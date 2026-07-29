@@ -1,10 +1,16 @@
-# Condensation Policy — Design
+# Pattern: Panel
 
 **Date:** 2026-07-29
 **Status:** Approved for implementation planning
-**Scope:** How duplicative skills are condensed into astra skills without flattening the
-distinct voices they carry. Defines the panel module, its interface, and the amendments this
-forces on `README.md`.
+**Selected when:** the **judgment** dimension carries ≥2 distinct values — cluster members hold
+different priors that can produce incompatible recommendations on the same artifact.
+**Scope:** panel mechanics only — the seat model, the panel module interface, the debate
+protocol, the chair's invariants, and panel-specific cost and validation.
+
+**Governed by** `../condensation-policy.md`. That document owns eligibility, the dimension
+classification that selects this pattern, the six preservation obligations, the autonomy rule,
+pattern composition, packaging, and the seven universal conformance evidence items. This
+document adds panel-specific mechanics on top and subtracts nothing.
 
 > 留其精華，去之糟粕 — but a voice is not 糟粕 merely because another voice already spoke.
 
@@ -42,7 +48,7 @@ it is real: `plan-ceo-review` loads 1,476 lines to deliver roughly 600 lines of 
 
 | # | Decision | Rationale |
 |---|---|---|
-| D1 | **Astra ships as one plugin. The plugin is the self-contained module.** | Shared `personas/`, `playbooks/`, `protocol/` are inside the unit. Unlike `guard` reaching into gstack, nothing here can be uninstalled independently. Closes `README.md:577`. |
+| D1 | **Astra ships as one plugin. The plugin is the self-contained module.** | Shared `personas/`, `playbooks/`, `protocol/` are inside the unit. Unlike `guard` reaching into gstack, nothing here can be uninstalled independently. **Now owned by `../condensation-policy.md` §11** — it applies to every pattern, not only this one; retained here because the seat model depends on it. |
 | D2 | **Decision catalogue → blind round → seat-declared conflict scan → targeted response → resolution → procedural rendering.** | Known decisions receive shared identifiers before seats run. Independence is preserved by *ordering* — each seat commits its claims before seeing any other's. Debate is bought without spending diversity of prior. |
 | D3 | **The chair is procedural. It sorts; it does not rule.** | A mediator with substantive power is a homogenizer in a neutral hat, and it touches the output last. |
 | D4 | **Distinctness is decided by the behavioral disagreement test (§9, §11.3).** | A panel whose members cannot disagree burns N dispatches to produce one opinion. Reading proposes a distinction; a contrastive run must exercise it. |
@@ -387,20 +393,19 @@ panel composition.
 
 ---
 
-## 9. The condensation rule
+## 9. Persona distinctness
+
+The distinctness test and the dimension exclusions that route a difference to register,
+jurisdiction, playbook or persona are owned by `../condensation-policy.md` §4. The judgment-row
+test is restated here because everything below executes against it:
 
 > **Two voices are distinct iff, holding artifact, available evidence and decision constant,
 > their different priors can produce incompatible recommendations within overlapping
 > standing.**
 
-Exclusions:
-
-| Difference is only… | Then it is… |
-|---|---|
-| tone | **register** — a persona field, not a persona |
-| subject matter | **jurisdiction** |
-| investigative technique, same decision policy | **playbook** |
-| decision policy | **persona** |
+What follows is the panel-specific form of the policy's universal E5 obligation — reading
+proposes a distinction, a contrastive run must exercise it — plus the worked adjudication of
+the cluster that selected this pattern.
 
 ### The disagreement test is behavioral
 
@@ -465,37 +470,11 @@ Ramsay refuses it. A roster carved by domain collapses both into "the code quali
 
 ---
 
-## 10. Packaging — README amendments
+## 10. Collision map correction
 
-D1 locks plugin-root sharing. The seam **moves**; no new exception is added.
-
-### 10.1 Replace §2(a) (`README.md:132-141`)
-
-Current text declares skill-level self-containment with a single carve-out for router
-discovery. Replace with:
-
-> **(a) Filesystem self-containment — the plugin is the module.** Every astra implementation
-> file lives inside the plugin. Skills may consume declared shared modules under
-> `protocol/`, `personas/`, and `playbooks/`; nothing reaches outside the plugin.
-
-Consequences:
-
-- **The router exception disappears.** Router discovery becomes ordinary intra-plugin
-  composition, not a carve-out.
-- **MCP is not a filesystem exception at all.** It is an external runtime prerequisite under
-  §2(b), which is a different category. `README.md:548` is recategorized accordingly.
-- **`bin/` rule (`README.md:197`) and "vendor it, never link out" (`:615`) still apply**, at
-  the plugin boundary rather than the skill boundary.
-- **Skills are no longer independently portable.** Stated, not implied.
-
-### 10.2 Close the install question (`README.md:577`)
-
-"Should astra ship as a plugin?" is answered: **yes**. The two costs that section names are
-accepted and become implementation constraints — paths resolve through
-`${CLAUDE_PLUGIN_ROOT}` / `${CLAUDE_SKILL_DIR}`, never literals; and command names are
-namespaced (`/astra:denounce`), which `/astra-tune` must match when mining transcripts.
-
-### 10.3 Correct the collision map
+Packaging and the README self-containment amendments are owned by
+`../condensation-policy.md` §11–§12; they apply to every pattern. What remains here is
+specific to the cluster this pattern was selected for.
 
 The adversarial-critique row keeps `plan-eng-review` as a distinct persona. Cluster totals
 are unaffected — it was never proposed for deletion, only for merger into another voice.

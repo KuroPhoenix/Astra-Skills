@@ -639,8 +639,9 @@ b5a0b9d72f4a992ba0b52cd7b27d15e7e0e29e35c4b775477ec3a031c47f5c92  office-hours/S
 73e2bf3e7b1868493fc162dccf9f26c182f50e4cfcad3e4f02efce0e3099e472  autoplan/SKILL.md
 b4e029d6c927b1ba671748b5d23e026d1c8059bde96e955fb504490da22b9b69  diss.md
 0ac5d05a598ca73edf0e35956efddf10ce989a0a68c9483bb6355cab3da73fff  trim.md
-efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md working draft
+efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md (committed at a037f20)
 ```
 
-The `README.md` hash records the unstaged working draft whose amendments §10 specifies. That
-file remains a follow-up and is deliberately not part of this spec commit.
+The `README.md` hash records the draft whose amendments §10 specifies. That file was an unstaged
+working draft when this spec was written and is now committed at `a037f20` with identical content,
+so the hash and every line coordinate taken against it remain valid.

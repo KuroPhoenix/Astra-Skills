@@ -551,14 +551,16 @@ in this set.
 
 ### 13.1 Why this is not merely tidiness
 
-**The committed `README.md` at this branch's HEAD is two lines long.** The 600-line document these
-specs cite as governing evidence is an **unstaged working draft**. A clean checkout cannot
-reproduce a single line citation, which means anyone validating these specs from the repository
-alone finds nothing where the citations point.
+This convention was forced by a real reproducibility failure, now closed (§13.4). The 667-line
+`README.md` these specs cite as governing evidence existed only as an **unstaged working draft**
+while they were written; HEAD carried a two-line stub. A clean checkout could not reproduce a
+single line citation, so anyone validating these specs from the repository alone found nothing
+where the citations pointed.
 
-That is a real reproducibility failure, and the snapshot is what makes it survivable: a reader can
-verify they hold the same source the specs were written against, and a hash mismatch tells them
-the coordinates are stale before they conclude the claim is false.
+The convention outlives the defect that prompted it, because the same failure recurs every time a
+cited source is edited. The snapshot is what makes that survivable: a reader can verify they hold
+the same source the specs were written against, and a hash mismatch tells them the coordinates are
+stale before they conclude the claim is false.
 
 ### 13.2 Two citation classes
 
@@ -574,7 +576,7 @@ invalid together when the hash changes. §12's targets are all of the second cla
 ### 13.3 Snapshot
 
 ```text
-efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md (unstaged working draft)
+efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md (committed at a037f20)
 ab22714e84c096eed506f314aa49f44161f08eb37a4b4651fb2725bab6ca07ff  gstack/guard/SKILL.md
 ```
 
@@ -587,18 +589,15 @@ absent from panel's list.
 against the new source, and re-verify each quoted phrase still appears — the phrase is the
 evidence.
 
-### 13.4 The README must be committed before implementation planning closes
+### 13.4 Resolved — the README is in version control
 
-The amendments in §12 apply to a file that is not in version control. Until the working draft is
-committed, §12 cannot be executed as written and E6 cannot be satisfied for any record. This is
-tracked in §14.
+Committed at `a037f20`, byte-identical to the draft, so the §13.3 hash was unaffected and no §12
+coordinate moved. §12 is executable as written and E6 is satisfiable for every record.
 
 ---
 
 ## 14. Open questions
 
-- **The README working draft is uncommitted.** §13.4. Blocks §12 execution and E6 for every
-  record. Highest-priority item in this list because everything else cites it.
 - **Composed-pattern runtime interference.** §8 rule 6 makes it a per-record disclosure, which is
   a stopgap, not a specification. What is missing: whether composed contexts can observe or
   mutate each other's state, and what the authority boundary is at runtime rather than on paper.
@@ -651,8 +650,8 @@ behavior-bearing frontmatter set replacing four drifted enumerations (§4.3), cl
 formation (§3.2), register's missing disposition (§4.1), the record schema's four missing evidence
 sections (§10), both E5 gates required of every pattern rather than three patterns validating only
 their own declarations (§9), the composition interface disclosure (§8 rule 6), evidence anchoring
-against a hash because the cited README is uncommitted (§13), and `model` having no total ordering
-(§14).
+against a hash because the cited README was then uncommitted (§13 — since committed at `a037f20`
+with identical content, so no coordinate moved; §13.4), and `model` having no total ordering (§14).
 
 The pattern documents carry their own corrections: pipeline's contradictory partial-autonomy mode
 and its unevaluable `effect_free` condition, adapter-set's missing capability baseline,

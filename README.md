@@ -2,12 +2,14 @@
 
 > 留其精華，去之糟粕，集各家之大成
 
-One set of skills, fused from many. Each astra skill absorbs the capabilities of every
-duplicative skill in the wild that solves the same problem, keeps what is good, discards
-what is not, and presents **one** entry point instead of five competing ones.
+An inventory-driven effort to derive a personalized, non-colliding set of skills from the
+existing collection.
 
-This document is the design. The roster of astra skills is deliberately still open —
-see [Open questions](#open-questions).
+> **Phase-0 status:** this README is source inventory and earlier research, not the governing
+> design. The authoritative scope is the
+> [personal skill roster design](docs/superpowers/specs/2026-07-29-personal-skill-roster-design.md).
+> Packaging, tiers, caching, telemetry, implementation and retirement are deferred. Sections
+> discussing them below preserve research context only.
 
 ---
 
@@ -185,6 +187,9 @@ handler, so an evicted skill can still be found and can still earn its way back.
 
 ## Architecture
 
+> **Deferred research:** this architecture is not part of phase 0 and is not an implementation
+> decision.
+
 ```
 astra/                       Tier 0 — router + miss handler. Model-invoked.
   SKILL.md                     Names every astra skill and when to reach for it.
@@ -231,17 +236,13 @@ That single hop restores the demand path, and three things follow:
 
 ### Reading a skill is not invoking it
 
-The hop has a hard limit, and it constrains what may be demoted. A `Read` delivers the
-**instructions**; invocation delivers the instructions **plus everything the frontmatter
-declares**:
-
 A `Read` delivers the **instructions**. Invocation delivers the instructions **plus
 everything the frontmatter declares** — and only invocation does:
 
 | Frontmatter field | Effect that a `Read` cannot reproduce | Uses on this machine |
 |---|---|---:|
-| `allowed-tools` | permission boundary | 117 |
-| `disallowed-tools` | permission boundary | — |
+| `allowed-tools` | one-turn permission pre-approval | 117 |
+| `disallowed-tools` | one-turn tool denial | — |
 | `hooks` | installs hooks (e.g. `guard`'s `PreToolUse` guards) | 8 |
 | `argument-hint` | argument binding | 7 |
 | `model` | model override | 6 |
@@ -279,6 +280,10 @@ lowercase/numbers/hyphens only, and it **cannot contain the reserved words `anth
 ---
 
 ## Tuning: `/astra-tune`
+
+> **Deferred research:** tuning, promotion signals and tier changes are outside phase 0.
+> The Tier 2b proposal is incomplete: surfacing a miss leaves no structured transcript event
+> containing the missed target, so its demand cannot be scored as currently described.
 
 An **advisory** cache manager. It proposes; you approve. It never rewrites frontmatter
 unattended.
@@ -383,13 +388,14 @@ full window of evidence.
 
 ## The collision map
 
-Each row is one astra skill and everything it retires. This doubles as the migration
-checklist. **Usage** shows invocations from the July 2026 transcripts — most rows are
-entirely cold, which is the point.
+Each row is a **candidate neighborhood for investigation**, not one decided astra skill and not
+a retirement list. Phase 0 may merge a row, split it into several personalized skills, keep
+entries separate, or exclude entries with a reason. **Usage** shows invocations from the July
+2026 transcripts and affects prioritization only.
 
-### Merge targets
+### Candidate collision neighborhoods
 
-| Cluster | Skills absorbed | n | Usage |
+| Candidate neighborhood | Entries to investigate | n | Usage |
 |---|---|---:|---:|
 | **Adversarial critique** | `grilling`, `grill-me`, `grill-with-docs`, `/diss`, `/diss-api`, `diss-infra`, `diss-claudemd`, `/elon`, `/trim`, `office-hours`, `plan-ceo-review`, `plan-eng-review`, `plan-design-review`, `plan-devex-review`, `autoplan` | 15 | **50** |
 | **Code review** | `code-review`, `review`, `requesting-code-review`, `receiving-code-review`, `superpowers:requesting-code-review`, `superpowers:receiving-code-review`, `feature-dev:code-reviewer`, `code-review:code-review`, `security-review`, `simplify`, `code-simplifier`, `health` | 12 | **9** |
@@ -409,10 +415,10 @@ entirely cold, which is the point.
 | **iOS** | `ios-qa`, `ios-fix`, `ios-design-review`, `ios-sync`, `ios-clean` | 5 | 0 |
 | **Ops & routine** | `retro`, `meeting`, `office-hours` | 3 | 0 |
 
-**Total absorbed: 176 entries across 17 clusters (~173 distinct).** Three skills sit in two
-clusters each and are counted twice — `pair-agent` (browser / delegation), `office-hours`
-(critique / ops), `skillify` (browser / skill-meta). Those overlaps are unresolved cluster
-boundaries, and each one is a decision owed to the roster discussion.
+**Inventory: 176 candidate occurrences across 17 neighborhoods (~173 distinct).** Three entries
+appear in two neighborhoods and are counted twice — `pair-agent` (browser / delegation),
+`office-hours` (critique / ops), and `skillify` (browser / skill-meta). Phase 0 assigns each a
+primary home and records any secondary role.
 
 ### Not merge targets — reference skills
 
@@ -574,9 +580,10 @@ Astra Skills cannot ignore it. Either monster-prompt is absorbed into astra, or 
 repos divide responsibility explicitly. **This is unresolved** — see
 [Open questions](#open-questions).
 
-### Should astra ship as a plugin?
+### Packaging research (deferred)
 
-Worth deciding early, because it settles the install-mechanism question. A plugin can carry
+Packaging is outside phase 0. The following tradeoff is retained for a later implementation
+decision. A plugin can carry
 skills, commands, agents, hooks, MCP and LSP declarations as one versioned, toggleable unit
 — exactly the astra component set. The alternative is loose symlinks into
 `~/.claude/skills/`, which is what produced the 133 broken links this repo exists to fix.

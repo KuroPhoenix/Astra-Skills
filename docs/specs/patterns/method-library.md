@@ -3,7 +3,9 @@
 **Date:** 2026-07-29
 **Status:** Draft — no cluster record written yet
 **Selected when:** the **method** dimension carries ≥2 distinct values — cluster members gather
-different evidence or run different tests, while holding the same priors.
+different evidence or run different tests. This pattern addresses the method difference only; where
+the same cluster also differs at judgment or substrate, those select their own patterns and all of
+them compose (policy §8). Nothing here assumes the priors are identical.
 **Scope:** playbook mechanics — the playbook interface, how a method is selected, and the
 contrastive form that proves two methods distinct.
 
@@ -29,7 +31,7 @@ nowhere to live; under the policy's classification they are the method dimension
 their representation.
 
 `spock` also carries substrate (JVM + Groovy). Per policy §8 rule 4, that composes with
-`patterns/adapter-set.md` rather than being flattened into the playbook.
+`adapter-set.md` rather than being flattened into the playbook.
 
 ---
 
@@ -70,13 +72,20 @@ question every time, and would let the agent quietly switch a project's testing 
 
 Selection ladder, in descending order of precedence:
 
-1. **Project declaration** — the project's own configuration or `CLAUDE.md` names the method.
-   Highest precedence and the expected common case.
-2. **User-named** — `/astra-test --method bdd` for a one-off departure.
-3. **Precondition elimination** — if a playbook's `preconditions` cannot be satisfied
-   (no JVM present for `spock`), it is not a candidate. Mechanical, not inferential.
+1. **User-named** — `/astra:test --method bdd`. Highest precedence, because a one-off departure
+   that a project declaration can override is not a departure at all. An earlier draft ranked
+   project configuration first, which made the stated escape hatch unreachable in exactly the
+   projects that declare a method — i.e. all the ones where it matters.
+2. **Project declaration** — the project's own configuration or `CLAUDE.md` names the method. The
+   expected common case, and the default whenever the user has not asked for something else.
+3. **Precondition elimination** — if a playbook's `preconditions` cannot be satisfied (no JVM
+   present for `spock`), it is not a candidate. Mechanical, not inferential.
 4. **Index lookup** — `playbooks/INDEX.md`, read only when the above leave more than one
    candidate. This is the path that can degrade, so it is last.
+
+Rules 1 and 3 interact: a user-named method whose preconditions fail **raises**. It does not
+silently fall back to the project default. The user named a method; being unable to run it is
+information they need, not a problem to route around (policy P6 — absence must be loud).
 
 If step 4 leaves ambiguity, the skill asks. It does not guess: silently choosing a testing
 discipline is a decision with a long tail that the user never approved.
@@ -88,7 +97,7 @@ discipline is a decision with a long tail that the user never approved.
 Policy §4 defines the method row: two methods are distinct when, run on the same artifact,
 they yield **different supported findings — not merely different prose**.
 
-Policy E5's four universal rules apply. The panel-specific form is:
+Policy E5's five universal rules apply. Their method-library form is:
 
 1. Fix at least three versioned artifacts. Include at least one **expected-divergence** case
    (an artifact where the two methods should surface different findings) and one
@@ -143,7 +152,7 @@ and the library has silently become a roster.
 ## 7. Cost
 
 One playbook is loaded per invocation. Cost is `chassis + playbook`, independent of how many
-playbooks the library holds — the unselected ones are files on disk (`README.md:98` §1: files
+playbooks the library holds — the unselected ones are files on disk (`README.md`, Principles §1 — files
 inside a skill cost zero until read).
 
 This is the cheapest pattern, and the contrast with the panel is instructive: a panel pays
@@ -158,7 +167,7 @@ still applies to distinctness claims.
 
 ## 8. Candidate clusters
 
-From the collision map (`README.md:384`), pending records:
+From the collision map (`README.md`, *"The collision map"*), pending records:
 
 | Cluster | n | Note |
 |---|---:|---|

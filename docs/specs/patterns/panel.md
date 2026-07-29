@@ -89,13 +89,13 @@ second payment reintroduces the routing collision one level down.
 The seat roster is therefore a table inside the convening `SKILL.md`, which is already in
 context when the skill fires. This is what the three declared reviewer roles at
 `diss.md:323,349,373` do today. The **wider 15-skill adversarial-critique cluster**, not
-`/diss` alone, records 50 July invocations in the working `README.md:394`.
+`/diss` alone, records 50 July invocations in the working `README.md`, *"The collision map"* → adversarial-critique row.
 
 Three declared escape hatches, in descending order of trust:
 
 1. **Conditional seats** — `if the diff touches auth or crypto → add seat cso@security`.
    Declared; the condition is evaluated against facts.
-2. **User-named** — `/astra-denounce --with karpathy`.
+2. **User-named** — `/astra:denounce --with karpathy`.
 3. **Index lookup** — `personas/INDEX.md`, read only when the panel is genuinely open-ended.
    This is the path that can degrade, so it is the fallback, not the mechanism.
 

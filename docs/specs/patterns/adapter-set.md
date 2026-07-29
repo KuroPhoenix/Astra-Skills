@@ -2,8 +2,11 @@
 
 **Date:** 2026-07-29
 **Status:** Draft — no cluster record written yet
-**Selected when:** the **substrate** dimension carries ≥2 distinct values — cluster members
-execute the same method with the same priors on different runtimes.
+**Selected when:** the **substrate** dimension carries ≥2 distinct values — cluster members require
+different runtime prerequisites, distinguishable by a capability probe. This pattern addresses the
+substrate difference only; where the same cluster also differs at judgment or method, those select
+their own patterns and all of them compose (policy §8). Nothing here assumes the priors or methods
+are identical.
 **Scope:** adapter mechanics — the adapter interface, the capability parity matrix, detection
 ordering, and how absence is made loud.
 
@@ -142,14 +145,27 @@ In addition to policy E1–E7:
 |---|---|
 | A1 | Every adapter's `probe` is runnable **without its substrate present**, and returns absent rather than erroring. A probe that crashes when AWS is unreachable cannot be used for elimination. |
 | A2 | Every adapter declares `unsupported` explicitly. Empty by assertion is permitted; empty by omission is not. |
-| A3 | **Parity matrix validation** — the §4 contrastive run. Every operation is attempted on every adapter; the observed success/failure pattern must match the declared matrix exactly. A declared-supported operation that fails, or a declared-unsupported operation that succeeds, is a matrix defect. |
+| A0 | **Source capability baseline (RED)** — run a fixed operation corpus against **each original source skill** before any adapter exists, and record which operations each one actually supports on its own substrate. §6.1. |
+| A3 | **Parity matrix validation (GREEN)** — every operation attempted on every condensed adapter; the observed success/failure pattern must match both the declared matrix **and** A0's baseline. A declared-supported operation that fails, a declared-unsupported operation that succeeds, or an operation a source supported that no adapter now supports, is a defect. |
 | A4 | Every unsupported operation raises with the substrate named. Tested, not asserted. |
 | A5 | Every `remote` or `metered` adapter has a teardown, and a run that acquires a session and exits leaves no live session behind. |
+| A6 | **No automatic escalation to metered** — a run whose requirements a `local` adapter satisfies never selects a `metered` one. §5 rule 3, tested. |
 
-A3 is this pattern's form of policy E5. Note what it compares: not conclusions (panel) and not
-findings (method library), but **which operations succeed**. Substrates are distinct exactly
-when the matrix rows differ, so the matrix *is* the distinctness claim, and A3 is the
-contrastive run that exercises it.
+### 6.1 Why A3 alone is not sufficient
+
+A3 is this pattern's GREEN gate. Note what it compares: not conclusions (panel) and not findings
+(method library), but **which operations succeed**. Substrates are distinct exactly when the matrix
+rows differ, so the matrix *is* the distinctness claim.
+
+But an earlier draft specified A3 without A0, and that is a real hole: validating the matrix
+against the condensed adapters proves the matrix is honest about the **new** code. It says nothing
+about what parity existed before. An adapter set could drop `agent-browser`'s local file upload
+entirely, declare it unsupported everywhere, pass A3 perfectly — matrix matches observed behavior —
+and have silently violated P1.
+
+A0 supplies the baseline that makes the loss visible. Concretely: run `upload(local_path)` against
+`agent-browser`, `electron` and `webapp-testing` separately first. Two support it, one does not.
+That three-way result is what the condensed matrix must reproduce.
 
 ---
 

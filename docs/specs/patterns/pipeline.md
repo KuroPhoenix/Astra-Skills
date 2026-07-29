@@ -16,7 +16,7 @@ conformance evidence items.
 ## 1. Why this pattern exists, and why it is the dangerous one
 
 Ship & VCS is the highest-usage cluster in the collision map — 17 skills, 49 July invocations
-(`README.md:399`). It is also the only large cluster whose members **write**: commits, pushes,
+(`README.md`, *"The collision map"* → Ship & VCS row). It is also the only large cluster whose members **write**: commits, pushes,
 PRs, tags, container images, deploys.
 
 Every other pattern condenses things that read. This one condenses things that act, which makes
@@ -24,7 +24,7 @@ its failure modes different in kind rather than degree. A panel that loses a voi
 worse report. A pipeline that loses a gate pushes to production without asking.
 
 The usage split is the evidence that matters. `/pr` is **39 typed against 1 agent-fired**.
-`README.md:172` §3 reads that correctly: for side-effecting skills, heavy manual use is evidence
+`README.md`, Principles §3 (*"Provenance over frequency"*), reads that correctly: for side-effecting skills, heavy manual use is evidence
 the user wants to keep control, not evidence they want to hand it over.
 
 ---
@@ -40,19 +40,29 @@ stage:
     prompt:      string
     on_decline:  abort | skip | branch
   effects:
-    reversible:  true | false
+    effect_free: true | false          # changes NO state anywhere, incl. local
+    reversible:  true | false          # undoable by this pipeline, if not effect_free
     external:    true | false          # visible outside this machine
     scope:       string                # what it touches
+    idempotent:  true | false          # re-running produces the same end state
+    reconcile:   <vendored probe>      # required when external AND NOT idempotent
   preconditions: [<condition>]
   outputs:       [<artifact or state>]
   resumable_from: true | false
 ```
 
-`effects.reversible` and `effects.external` are the fields that drive §4 ordering and §5
-autonomy. They are not documentation; they are inputs to mechanical checks.
+These fields are not documentation; they are inputs to mechanical checks. `effect_free` and
+`reversible` drive §4 ordering and the §6.1 split point; `idempotent` and `reconcile` drive §5.
 
-`gate: null` is permitted only for a stage that is both reversible and effect-free — running
-tests, computing a diff. Every stage that writes anything carries a gate.
+**`effect_free` is a separate field from `reversible`** because §2's gate rule and §6.1's split
+both turn on "changes nothing," and `reversible: true` does not mean that. Writing a file and
+deleting it again is reversible but not effect-free, and an earlier draft used "reversible AND
+effect-free" as a condition while providing no field for the second half — leaving the rule
+unevaluable. Running tests is `effect_free: true`; `git commit` is `effect_free: false,
+reversible: true`; `git push` is `effect_free: false, reversible: false, external: true`.
+
+`gate: null` is permitted **only** when `effect_free: true`. Every stage that changes any state
+carries a gate.
 
 ---
 
@@ -75,8 +85,14 @@ Mechanically:
    independently — e.g. one `AskUserQuestion` with two questions, not one question covering
    both. Bundling that forces a single yes/no across two decisions is a many-to-one merge.
 4. A gate may be *added*. Adding is always permitted.
-5. Removing a gate requires the record's "given up" section (policy §10 section 9) to name it,
-   with a reason, and requires that the stage behind it be reversible and non-external.
+5. **A gate on a stage that changes state may not be removed.** No record entry excuses it — the
+   gate protects a P4 boundary, and policy §5.1 makes P4 non-waivable. An earlier draft permitted
+   removal with a "given up" entry, which contradicted this section's own headline and would have
+   let the central invariant be written away one record at a time.
+6. The single exception is definitional rather than a waiver: a gate on a stage that is
+   `effect_free: true` was never protecting anything, and reclassifying it to `gate: null` is
+   permitted. The record states the reclassification and the evidence that the stage is
+   effect-free. **If in doubt, the stage is not effect-free.**
 
 Rule 3 is the one that gets violated by accident. `plan-ceo-review:874` already establishes the
 house norm — *"Present each scope-expanding idea as an AskUserQuestion. The user opts in or
@@ -118,30 +134,81 @@ replaced.
 5. Resumption is offered, never automatic. An interrupted pipeline that resumes itself on the
    next invocation is acting without being asked.
 
+### 5.1 Mid-stage interruption
+
+Rules 1–5 handle interruption *between* stages. A crash **inside** an external stage is the harder
+case and the one that actually happens: the tag may be pushed, the image may be half-uploaded, the
+deploy may have started. Stage-boundary bookkeeping cannot tell you which.
+
+1. Every stage with `external: true` declares either `idempotent: true` or a `reconcile` probe.
+   There is no third option, and the schema makes its absence a validation failure rather than a
+   discovered surprise.
+2. **`idempotent: true`** — resumption re-runs the stage. Re-running `git push` of an
+   already-pushed ref, or re-tagging with the same value, converges. Declaring idempotence asserts
+   the *end state* converges, not that the command is a no-op.
+3. **`reconcile`** — resumption runs the probe first. It inspects the external system and reports
+   `not_started` / `partial` / `complete`. Resumption then skips, repairs, or re-runs accordingly.
+   The probe is vendored inside the plugin like any other script (policy §11).
+4. **`partial` with no repair path stops the pipeline and reports.** It does not guess, and it does
+   not re-run a non-idempotent external effect on the chance that it did not land. A stopped
+   pipeline with an accurate description of the intermediate state is a better outcome than a
+   second deploy.
+5. The reconcile probe is itself `effect_free: true`. A probe that mutates the system it is
+   inspecting cannot be run on an unknown state.
+
+This is where condensation could easily make things *worse* than the source skills. `ship`,
+`land-and-deploy` and `canary` each leave a smaller intermediate state because each does less. One
+pipeline spanning all three has a wider window in which a crash lands mid-effect, so it owes a
+correspondingly better answer for what to do about it.
+
 ---
 
 ## 6. Autonomy — this pattern's hard constraint
 
 Policy §6 applies to every pattern. Here it binds hardest, so it is restated concretely:
 
-> **The condensed pipeline's invocation mode is the most restrictive among its stages.**
+> **A pipeline containing any stage more restrictive than model-invoked is itself
+> user-invoked. There is no partial mode.**
 
-For ship & VCS, that means the pipeline is **user-invoked**. One stage descended from `/pr`
-(39 typed / 1 agent-fired) is sufficient to fix the whole pipeline's mode, because a
-model-invoked pipeline can reach that stage autonomously.
+For ship & VCS that means the pipeline is **user-invoked**. One stage descended from `/pr`
+(39 typed / 1 agent-fired) fixes the whole pipeline's mode, because a model-invoked pipeline can
+reach that stage autonomously.
 
-Two further constraints specific to sequences:
+### 6.1 One skill cannot hold two modes
 
-- **A stage's gate may not be waived by the pipeline.** If a stage requires confirmation
-  standalone, it requires confirmation as a stage. Composition does not dilute authority.
-- **Partial autonomy is expressible and preferred.** A pipeline may run its reversible,
-  effect-free prefix model-invoked and stop at the first gate. That preserves the convenience
-  motivating condensation without granting write authority. Where a cluster's stages split
-  cleanly at the first irreversible effect, prefer this over making the whole pipeline
-  user-invoked.
+An earlier draft said the pipeline was user-invoked *and* that it "may run its reversible,
+effect-free prefix model-invoked." **Those cannot both be true of one skill.** Invocation mode is a
+property of the skill, not of a position within it. A skill the model may invoke is a skill the
+model may enter — and once entered, only the gates stand between it and the writing stages. That
+draft granted autonomous entry into the ship pipeline while claiming to forbid it.
 
-The last point is the one worth implementing carefully: it is how this pattern delivers value
-without the autonomy creep that would otherwise be its price.
+The value that draft was reaching for is real, and the correct expression is **two entry points,
+not one skill with a mode**:
+
+```
+astra:inspect         Tier 1 or 2a. Model-invoked. Reversible, effect-free stages only.
+                      Terminates at the boundary. Cannot reach a writing stage at all —
+                      not "is gated from"; the stages are not in it.
+
+astra:ship            Tier 2b. User-invoked. Contains the writing stages, and may
+                      re-run or consume astra:inspect's output.
+```
+
+The split is at the **first stage with `effects.effect_free: false`**, and it is structural: the
+writing stages are absent from the read-only entry point, so no gate is load-bearing for
+containing autonomy. A gate that is the only thing preventing an autonomous write is a gate one
+bug away from not preventing it.
+
+Where the stages do not split cleanly — a reversible stage that must interleave with writes — the
+whole pipeline is user-invoked and no read-only entry point is offered. **The split is an
+optimization, not an obligation**, and a forced split is worse than none.
+
+### 6.2 Gates are not diluted by composition
+
+**A stage's gate may not be waived by the pipeline.** If a stage requires confirmation standalone,
+it requires confirmation as a stage. This holds regardless of §6.1: a user-invoked pipeline still
+gates every writing stage, because being invoked by hand is consent to run the pipeline, not
+consent to each of its effects.
 
 ---
 
@@ -149,13 +216,21 @@ without the autonomy creep that would otherwise be its price.
 
 In addition to policy E1–E7:
 
+**S1 is the RED gate and S2–S8 are GREEN**, per policy E5. An earlier draft specified only checks
+against the condensed pipeline, which could confirm internal consistency without establishing what
+the source skills did — so a lost gate or a lost resume path would have passed.
+
 | # | Evidence |
 |---|---|
-| S1 | **Gate inventory diff** — baseline gates from all source skills against condensed gates, demonstrating no many-to-one merge. §3. |
+| S0 | **Source characterization (RED)** — run **each source skill separately** on a fixed corpus and record, per source: its gate points, its effect classification per stage, its resume behavior under interruption, and its declined-gate behavior. This is the baseline every check below compares against. §3 rule 1 depends on it existing. |
+| S1 | **Gate inventory diff (GREEN)** — S0's baseline gates against condensed gates, demonstrating no many-to-one merge and no removal barred by §3 rule 5. |
 | S2 | **Ordering proof** — no irreversible stage precedes a reversible stage it depends on; blast radius ascending among irreversible stages. §4. |
 | S3 | **Gate traversal test** — a run cannot reach any irreversible stage without traversing its gate. Tested by attempting to skip. |
-| S4 | **Resume test** — interrupt at each stage boundary, resume, and confirm no completed stage re-runs and every forward gate re-presents. §5. |
+| S4 | **Resume test, boundaries** — interrupt at each stage boundary, resume, and confirm no completed stage re-runs and every forward gate re-presents. §5. |
+| S4b | **Resume test, mid-stage** — interrupt *inside* each `external: true` stage. An `idempotent` stage must converge on re-run; a `reconcile` stage's probe must correctly report `not_started`/`partial`/`complete` against a deliberately induced state of each kind. A `partial` with no repair path must stop and report rather than re-run. §5.1. |
+| S4c | **Schema completeness** — every stage declares `effect_free`; every `external: true` stage declares `idempotent: true` or a `reconcile` probe; every `reconcile` probe is itself `effect_free`. Mechanical, checkable before any run. |
 | S5 | **Autonomy diff** — the condensed pipeline's invocation mode against the most restrictive source stage's. Policy E2 covers the tool/hook diff; this covers mode specifically because §6 is where this pattern is most likely to regress. |
+| S5b | **Split containment** — where §6.1 offered a model-invoked read-only entry point, prove the writing stages are **absent from it**, not merely gated within it. Attempt to reach a writing stage from the read-only entry point; it must be unreachable because it does not exist there. A gate is not evidence for this check. |
 | S6 | **Declined-gate test** — for every gate, declining produces the declared `on_decline` behavior and leaves no partial external effect. |
 
 S6 is easy to omit and important: gates are usually tested by approving them. A gate whose
@@ -178,7 +253,7 @@ decline path was never exercised is a gate that may not work.
 
 | Cluster | n | Note |
 |---|---:|---|
-| Ship & VCS | 17 | `ship`, `land-and-deploy`, `canary`, `landing-report`, `setup-deploy`, `/pr`, `/commit`, `/build-push-ecr`, `commit-commands:*`, `changelog`, `document-release`, `resolving-merge-conflicts`, `finishing-a-development-branch`, `using-git-worktrees`, `github` (`README.md:399`). **49 invocations — highest in the map.** `/pr`'s unconfigured Jira MCP (`README.md:165`) is live breakage to fix during condensation, not after. |
+| Ship & VCS | 17 | `ship`, `land-and-deploy`, `canary`, `landing-report`, `setup-deploy`, `/pr`, `/commit`, `/build-push-ecr`, `commit-commands:*`, `changelog`, `document-release`, `resolving-merge-conflicts`, `finishing-a-development-branch`, `using-git-worktrees`, `github` (collision map, Ship & VCS row). **49 invocations — highest in the map.** `/pr`'s unconfigured Jira MCP (`README.md`, Principles §2 MCP table — *"no alternative"*) is live breakage to fix during condensation, not after. |
 | Setup & config | 8 | `setup-aurora-pg-mcp`, `setup-gbrain`, `sync-gbrain`, `update-config`, `keybindings-help`, `fewer-permission-prompts`, `claude-automation-recommender`, `setup-browser-cookies`. Lower risk — effects are local config, mostly reversible. |
 | Context & handoff | 5 | `context-save`, `context-restore`, `strategic-compact`, `handoff`, `nowhat`. Sequence is weak here; verify against policy §4 before selecting this pattern rather than keep-separate. |
 

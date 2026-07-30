@@ -166,10 +166,10 @@ Lack of observed disagreement is evidence for further investigation, not proof o
 
 ## 7. Required per-skill design
 
-Every completed phase-0 design under `designs/` must contain the following sections. The
-restored `designs/astra-critique.md` is currently the worked source design and must be
-normalized to this contract before it is accepted as complete. The headings may be adapted
-for readability, but the information may not be omitted.
+Every completed phase-0 design under `designs/` must contain the following sections.
+`designs/astra-critique.md` is normalized to this contract and is the reference example of it;
+its sections 1–10 map one-to-one onto 7.1–7.10 below. The headings may be adapted for
+readability, but the information may not be omitted.
 
 ### 7.1 Identity and status
 
@@ -321,10 +321,11 @@ Its source analysis demonstrates the required reasoning:
 
 | Source group | Design lesson |
 |---|---|
-| `grill-me`, `grill-with-docs` | Delegating stubs contribute machinery; they do not establish new perspectives |
-| `grilling` | Relentless one-at-a-time decision interrogation contributes a decision policy and interaction behavior |
+| `grill-me`, `grill-with-docs` | Delegating stubs contribute machinery; they do not establish new perspectives. A stub can still carry authority fields |
+| `grilling` | An interrogation protocol that returns every decision to the user holds no priors of its own: it contributes protocol and machinery, not a perspective |
 | `autoplan` | Sequencing specialist reviews contributes protocol, not another perspective |
-| `/diss`, `/diss-api`, `diss-infra`, `diss-claudemd` | Shared adversarial-review behavior can coexist with subject-specific jurisdictions and playbooks |
+| `/diss`, `/diss-api`, `diss-infra` | Shared adversarial behavior can coexist with subject-specific jurisdictions and playbooks; register may vary without splitting the perspective |
+| `diss-claudemd` | A name matching a family is not membership in it. Read the body: this one shares `/trim`'s role and playbook, not `/diss`'s voice |
 | `/elon` | First-principles reconstruction contributes a distinct perspective |
 | `/trim` | Prompt reduction, official-practice review, prompt-only jurisdiction, and authority fields must be classified separately |
 | `office-hours` | Problem validation differs from rebuilding a solution from first principles |
@@ -332,18 +333,25 @@ Its source analysis demonstrates the required reasoning:
 | `plan-eng-review` | Incrementality, blast radius, reversibility, and production ownership contribute a separate perspective |
 | `plan-design-review` | User hierarchy, journey, and interface consequences contribute a perspective and design playbooks |
 | `plan-devex-review` | Time to first success and developer friction contribute a developer-experience perspective and playbooks |
+| `plan-devex-review`, `devex-review` | One perspective can span a plan and a running artifact: that is two jurisdictions with two playbooks, not two voices |
 
 The example chooses a panel because several sources have overlapping standing but can reach
 incompatible recommendations. Blind filing, conflict handling, verification, and procedural
 rendering are Astra Critique design decisions. Other Astra skills must not copy them unless
 their own source evidence establishes the same need.
 
-Before it counts as a completed phase-0 design, `designs/astra-critique.md` must be normalized
-in place to section 7 while preserving the useful condensation and panel reasoning. That
-normalization must explicitly resolve any remaining ambiguity in how the `/diss` voice,
-code-structure judgment, and test-evidence judgment are separated. Historical packaging,
-tiering, tuning, and generic runtime proposals remain labeled historical rather than becoming
-phase-0 requirements.
+`designs/astra-critique.md` was normalized in place to section 7 on 2026-07-30, preserving the
+condensation and panel reasoning in labeled historical appendices. That normalization resolved the
+required ambiguity on evidence: the `/diss` voice is **one** perspective whose register names two
+people jointly; test-evidence judgment inside it is a threshold and a filter rather than a rival
+prior; and the genuine code-structure-versus-test-evidence conflict is between `/diss` and
+`review`, which defines itself as finding *"structural issues that tests don't catch."* Historical
+packaging, tiering, tuning, and generic runtime proposals remain labeled historical rather than
+becoming phase-0 requirements.
+
+Four of that design's original classifications were disproved by reading the source bodies. Agents
+should read the corrections as a warning about label-based clustering, not as settled taxonomy for
+their own neighborhoods.
 
 ## 10. Agent workflow
 

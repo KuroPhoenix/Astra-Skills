@@ -1,35 +1,178 @@
-# Astra Critique condensation plan — restored design
+# Astra Critique — phase-0 design
 
-**Original date:** 2026-07-29
-**Restored:** 2026-07-30
-**Status:** Restored critique design reference; normalization pending
-**Scope:** How the adversarial-critique source cluster can become a future Astra Critique
-skill without flattening its distinct decision policies. Defines the proposed panel module,
-its interface, and the historical README amendments that followed from it.
+**Normalized:** 2026-07-30 · **Original design:** 2026-07-29 (`f264c20`, reviewed at `ff889a4`)
 
-> **Current authority:** `docs/design-requirements.md` governs per-skill design work. This
-> document is the critique-specific worked design, not a universal condensation policy and
-> not an implemented skill.
+> **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns
+> phase scope and the global ledgers. This is one per-skill design, not a universal condensation
+> policy and not an implemented skill.
 >
-> **Historical sections.** §2 (design decisions), §4 (field-level schema), §10 (packaging and
-> README amendments), and §11 (cost model and measurement protocol) predate the phase-0 scope,
-> as does every reference to fixtures, harnesses, or benchmarks elsewhere in this document.
+> **Historical appendices.** Appendix A (panel protocol and schemas), Appendix B (packaging
+> proposals), and Appendix C (cost model and measurement protocol) predate the phase-0 scope.
 > `docs/phase-0.md` section 8 defers packaging, schemas, routers, tiers, telemetry, and
-> conformance harnesses. Those sections are retained as research evidence because the
-> condensation and panel reasoning they support is this document's substance. They are not
-> phase-0 requirements, and nothing in them is settled.
+> conformance harnesses. They are retained as research evidence because the condensation and
+> panel reasoning they support is this design's substance. Nothing in them is settled, and no
+> fixture, harness, or benchmark is authorized here.
 >
-> **README anchors are stale.** The `README.md` hash recorded in §13 predates commit `a037f20`
-> and everything after it, so every `README.md:<line>` citation below is invalid under this
-> document's own rule (§13). Cite README headings instead.
+> **README anchors.** The `README.md` hash recorded in §10 predates commit `a037f20`. Cite README
+> headings, never line numbers.
+>
+> **Conformance.** Sections 1–10 map one-to-one and in order onto
+> `docs/design-requirements.md` sections 7.1–7.10. Self-reviewed against that document's section 11
+> checklist; the appendices carry no phase-0 requirements.
 
 > 留其精華，去之糟粕 — but a voice is not 糟粕 merely because another voice already spoke.
 
 ---
 
-## 1. The measurement
+## 1. Identity and status
 
-Seven persona-bearing gstack skills, diffed against each other:
+| Field | Value |
+|---|---|
+| Provisional Astra name | `astra-critique` |
+| Status | `proposed` |
+| Priority | `now` |
+| Candidate neighborhood | Adversarial critique (16 occurrences) |
+
+**User job.** *When I want a decision, plan, diff, or prompt attacked by reviewers who can
+genuinely disagree with each other, before I commit to it.*
+
+**Personal value — explicit.** The user's standing global instructions make adversarial critique
+a permanent requirement, not a preference: `claude/rules/persona.md` mandates *"Truth over
+comfort… Correct the user when they're wrong — challenge flawed premises before implementing
+solutions. This counteracts sycophancy,"* and requires that *"Multiple valid interpretations
+exist → present them with tradeoffs, never pick silently."* A skill whose output is several
+attributable positions plus an explicit user choice is the direct mechanical expression of that
+instruction.
+
+Usage is supporting evidence only: the neighborhood records 50 July invocations, and `/diss`
+alone is 31 agent-fired — the highest autonomous count of any source on the machine.
+
+`proposed` is the only phase-0 status. Priority `now` reflects that value plus the fact that this
+neighborhood is the only one where the user already invokes a source daily.
+
+---
+
+## 2. Interface and scope
+
+**Requests that should trigger it.** "Review this before I ship it." "Attack this plan." "Is this
+the right approach, or am I fooling myself?" "What breaks if I do this?" Reviewing a diff, a
+plan, a spec, an infra change, a prompt, or a CLAUDE.md.
+
+**Nearby requests that should not.**
+
+| Request | Belongs to |
+|---|---|
+| "Why is this failing?" | Debug & incident — diagnosis, not judgment |
+| "Do the tests pass?" | Testing |
+| "Find the vulnerabilities" | `cso`'s jurisdiction and attacker priors |
+| "Explain how this works" | Codebase comprehension |
+| "Make this change" | Any implementation skill — this skill never edits |
+| "Interview me until my plan is sharp" | Sharpened but distinct — see §5.6 |
+
+**Accepted context, conceptually.** One artifact with an identifiable set of decisions in it, plus
+whatever evidence the artifact's own domain supplies (a diff and its repository, a plan and its
+stated intent, a prompt and the published practices it should meet).
+
+**User-visible result.** A report in which every substantive sentence is attributable to a named
+reviewer, factual disputes have been checked against evidence, and every normative disagreement
+is surfaced as an explicit choice rather than silently resolved.
+
+**Non-goals.** Making the change. Deciding tradeoffs on the user's behalf. Producing a single
+merged verdict that hides disagreement. Replacing test execution or security auditing.
+
+**Decisions that remain with the user.** Every normative tradeoff. Panel composition, when
+overridden. Whether to act on any finding. Whether an unresolved factual dispute blocks.
+
+The interface is deliberately smaller than the behavior: one invocation and one artifact, against
+a panel whose composition, protocol, and conflict handling stay behind it.
+
+---
+
+## 3. Source evidence
+
+All sources inspected 2026-07-30. Every row is **Observed** unless marked otherwise. gstack
+sources are reached at `~/.claude/skills/<name>/SKILL.md`, which is a **symlink** whose target is
+`~/.claude/skills/gstack/<name>/SKILL.md`; the hash is of the target bytes.
+
+### 3.1 Inspection record
+
+| Identifier | Component | Location | Invocation | Avail. | Declaration (authority fields) | sha256 |
+|---|---|---|---|---|---|---|
+| `grilling` | skill | `skills/grilling/` | `/grilling`, model-invocable | live | `name`, `description` only — **no authority fields** | `44331dda…` |
+| `grill-me` | skill | `skills/grill-me/` | `/grill-me` | live | **`disable-model-invocation: true`** | `6189dfce…` |
+| `grill-with-docs` | skill | `skills/grill-with-docs/` | `/grill-with-docs` | live | **`disable-model-invocation: true`** | `610d0910…` |
+| `/diss` | command | `commands/diss.md` | `/diss <pr\|empty>` | live | `argument-hint`; `allowed-tools` incl. `Agent`, `Task*`, 2× mysql MCP | `b4e029d6…` |
+| `/diss-api` | command | `commands/diss-api.md` | `/diss-api <pr\|spec>` | live | `argument-hint`; `allowed-tools` | `f2b765a4…` |
+| `diss-infra` | skill | `skills/diss-infra/` | `Skill(diss-infra)` | live | **`effort: xhigh`** | `94b3172c…` |
+| `diss-claudemd` | skill | `skills/diss-claudemd/` | `Skill(diss-claudemd)` | live | **`effort: xhigh`**; **no `allowed-tools` despite MCP use** | `4778d24b…` |
+| `/elon` | command | `commands/elon.md` | `/elon <problem>` | live | `argument-hint`; `allowed-tools` | `f1528542…` |
+| `/trim` | command | `commands/trim.md` | `/trim <file>` | live | `argument-hint`; `allowed-tools` incl. 2× context-mode MCP | `0ac5d05a…` |
+| `office-hours` | skill | `skills/office-hours/` | `/office-hours` | live | `allowed-tools`, `triggers`; v2.0.0 | `b5a0b9d7…` |
+| `plan-ceo-review` | skill | `skills/plan-ceo-review/` | `/plan-ceo-review` | live | `allowed-tools`, `triggers` | `c18016a3…` |
+| `plan-eng-review` | skill | `skills/plan-eng-review/` | `/plan-eng-review` | live | `allowed-tools`, `triggers` | `41c92a82…` |
+| `plan-design-review` | skill | `skills/plan-design-review/` | `/plan-design-review` | live | `allowed-tools`, `triggers`; v2.0.0 | `0f756585…` |
+| `plan-devex-review` | skill | `skills/plan-devex-review/` | `/plan-devex-review` | live | `allowed-tools`, `triggers`; v2.0.0 | `4d6cc577…` |
+| `devex-review` | skill | `skills/devex-review/` | `/devex-review` | live | `allowed-tools`, `triggers` | `aa162970…` |
+| `autoplan` | skill | `skills/autoplan/` | `/autoplan` | live | `allowed-tools`, `triggers`; `AUTO-GENERATED from SKILL.md.tmpl` | `73e2bf3e…` |
+
+**Secondary-role sources — inspected as evidence, primary home not claimed.**
+`docs/design-requirements.md` section 7.3 authorizes exactly this inspection.
+
+| Identifier | Component | Location | Invocation | Avail. | Declaration | sha256 |
+|---|---|---|---|---|---|---|
+| `review` | skill | `skills/review/` | `/review` | live | `allowed-tools`, `triggers` | `92ee16af…` |
+| `cso` | skill | `skills/cso/` | `/cso [flags]` | live | `allowed-tools`, `triggers`; v2.0.0 | `4d5da636…` |
+
+### 3.2 Disposition and contribution
+
+Contribution categories are from `docs/design-requirements.md` section 5.
+
+| Source | Contribution | Primary home | Secondary role |
+|---|---|---|---|
+| `grilling` | **Protocol** (one question at a time, decision-tree traversal, dependency-first) · **Machinery** (recommend an answer per question; look facts up rather than asking) | `astra-critique` | — |
+| `grill-me` | **Machinery** (7-line delegating stub) · authority field | `astra-critique` | — |
+| `grill-with-docs` | **Machinery** (7-line stub) · **Separate** (its `/domain-modeling` half is a documentation job) | `astra-critique` | Docs & knowledge — `domain-modeling` |
+| `/diss` | **Perspective** (adversarial, production-consequence, evidence-gated) · **Playbook** (code map, risk classification, evidence-only verifier) · **Jurisdiction** (code diffs) · **Prerequisite** (mysql MCP, with CLI fallback) · **Machinery** (subagent dispatch, task tracking) | `astra-critique` | — |
+| `/diss-api` | **Jurisdiction** (OpenAPI specs) · **Playbook** (`design-api` compliance audit) · register variant | `astra-critique` | `design-api` as retained reference |
+| `diss-infra` | **Jurisdiction** (Terraform / CloudFormation) · **Playbook** (dependency tracing, attack-surface and cost analysis) · authority (`effort: xhigh`) | `astra-critique` | — |
+| `diss-claudemd` | **Perspective** (prompt-engineering specialist — *shared with `/trim`*, not with `/diss`) · **Playbook** (published-practice audit) · **Jurisdiction** (CLAUDE.md) · **Prerequisite** (context-mode MCP, undeclared, no fallback) | `astra-critique` | — |
+| `/elon` | **Perspective** (reduce to irreducible components, rebuild without inherited assumptions) | `astra-critique` | — |
+| `/trim` | **Perspective** (provisional — reduction prior) · **Playbook** (published-practice audit) · **Jurisdiction** (prompts and `SKILL.md`) · **Prerequisite** (context-mode MCP) · authority (`Edit`/`Write`, `AskUserQuestion`) | `astra-critique` | — |
+| `office-hours` | **Perspective** (is the problem even understood yet) · authority (**hard gate: no implementation**) · **Prerequisite** (gbrain context, optional) | `astra-critique` | Ops & routine |
+| `plan-ceo-review` | **Perspective** (scope up, completeness is cheap) | `astra-critique` | — |
+| `plan-eng-review` | **Perspective** (blast radius, reversibility, refactor not rewrite, production ownership) | `astra-critique` | — |
+| `plan-design-review` | **Perspective** (what the user sees first, second, third) · **Playbook** (design review) | `astra-critique` | — |
+| `plan-devex-review` | **Perspective** (developer advocate, TTHW) · **Jurisdiction** (plan document) | `astra-critique` | — |
+| `devex-review` | **Jurisdiction** (running artifact) · **Playbook** (live execution, error-message screenshots, CLI help evaluation) — *same perspective as `plan-devex-review`* | `astra-critique` | — |
+| `autoplan` | **Protocol** (sequential specialist reviews with auto-decisions) | `astra-critique` | — |
+| `review` | **Perspective** (structure-first, recall-first) — secondary evidence only | **Code review** (unclaimed by this design) | `astra-critique`: the contrastive counterpart to `/diss` (§5.1) |
+| `cso` | **Perspective** (attacker priors) · **Jurisdiction** (dependencies, CI, git history) · parameterized evidence gate — secondary evidence only | **Language / stack reference** (unclaimed) | `astra-critique`: third policy on the evidence-threshold axis (§5.1) |
+
+Every occurrence has exactly one primary disposition. `office-hours` is a known repeated README
+occurrence; its primary home is claimed here and its Ops & routine appearance is the secondary
+role. `review` and `cso` keep their primary homes elsewhere — inspecting them did not move
+ownership.
+
+### 3.3 Proposed ledger changes
+
+For the phase-0 coordinator to apply to `docs/phase-0.md` section 5 — this design does not edit
+the ledger itself:
+
+- 16 Adversarial-critique occurrences → `primary_home: astra-critique`, `claim_status: resolved`.
+- `office-hours` (Ops & routine occurrence) → `duplicate occurrence`, secondary role recorded.
+- `grill-with-docs` → secondary role on `domain-modeling` (Docs & knowledge).
+- `review` (Code review occurrence) → unchanged primary; add `astra-critique` to
+  `secondary_roles`.
+- `cso` (reference ledger, section 6) → `consuming_designs: [astra-critique]`; disposition
+  (`keep`/`defer`/`exclude`) stays with the global ledger.
+- `design-api` (reference ledger) → `consuming_designs: [astra-critique]` via `/diss-api`.
+
+---
+
+## 4. Collision analysis
+
+**Why the sources appeared duplicative.** Seven of the large gstack sources are
+chassis-then-persona in that order, and the chassis dominates:
 
 | Skill | Lines | Identical to `plan-ceo-review` | Persona begins |
 |---|---:|---:|---:|
@@ -41,111 +184,449 @@ Seven persona-bearing gstack skills, diffed against each other:
 | `plan-eng-review` | 1050 | 915 | ~805 |
 | `cso` | 1285 | 841 | ~791 |
 
-Every file is chassis-then-persona in that order. The `## Voice` block is byte-identical
-across all seven (`plan-ceo-review:631`, `plan-eng-review:607`, `cso:606`), each reciting the
-same house style before declaring a different character underneath it.
+The `## Voice` block is byte-identical across all seven, each reciting the same house style before
+declaring a different character underneath it. Descriptions therefore collide while bodies
+diverge — which is precisely why `docs/design-requirements.md` section 4.1 forbids merging on
+descriptions alone.
 
 **The authors already found the split.** `autoplan/SKILL.md:21` carries
-`<!-- AUTO-GENERATED from SKILL.md.tmpl -->` — gstack templates the chassis in at build time.
-What a template cannot do is stop shipping it seven times.
+`<!-- AUTO-GENERATED from SKILL.md.tmpl -->`: gstack templates the chassis in at build time. What
+a template cannot do is stop shipping it seven times. The cost is maintenance and drift across
+seven files first, per-invocation context second.
 
-**Two costs, stated separately.** Maintenance and drift across seven files is the larger one.
-Context cost is per-invocation only — SKILL.md bodies are not preloaded, descriptions are — but
-it is real: `plan-ceo-review` loads 1,476 lines to deliver roughly 600 lines of CEO.
+**What is actually shared.** The chassis (preamble tiers, `AskUserQuestion` protocol, a shared
+question registry), the Voice block, and the adversarial framing. All of it is machinery or
+protocol; none of it is a decision policy.
+
+**Which entries are aliases or shallow delegation.** `grill-me` and `grill-with-docs` are 7 lines
+each and contain one instruction apiece — `Run a /grilling session`, the second adding
+`using the /domain-modeling skill`. Neither carries a prior. Both nonetheless declare
+`disable-model-invocation: true`, so they are behaviour-bearing despite being stubs.
+
+**Which apparent duplicates are different jobs.**
+
+- `office-hours` versus `/elon`: one refuses to move past the problem statement, the other
+  rebuilds the solution from atomic truths. Adjacent, not equivalent.
+- `devex-review` versus `plan-devex-review`: one perspective over two jurisdictions (§5.5).
+- `autoplan` versus the four reviews it sequences: protocol, not a fifth voice.
+
+**Where source instructions conflict.** Two genuine conflicts, both established by reading
+bodies:
+
+1. `/diss` versus `review` on whether an unproven structural suspicion may be filed at all
+   (§5.1). This is the sharpest conflict in the neighborhood and it crosses into the Code review
+   row.
+2. `diss-claudemd` versus its own name (§5.4). It shares `/trim`'s role and playbook, not
+   `/diss`'s voice, so the four `diss*` entries are not one persona over four subjects.
+
+**Why the proposal is one coherent module.** Every retained source answers the same user
+question — *what is wrong with this, and what should I do about it* — over an artifact the user
+already has, and returns judgment rather than changes. The variation between them is in priors,
+evidence method, and standing, which is variation *inside* one job. The sources that turned out
+to answer a different question are recorded as `Separate` rather than absorbed.
 
 ---
 
-## 2. Proposed design decisions
+## 5. Preserved distinctions
 
-> **Historical.** These were recorded as locked decisions before phase 0 defined its scope.
-> They are proposals. D1 especially: packaging is deferred by `docs/phase-0.md` section 8, and
-> the install question D1 claimed to close is still listed as open in the README.
+### 5.1 Resolved: the `/diss` voice, code-structure judgment, and test-evidence judgment
+
+`docs/design-requirements.md` section 9 requires this normalization to resolve the ambiguity
+explicitly. Resolution, in three parts:
+
+**(a) The `/diss` voice is one perspective, not two.** Linus and Ramsay occur in exactly one
+construction in the entire source set — a conjoined register inside a single role line.
+`diss.md:7`: *"You are a venomous, cynical code reviewer. Channel Linus Torvalds + Gordon
+Ramsay."* The only other occurrence, `diss-infra/SKILL.md:17`, fuses them the same way. **No
+source artifact has them as separate seats.** Under section 6, a difference of register alone is a
+persona field, not a persona.
+
+**(b) Test-evidence judgment inside `/diss` is a playbook and a filter, not a rival prior.**
+`/diss` holds one adversarial policy plus two mechanical rules:
+
+- `diss.md:339` — coverage below the 85% threshold emits exactly one High finding, computed from
+  JaCoCo XML.
+- `diss.md:406` — *"Any finding without concrete evidence (file:line + code trace or test output)
+  is discarded. No exceptions."*
+
+A threshold and a filter compute; they hold no priors and cannot disagree with anything.
+
+**(c) Consequence — the Linus-versus-Ramsay fixture is withdrawn.** The original claim that *"on
+working code shipped with stubbed tests Linus passes it and Ramsay refuses it"* has no source
+basis, so the mandatory contrastive fixture built on it (Appendix C) is void. Recorded rather
+than deleted, because it was a load-bearing claim of the reviewed design.
+
+**Where the real distinction lives: `/diss` versus `review`.**
+
+| | `/diss` | `review` |
+|---|---|---|
+| Stated job | adversarial review of a diff bound for production | *"structural issues that tests don't catch"* — code-structure judgment defined by **excluding** test evidence |
+| Unproven suspicion | **discarded** — `:406`, "No exceptions" | **filed** — that is its jurisdiction |
+| Prior on completeness | precision-first | recall-first — `review:669`, *"AI makes completeness cheap, so the complete thing is the goal. Recommend full coverage (tests, edge cases, error paths)"* |
+| Missing test | mechanical coverage finding (`:339`) | proposes one — `review:1381-1385`, findings may carry a `test_stub` |
+
+On working code shipped with stubbed tests these file **incompatible dispositions on the same
+decision and target**: `/diss` discards the structural suspicion for want of evidence and emits
+only a threshold finding; `review` files the structural issue *because* tests do not catch it,
+and attaches a proposed test. Two decision policies.
+
+So the correct first contrastive fixture is **`/diss` versus `review` on working code with
+stubbed tests**, replacing Linus versus Ramsay. `review`'s primary home stays in the Code review
+neighborhood; this design claims only a secondary role.
+
+**A third policy on the same axis.** `cso` makes the precision/recall threshold a *user-selected
+parameter* — `/cso` runs an 8/10 confidence gate, `/cso --comprehensive` a 2/10 gate. That is
+neither `/diss`'s hard filter nor `review`'s recall preference, and it suggests the evidence gate
+may belong in the protocol as an invocation parameter rather than inside any single perspective.
+Recorded as an observation; `cso` keeps its reference disposition.
+
+### 5.2 Retained: `plan-eng-review` is not the `/diss` voice
+
+`plan-eng-review`, "Cognitive Patterns — How Great Eng Managers Think," `:845` — *"Incremental
+over revolutionary — Strangler fig, not big bang. **Refactor, not rewrite** (Fowler)"* — negates
+the characteristic `/diss` move of naming the data structure that should have existed and judging
+the code against it. The same file holds its own override at `:836` (*"If the existing foundation
+is broken, say 'scrap it and do this instead'"*), so the eng-manager voice has a standing rule
+plus an exception where the `/diss` voice has only the exception. A clean rewrite requiring an
+irreversible big-bang migration is a real input on which they file incompatible recommendations.
+**Two decision policies.** Hash unchanged since the original inspection, so this evidence stands.
+
+### 5.3 Corrected: `grilling` is not a perspective
+
+Its entire body is 12 lines and contains no prior about any artifact. Every decision is
+explicitly returned to the user: *"The **decisions**, though, are mine — put each one to me and
+wait for my answer."* It cannot produce an incompatible recommendation because it does not
+recommend — it interrogates and defers. Under section 6 it contributes **protocol** (one question
+at a time; walk the decision tree resolving dependencies one by one) and **machinery** (offer a
+recommended answer per question; look facts up rather than asking). Downgraded from the original
+design's "persona."
+
+What survives is valuable and was previously mis-filed: the one-at-a-time interaction bound is a
+reader-load protocol parameter, and *"asking multiple questions at once is bewildering"* is its
+stated rationale.
+
+### 5.4 Corrected: `diss-claudemd` does not carry the venomous register
+
+Zero occurrences of *venomous*, *cynical*, *Linus*, *Ramsay*, or *brutal* anywhere in the file.
+Its role is delivered inside an `Agent` subagent prompt at `:205` and reads *"You are a prompt
+engineering specialist reviewing a CLAUDE.md file for compatibility with the latest Claude
+models"* — which is `/trim:9`'s role, *"You are a prompt engineering specialist. You review
+prompts and SKILL.md files against Anthropic's official best practices."* Both then run the same
+playbook: fetch and index the published practices, then audit against them.
+
+The original's "one persona, four jurisdictions" for the `diss*` family is therefore wrong. Three
+share the venomous register (`/diss`; `/diss-api` in variant form at `:9`, *"venomous API design
+critic… pedantry of a standards committee with the patience of a burnt-out tech lead"*;
+`diss-infra`), and `diss-claudemd` groups with `/trim` instead.
+
+**This makes `/trim`'s persona less provisional, not more.** It now has a second independent
+artifact expressing the same reduction-and-published-practice prior over a neighbouring
+jurisdiction. The provisional label is retained pending behavioral evidence, but the documentary
+basis is stronger than the original recorded.
+
+### 5.5 Resolved: `devex-review` versus `plan-devex-review`
+
+Same perspective, different jurisdiction and playbook.
+
+- Shared perspective: `plan-devex-review:849` — *"You are a developer advocate who has onboarded
+  onto 100 developer tools"* — with "DX First Principles" (`:869`) and TTHW benchmarks (`:922`).
+  `devex-review` runs the same TTHW metric (`:27`).
+- Different jurisdiction: `plan-devex-review` reads a **plan**; `devex-review` audits a **running
+  artifact** — *"screenshots error messages, evaluates CLI help text"* (`:27`), triggering on
+  "try the onboarding" (`:30`).
+- Different playbook: live execution and screenshot capture versus plan reading.
+
+Under section 6 that is one perspective over two jurisdictions with two playbooks — not two
+voices. This closes the open question raised when `devex-review` was added to the row.
+
+### 5.6 `grilling` versus this skill
+
+Both interrogate, but the outcomes differ: `grilling` drives toward *shared understanding before
+acting* and returns every decision to the user unresolved; this skill returns *attributable
+judgments about an existing artifact*. The interaction protocol is shared and absorbed (§5.3);
+the user outcome is not. Recorded so the triggers do not silently collide during the coordinator's
+roster-wide pass.
+
+### 5.7 Authority fields, prerequisites, and failure behavior that must survive
+
+| Must survive | Source evidence | Why it cannot be waived in prose |
+|---|---|---|
+| `disable-model-invocation: true` ×2 | `grill-me`, `grill-with-docs` frontmatter | Removes the skill from autonomous reach; a prose merger silently re-enables it |
+| `effort: xhigh` ×2 | `diss-infra`, `diss-claudemd` frontmatter | A reasoning-effort override cannot be reproduced by instruction text |
+| Hard gate: no implementation | `office-hours` — *"Do NOT invoke any implementation skill, write any code, scaffold any project"* | The gate is the guarantee that a critique stays a critique |
+| `Edit`/`Write` + `AskUserQuestion` | `/trim` `allowed-tools` | `/trim` is the one source permitted to change the artifact it reviews; that authority must be explicit, not inherited |
+| `Agent` dispatch + `Task*` | `/diss` `allowed-tools` | Its reviewer roles run as separate contexts, not as prose sections |
+| mysql MCP **with** CLI fallback | `diss.md:236` — *"CLI fallback (only if MCP unavailable)"* | The one source that degrades correctly; its shape is the rule |
+| context-mode MCP **without** fallback | `/trim` `allowed-tools`; `diss-claudemd:32,209,213` | Declared-and-broken in one case, **undeclared and broken** in the other — see §7 |
+| Evidence-only verification | `diss.md:282-296` — keyed on `finding_id`, reports `RESOLVED`/`PERSISTING`/`NEW`, no persona, *"No evidence = no finding"* | The seat that filed a claim is the worst possible judge of it |
+| Register as a field | `diss.md:7`, `diss-api.md:9`, `diss-infra:17` | Three registers over one prior; collapsing them loses tone the user chose, collapsing the prior loses judgment |
+
+---
+
+## 6. Proposed skill design
+
+**Panel seat = Perspective × Playbook × Jurisdiction. Panel = Protocol + one or more seats.**
+
+The four layers, and the evidence each already exists:
+
+| Layer | Question it answers | Evidence today |
+|---|---|---|
+| **Perspective** | *why* it reaches a conclusion — priors, decision policy, register | `plan-eng-review` "Cognitive Patterns" `:838-855`; `plan-ceo-review` `:906-923`; `cso` `:789-795` |
+| **Playbook** | *what* evidence it gathers, which tests it runs | `diss.md` "Code Map" `:141-180`, "Risk Classification" `:182-205`, verifier `:282-295`; `plan-devex-review` TTHW `:922` |
+| **Jurisdiction** | *which* artifact, this invocation | declared in the convening skill's panel table |
+| **Protocol** | blindness, conflict handling, rendering, user control | ordering rules; see Appendix A |
+
+**The playbook layer is load-bearing.** `diss.md:151-193` builds a code map and risk
+classification *before any voice speaks*. That is neither a personality nor generic chassis — it
+is the investigation method the adversarial seat runs across every jurisdiction. Under a
+three-layer model it has nowhere to live, so it would bloat the perspective, leak into the
+chassis, or be discarded. Separating it also makes seats recombinable: the same
+failure-mode-mapping playbook produces different findings under the eng-manager prior ("what is
+the blast radius") than under the attacker prior ("what does this expose").
+
+**Why a panel rather than one workflow.** Several sources have overlapping standing over the same
+artifact and can reach incompatible recommendations — §5.1 and §5.2 each demonstrate a concrete
+pair. A single merged voice would have to pick one prior silently, which is the specific outcome
+the user's standing instruction forbids. This justification is local to this skill;
+`docs/design-requirements.md` section 8 requires other designs to establish their own need rather
+than copy it.
+
+**Information flow.** Decision catalogue → blind filing → seat-declared conflict scan → targeted
+response → resolution → procedural rendering. Independence is preserved by **ordering**, not by
+blindness: each seat commits its claims before seeing any other's, so later exposure cannot
+retroactively change what it filed. Debate is bought without spending diversity of prior.
+
+**Where user choices occur.** Normative disagreements route to the user as an explicit choice with
+every surviving side quoted. Panel composition is declared data, overridable by the user.
+Whether to act is always the user's.
+
+**How uncertainty is represented.** Factual disputes go to an evidence-only verifier whose result
+describes the evidence — supported, contradicted, or indeterminate — never who wins. An
+indeterminate result is rendered as explicit uncertainty with both sides quoted, never silently
+resolved.
+
+**Failure and degradation.** A missing prerequisite degrades that seat, not the panel: the seat
+either runs a reduced playbook and says so, or is dropped with its absence reported. A panel that
+cannot convene any seat reports that rather than emitting a merged opinion. The `/diss` fallback
+shape — prefer MCP, detect absence, fall back — is the model.
+
+**Internal seams justified by actual variation.** Perspective / playbook / jurisdiction are
+separable because §5.1 and §5.5 demonstrate the same perspective over different playbooks and
+jurisdictions, and §5.4 demonstrates the same playbook under two different names. The chair is
+separate from the seats because §5.1(b) shows mechanical rules and substantive priors are
+different kinds of thing.
+
+**No shared Astra module is proposed.** `docs/design-requirements.md` section 7.6 requires two
+designs demonstrating the same seam. This is one. The directory layout in Appendix A is
+historical for exactly that reason.
+
+---
+
+## 7. Dependencies and delivery shape
+
+| Dependency | Type | Relationship | Behavior when absent |
+|---|---|---|---|
+| Reviewer contexts | agent | The design **invokes** separate contexts per seat; `/diss` already does this via `Agent` | Sequential in-context seats lose blindness — must be stated, not silently accepted |
+| `mcp__awslabs-mysql-mcp-server`, `-uat` | MCP server | **Coordinates** — preferred path for SQL evidence | Falls back to tunnel + CLI, per `diss.md:236`. **Not currently configured** |
+| context-mode MCP (`ctx_fetch_and_index`, `ctx_search`) | MCP server | **Coordinates** — fetches published practices for the prompt-audit playbook | **No fallback exists in either consumer.** Plugin not installed |
+| `design-api` | skill (reference) | **Reads** as the compliance standard for the OpenAPI jurisdiction | Jurisdiction degrades to generic critique; must be reported |
+| `domain-modeling` | skill (reference) | **Documents only** — `grill-with-docs`'s other half is a separate job | Not this skill's concern; recorded as a cross-neighborhood role |
+| gbrain context | external runtime | **Documents only** — `office-hours` preflight, already optional upstream | Upstream already handles stale-but-usable fallback |
+| `git`, `gh`, JaCoCo XML | runtime | **Coordinates** — evidence sources for the code jurisdiction | Playbook runs reduced and says which evidence was unavailable |
+
+**A finding for the README's MCP table.** The README records three commands reaching for
+unconfigured MCP servers (`/diss` with a fallback, `/pr` and `/trim` without). **`diss-claudemd`
+is a fourth, and it is worse than `/trim`:** it calls `ctx_fetch_and_index` and `ctx_search` at
+`:32`, `:209`, and `:213` while declaring **no `allowed-tools` at all**, and it ships no fallback.
+`/trim` at least declares the dependency it cannot satisfy. This is the same
+reaching-outside-the-unit failure the README identifies for `guard`, in its quietest form: an
+undeclared dependency on an absent server.
+
+**Two further sideways reaches, for the same principle.** `autoplan:907` — *"reads the full CEO,
+design, eng, and DX review skill files from disk"* — and `:714`, which shells out to
+`~/.claude/skills/gstack/bin/gstack-question…`. Both break if gstack is uninstalled. They are
+recorded here as evidence for the self-containment principle, not as work items for this design.
+
+**Tool authority.** Pre-approval is not restriction: the seats need read and search authority over
+the artifact and its repository, and the design must record that **no seat may edit the artifact
+under review** — with `/trim`'s `Edit`/`Write` as the single declared exception, convened only for
+its own jurisdiction. Detailed permission design is deferred; the forbidden effect is not.
+
+---
+
+## 8. Manual bridge
+
+Usable today, in this order:
+
+1. **Code diff** — `/diss` (or `/diss-api` for a spec, `Skill(diss-infra)` for IaC). Highest-value
+   single step; the mysql MCP is absent, so it takes the documented CLI fallback.
+2. **Plan** — `/autoplan` for the sequenced CEO → design → eng → DX pass, or the four
+   `/plan-*-review` commands individually when you want to read them separately.
+3. **Problem statement** — `/office-hours` before either, when the problem may not be understood
+   yet; `/elon` when the requirement itself is suspect.
+4. **Prompt or `SKILL.md`** — `/trim`. **Missing prerequisite:** steps 1–2 are context-mode MCP
+   calls and the plugin is not installed, so the published-practice grounding is unavailable and
+   the review proceeds on the model's own recollection. `Skill(diss-claudemd)` has the same gap
+   for CLAUDE.md and does not declare it.
+5. **Cross-checking a `/diss` result** — run `/review` on the same branch. Per §5.1 these two
+   disagree by construction, so the pair is the manual approximation of a two-seat panel, and the
+   disagreement is the signal.
+
+**What the bridge cannot approximate.** Blind filing. Running `/autoplan` sequences the reviews
+but they are not independent, and no current path gives attributable positions with normative
+conflicts surfaced as an explicit choice.
+
+---
+
+## 9. Deferred implementation and validation
+
+Skill-specific only; `docs/phase-0.md` section 8 owns the phase-wide list.
+
+1. **First contrastive behavior to preserve:** `/diss` versus `review` on working code with
+   stubbed tests must yield incompatible dispositions on the same decision and target, without
+   either being told to disagree (§5.1). Replaces the withdrawn Linus-versus-Ramsay fixture.
+2. **Second:** `plan-eng-review` versus the `/diss` voice on a clean rewrite requiring an
+   irreversible big-bang migration (§5.2).
+3. **Third:** `/trim`'s reduction prior versus a completeness-first perspective on the same
+   `SKILL.md`. Now supported by two artifacts (§5.4), so the merger question is sharper: a passing
+   merger fixture may remove only the provisional perspective — the playbook, jurisdiction, and
+   invocation authority still survive.
+4. **Convergence control:** `devex-review` and `plan-devex-review` should **not** diverge on a
+   shared decision once jurisdiction is held constant (§5.5). Manufactured disagreement there is
+   a failure.
+5. **Prerequisite failure path:** the context-mode MCP is absent, so the published-practice
+   playbook must have a defined degraded mode before the prompt jurisdiction is implemented.
+   `diss-claudemd`'s undeclared dependency must be declared before it can be claimed as absorbed.
+6. **Retirement gate:** no source may be retired until its perspective's expected divergence and
+   its playbook's source-unique supported findings are both reproduced. A matching final
+   disposition does not excuse losing a playbook's evidence.
+
+Nothing here authorizes building a fixture or harness during phase 0.
+
+---
+
+## 10. Provenance and open questions
+
+**Inspection.** All 18 sources inspected 2026-07-30; component type, location, invocation,
+availability, and declaration recorded in §3.1. Every material claim in §5 is **Observed** —
+quoted from an inspected body — except the two labeled provisional (`/trim`'s perspective, and
+`cso`'s gate as a protocol parameter rather than a perspective field), which are **Inferred**. No
+source in this design is **Unavailable**, and none is claimed as absorbed.
+
+**Anchoring.** Headings and unique quoted phrases are the primary anchors. Line numbers are
+convenience coordinates against the hashes below; a hash mismatch invalidates the line anchors
+until the source is re-inspected and they are regenerated.
+
+Gstack sources resolve at `~/.claude/skills/<name>/SKILL.md` → symlink →
+`~/.claude/skills/gstack/<name>/SKILL.md`; commands at `~/.claude/commands/`.
+
+```text
+44331dda57f461db4fec3f2efb6ddabe7aaaa0a57ae0f88a883bc61aed8a0587  grilling/SKILL.md
+6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54  grill-me/SKILL.md
+610d091047bcfb9db0f75c057d15538481a721111579fc5ec7f83ad9131a2165  grill-with-docs/SKILL.md
+94b3172c61321dfa7bb0701bb9a4e3b1f305ba8a94e78ffed2ed3a17df75da03  diss-infra/SKILL.md
+4778d24b660e04515492909d3d204a9d0ec7ec8ac38e99d1c0e7a420de0c8408  diss-claudemd/SKILL.md
+aa162970e42dbca046f7f6ffb0b40167cf63b76b50d197d87fd4895937680513  devex-review/SKILL.md
+c18016a320c7516814d41067936b9b239899e08f27b133a306f4de4c20921284  plan-ceo-review/SKILL.md
+0f756585231f5630d80e3a3163ca664312acf78ea34e2bb535275816ffb1bfd0  plan-design-review/SKILL.md
+4d6cc577f07af1a0268e89ba0fdf45eb595583bdad306f809cbb8b6645c18951  plan-devex-review/SKILL.md
+41c92a82319c081ef48a17733bcd5815d83637cf1e0390c45db5f9ccbbca08e9  plan-eng-review/SKILL.md
+92ee16af71d5e0088326869b0a211c50f94b9261eeae75656bc21f9bcfae2031  review/SKILL.md
+b5a0b9d72f4a992ba0b52cd7b27d15e7e0e29e35c4b775477ec3a031c47f5c92  office-hours/SKILL.md
+4d5da6367475aaad38bbf59f29e5c7fa2b184d48590951100b1d409b723133ea  cso/SKILL.md
+73e2bf3e7b1868493fc162dccf9f26c182f50e4cfcad3e4f02efce0e3099e472  autoplan/SKILL.md
+b4e029d6c927b1ba671748b5d23e026d1c8059bde96e955fb504490da22b9b69  diss.md
+f2b765a4ed00c80e40fc600d7d09af518925744c581e5f606a471c2fe7431b02  diss-api.md
+f15285425fe5e94914350c10e9ee71526c7b194eeb30fe1881471d7dad95e042  elon.md
+0ac5d05a598ca73edf0e35956efddf10ce989a0a68c9483bb6355cab3da73fff  trim.md
+efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md (STALE — see below)
+```
+
+The 18 source hashes were re-verified on 2026-07-30 and all match. The `README.md` hash records
+the then-unstaged working draft whose amendments Appendix B proposed; that draft was committed at
+`a037f20` and revised afterwards, so it **no longer matches** and every `README.md:<line>` anchor
+in this document is invalid. Cite README headings instead.
+
+**Claims disproved on inspection and corrected here.** `grilling` as a perspective (§5.3);
+`diss-claudemd` as part of the venomous family (§5.4); Linus and Ramsay as separate voices, and
+the fixture built on them (§5.1); the `plan-eng-review` merge, disproved in the original review
+and re-verified here (§5.2). Two successive cost-scaling characterizations and the claim that
+fixtures guarantee conflict detection were corrected in the original review and are retained in
+Appendix C.
+
+### Open questions
+
+- **Playbook roster.** Which playbooks exist and at what granularity. Same budgeting question as
+  the perspective roster, one layer down. *Consequence:* too fine and the seat table becomes
+  unreadable; too coarse and §5.5's jurisdiction split has nowhere to live.
+- **Does the evidence gate belong to the protocol or to each perspective?** `cso` parameterizes
+  what `/diss` hard-codes (§5.1). *Consequence:* if it is a protocol parameter, `/diss`'s "no
+  exceptions" filter becomes a default rather than a prior, which weakens the case for treating
+  precision-first as part of its perspective at all.
+- **`/trim`'s perspective.** Provisional pending behavioral evidence, now with two supporting
+  artifacts (§5.4). *Consequence:* if it merges, the reduction prior disappears from the roster
+  and prompt review loses its only counterweight to completeness-first voices.
+- **Whether `review` should move.** Its primary home is the Code review neighborhood, but §5.1
+  makes it this skill's sharpest contrastive counterpart. *Consequence:* if Code review's own
+  design also claims it as central, the coordinator has a genuine ownership conflict rather than a
+  secondary role.
+- **monster-prompt.** Unchanged from the README. *Consequence:* `/diss`, `/diss-api`, `/elon`, and
+  `/trim` are all monster-prompt commands, so four of this design's sources sit inside the
+  unresolved boundary.
+
+---
+---
+
+# Appendix A — Panel protocol (historical detail)
+
+> **Historical.** `docs/phase-0.md` section 8 defers exact schemas, routers, and conformance
+> harnesses. Retained because it records *which distinctions must survive condensation* —
+> structured stance, claim identity, revision status, reader bounds — not because any field is
+> specified. Read as design reasoning, not as a contract. The shared `personas/`, `playbooks/`,
+> and `protocol/` directories referenced throughout are a single-design proposal and do not meet
+> the two-design threshold in `docs/design-requirements.md` section 7.6.
+
+## A.1 Proposed design decisions
 
 | # | Proposed decision | Rationale |
 |---|---|---|
-| D1 | *(historical — packaging deferred)* **Astra ships as one plugin. The plugin is the self-contained module.** | Shared `personas/`, `playbooks/`, `protocol/` would sit inside the unit. Unlike `guard` reaching into gstack, nothing could be uninstalled independently. Recorded against the README's install question, which remains open. |
-| D2 | **Decision catalogue → blind round → seat-declared conflict scan → targeted response → resolution → procedural rendering.** | Known decisions receive shared identifiers before seats run. Independence is preserved by *ordering* — each seat commits its claims before seeing any other's. Debate is bought without spending diversity of prior. |
-| D3 | **The chair is procedural. It sorts; it does not rule.** | A mediator with substantive power is a homogenizer in a neutral hat, and it touches the output last. |
-| D4 | **Distinctness is decided by the behavioral disagreement test (§9, §11.3).** | A panel whose members cannot disagree burns N dispatches to produce one opinion. Reading proposes a distinction; a contrastive run must exercise it. |
-| D5 | **Known decision IDs are invocation data; novel decisions remain emergent.** | Seats select shared IDs rather than minting them blindly. Emergent findings remain discoverable, but the mechanical backstop is deliberately incomplete for them. |
-| D6 | **Reader limits are protocol parameters enforced at seat submission.** | The chair may neither paraphrase nor trim. Bounded claims and final positions protect the reader without giving the chair substantive discretion. |
+| D1 | *(historical — packaging deferred)* Astra ships as one plugin; the plugin is the self-contained module. | Shared modules would sit inside the unit. Recorded against the README's install question, which remains open. |
+| D2 | Decision catalogue → blind round → seat-declared conflict scan → targeted response → resolution → procedural rendering. | Known decisions receive shared identifiers before seats run. Independence is preserved by *ordering* — each seat commits before seeing any other's. |
+| D3 | The chair is procedural. It sorts; it does not rule. | A mediator with substantive power is a homogenizer in a neutral hat, and it touches the output last. |
+| D4 | Distinctness is decided by the behavioral disagreement test. | A panel whose members cannot disagree burns N dispatches to produce one opinion. Reading proposes a distinction; a contrastive run must exercise it. |
+| D5 | Known decision IDs are invocation data; novel decisions remain emergent. | Seats select shared IDs rather than minting them blindly. The mechanical backstop is deliberately incomplete for emergent findings. |
+| D6 | Reader limits are protocol parameters enforced at seat submission. | The chair may neither paraphrase nor trim. Bounded claims protect the reader without giving the chair discretion. |
 
----
+## A.2 Panel declaration is data, not inference
 
-## 3. Architecture — four layers
+Skill selection must be inferential — the router cannot know in advance what will be asked. Seat
+selection need not be: by the time a seat is needed a skill has already fired, so the task is
+already classified. Inferring the panel pays for that classification twice, and the second payment
+reintroduces the routing collision one level down.
 
-**Panel seat = Persona × Playbook × Jurisdiction.**
-**Panel = Protocol + one or more seats.**
-
-| Layer | Question it answers | Evidence it exists today |
-|---|---|---|
-| **Persona** | *Why* it reaches a conclusion — priors, decision policy, register | `plan-eng-review`, “Cognitive Patterns — How Great Eng Managers Think” (`:838-855`); `plan-ceo-review`, “Cognitive Patterns — How Great CEOs Think” (`:906-923`); `cso`, “Chief Security Officer Audit” (`:789-795`) |
-| **Playbook** | *What* evidence it gathers and which tests it performs | `diss.md`, “Code Map” (`:141-180`), “Risk Classification” (`:182-205`), and verifier (`:282-295`); `plan-devex-review`, “TTHW Benchmarks” (`:922`); `cso`, “Attack Surface Census” (`:919-923`) |
-| **Jurisdiction** | *Which* artifact, this invocation | declared in the convening skill's panel table |
-| **Protocol** | Blindness, conflict handling, rendering, user control | `protocol/` |
-
-> **Historical directory layout.** The shared `personas/`, `playbooks/`, and `protocol/`
-> directories are a single-design proposal. `docs/design-requirements.md` section 7.6 and
-> `docs/phase-0.md` section 8 both require two designs demonstrating the same seam before a
-> shared Astra module is extracted. Read the four layers as analysis of what must stay
-> distinct, not as an approved layout.
-
-The playbook layer is not optional. `diss.md:151-193` builds a code map and risk
-classification *before any voice speaks*. That is neither Linus's personality nor generic
-chassis — it is the investigation method the venomous seat runs across every jurisdiction.
-Under a three-layer model it has nowhere to live, so it would bloat the persona, leak into
-the chassis, or be discarded during condensation.
-
-Playbook separation also makes seats recombinable: the same failure-mode-mapping playbook run
-by the eng-manager persona ("what is the blast radius") and by the CSO persona ("what does
-this expose") produces different findings from identical evidence.
-
-### Panel declaration is data, not inference
-
-Skill selection must be inferential — the router cannot know in advance what will be asked.
-Seat selection need not be: by the time a seat is needed a skill has already fired, so the
-task is already classified. Inferring the panel pays for that classification twice, and the
-second payment reintroduces the routing collision one level down.
-
-The seat roster is therefore a table inside the convening `SKILL.md`, which is already in
-context when the skill fires. This is what the three declared reviewer roles at
-`diss.md:323,349,373` do today. The **wider 15-skill adversarial-critique cluster**, not
-`/diss` alone, records 50 July invocations in the working `README.md:394`.
+The seat roster is therefore a table inside the convening `SKILL.md`, already in context when the
+skill fires. This is what the three declared reviewer roles at `diss.md:323,349,373` do today.
 
 Three declared escape hatches, in descending order of trust:
 
 1. **Conditional seats** — `if the diff touches auth or crypto → add seat cso@security`.
-   Declared; the condition is evaluated against facts.
 2. **User-named** — `/astra-denounce --with karpathy`.
-3. **Index lookup** — `personas/INDEX.md`, read only when the panel is genuinely open-ended.
-   This is the path that can degrade, so it is the fallback, not the mechanism.
+3. **Index lookup** — read only when the panel is genuinely open-ended. This is the path that can
+   degrade, so it is the fallback, not the mechanism.
 
-### Decision catalogue is invocation data
+## A.3 Decision catalogue is invocation data
 
-Seat selection classifies *who should speak*. It does not assign shared names to the
-artifact-specific decisions they discuss. Before the blind round, the convening skill creates
-a neutral decision catalogue from explicit user questions and artifact anchors. If the
-artifact does not enumerate its decisions, an evidence-only preflight extractor may identify
-targets and phrase neutral questions; it may not recommend an answer.
+Seat selection classifies *who should speak*; it does not name the artifact-specific decisions they
+discuss. Before the blind round, the convening skill creates a neutral decision catalogue from
+explicit user questions and artifact anchors. If the artifact does not enumerate its decisions, an
+evidence-only preflight extractor may identify targets and phrase neutral questions; it may not
+recommend an answer.
 
-Every seat receives the same catalogue and selects from it. Seats may still surface a novel
-decision under a seat-scoped `emergent:<seat.id>:<n>` identifier. This preserves discovery
-outside the catalogue while making the §8.2 backstop operational for every catalogued
-decision. The catalogue can therefore improve coverage but cannot guarantee it.
+Every seat receives the same catalogue and selects from it. Seats may still surface a novel decision
+under a seat-scoped `emergent:<seat.id>:<n>` identifier. This preserves discovery outside the
+catalogue while making the A.7 backstop operational for every catalogued decision.
 
----
-
-## 4. Panel module interface
-
-> **Historical.** `docs/phase-0.md` section 8 defers exact schemas. The YAML below is retained
-> because it records *which distinctions must survive condensation* — structured stance, claim
-> identity, revision status, reader bounds — not because any field is specified. Read it as
-> design reasoning, not as a contract.
-
-The panel is a deep module. This is the interface the design proposes — every field below is
-load-bearing for at least one chair invariant (§6), conflict mechanism (§8), or reader bound.
-
-### PanelInvocation
+## A.4 Interface sketch
 
 ```yaml
 panel_invocation:
@@ -163,60 +644,44 @@ panel_invocation:
     max_words_per_final_position: 180
 ```
 
-The three limits are provisional defaults. An individual skill may request a lower value but
-never a higher one; raising a default requires a versioned protocol change informed by
-§11.3. A submission outside these limits is rejected back to its originating seat for
-resubmission. The chair never truncates it.
-
-“Word” means a Unicode word-segmentation unit under the Unicode version pinned by the
-protocol release. Dispatch validation and the conformance harness use the same counter, so
-C10 does not depend on a model's interpretation of word boundaries.
-
-### Seat
+The three limits are provisional defaults. A skill may request a lower value, never higher. A
+submission outside these limits is rejected back to its originating seat; the chair never truncates
+it.
 
 ```yaml
 seat:
   id:            string             # panel-unique, e.g. "eng@migration-plan"
-  persona:       personas/<name>.md
-  playbook:      playbooks/<name>.md
+  perspective:   <name>
+  playbook:      <name>
   jurisdiction:
     artifact:    <path or ref>
-    scope:       string             # which part of it
+    scope:       string
   constraints:
-    requires:    [<playbook output>] # evidence this seat needs to exist first
-    forbidden_playbooks: [<name>]    # combinations that are illegal
+    requires:    [<playbook output>]
+    forbidden_playbooks: [<name>]    # illegal combinations
 ```
 
-`constraints.forbidden_playbooks` is what prevents illegal seats — most importantly, an
-evidence-only verifier playbook (§7) may never be paired with a persona, and the chair may
-never be paired with a substantive playbook.
-
-### Claim
+`forbidden_playbooks` is what prevents illegal seats — most importantly, an evidence-only verifier
+playbook may never be paired with a perspective, and the chair may never be paired with a
+substantive playbook.
 
 ```yaml
 claim:
-  id:           string              # globally unique: "<seat.id>.<n>"
-  seat:         <seat.id>           # originating seat
+  id:           string              # "<seat.id>.<n>"
+  seat:         <seat.id>
   round:        1
   kind:         factual | normative
   decision_id:  string              # catalogue ID or "emergent:<seat.id>:<n>"
-  position:     string              # one atomic assertion, <= max_words_per_claim
-  stance:                           # structured, enables mechanical comparison
+  position:     string              # one atomic assertion
+  stance:
     target:     <file:line or artifact ref>
     disposition: accept | reject | rewrite | defer | block
   evidence:     [ { ref, quote } ]
 ```
 
-`decision_id` + `stance` exist to make the mechanical backstop (§8.2) implementable. A seat
-must use the catalogue ID whenever its claim bears on a catalogued question. Without a
-structured stance, "incompatible positions" is a semantic judgment, and only seats may make
-those. An emergent ID remains a valid traceability key but is not mechanically comparable to
-another seat's independently named emergent decision.
-
-`kind` is asserted by the filing seat and determines routing at §5.4: factual claims are
-resolvable by evidence, normative claims are not.
-
-### Challenge
+`decision_id` + `stance` exist to make the mechanical backstop implementable. Without a structured
+stance, "incompatible positions" is a semantic judgment, and only seats may make those. `kind`
+determines routing: factual claims are resolvable by evidence, normative ones are not.
 
 ```yaml
 challenge:
@@ -224,360 +689,159 @@ challenge:
   contests:     <claim.id>
   ground:       string              # one line, why it is contested
   kind:         factual | normative
-```
 
-A challenge is not a rebuttal. It is a seat asserting that a conflict exists — the semantic
-judgment the chair is forbidden from making.
-
-### Verification
-
-```yaml
 verification:
-  verifier:     playbooks/verify-<domain>.md   # evidence-only, no persona
-  claims:       [<claim.id>]                   # must already exist
+  verifier:     verify-<domain>      # evidence-only, no perspective
+  claims:       [<claim.id>]
   evidence:     [ { ref, quote } ]
   result:       supported | contradicted | indeterminate
-```
 
-`result` describes the evidence, never who wins. Seats revise, withdraw or retain their own
-positions in response.
-
-### FinalPosition
-
-```yaml
 final_position:
   seat:         <seat.id>
   revision:     integer             # 0 blind; 1 rebuttal; 2 post-verification
   status:       active | withdrawn
-  text:         <string or null>     # active only; <= max_words_per_final_position
-  supports:     [<claim.id>]         # non-empty if active; may be empty if withdrawn
+  text:         <string or null>
+  supports:     [<claim.id>]
   supersedes:   <revision or null>
 ```
 
-Every seat nominates revision 0 with its blind claims. A re-dispatched seat may replace it
-with one higher revision. The highest schema-valid revision is that seat's effective
-position. `withdrawn` requires `text: null` and is never rendered; `active` requires non-empty
-`text` and `supports`. The chair never selects an excerpt — selection biases the result
-exactly as paraphrase does.
+A challenge is not a rebuttal — it is a seat asserting that a conflict exists, the semantic judgment
+the chair is forbidden from making. `verification.result` describes the evidence, never who wins.
+The highest schema-valid revision is a seat's effective position; the chair never selects an excerpt,
+because selection biases the result exactly as paraphrase does.
 
-### Decision
+## A.5 Protocol
 
-```yaml
-decision:
-  id:           <decision_id>
-  kind:         normative
-  sides:        [ { seat, final_position } ]   # EVERY surviving side
-  rendered_as:  AskUserQuestion
-```
+**Blind round.** Each seat receives perspective + playbook + jurisdiction + the neutral catalogue +
+protocol limits, and nothing from any other seat. Independence is structural here.
 
----
+**Conflict scan — seats declare, chair does not.** Each seat receives its own context again plus the
+merged claim list, and returns **only** Challenge records. Anchoring is prevented by *ordering, not
+blindness*: every seat's own claims are committed and immutable before it sees anyone else's.
 
-## 5. Protocol
+**Targeted rebuttal.** Only seats involved in contested claims are re-dispatched, batched one
+dispatch per seat. Claimant and challenger always remain in separate contexts. A seat with no
+contested claim is never re-dispatched; its revision 0 becomes effective mechanically.
 
-### 5.1 Blind round
-
-Each seat receives persona + playbook + jurisdiction + the neutral decision catalogue +
-protocol limits, and nothing from any other seat. It submits numbered atomic claims plus
-`final_position.revision: 0`. Independence is structural here.
-
-### 5.2 Conflict scan — seats declare, chair does not
-
-Each seat receives its persona + playbook again, plus the merged claim list, and returns
-**only** Challenge records: contested claim IDs plus a one-line ground. Nothing else. Whether
-the host resumes a seat context or starts a fresh one, the model input contains the seat
-context again; §11.1 prices that replay.
-
-Anchoring is prevented by **ordering, not blindness** — every seat's own claims are committed
-and immutable before it sees anyone else's. Seeing other claims at this point cannot
-retroactively change what it filed.
-
-This step is where the chair would otherwise have to make a semantic judgment. It cannot, so
-standing stays with the speakers.
-
-### 5.3 Targeted rebuttal
-
-Only seats involved in contested claims are re-dispatched. All contests involving the same
-seat are batched into **one dispatch for that seat**; otherwise one busy seat would repay its
-persona and playbook once per claim. Claimant and challenger always remain in **separate
-contexts**. Each receives its contested claims plus the relevant counterpart positions and
-ends by nominating one bounded `final_position.revision: 1`.
-
-A seat with no contested claim is never re-dispatched: its revision 0 position becomes
-effective mechanically. A seat may not introduce an unrelated claim during rebuttal; C9
-restarts the claim cycle if it does.
-
-### 5.4 Resolution
+**Resolution.**
 
 | Clash kind | Route |
 |---|---|
-| **Normative** (tradeoff, design, taste) | `AskUserQuestion` with every surviving side quoted verbatim |
-| **Factual** | Verifier playbook (§7). Affected seats are then re-dispatched once, batched per seat, to revise, withdraw or retain. |
-| **Factual, verifier returns `indeterminate`** | Rendered as explicit uncertainty, both sides quoted. Never silently resolved. |
+| **Normative** | `AskUserQuestion` with every surviving side quoted verbatim |
+| **Factual** | Verifier playbook; affected seats re-dispatched once to revise, withdraw, or retain |
+| **Factual, indeterminate** | Rendered as explicit uncertainty, both sides quoted. Never silently resolved |
 
-Normative clashes go to the user; factual ones go to evidence; only genuinely undecidable
-ones are rendered as uncertainty. This matches the house norm already in place —
-`plan-ceo-review`, “Mega Plan Review Mode,” `:874` — *"Present each scope-expanding idea as
-an AskUserQuestion"* — and `:879` — *"In ALL modes, the user is 100% in control."*
+This matches the house norm already in place — `plan-ceo-review:874`, *"Present each
+scope-expanding idea as an AskUserQuestion"*, and `:879`, *"In ALL modes, the user is 100% in
+control."*
 
-After factual verification, each affected seat receives its persona + playbook, the verifier
-record and its contested claims in its own context. It may nominate
-`final_position.revision: 2`. Multiple verified clashes for one seat are again batched into
-one dispatch.
+**Procedural rendering.** For each seat the chair reads the highest schema-valid `final_position`.
+An `active` revision is copied verbatim; a `withdrawn` one is omitted. Revision number, schema
+validity, and status are mechanical fields, so the chair makes no textual choice.
 
-### 5.5 Procedural rendering
-
-For each seat, the chair reads its highest schema-valid `final_position.revision`. An
-`active` revision is copied verbatim into the report; a `withdrawn` revision is omitted.
-Revision number, schema validity and status are mechanical fields, so the chair makes no
-textual choice.
-
----
-
-## 6. `protocol/chair.md` — invariants
-
-Mechanically testable. Each is a check a conformance harness can run against a transcript.
+## A.6 Chair invariants
 
 | # | Invariant |
 |---|---|
 | C1 | Every non-scaffold sentence in the final output appears **verbatim** in a speaker submission. |
 | C2 | The chair emits zero claims of its own. |
-| C3 | Scaffold text comes from a **fixed, versioned allowlist**. The chair may not generate new scaffold prose. |
+| C3 | Scaffold text comes from a fixed, versioned allowlist. |
 | C4 | Every rendered position is a seat-nominated `final_position` reproduced **whole** — never a substring. |
-| C5 | Every seat's highest schema-valid `active` revision is rendered exactly once; a highest `withdrawn` revision and every superseded revision are rendered zero times. |
+| C5 | Every seat's highest schema-valid `active` revision is rendered exactly once; withdrawn and superseded revisions zero times. |
 | C6 | Attribution is preserved on every rendered block; ordering is deterministic. |
 | C7 | Every unresolved clash renders **every** surviving side. |
 | C8 | Every claim surviving to output traces to a round-1 claim ID. |
-| C9 | Verification evidence may be added after round 1, but must **link to existing claim IDs**. An unrelated late claim restarts the claim cycle rather than entering the report. |
-| C10 | Every Claim and FinalPosition satisfies the invocation's count and word limits. An invalid submission returns to its seat; the chair never truncates or paraphrases it. |
+| C9 | Verification evidence may be added after round 1 but must link to existing claim IDs. An unrelated late claim restarts the claim cycle. |
+| C10 | Every Claim and FinalPosition satisfies the invocation's count and word limits. An invalid submission returns to its seat; the chair never truncates it. |
 
-C3 is what stops the chair from smuggling substance in as connective tissue. C5 closes the
-gap in "every rendered position was nominated" — which permits dropping one. C10 protects
-the reader without weakening C1 or giving the chair editorial power.
+C3 stops the chair smuggling substance in as connective tissue. C5 closes the gap in "every rendered
+position was nominated," which permits dropping one. **The chair is not a perspective** — naming it
+one invites exactly the substantive behavior C1–C10 forbid.
 
-**The chair does not live under `personas/`.** It lives at `protocol/chair.md`. Naming it a
-persona invites exactly the substantive behavior C1–C10 forbid.
+## A.7 Verifier playbooks and conflict detection
 
----
+Factual verification runs through an **evidence-only playbook with no perspective attached**.
+Routing a factual clash back through the claimant's perspective would inherit its confirmation
+bias. **This already exists:** `diss.md:282-296` is a working evidence-only verifier — keyed on
+`finding_id`, reporting `RESOLVED`/`PERSISTING`/`NEW` with `file:line` evidence, carrying no
+perspective, and enforcing *"No evidence = no finding."* That line becomes the verifier playbook's
+governing rule.
 
-## 7. Verifier playbooks
+Three detection mechanisms:
 
-Factual verification runs through an **evidence-only playbook with no persona attached**.
-Routing a factual clash back through the claimant's persona would inherit the claimant's
-confirmation bias — the seat that filed a claim is the worst possible judge of it.
+1. **Seat-declared contest (primary).** Preserves standing. Fails when no seat notices a conflict
+   outside its beat.
+2. **Mechanical backstop.** Identical catalogued `decision_id` with incompatible
+   `stance.disposition` triggers a conflict even if uncontested. Incompatible pairs:
+   `accept`×`reject`, `accept`×`block`, `rewrite`×`accept`, `defer`×`block`. This compares enum
+   values against a fixed table, so it does not violate C2. It deliberately ignores `emergent:*`
+   identifiers, because deciding that two differently named novel findings mean the same thing
+   would be a semantic judgment.
+3. **Conformance fixtures (test time only).** Expected clashes live in fixtures, **never in runtime
+   perspective content.** Runtime "disagrees with" blocks are rejected: they create pairwise
+   coupling, go stale silently, and prime performative disagreement.
 
-The verifier reports evidence. The original seats revise, withdraw, or retain.
-
-**This already exists.** `diss.md:282-296` is a working evidence-only verifier:
-
-- keyed on `finding_id` — claim-ID linkage, as C9 requires
-- reports `RESOLVED` / `PERSISTING` / `NEW` with `file:line` evidence
-- carries no persona, no priors, no register
-- enforces **"No evidence = no finding."**
-
-That line becomes the verifier playbook's governing rule.
-
----
-
-## 8. Conflict detection — three mechanisms and their limits
-
-### 8.1 Seat-declared contest (primary)
-
-§5.2. Preserves standing. Fails when no seat happens to notice a conflict outside its beat.
-
-### 8.2 Mechanical backstop
-
-**Identical catalogued `decision_id` with incompatible `stance.disposition` triggers a
-conflict even if no seat contests it.** Incompatible pairs: `accept`×`reject`,
-`accept`×`block`, `rewrite`×`accept`, `defer`×`block`.
-
-This is mechanical, not semantic — it does not require the chair to interpret prose, only to
-compare two enum values against a fixed table. It therefore does not violate C2.
-
-The pre-dispatch catalogue (§3) makes this operational: seats select a shared identifier
-instead of minting one independently. The backstop deliberately ignores seat-scoped
-`emergent:*` identifiers because deciding that two differently named novel findings mean the
-same thing would be a semantic judgment. Those conflicts remain detectable only through
-seat-declared contests.
-
-### 8.3 Conformance fixtures (test time only)
-
-Expected clashes live in fixtures and panel-selection metadata, **never in runtime persona
-content.** Runtime `Disagrees with` blocks are rejected because they create pairwise coupling
-between persona files, go stale silently, and prime performative disagreement — telling Linus
-he clashes with Ramsay invites him to manufacture a clash.
-
-### 8.4 Recorded limitation
-
-**None of the three guarantees detection of a novel conflict.** Fixtures catch only conflicts
-represented in the corpus. The backstop catches only conflicts that reduce to structured
-disposition on a catalogued `decision_id`. Seat-declared contests depend on seats noticing.
-
-A conflict that is novel, prose-only, and unnoticed by every seat **will pass silently.** This
-is a known and accepted gap, not an oversight. The mitigation is that fixtures grow with the
-corpus, and a missed conflict that later appears in a fixture becomes a regression test on
-panel composition.
+**Recorded limitation.** None of the three guarantees detection of a novel conflict. A conflict that
+is novel, prose-only, and unnoticed by every seat **will pass silently.** This is a known and
+accepted gap, not an oversight.
 
 ---
 
-## 9. The condensation rule
+# Appendix B — Packaging proposals (historical, not applied)
 
-> **Two voices are distinct iff, holding artifact, available evidence and decision constant,
-> their different priors can produce incompatible recommendations within overlapping
-> standing.**
+> **Historical and superseded.** This appendix proposed amendments to `README.md` that were **never
+> applied**. `docs/phase-0.md` section 8 defers packaging, and `docs/design-requirements.md`
+> section 2 keeps the README authoritative as source inventory, so the README text these
+> subsections proposed to replace still stands as written. Retained to record what was considered.
 
-Exclusions:
+## B.1 Proposed replacement of Principles §2(a) — not applied
 
-| Difference is only… | Then it is… |
-|---|---|
-| tone | **register** — a persona field, not a persona |
-| subject matter | **jurisdiction** |
-| investigative technique, same decision policy | **playbook** |
-| decision policy | **persona** |
+The README declares **skill-level** self-containment with a single carve-out for router discovery
+(Principles, "2. Self-containment"). This proposed replacing it with **plugin-level**
+self-containment: every astra implementation file inside the plugin, skills consuming declared
+shared modules, nothing reaching outside the plugin.
 
-### The disagreement test is behavioral
+**That replacement was not made.** The README's skill-level rule and its router exception remain the
+active statement. The proposal's stated consequences would have been: the router exception
+disappears into ordinary intra-plugin composition; MCP stops being a filesystem exception and
+becomes an external runtime prerequisite; the `bin/` rule and "vendor it, never link out" apply at
+the plugin boundary; and skills are no longer independently portable.
 
-Reading source files identifies candidate personas; it does not prove them distinct. For each
-candidate pair with overlapping standing:
+## B.2 Proposed closure of the install question — not applied
 
-1. Run the **original source skills**, blind, against the same fixed artifact, evidence and
-   fixture-supplied decision catalogue.
-2. Include contrastive fixtures expected to make the priors diverge and convergence controls
-   on which manufactured disagreement would be a failure.
-3. Compare structured stances on the same decision and target across repeated runs.
-4. Preserve a persona when the expected incompatible recommendation is reproducible.
-5. Treat no observed disagreement across the corpus only as evidence for merger, never as a
-   proof of equivalence.
-6. After extraction, rerun the corpus against the condensed seat and require source-behavior
-   preservation.
+This answered "Should astra ship as a plugin?" with **yes**, accepting two costs as implementation
+constraints: paths resolving through `${CLAUDE_PLUGIN_ROOT}` / `${CLAUDE_SKILL_DIR}` rather than
+literals, and namespaced command names (`/astra:denounce`) that any later transcript mining would
+have to match.
 
-This is the executable form of the rule above. §11.3 defines the corpus, repetition and
-quality measurements. The first mandatory contrastive fixture is Linus versus Ramsay on
-working code with stubbed tests; it should yield incompatible dispositions without either
-runtime persona being told to disagree.
+**The question remains open**, still listed under the README's open questions.
 
-### Worked example — adversarial critique cluster (15 of the row's 16 skills)
-
-> `devex-review` was added to the row after this analysis was written and is **not** assessed
-> below. See §10.3 and §12.
-
-| Absorbed | Prior | Verdict |
-|---|---|---|
-| `grill-me`, `grill-with-docs` | none — 7-line stubs delegating to `grilling` | **machinery** |
-| `autoplan` | none — sequences four skills | **protocol**, not a voice |
-| `/diss`, `/diss-api`, `diss-infra`, `diss-claudemd` | identical priors, four subjects | **one persona, four jurisdictions** |
-| `/trim` | shorter prompts achieving the same result are strictly better (`trim.md:72`); published-practice audit; prompts and `SKILL.md` only | **provisional persona × prompt-audit playbook × jurisdiction**, convened only for prompt/skill artifacts; behavior-bearing frontmatter is preserved separately |
-| `grilling` | "you have not thought this through and I will not let you move on" | **persona** |
-| `/elon` | "the requirement itself is probably wrong; rebuild from physics" | **persona** |
-| `office-hours` | "is the problem even understood yet?" | **persona** — attacks the problem statement where Elon rebuilds the solution |
-| `plan-ceo-review` | cathedral, scope-up, completeness-is-cheap (`:874,878`) | **persona** |
-| `plan-eng-review` | blast radius, boring-by-default, strangler-fig, reversibility, production ownership (“Cognitive Patterns,” `:838-855`) | **persona** — see below |
-| `plan-design-review` | "what does the user see first, second, third" | **persona** |
-| `plan-devex-review` | "first five minutes decide everything" (“DX First Principles,” `:873`) | **persona** |
-
-`/trim` is intentionally the hard case. Its role label alone does not establish a persona,
-but its reduction rule can produce a decision prior incompatible with a completeness-first
-seat on the same `SKILL.md`. Until the behavioral corpus demonstrates equivalence, the
-lossless choice is to preserve that prior provisionally. Its official-practices rubric is a
-playbook, its prompt/skill restriction is jurisdiction, and its `AskUserQuestion` plus
-`Edit`/`Write` frontmatter remains behavior-bearing machinery rather than persona text. A
-passing merger fixture may later remove only the provisional persona; the playbook,
-jurisdiction and invocation behavior still survive.
-
-**`plan-eng-review` is NOT merged into Linus.** An earlier draft proposed this from grep hits
-without reading the region; reading it disproves the merge. `plan-eng-review`, “Cognitive
-Patterns — How Great Eng Managers Think,” `:845` —
-*"Incremental over revolutionary — Strangler fig, not big bang. **Refactor, not rewrite**
-(Fowler)"* — directly negates Linus's characteristic move of naming the data structure that
-should have existed and judging the code against it. The same file holds its own override at
-`:836` (*"If the existing foundation is broken, say 'scrap it and do this instead'"*), which
-means the eng-manager voice has a standing rule plus an exception where Linus has only the
-exception. A clean, elegant rewrite requiring an irreversible big-bang migration is a real
-input on which they file incompatible recommendations. **Two decision policies.**
-
-Note what survives that a jurisdiction-based split would have destroyed: **Linus and Ramsay
-remain separate**, because on working code shipped with stubbed tests Linus passes it and
-Ramsay refuses it. A roster carved by domain collapses both into "the code quality voice."
-
----
-
-## 10. Packaging — historical amendment proposals (not applied)
-
-> **Historical and superseded.** This section proposed amendments to `README.md` that were
-> **never applied**. `docs/phase-0.md` section 8 defers packaging, and
-> `docs/design-requirements.md` section 2 keeps the README authoritative as source inventory,
-> so the README text these subsections proposed to replace still stands as written. Retained to
-> record what was considered and why.
-
-Under D1, plugin-root sharing would move the self-containment seam rather than add a new
-exception.
-
-### 10.1 Proposed replacement of Principles §2(a) — not applied
-
-The README declares **skill-level** self-containment with a single carve-out for router
-discovery (Principles, "2. Self-containment"). This section proposed replacing it with
-**plugin-level** self-containment:
-
-> **(a) Filesystem self-containment — the plugin is the module.** Every astra implementation
-> file lives inside the plugin. Skills may consume declared shared modules under
-> `protocol/`, `personas/`, and `playbooks/`; nothing reaches outside the plugin.
-
-**That replacement was not made.** The README's skill-level rule and its router exception
-remain the active statement of the principle. The proposal's stated consequences would have
-been:
-
-- **The router exception disappears** — router discovery becomes ordinary intra-plugin
-  composition rather than a carve-out.
-- **MCP stops being a filesystem exception at all** — it becomes an external runtime
-  prerequisite under §2(b), a different category. The README's plugin treatment table would be
-  recategorized accordingly.
-- **The `bin/` rule and "vendor it, never link out" still apply**, at the plugin boundary
-  rather than the skill boundary.
-- **Skills are no longer independently portable** — stated, not implied.
-
-### 10.2 Proposed closure of the install question — not applied
-
-This section answered "Should astra ship as a plugin?" with **yes**, accepting the two costs the
-README names as implementation constraints: paths resolving through `${CLAUDE_PLUGIN_ROOT}` /
-`${CLAUDE_SKILL_DIR}` rather than literals, and namespaced command names (`/astra:denounce`)
-that any later transcript mining would have to match.
-
-**The question remains open.** It is still listed under the README's open questions, and
-`docs/phase-0.md` section 8 defers install mechanism, packaging, and namespacing.
-
-### 10.3 Collision-map corrections — applied
+## B.3 Collision-map corrections — applied
 
 Both corrections proposed for the adversarial-critique row hold in the current README:
-`plan-eng-review` is retained as a distinct persona rather than merged into Linus, and `/trim`
-is retained as a conditional prompt/skill-review composition pending its behavioral-distinctness
-fixture. Cluster totals were unaffected — neither entry was ever proposed for deletion, only for
-merger into another voice.
-
-§9's worked example accounts for the 15 entries the row held at the time of writing. The row now
-holds 16: `devex-review` was subsequently found missing from the inventory and added. It is
-**not** analyzed in §9, and its relationship to `plan-devex-review` is an open question — see
-§12.
+`plan-eng-review` is retained as a distinct perspective, and `/trim` is retained pending its
+behavioral-distinctness evidence. Cluster totals were unaffected — neither was ever proposed for
+deletion, only for merger into another voice. The row now holds 16 after `devex-review` was added;
+§5.5 accounts for it.
 
 ---
 
-## 11. Cost model and measurement plan
+# Appendix C — Cost model and measurement protocol (historical)
 
-> **Historical.** `docs/phase-0.md` section 8 defers telemetry, conformance harnesses, and
-> runtime preservation fixtures, and `docs/design-requirements.md` section 6 limits this phase to
-> documentary distinctness with the confirming behavior *recorded, not built*. What follows is
-> retained as the specification of what a later phase would have to measure. It authorizes no
-> fixture, harness, or benchmark, and none of its constants are measurements.
+> **Historical.** `docs/phase-0.md` section 8 defers telemetry, conformance harnesses, and runtime
+> preservation fixtures, and `docs/design-requirements.md` section 6 limits this phase to
+> documentary distinctness with the confirming behavior *recorded, not built*. Retained as the
+> specification of what a later phase would have to measure. It authorizes no fixture, harness, or
+> benchmark, and none of its constants are measurements. **The Linus-versus-Ramsay fixture named
+> below is withdrawn by §5.1; the fixture slot is now `/diss` versus `review`.**
 
-### 11.1 Complete model
+## C.1 Cost model
 
-Use tokens, not source lines. Let:
-
-- `Pᵢ` = seat `i`'s persona + playbook + jurisdiction + catalogue + limits
-- `C` = average round-1 claim-set tokens produced by one seat
-- `B` = distinct seats participating in targeted response (`B ≤ N` because §5.3 batches)
-- `F` = factual-verifier dispatches and `V` = one verifier's context
-- `A` = distinct seats re-dispatched after verification (`A ≤ N` when batched)
-- `H` = chair protocol context and `L` = average effective final-position tokens
-- `X`, `Y` = targeted-clash and verification-evidence payloads respectively
+Use tokens, not source lines. Let `Pᵢ` = seat `i`'s perspective + playbook + jurisdiction +
+catalogue + limits; `C` = average round-1 claim-set tokens per seat; `B` = distinct seats in
+targeted response (`B ≤ N`, because dispatches batch); `F`/`V` = verifier dispatches and one
+verifier's context; `A` = distinct seats re-dispatched after verification; `H`/`L` = chair context
+and average effective final-position tokens; `X`, `Y` = targeted-clash and verification payloads.
 
 | Phase | Approximate uncached input |
 |---|---|
@@ -588,152 +852,56 @@ Use tokens, not source lines. Let:
 | Factual verification and seat update | `F·V + Σᵢ∈A Pᵢ + Y` |
 | Procedural rendering | `H + N·L` |
 
-The conflict scan is therefore **`O(N·P + N²·C)`, not merely `O(N²·C)`**. A resumed agent
-does not make `Pᵢ` disappear from model input; its prior context is replayed and billed unless
-the provider reports it as cached. Fresh and resumed implementations must therefore report
-uncached input, cache reads and cache writes separately.
+The conflict scan is therefore **`O(N·P + N²·C)`, not merely `O(N²·C)`**. A resumed agent does not
+make `Pᵢ` disappear from model input; its prior context is replayed and billed unless the provider
+reports it as cached. At the permitted `N = 2/4/6`, repeated perspective + playbook context is
+expected to dominate the quadratic claim payload. The expensive axis at small N is the number of
+**seat-bearing phases**.
 
-At the permitted `N = 2/4/6`, repeated persona + playbook context is expected to dominate the
-quadratic claim payload. `N²C` remains the asymptotic scaling hazard, but it is not assumed to
-be the operational cost driver below the cap. The expensive axis at small N is the number of
-**seat-bearing phases**. Condensation removes duplicated chassis from `Pᵢ`; it does not make
-the specialist context free on later phases.
+**The 49% figure is withdrawn as a claim.** `autoplan` reading four skills is
+1476 + 1514 + 1050 + 1460 = 5,500 source lines against an estimated ~2,800 under this design. That
+is a source-line ratio, not a token measurement; it ignores per-subagent setup and every later
+phase's replayed input.
 
-### 11.2 The 49% figure is withdrawn as a claim
+## C.2 Measurement protocol
 
-`autoplan` reading four skills is 1476 + 1514 + 1050 + 1460 = 5,500 source lines against an
-estimated ~2,800 under this design. That is **a source-line ratio, not a token measurement.**
-It ignores per-subagent setup and every later phase's replayed input and output. It is an
-estimate pending §11.3 and is labelled as such wherever it appears.
+Cost measurement cannot establish that condensation preserved the voices. Three gates, in order.
 
-### 11.3 Behavioral and cost measurement protocol
+**A. Source characterization — RED.** For each candidate pair with overlapping standing: build at
+least three fixed, versioned artifacts with fixture-supplied decision IDs and targets, including
+one expected-divergence case and one expected-convergence control. Run each **original source
+skill** blind on identical artifact + evidence + catalogue, three times, under a characterization
+wrapper that adds only the output schema and protocol limits — no perspective text, expected
+answer, or pair identity. A divergence fixture passes when incompatible `stance.disposition` values
+on the same decision and target appear in at least two of three runs; a convergence control passes
+when manufactured incompatibility does not. Persist claims, stances, and expected clashes as
+fixtures; runtime perspectives never see the expectation metadata.
 
-Cost measurement cannot establish that condensation preserved the voices or improved the
-report. The benchmark therefore has three gates, in order.
+No observed disagreement across the corpus makes two voices **candidates** for merger; it never
+proves equivalence.
 
-#### A. Source characterization — RED
+**B. Extraction preservation — GREEN.** Run each extracted seat on the same corpus with the same
+catalogues and three-run repetition. It must preserve every source fixture's expected divergence
+and convergence result, and must retain source-unique supported findings — a matching final
+disposition does not excuse losing a playbook's evidence. Any loss blocks retirement of the source.
 
-For each candidate persona pair with overlapping standing:
+**C. Panel quality and cost.** Baseline: current `autoplan` on the fixed corpus. Comparison: the
+same artifacts through the panel at **N = 2, 4, 6**, with nested versioned rosters so the
+marginal-seat measurement does not silently change composition. A blinded evaluator receives
+de-identified, order-randomized outputs and the fixture rubric, scoring recall of seeded decisions,
+supported-claim precision and unsupported-claim rate, preservation of expected divergences and
+convergence controls, actionability, and reader load.
 
-1. Build at least three fixed, versioned artifacts with fixture-supplied decision IDs and
-   targets. Include at least one expected-divergence case and one expected-convergence
-   control.
-2. Run each **original source skill** blind on identical artifact + evidence + catalogue.
-   A common characterization wrapper may add only the Claim/FinalPosition output schema and
-   protocol limits; it contains no persona text, expected answer or pair identity. Run each
-   fixture three times to expose stochastic one-offs.
-3. A divergence fixture passes when incompatible `stance.disposition` values on the same
-   decision and target appear in at least two of three runs. A convergence control passes
-   when manufactured incompatibility does not appear in at least two of three runs.
-4. Persist claims, stances and expected clashes as §8.3 fixtures. Runtime personas never see
-   the expectation metadata.
-
-The first required fixture is Linus versus Ramsay on working code with stubbed tests. Failure
-to reproduce the expected clash blocks their merger. No observed disagreement across the
-corpus makes two voices **candidates** for merger; it does not prove equivalence.
-
-#### B. Extraction preservation — GREEN
-
-Run each extracted persona + playbook seat on the same corpus, with the same catalogues and
-three-run repetition. It must preserve every source fixture's expected divergence and
-convergence result. It must also retain source-unique supported findings; a matching final
-disposition does not excuse losing a playbook's evidence. Any loss blocks retirement of the
-source skill.
-
-#### C. Panel quality and cost
-
-Baseline: current `autoplan` on the fixed corpus. Comparison: the same artifacts through the
-astra panel at **N = 2, 4 and 6 seats**. The rosters are nested and versioned: the N=4 roster
-contains the N=2 seats, and N=6 contains N=4, so the marginal-seat measurement does not
-silently change composition. Run each configuration three times.
-
-A blinded evaluator receives de-identified, order-randomized outputs and the fixture rubric.
-It scores:
-
-- recall of seeded material decisions and known failure modes
-- supported-claim precision and unsupported-claim rate
-- preservation of expected persona divergences and convergence controls
-- actionability of the surfaced decisions
-- reader load: total words and words per supported material decision
-
-The panel passes only if it preserves every mandatory divergence fixture, loses no seeded
-critical decision found by the baseline, introduces no higher unsupported-claim rate than
-the baseline, and does not lower the median actionability score. `Decisions surfaced` remains
-a diagnostic count; by itself it is not a quality metric.
+The panel passes only if it preserves every mandatory divergence fixture, loses no seeded critical
+decision found by the baseline, introduces no higher unsupported-claim rate, and does not lower
+median actionability. `Decisions surfaced` is a diagnostic count, not a quality metric.
 
 For every dispatch, record phase, seat, fresh/resumed status, uncached input tokens, cache
-read/write tokens, output tokens and wall-clock. Also record seats dispatched, claims,
-challenges, distinct rebuttal seats, verifier calls, post-verification seat updates,
-effective final-position words and total report words.
+read/write tokens, output tokens, and wall-clock. The cost claims to defend are **marginal cost per
+seat**, **marginal cost per seat-bearing phase**, and total cost at the declared cap.
 
-The cost claims to defend are **marginal cost per seat**, **marginal cost per seat-bearing
-phase**, and total cost at the declared cap. The benchmark reports the measured contribution
-of `N·P` and `N²·C`; it does not assume or search for a crossover outside the supported panel
-size.
+## C.3 Panel-size cap
 
-### 11.4 Panel-size cap
-
-A default cap is proposed as part of this design, to be set from §11.3 results. Provisional
-default is **4 seats**, escalating to 6 only where the artifact warrants and the user opts in.
-The cap is a protocol parameter, not a per-skill choice, so it cannot drift upward one skill
-at a time. The claim and final-position limits in §4 are governed the same way and are
-validated by the reader-load measurements before implementation planning closes.
-
----
-
-## 12. Open questions this design does not close
-
-- **Playbook roster.** Which playbooks exist, and their granularity. Same budgeting question
-  as the persona roster, one layer down.
-- **Conformance harness.** Where C1–C10 run, and whether a failing chair transcript blocks
-  output or annotates it.
-- **Persona roster and Tier 1/Tier 2 assignment.** Unchanged from `README.md` open questions.
-- **`devex-review` versus `plan-devex-review`.** Added to the adversarial-critique row after
-  this design was written, and not analyzed in §9. One audits a live developer experience, the
-  other reviews a plan; the names are near-identical, which is exactly the routing collision
-  this repo exists to catch. Whether they are one perspective across two jurisdictions or two
-  decision policies is untested.
-- **monster-prompt.** Unchanged. D1, if adopted, would sharpen it — if astra is one plugin,
-  monster-prompt is either inside it or explicitly outside.
-
----
-
-## 13. Provenance
-
-Claims in earlier drafts were disproved on inspection and are corrected here: the
-`plan-eng-review` merge (§9), two successive cost-scaling characterizations (§11.1), and the
-assertion that fixtures guarantee conflict detection (§8.4). Review also closed catalogued
-`decision_id` assignment, added reader limits and behavioral characterization, adjudicated
-all 15 worked-example inputs, and corrected the README replacement range.
-
-### Evidence snapshot
-
-Headings and unique quoted phrases are the primary evidence anchors. Line numbers are
-convenience coordinates against the exact 2026-07-29 inputs below; a hash mismatch means the
-line anchors must be regenerated before relying on them.
-
-Gstack sources resolve under `~/.claude/skills/gstack/<name>/SKILL.md`; command sources resolve
-under `~/.claude/commands/`.
-
-```text
-c18016a320c7516814d41067936b9b239899e08f27b133a306f4de4c20921284  plan-ceo-review/SKILL.md
-0f756585231f5630d80e3a3163ca664312acf78ea34e2bb535275816ffb1bfd0  plan-design-review/SKILL.md
-4d6cc577f07af1a0268e89ba0fdf45eb595583bdad306f809cbb8b6645c18951  plan-devex-review/SKILL.md
-92ee16af71d5e0088326869b0a211c50f94b9261eeae75656bc21f9bcfae2031  review/SKILL.md
-b5a0b9d72f4a992ba0b52cd7b27d15e7e0e29e35c4b775477ec3a031c47f5c92  office-hours/SKILL.md
-41c92a82319c081ef48a17733bcd5815d83637cf1e0390c45db5f9ccbbca08e9  plan-eng-review/SKILL.md
-4d5da6367475aaad38bbf59f29e5c7fa2b184d48590951100b1d409b723133ea  cso/SKILL.md
-73e2bf3e7b1868493fc162dccf9f26c182f50e4cfcad3e4f02efce0e3099e472  autoplan/SKILL.md
-b4e029d6c927b1ba671748b5d23e026d1c8059bde96e955fb504490da22b9b69  diss.md
-0ac5d05a598ca73edf0e35956efddf10ce989a0a68c9483bb6355cab3da73fff  trim.md
-efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md working draft
-```
-
-The `README.md` hash records the then-unstaged working draft whose amendments §10 proposed. That
-draft was committed at `a037f20` and revised afterwards, so the recorded hash no longer matches
-the file. Under the rule above, **every `README.md:<line>` anchor in this document is invalid**
-and must not be relied on; cite README headings instead. The §10 amendments those anchors pointed
-at were never applied and are recorded as historical.
-
-Gstack and command hashes are unaffected — they were taken against `~/.claude/skills/gstack/` and
-`~/.claude/commands/` and remain the reproducible basis for §1, §3, §7, and §9.
+A default cap is proposed as part of this design, to be set from C.2 results. Provisional default is
+**4 seats**, escalating to 6 only where the artifact warrants and the user opts in. The cap is a
+protocol parameter, not a per-skill choice, so it cannot drift upward one skill at a time.

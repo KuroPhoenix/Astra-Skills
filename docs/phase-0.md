@@ -64,7 +64,7 @@ skills/
 | `docs/design-requirements.md` | The normative contract for every per-skill design |
 | `docs/phase-0.md` | Phase scope, global ledgers, coordination, and acceptance |
 | `designs/<astra-name>.md` | One proposed Astra skill's evidence, interface, distinctions, and high-level design |
-| `designs/astra-critique.md` | Restored critique condensation plan and worked design, pending normalization against the design requirements |
+| `designs/astra-critique.md` | The Astra Critique design, normalized to `docs/design-requirements.md` section 7 and serving as its reference example |
 | `skills/` | Reserved for later implementation; empty during phase 0 |
 
 No other active specification or pattern directory is required. Superseded material remains

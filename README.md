@@ -21,18 +21,18 @@ Not a tidiness project. Measured on this machine, July 2026:
 | Measurement | Value | Source |
 |---|---|---|
 | Entries in the skills directory | **271** | `~/.claude/skills/` — 71 real dirs, 200 symlinks |
-| Of those, live | **138** | 133 symlinks have missing targets |
-| Invocable skills those 138 entries hold | **192** | `gstack/` is **one** entry holding **54** sub-skills |
+| Of those, live and invocable | **138** | 133 symlinks have missing targets |
+| Live entries that are gstack | **55 of 138** | 54 skills + its router, surfaced by symlink |
 | Distinct skills the agent invoked in one month | **16** | 214 transcripts, `Skill` tool calls |
 | Distinct skills invoked by any path | **17** | adds `python-patterns`, typed only |
-| Live skills in `~/.claude/skills/` that fired at all | **5 of 192** | `code-tracing`, `python-patterns`, `github`, `receiving-code-review`, `doc-coauthoring` |
+| Live skills in `~/.claude/skills/` that fired at all | **5 of 138** | `code-tracing`, `python-patterns`, `github`, `receiving-code-review`, `doc-coauthoring` |
 | The rest of the working set | plugin skills (9) · local commands (2) · 1 broken link | `superpowers:*`, `shell-scripting:*`, `/diss`, `/pr` |
 | gstack skills carrying usage-logging code | **82** | `grep -rl skill-usage.jsonl` |
 | Times that logging has ever executed | **0** | `~/.gstack/analytics/` does not exist |
 | Plugins enabled | **16** | from 4 marketplaces |
 | Components those plugins add | **47 skills · 6 commands · 6 agents · 3 MCP servers · 2 hooks · 1 LSP server** | see [Plugins](#plugins) |
 | Harness built-in skills | **12** | shipped with the CLI — no directory, no manifest |
-| **Total invocable skills** | **251** | 192 personal + 47 plugin + 12 built-in |
+| **Total invocable skills** | **197** | 138 personal + 47 plugin + 12 built-in |
 | MCP tools referenced by local commands but **not configured** | **5** | jira, awslabs-mysql ×2, context-mode ×2 |
 
 The real working set, mined from transcripts. **Two cohorts, counted separately** — they
@@ -71,18 +71,20 @@ census that reads only `~/.claude/skills/` misses two of the four:
 
 | Category | Count | Enumerated from |
 |---|---:|---|
-| Personal skills — top-level entries | 138 live · 133 dangling | `~/.claude/skills/*/SKILL.md` |
-| Personal skills — nested under one entry | **54** | `~/.claude/skills/gstack/*/SKILL.md` |
+| Personal skills | 138 live · 133 dangling | `~/.claude/skills/*/SKILL.md` |
+| — of which gstack, surfaced by symlink | **55** | targets under `~/.claude/skills/gstack/` |
 | Plugin components | 47 skills · 6 cmds · 6 agents · 3 MCP · 2 hooks · 1 LSP | plugin **manifests** — see [Plugins](#plugins) |
 | Local commands | 8 | `~/.claude/commands/*.md` |
 | **Harness built-in skills** | **12** | **nothing on disk** — shipped with the CLI |
 
 Two consequences:
 
-**`gstack` is one entry holding 54 skills.** An entry count is not a skill count. `/browse`,
-`/ship`, `/guard`, `plan-ceo-review` and 50 others each carry their own description and each
-bill the context budget every turn, yet all 54 hide behind a single line in `ls`. The 271/138
-figures are entry counts and were never invocable-skill counts.
+**gstack is 55 of the 138 live entries — 40% of the live collection.** Each
+`~/.claude/skills/<name>/` is a real directory whose `SKILL.md` is a symlink into
+`~/.claude/skills/gstack/<name>/`, so these skills are already counted once, at top level.
+`skills/gstack/` is therefore **not** a second tier to add to the census — an earlier revision of
+this table wrongly counted it as +54. What the concentration does mean: disabling gstack removes
+54 skills and its router from the live set in a single move.
 
 **Harness built-ins have no path and no manifest.** These 12 are invocable, and ten of them
 already appeared in the collision map below without ever being counted here:
@@ -104,9 +106,13 @@ Every measured source, diffed against what this document claims:
 | Claimed here, absent from the inventory | **0** — every remaining difference is a namespace prefix, an MCP server, or a plugin agent |
 
 Method: extract every backticked identifier from the collision map and the reference groups;
-diff against `find -L ~/.claude/skills -maxdepth 3 -name SKILL.md`, the plugin manifests,
+diff against `find -L ~/.claude/skills -maxdepth 2 -name SKILL.md`, the plugin manifests,
 `~/.claude/commands/`, and the built-in list above. **Re-run on every plugin install and CLI
 update** — it is the only check that holds the map to the machine rather than to itself.
+
+`-maxdepth 2` with `-L` is deliberate: it resolves each entry's symlinked `SKILL.md` and yields
+all 138 entry names, gstack included. Descending to depth 3 walks into `skills/gstack/` and
+counts those 54 a second time.
 
 `devex-review` is the instructive miss. It is a distinct live gstack skill whose name nearly
 duplicates `plan-devex-review`, which was already mapped: one audits a live developer

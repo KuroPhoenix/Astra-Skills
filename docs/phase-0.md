@@ -77,11 +77,11 @@ README.md section “The collision map.” The ledger is populated during phase-
 must contain one row per occurrence, including repeated appearances of the same source.
 
 The occurrences span four delivery mechanisms, enumerated in README section “Four source
-categories, not three.” Two of them are invisible to a directory scan: 54 personal skills nest
-under the single `gstack/` entry, and 12 harness built-in skills have no path and no manifest at
-all. **Open:** a built-in cannot produce the immutable revision or content hash that
-`docs/design-requirements.md` section 4.1 requires, so the provenance rule needs either a
-version-pinning alternative or an explicit exception before those 12 rows can resolve.
+categories, not three.” One is invisible to a directory scan entirely: 12 harness built-in
+skills have no path and no manifest at all. **Open:** a built-in cannot produce the immutable
+revision or content hash that `docs/design-requirements.md` section 4.1 requires, so the
+provenance rule needs either a version-pinning alternative or an explicit exception before those
+12 rows can resolve.
 
 Each row records:
 

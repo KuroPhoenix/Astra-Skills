@@ -1,7 +1,7 @@
 # Astra skill design requirements
 
 **Date:** 2026-07-30
-**Status:** Approved structure; written-document review pending
+**Status:** Approved structure; revised for agent review
 
 ## 1. Purpose
 
@@ -17,27 +17,29 @@ It governs design work only. A compliant output explains:
 - which high-level architecture best fits that particular skill.
 
 It does not create the skill. Exact prompts, `SKILL.md` frontmatter, tool declarations,
-packaging, tests, tuning, and retirement decisions belong to later phases.
+packaging, tests, tuning, behavioral-preservation claims, and source retirement belong to
+later phases.
 
 ## 2. Authority and document roles
 
 Apply authority in this order:
 
 1. The user's current instructions.
-2. This document for how Astra skill designs are researched and written.
-3. A per-skill design for the behavior of that proposed Astra skill.
-4. `README.md` as source inventory, usage evidence, and candidate collision neighborhoods.
-5. Historical policy and pattern documents as research evidence only.
+2. `docs/phase-0.md` for phase scope, global source coverage, coordination, and acceptance.
+3. This document for how each Astra skill design is researched, written, and reviewed.
+4. A per-skill design for the proposed behavior of that skill.
+5. `README.md` as source inventory, usage evidence, and candidate collision neighborhoods.
+6. Restored or superseded documents as research evidence only.
 
-The phase-0 scope remains defined by
-`docs/superpowers/specs/2026-07-29-personal-skill-roster-design.md`. This document supersedes
-that design's earlier proposed `condensation-guide.md` and monolithic `skill-roster.md`
-interfaces.
+When requirements touch the same deliverable, ownership resolves the conflict:
+`docs/phase-0.md` decides what phase 0 must cover and when the phase is complete; this
+document decides what every per-skill design must contain and how an agent produces it. A
+per-skill design may specialize its proposed behavior but may not override either contract.
 
 Per-skill designs live at:
 
 ```text
-docs/astra-skills/<provisional-astra-name>.md
+designs/<provisional-astra-name>.md
 ```
 
 The directory contents form the emerging roster. Names and count remain provisional until
@@ -45,8 +47,8 @@ all candidate neighborhoods have been investigated and their triggers compared.
 
 ## 3. Governing rule
 
-> Propose one Astra skill only when one coherent user job can be served through one
-> distinguishable interface without discarding useful behavior, authority, prerequisites,
+> Propose one Astra skill only when the user wants one coherent job served through one
+> distinguishable interface, without discarding useful behavior, authority, prerequisites,
 > or component types from its sources.
 
 The collision map is evidence to investigate, not a list of predetermined skills. A row may:
@@ -55,7 +57,12 @@ The collision map is evidence to investigate, not a list of predetermined skills
 - split into several Astra skills;
 - merge with part of another row;
 - retain some sources as independent references or dependencies; or
-- exclude sources with an evidence-backed reason.
+- exclude sources with an evidence-backed reason, including that they are not useful to this
+  user.
+
+Personal value is not implied by appearing in the inventory. Ground it in an explicit user
+instruction, a named project-development need, or a clearly labeled provisional inference.
+Usage can inform priority, but it does not decide usefulness.
 
 Under unresolved uncertainty, preserve the distinction and record the open question. A design
 may be provisional; an unsupported merger may not be presented as settled.
@@ -75,7 +82,7 @@ For every source occurrence, record:
 | Availability | Live, disabled, missing, dangling, or recovered from history |
 | Declaration | Complete frontmatter or manifest fields, including unfamiliar fields |
 | Behavior evidence | Relevant instructions, workflow, decision rules, prerequisites, and outputs |
-| Provenance | Inspection date plus a stable revision or content hash when practical |
+| Provenance | Inspection date plus an immutable revision or content hash for every inspected source |
 
 Read the manifest or registration before assuming a directory represents the complete
 component. When descriptions collide, inspect the relevant instruction bodies. Descriptions
@@ -91,6 +98,12 @@ Every material statement about a source must be one of:
 
 An unavailable source cannot be claimed as absorbed or preserved. Recover it from a trustworthy
 repository or snapshot, defer it, or exclude it with the limitation stated.
+
+Every inspected source must have reproducible provenance. Hash the bytes used for the analysis
+or record an immutable repository revision. If stable bytes cannot be obtained, label the
+source unavailable rather than presenting the inspection as reproducible. A later hash
+mismatch invalidates the recorded line anchors until the source is re-inspected and those
+anchors are regenerated.
 
 ### 4.3 Preserve delivery shape
 
@@ -153,15 +166,24 @@ Lack of observed disagreement is evidence for further investigation, not proof o
 
 ## 7. Required per-skill design
 
-Every file under `docs/astra-skills/` must contain the following sections. The headings may be
-adapted for readability, but the information may not be omitted.
+Every completed phase-0 design under `designs/` must contain the following sections. The
+restored `designs/astra-critique.md` is currently the worked source design and must be
+normalized to this contract before it is accepted as complete. The headings may be adapted
+for readability, but the information may not be omitted.
 
 ### 7.1 Identity and status
 
 - provisional Astra name;
 - `proposed` status;
+- `now`, `next`, or `later` priority, justified by personal project-development value and
+  usage only as supporting evidence;
 - candidate neighborhood or neighborhoods investigated;
-- one-sentence user job beginning, “When I want to …”.
+- one-sentence user job beginning, “When I want to …”; and
+- a personal-value statement naming why the user wants this job and whether that evidence is
+  explicit or inferred.
+
+`proposed` is the only phase-0 design status. Implementation and validation states belong to
+later implementation tracking, not to this design field.
 
 The job must express one outcome. If it needs “or” to join independent outcomes, split the
 design or justify why one invocation must coordinate them.
@@ -186,12 +208,20 @@ Account for every source occurrence investigated using the evidence requirements
 Assign each occurrence:
 
 - a primary disposition;
-- its proposed Astra home, if any;
+- exactly one proposed primary home or independent disposition;
 - contribution categories from section 5; and
 - any secondary role in another design.
 
-Do not hide overlaps. `pair-agent`, `office-hours`, and `skillify` currently appear in more
-than one candidate neighborhood and require an explicit primary home.
+Mirror proposed changes to the collision source-claim ledger in `docs/phase-0.md` section 5.
+The phase-0 coordinator, not the design agent, applies those changes to the authoritative
+ledger. A claim determines who proposes a source's disposition; it never prevents an agent
+from inspecting that source as evidence.
+
+Do not hide overlaps. `pair-agent`, `office-hours`, and `skillify` are known repeated README
+occurrences, but they are not the complete overlap set. Record cross-neighborhood semantic
+roles as well. In particular, the Astra Critique analysis may inspect `review` and `cso` when
+distinguishing code-structure judgment from test-evidence judgment without claiming either as
+its primary source home.
 
 ### 7.4 Collision analysis
 
@@ -236,6 +266,10 @@ or merely documents each dependency.
 Do not express tool pre-approval as tool restriction. Detailed permission design remains
 deferred, but known authority requirements and forbidden effects must remain visible.
 
+For every consumed independent reference, propose a `consuming_designs` update to the
+reference and cleanup ledger in `docs/phase-0.md` section 6. The global ledger, not this
+design, owns the reference's keep, defer, or exclude disposition.
+
 ### 7.8 Manual bridge
 
 Until implementation exists, give the exact current invocation or ordered manual workflow that
@@ -243,15 +277,10 @@ best approximates the proposed skill. State missing or unavailable prerequisites
 
 ### 7.9 Deferred implementation and validation
 
-List what later work must decide or prove, including:
-
-- exact `SKILL.md` content and frontmatter;
-- prompt and output schemas;
-- tool permissions and host-version contract;
-- packaging and namespacing;
-- behavioral characterization and preservation;
-- failure-path and prerequisite tests; and
-- any source-retirement gate.
+List only the later decisions and validation obligations specific to this skill, such as a
+contrastive behavior the future implementation must preserve, a prerequisite failure path, or
+a source-specific retirement gate. Do not repeat the global deferred-work list;
+`docs/phase-0.md` section 8 is authoritative for phase-wide exclusions.
 
 ### 7.10 Provenance and open questions
 
@@ -277,10 +306,9 @@ method-library, adapter-set, pipeline, or composition runtimes during this phase
 
 ## 9. Worked example: Astra Critique
 
-The historical document at
-`ff889a4:docs/specs/2026-07-29-condensation-policy-design.md` is the last reviewed unified
-design for the future Astra Critique skill. The original version is at `f264c20` and the later
-policy/pattern split begins at `ae44a91`.
+The restored design at `designs/astra-critique.md` reproduces the last reviewed unified design
+for the future Astra Critique skill from `ff889a4`. The original version is at `f264c20`, and
+the later policy/pattern split begins at `ae44a91`.
 
 Despite its historical title, that document is:
 
@@ -310,29 +338,41 @@ incompatible recommendations. Blind filing, conflict handling, verification, and
 rendering are Astra Critique design decisions. Other Astra skills must not copy them unless
 their own source evidence establishes the same need.
 
-The future `docs/astra-skills/astra-critique.md` must refactor the useful design from the
-historical document into the requirements of section 7. It must explicitly resolve any
-remaining ambiguity in how the `/diss` voice, code-structure judgment, and test-evidence
-judgment are separated. It must omit the historical packaging, tiering, tuning, and generic
-runtime proposals.
+Before it counts as a completed phase-0 design, `designs/astra-critique.md` must be normalized
+in place to section 7 while preserving the useful condensation and panel reasoning. That
+normalization must explicitly resolve any remaining ambiguity in how the `/diss` voice,
+code-structure judgment, and test-evidence judgment are separated. Historical packaging,
+tiering, tuning, and generic runtime proposals remain labeled historical rather than becoming
+phase-0 requirements.
 
 ## 10. Agent workflow
 
-An agent assigned a candidate neighborhood must:
+The phase-0 coordinator reserves source claims before assigning design work. An assigned agent
+must:
 
-1. Read this document completely.
-2. Inspect the collision-map entries and their registrations.
+1. Read `docs/phase-0.md` and this document completely.
+2. Inspect the assigned occurrences in `README.md` section “The collision map,” their
+   registrations, and any cross-neighborhood or reference sources needed to understand them.
 3. Build the source evidence table before proposing names or architecture.
-4. State the shared user job and split entries that do not serve it.
-5. Map each source contribution and every preserved distinction.
+4. State the shared user job and personal value, then split entries that do not serve it.
+5. Map each source contribution, primary disposition, secondary role, and preserved
+   distinction.
 6. Propose the smallest coherent interface and a skill-specific high-level design.
-7. Compare its trigger with existing per-skill designs.
-8. Record the current manual bridge and deferred implementation work.
-9. Self-review against section 11.
-10. Change only the assigned design documentation unless given broader authority.
+7. Compare its trigger with any available peer designs and record possible collisions for the
+   final reconciliation pass.
+8. Record the current manual bridge and skill-specific deferred work.
+9. Record proposed changes to both phase-0 ledgers inside the assigned design.
+10. Self-review against section 11.
+11. Change only the assigned design file unless given broader authority.
 
-If a neighborhood yields multiple independent jobs, propose multiple design files. If two
-neighborhoods yield one job, record the cross-neighborhood merge and account for every source.
+Agents may inspect sources outside their assigned neighborhood; “change only the assigned
+design” is an edit boundary, not an evidence boundary. Agents do not assume peers have already
+finished. After all draft designs exist, the coordinator performs the authoritative
+roster-wide trigger and ownership comparison described in `docs/phase-0.md`.
+
+If a neighborhood yields multiple independent jobs, propose multiple design files through the
+coordinator. If two neighborhoods yield one job, record the cross-neighborhood merge and
+account for every source without taking an already claimed primary home.
 
 ## 11. Review checklist
 
@@ -340,12 +380,14 @@ neighborhoods yield one job, record the cross-neighborhood merge and account for
 
 - [ ] Every investigated occurrence has an exact identifier and component type.
 - [ ] Live location, invocation, availability, declaration, and behavior evidence are recorded.
+- [ ] Every inspected source has an immutable revision or content hash and inspection date.
 - [ ] Observed, inferred, and unavailable claims are distinguishable.
 - [ ] No unavailable source is claimed as absorbed.
 
 ### Skill scope
 
 - [ ] The design serves one user job through one distinguishable interface.
+- [ ] The design states why this user wants the job and labels inferred value as provisional.
 - [ ] Trigger, non-trigger, result, non-goals, and user-owned decisions are explicit.
 - [ ] The collision-map row was treated as a candidate, not a predetermined skill.
 - [ ] Nearby per-skill triggers do not silently collide.
@@ -354,6 +396,8 @@ neighborhoods yield one job, record the cross-neighborhood merge and account for
 
 - [ ] Shared machinery is separated from protocols, playbooks, perspectives, and jurisdictions.
 - [ ] Authority fields, prerequisites, failure behavior, and component types remain visible.
+- [ ] Every occurrence has exactly one proposed primary disposition and primary home.
+- [ ] Every overlap or cross-role names its primary home and explicit secondary role or exclusion.
 - [ ] Every merger and retained distinction has a written evidence basis.
 - [ ] The design states what later behavioral validation must prove.
 
@@ -363,13 +407,13 @@ neighborhoods yield one job, record the cross-neighborhood merge and account for
 - [ ] Internal seams correspond to demonstrated variation.
 - [ ] The architecture is local to this skill rather than copied from Astra Critique.
 - [ ] Failure, uncertainty, degradation, and user decisions are addressed at design level.
-- [ ] A usable manual bridge exists today.
+- [ ] A usable manual bridge exists, or its missing prerequisite and consequence are named.
 
 ### Scope discipline
 
 - [ ] No `SKILL.md`, executable prompt, plugin scaffold, or runtime implementation was created.
 - [ ] No final tool permissions, cache, telemetry, packaging, or tuning system was designed.
-- [ ] No existing source was disabled, uninstalled, deleted, or declared retireable.
+- [ ] No existing source was disabled, uninstalled, deleted, or declared eligible for retirement.
 - [ ] Open questions name their consequence instead of using empty placeholders.
 
 ## 12. Definition of done
@@ -377,11 +421,12 @@ neighborhoods yield one job, record the cross-neighborhood merge and account for
 A per-skill design is ready for review when:
 
 1. all assigned source occurrences are accounted for;
-2. the job and interface are distinguishable from the emerging roster;
+2. the job is personally valuable and its interface is distinguishable from the emerging
+   roster;
 3. source contributions and preserved distinctions are evidence-backed;
 4. the proposed architecture is concrete enough to guide later implementation planning;
 5. implementation details and behavioral validation remain explicitly deferred;
-6. the manual bridge is usable or its missing prerequisite is named; and
+6. the manual bridge is usable or its missing prerequisite and consequence are named; and
 7. the review checklist passes without placeholders or authority conflicts.
 
 Passing these requirements means the design is grounded. It does not mean the skill is
@@ -389,15 +434,5 @@ implemented, validated, installed, or safe to use as a replacement.
 
 ## 13. Deferred work
 
-This phase does not include:
-
-- creating or editing Astra `SKILL.md` files;
-- exact prompts, schemas, hooks, agents, scripts, or tool declarations;
-- plugin packaging, installation, namespacing, or host-version pinning;
-- router behavior, autonomous invocation, tiers, caches, promotion, tuning, or telemetry;
-- persistent runtime state or a universal composition interface;
-- conformance-harness implementation or runtime preservation fixtures; or
-- disabling, uninstalling, deleting, or retiring existing sources.
-
-Those decisions are made per skill after its design is reviewed and selected for
-implementation.
+`docs/phase-0.md` section 8 is the single phase-wide deferred-work list. A per-skill design
+records only its skill-specific future decisions and validation obligations under section 7.9.

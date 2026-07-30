@@ -6,10 +6,11 @@ An inventory-driven effort to derive a personalized, non-colliding set of skills
 existing collection.
 
 > **Phase-0 status:** this README is source inventory and earlier research, not the governing
-> design. The authoritative scope is the
-> [personal skill roster design](docs/superpowers/specs/2026-07-29-personal-skill-roster-design.md).
-> Packaging, tiers, caching, telemetry, implementation and retirement are deferred. Sections
-> discussing them below preserve research context only.
+> design. The authoritative scope is [Astra phase 0](docs/phase-0.md), each proposed skill
+> follows the [design requirements](docs/design-requirements.md), and the restored
+> [Astra Critique plan](designs/astra-critique.md) is the worked example. Packaging, tiers,
+> caching, telemetry, implementation, and retirement are deferred. Sections discussing them
+> below preserve research context only.
 
 ---
 

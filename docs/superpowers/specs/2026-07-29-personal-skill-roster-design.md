@@ -5,8 +5,10 @@
 
 ## 0. Authority
 
-This document is the authoritative phase-0 design. It supersedes the README's earlier runtime,
-packaging, tiering, and retirement proposals and the policy/pattern specification family.
+This document is the authoritative phase-0 scope design. It supersedes the README's earlier
+runtime, packaging, tiering, and retirement proposals and the policy/pattern specification
+family. `docs/design-requirements.md` governs how agents research and write each per-skill
+design.
 
 The README remains source inventory until phase 0 rewrites it. Its collision-map rows are
 candidate neighborhoods, not decided personalized skills. When this design conflicts with the
@@ -66,8 +68,9 @@ The active design surface becomes:
 ```text
 README.md
 docs/
-  condensation-guide.md
-  skill-roster.md
+  design-requirements.md
+  astra-skills/
+    <provisional-astra-name>.md
   superpowers/specs/
     2026-07-29-personal-skill-roster-design.md
 ```
@@ -77,14 +80,13 @@ Ownership is deliberately small:
 | Document | Owns |
 |---|---|
 | `README.md` | Purpose, phase-0 scope, headline inventory, and links |
-| `docs/condensation-guide.md` | The lightweight decision procedure used to resolve candidates |
-| `docs/skill-roster.md` | Source accounting, per-cluster decisions, and the final personalized roster |
+| `docs/design-requirements.md` | Evidence, reasoning, content, and review requirements for every per-skill design |
+| `docs/astra-skills/<name>.md` | One proposed Astra skill's source accounting, preserved distinctions, interface, and high-level design |
 | This design | Scope and acceptance criteria for producing those documents |
 
 The current policy and five pattern specifications are superseded research history, not phase-0
-interfaces. Useful rules are extracted into `condensation-guide.md`; those documents are removed
-from the active tree rather than patched or archived beside the authoritative design. Git history
-preserves them.
+interfaces. Useful rules and the Astra Critique worked example are interpreted through
+`docs/design-requirements.md`; the historical documents remain recoverable through Git history.
 
 ## 5. Collision-resolution procedure
 
@@ -152,9 +154,9 @@ namespacing are separate later decisions.
 
 ## 7. Source accounting
 
-`docs/skill-roster.md` contains one source-accounting table covering every occurrence in the
-current collision map, plus a separate keep/defer/exclude table for the live reference-skill
-groups already identified in the README. Each source row records:
+The per-skill designs under `docs/astra-skills/` collectively account for every occurrence in
+the current collision map. They also record keep, defer, or exclude decisions for relevant live
+reference skills identified in the README. Each source row records:
 
 - source identifier and artifact type;
 - source location and exact invocation mechanism;

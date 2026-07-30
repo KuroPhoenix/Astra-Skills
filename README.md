@@ -8,8 +8,11 @@ existing collection.
 > **Phase-0 status:** this README is source inventory and earlier research, not the governing
 > design. The authoritative scope is [Astra phase 0](docs/phase-0.md), each proposed skill
 > follows the [design requirements](docs/design-requirements.md), and the restored
-> [Astra Critique plan](designs/astra-critique.md) is the worked example. Packaging, tiers,
-> caching, telemetry, implementation, and retirement are deferred. Sections discussing them
+> [Astra Critique plan](designs/astra-critique.md) is the worked example. The
+> [phase-0 ledgers](docs/phase-0-ledgers.md) hold coordinator-owned source-accounting state.
+> The long-term goal is self-contained superskills followed by gated deletion of the duplicative
+> originals; phase 0 designs that end state but does not perform it. Packaging, tiers, caching,
+> telemetry, implementation, evaluation, and retirement are deferred. Sections discussing them
 > below preserve research context only.
 
 ---
@@ -684,27 +687,35 @@ it gets **absorbed or rejected**.
    does by default.
 6. **Vendor it.** Copy scripts in. Never link out. If it needs MCP, declare the server and
    write the fallback in the same commit.
-7. **Place it on the ladder.** New *branch* → its own `references/<case>.md`. New rule
+7. **Evaluate it.** Compare the strongest applicable original, a temporary convener using the
+   unchanged original, and the self-contained candidate. Require home-jurisdiction
+   non-regression and the design's declared positive advantage before retirement.
+8. **Place it on the ladder.** New *branch* → its own `references/<case>.md`. New rule
    affecting every branch → inline in `SKILL.md`.
-8. **Prune.** `SKILL.md` back under 500 lines. References stay one level deep.
-9. **Record it** in the collision map above, so the row grows and the skill stays retired.
+9. **Prune.** `SKILL.md` back under 500 lines. References stay one level deep.
+10. **Record it** in the collision map above. Keep the original installed until its explicit
+    retirement gate passes.
 
 ---
 
 ## Migration
 
 1. Build the astra skills, one cluster at a time, hottest first.
-2. Verify each against the source skills it claims to absorb.
-3. Uninstall the absorbed originals.
-4. Sweep the 133 dangling symlinks.
-5. **Retire plugins per component, not per plugin.** Read the component list from the
+2. Compare each source oracle, temporary reference convener, and self-contained candidate on the
+   same fixed corpus.
+3. Require home-jurisdiction non-regression, the design's declared positive advantage, and
+   internalization fidelity; then obtain user approval for each retirement.
+4. Uninstall only the originals whose retirement gates passed.
+5. Sweep the 133 dangling symlinks.
+6. **Retire plugins per component, not per plugin.** Read the component list from the
    marketplace **manifest**, not the directory tree — LSP servers and monitors are declared
    there and are invisible to a directory scan. Disable only once every component is either
    absorbed (skills, commands), replaced (hooks), or consciously given up (agents, MCP, LSP).
-6. **Fix the 5 dangling MCP references** — either configure the servers or write the
+7. **Fix the 5 dangling MCP references** — either configure the servers or write the
    fallbacks. `/pr` and `/trim` are live breakage today, independent of this refactor.
-7. **Resolve monster-prompt** — absorb it, or draw an explicit boundary.
-8. Audit: anything in `~/.claude/skills/` not matching `astra-*` is a candidate for removal.
+8. **Resolve monster-prompt** — absorb it, or draw an explicit boundary.
+9. Audit: anything in `~/.claude/skills/` not matching `astra-*` is a candidate for removal,
+   never automatic authorization to delete it.
 
 ---
 

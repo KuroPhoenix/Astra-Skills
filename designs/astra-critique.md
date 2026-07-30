@@ -7,11 +7,12 @@
 > policy and not an implemented skill.
 >
 > **Historical appendices.** Appendix A (panel protocol and schemas), Appendix B (packaging
-> proposals), and Appendix C (cost model and measurement protocol) predate the phase-0 scope.
+> proposals), and Appendix C (cost model and a later measurement sketch) predate the phase-0 scope.
 > `docs/phase-0.md` section 8 defers packaging, schemas, routers, tiers, telemetry, and
 > conformance harnesses. They are retained as research evidence because the condensation and
-> panel reasoning they support is this design's substance. Nothing in them is settled, and no
-> fixture, harness, or benchmark is authorized here.
+> panel reasoning they support is this design's substance. Core §9 owns this design's normative
+> validation obligations. Nothing in the appendices is settled, and no fixture, harness, or
+> benchmark is authorized here.
 >
 > **README anchors.** The `README.md` hash recorded in §10 predates commit `a037f20`. Cite README
 > headings, never line numbers.
@@ -144,7 +145,7 @@ Contribution categories are from `docs/design-requirements.md` section 5.
 | `plan-design-review` | **Perspective** (what the user sees first, second, third) · **Playbook** (design review) | `astra-critique` | — |
 | `plan-devex-review` | **Perspective** (developer advocate, TTHW) · **Jurisdiction** (plan document) | `astra-critique` | — |
 | `devex-review` | **Jurisdiction** (running artifact) · **Playbook** (live execution, error-message screenshots, CLI help evaluation) — *same perspective as `plan-devex-review`* | `astra-critique` | — |
-| `autoplan` | **Protocol** (sequential specialist reviews with auto-decisions) | `astra-critique` | — |
+| `autoplan` | **Protocol** (fresh specialist contexts, explicit blind filing, staged consensus and auto-decisions) · **Machinery** (dual-model dispatch, degradation tags, decision audit) · **Jurisdiction** (plans) | `astra-critique` | — |
 | `review` | **Perspective** (structure-first, recall-first) — secondary evidence only | **Code review** (unclaimed by this design) | `astra-critique`: the contrastive counterpart to `/diss` (§5.1) |
 | `cso` | **Perspective** (attacker priors) · **Jurisdiction** (dependencies, CI, git history) · parameterized evidence gate — secondary evidence only | **Language / stack reference** (unclaimed) | `astra-critique`: third policy on the evidence-threshold axis (§5.1) |
 
@@ -155,10 +156,11 @@ ownership.
 
 ### 3.3 Proposed ledger changes
 
-For the phase-0 coordinator to apply to `docs/phase-0.md` section 5 — this design does not edit
-the ledger itself:
+For the phase-0 coordinator to apply to `docs/phase-0-ledgers.md` under the protocol in
+`docs/phase-0.md` section 5 — this design does not edit the ledger itself:
 
-- 16 Adversarial-critique occurrences → `primary_home: astra-critique`, `claim_status: resolved`.
+- 16 Adversarial-critique occurrences → `primary_home: astra-critique`,
+  `claim_status: claimed` until the roster-wide reconciliation.
 - `office-hours` (Ops & routine occurrence) → `duplicate occurrence`, secondary role recorded.
 - `grill-with-docs` → secondary role on `domain-modeling` (Docs & knowledge).
 - `review` (Code review occurrence) → unchanged primary; add `astra-critique` to
@@ -189,10 +191,18 @@ declaring a different character underneath it. Descriptions therefore collide wh
 diverge — which is precisely why `docs/design-requirements.md` section 4.1 forbids merging on
 descriptions alone.
 
-**The authors already found the split.** `autoplan/SKILL.md:21` carries
-`<!-- AUTO-GENERATED from SKILL.md.tmpl -->`: gstack templates the chassis in at build time. What
-a template cannot do is stop shipping it seven times. The cost is maintenance and drift across
-seven files first, per-invocation context second.
+**`autoplan` already implements a partial convener.** It reads the four full plan-review skills
+from disk (`:907-911`), dispatches fresh reviewers explicitly told they have seen no prior review
+(`:1181-1189`, `:1304-1315`, `:1380-1391`, `:1506-1517`), runs Claude and Codex voices when
+available (`:1155-1158`), tags degraded modes (`:1191-1196`), and records an incremental decision
+audit (`:1567-1580`). It is therefore stronger than a description-level baseline of "sequential
+specialist reviews." Its limits are equally material: it covers plans only, auto-decides most
+intermediate choices (`:907-924`), and depends on the original files remaining installed.
+
+The source also carries `<!-- AUTO-GENERATED from SKILL.md.tmpl -->`; templating reduces upstream
+drift, but composition by reference still breaks when those source files are removed. Existing
+composition proves that a small interface can hide specialist behavior. It does not prove that
+rewriting those specialists into one self-contained implementation preserves or improves them.
 
 **What is actually shared.** The chassis (preamble tiers, `AskUserQuestion` protocol, a shared
 question registry), the Voice block, and the adversarial framing. All of it is machinery or
@@ -208,7 +218,8 @@ each and contain one instruction apiece — `Run a /grilling session`, the secon
 - `office-hours` versus `/elon`: one refuses to move past the problem statement, the other
   rebuilds the solution from atomic truths. Adjacent, not equivalent.
 - `devex-review` versus `plan-devex-review`: one perspective over two jurisdictions (§5.5).
-- `autoplan` versus the four reviews it sequences: protocol, not a fifth voice.
+- `autoplan` versus the four reviews it sequences: an existing plan-jurisdiction convener and
+  protocol, not a fifth voice and not a baseline for non-plan artifacts.
 
 **Where source instructions conflict.** Two genuine conflicts, both established by reading
 bodies:
@@ -224,6 +235,12 @@ question — *what is wrong with this, and what should I do about it* — over a
 already has, and returns judgment rather than changes. The variation between them is in priors,
 evidence method, and standing, which is variation *inside* one job. The sources that turned out
 to answer a different question are recorded as `Separate` rather than absorbed.
+
+**Expected positive advantage over the source oracle.** On artifacts whose important decisions
+cross jurisdictions, one invocation should surface supported, decision-changing conflicts that
+the strongest applicable single source misses, while preserving each source's home-jurisdiction
+quality. Broader routing and self-containment are separate maintenance advantages; they do not
+count as evidence that the critique itself is better. Section 9 defines the later test.
 
 ---
 
@@ -356,16 +373,26 @@ roster-wide pass.
 | Hard gate: no implementation | `office-hours` — *"Do NOT invoke any implementation skill, write any code, scaffold any project"* | The gate is the guarantee that a critique stays a critique |
 | `Edit`/`Write` + `AskUserQuestion` | `/trim` `allowed-tools` | `/trim` is the one source permitted to change the artifact it reviews; that authority must be explicit, not inherited |
 | `Agent` dispatch + `Task*` | `/diss` `allowed-tools` | Its reviewer roles run as separate contexts, not as prose sections |
+| Fresh reviewer isolation and blind filing | `autoplan:1181-1189,1304-1315,1380-1391,1506-1517` | The existing plan convener prevents earlier reviews from contaminating later filings; the candidate may improve the protocol but cannot claim this mechanism as new |
+| Dual-model degradation and decision audit | `autoplan:1155-1196,1567-1580` | Outside voices may fail independently, and auto-decisions remain attributable on disk instead of disappearing into synthesis |
 | mysql MCP **with** CLI fallback | `diss.md:236` — *"CLI fallback (only if MCP unavailable)"* | The one source that degrades correctly; its shape is the rule |
 | context-mode MCP **without** fallback | `/trim` `allowed-tools`; `diss-claudemd:32,209,213` | Declared-and-broken in one case, **undeclared and broken** in the other — see §7 |
 | Evidence-only verification | `diss.md:282-296` — keyed on `finding_id`, reports `RESOLVED`/`PERSISTING`/`NEW`, no persona, *"No evidence = no finding"* | The seat that filed a claim is the worst possible judge of it |
 | Register as a field | `diss.md:7`, `diss-api.md:9`, `diss-infra:17` | Three registers over one prior; collapsing them loses tone the user chose, collapsing the prior loses judgment |
 
+`autoplan`'s policy of auto-deciding most intermediate choices is deliberately **replaced**, not
+silently preserved: it conflicts with the user's standing rule against resolving normative
+tradeoffs without surfacing them. The auditability and failure handling survive; the normative
+resolution policy changes explicitly.
+
 ---
 
 ## 6. Proposed skill design
 
-**Panel seat = Perspective × Playbook × Jurisdiction. Panel = Protocol + one or more seats.**
+**Architecture hypothesis:** one deep `astra-critique` module with one public invocation and
+source-specific reviewer behavior behind internal seams. Its candidate composition rule is:
+
+> **Panel seat = Perspective × Playbook × Jurisdiction. Panel = Protocol + one or more seats.**
 
 The four layers, and the evidence each already exists:
 
@@ -374,7 +401,7 @@ The four layers, and the evidence each already exists:
 | **Perspective** | *why* it reaches a conclusion — priors, decision policy, register | `plan-eng-review` "Cognitive Patterns" `:838-855`; `plan-ceo-review` `:906-923`; `cso` `:789-795` |
 | **Playbook** | *what* evidence it gathers, which tests it runs | `diss.md` "Code Map" `:141-180`, "Risk Classification" `:182-205`, verifier `:282-295`; `plan-devex-review` TTHW `:922` |
 | **Jurisdiction** | *which* artifact, this invocation | declared in the convening skill's panel table |
-| **Protocol** | blindness, conflict handling, rendering, user control | ordering rules; see Appendix A |
+| **Protocol** | isolation, conflict handling, rendering, user control | `autoplan` fresh-context and degradation machinery plus the proposed normative-conflict rule; see Appendix A |
 
 **The playbook layer is load-bearing.** `diss.md:151-193` builds a code map and risk
 classification *before any voice speaks*. That is neither a personality nor generic chassis — it
@@ -384,17 +411,27 @@ chassis, or be discarded. Separating it also makes seats recombinable: the same
 failure-mode-mapping playbook produces different findings under the eng-manager prior ("what is
 the blast radius") than under the attacker prior ("what does this expose").
 
-**Why a panel rather than one workflow.** Several sources have overlapping standing over the same
-artifact and can reach incompatible recommendations — §5.1 and §5.2 each demonstrate a concrete
-pair. A single merged voice would have to pick one prior silently, which is the specific outcome
-the user's standing instruction forbids. This justification is local to this skill;
-`docs/design-requirements.md` section 8 requires other designs to establish their own need rather
-than copy it.
+**Why a panel is the candidate rather than a settled fact.** Several sources have overlapping
+standing over the same artifact and documentary evidence of incompatible policies — §5.1 and
+§5.2 each identify a concrete pair. A flat merged voice would have to pick one prior silently,
+which is the outcome the user's standing instruction forbids. But documentary disagreement does
+not prove that convening the perspectives improves an output. The panel survives as the proposed
+architecture only if §9 shows a positive cross-jurisdiction win over the source oracle without
+home-jurisdiction regression.
 
-**Information flow.** Decision catalogue → blind filing → seat-declared conflict scan → targeted
-response → resolution → procedural rendering. Independence is preserved by **ordering**, not by
-blindness: each seat commits its claims before seeing any other's, so later exposure cannot
-retroactively change what it filed. Debate is bought without spending diversity of prior.
+**Information flow.** Artifact classification and jurisdiction routing → decision catalogue →
+fresh-context blind filing → seat-declared conflict scan → targeted response → factual
+verification or user resolution → procedural rendering. A home-jurisdiction request may select
+one seat; the protocol does not convene extra perspectives merely because they exist. When
+several seats run, each commits its claims before seeing any other filing. Fresh contexts provide
+the isolation that `autoplan` already demonstrates; ordering controls later exposure.
+
+**What is inherited and what is new.** Fresh contexts, blind filing, dual-model redundancy,
+degradation tags, consensus tables, and decision auditing already exist in `autoplan` for plans.
+They are behaviors to preserve or deliberately simplify, not Astra Critique's novelty. The
+candidate additions are artifact routing across diffs, API specs, IaC, plans, running developer
+experiences, prompts, and CLAUDE.md; a wider seat pool; evidence-only factual verification; and
+refusal to auto-decide normative conflicts.
 
 **Where user choices occur.** Normative disagreements route to the user as an explicit choice with
 every surviving side quoted. Panel composition is declared data, overridable by the user.
@@ -408,13 +445,27 @@ resolved.
 **Failure and degradation.** A missing prerequisite degrades that seat, not the panel: the seat
 either runs a reduced playbook and says so, or is dropped with its absence reported. A panel that
 cannot convene any seat reports that rather than emitting a merged opinion. The `/diss` fallback
-shape — prefer MCP, detect absence, fall back — is the model.
+shape — prefer MCP, detect absence, fall back — and `autoplan`'s per-voice degradation matrix are
+the observed models.
 
-**Internal seams justified by actual variation.** Perspective / playbook / jurisdiction are
-separable because §5.1 and §5.5 demonstrate the same perspective over different playbooks and
-jurisdictions, and §5.4 demonstrates the same playbook under two different names. The chair is
-separate from the seats because §5.1(b) shows mechanical rules and substantive priors are
-different kinds of thing.
+**Depth and internal seams.** The public interface remains one invocation plus one artifact.
+Perspective / playbook / jurisdiction are internal seams because §5.1 and §5.5 demonstrate the
+same perspective over different playbooks and jurisdictions, and §5.4 demonstrates the same
+playbook under two different names. Routing, factual verification, and rendering stay internal
+modules. The chair is separate from the seats because §5.1(b) shows mechanical rules and
+substantive priors are different kinds of thing. None of those seams becomes caller-facing.
+
+**Three later implementations exercise the same task interface.**
+
+| Implementation | Purpose | Eligible as final? |
+|---|---|---|
+| Source oracle | Preselected strongest original for the artifact and jurisdiction | No; baseline only |
+| Reference convener | Routes to and coordinates the unchanged originals | No; validation scaffold that breaks when originals are deleted |
+| Self-contained candidate | Vendors or re-expresses the retained playbooks, perspectives, jurisdictions, authority, and degradation behavior internally | Yes, only after §9 passes |
+
+This sequence makes the failure legible. If the reference convener adds no value, reject or
+narrow the panel before rewriting sources. If it wins but the self-contained candidate loses,
+the extraction is at fault rather than the idea of coordination.
 
 **No shared Astra module is proposed.** `docs/design-requirements.md` section 7.6 requires two
 designs demonstrating the same seam. This is one. The directory layout in Appendix A is
@@ -426,7 +477,8 @@ historical for exactly that reason.
 
 | Dependency | Type | Relationship | Behavior when absent |
 |---|---|---|---|
-| Reviewer contexts | agent | The design **invokes** separate contexts per seat; `/diss` already does this via `Agent` | Sequential in-context seats lose blindness — must be stated, not silently accepted |
+| Reviewer contexts | agent | The design **invokes** separate contexts per seat; `/diss` uses `Agent`, and `autoplan` gives each phase a fresh reviewer explicitly denied prior reviews | Sequential in-context seats lose isolation — must be stated, not silently accepted |
+| Original source files | skills and commands | The later reference convener **invokes or reads** them unchanged for comparison only; the self-contained candidate **replaces** that dependency | A missing original invalidates its convener comparison. Any final candidate that still needs it is not self-contained and cannot retire it |
 | `mcp__awslabs-mysql-mcp-server`, `-uat` | MCP server | **Coordinates** — preferred path for SQL evidence | Falls back to tunnel + CLI, per `diss.md:236`. **Not currently configured** |
 | context-mode MCP (`ctx_fetch_and_index`, `ctx_search`) | MCP server | **Coordinates** — fetches published practices for the prompt-audit playbook | **No fallback exists in either consumer.** Plugin not installed |
 | `design-api` | skill (reference) | **Reads** as the compliance standard for the OpenAPI jurisdiction | Jurisdiction degrades to generic critique; must be reported |
@@ -445,7 +497,9 @@ undeclared dependency on an absent server.
 **Two further sideways reaches, for the same principle.** `autoplan:907` — *"reads the full CEO,
 design, eng, and DX review skill files from disk"* — and `:714`, which shells out to
 `~/.claude/skills/gstack/bin/gstack-question…`. Both break if gstack is uninstalled. They are
-recorded here as evidence for the self-containment principle, not as work items for this design.
+why `autoplan` is useful as reference-convener evidence but cannot be the final architecture
+when the originals are meant to be deleted. They are evidence for the self-containment
+principle, not phase-0 implementation work.
 
 **Tool authority.** Pre-approval is not restriction: the seats need read and search authority over
 the artifact and its repository, and the design must record that **no seat may edit the artifact
@@ -469,12 +523,16 @@ Usable today, in this order:
    the review proceeds on the model's own recollection. `Skill(diss-claudemd)` has the same gap
    for CLAUDE.md and does not declare it.
 5. **Cross-checking a `/diss` result** — run `/review` on the same branch. Per §5.1 these two
-   disagree by construction, so the pair is the manual approximation of a two-seat panel, and the
-   disagreement is the signal.
+   carry incompatible filing policies and are predicted to disagree on the stubbed-test fixture.
+   The pair is the manual approximation of a two-seat panel; the later characterization run must
+   establish whether that disagreement is reproducible and useful rather than assumed.
 
-**What the bridge cannot approximate.** Blind filing. Running `/autoplan` sequences the reviews
-but they are not independent, and no current path gives attributable positions with normative
-conflicts surfaced as an explicit choice.
+**What the bridge does and cannot approximate.** `/autoplan` already supplies fresh independent
+reviewers, explicit blind filing, dual-model degradation, consensus tables, and an audit trail
+for plans. It does not span the other jurisdictions, and it auto-decides most intermediate
+questions. Separate `/diss` and `/review` runs have no shared decision catalogue or chair. No
+current path combines all jurisdictions, preserves attributable positions, and routes normative
+conflicts to an explicit user choice through one self-contained interface.
 
 ---
 
@@ -482,24 +540,77 @@ conflicts surfaced as an explicit choice.
 
 Skill-specific only; `docs/phase-0.md` section 8 owns the phase-wide list.
 
-1. **First contrastive behavior to preserve:** `/diss` versus `review` on working code with
-   stubbed tests must yield incompatible dispositions on the same decision and target, without
-   either being told to disagree (§5.1). Replaces the withdrawn Linus-versus-Ramsay fixture.
-2. **Second:** `plan-eng-review` versus the `/diss` voice on a clean rewrite requiring an
-   irreversible big-bang migration (§5.2).
-3. **Third:** `/trim`'s reduction prior versus a completeness-first perspective on the same
-   `SKILL.md`. Now supported by two artifacts (§5.4), so the merger question is sharper: a passing
-   merger fixture may remove only the provisional perspective — the playbook, jurisdiction, and
-   invocation authority still survive.
-4. **Convergence control:** `devex-review` and `plan-devex-review` should **not** diverge on a
-   shared decision once jurisdiction is held constant (§5.5). Manufactured disagreement there is
-   a failure.
-5. **Prerequisite failure path:** the context-mode MCP is absent, so the published-practice
-   playbook must have a defined degraded mode before the prompt jurisdiction is implemented.
-   `diss-claudemd`'s undeclared dependency must be declared before it can be claimed as absorbed.
-6. **Retirement gate:** no source may be retired until its perspective's expected divergence and
-   its playbook's source-unique supported findings are both reproduced. A matching final
-   disposition does not excuse losing a playbook's evidence.
+### 9.1 Hypotheses and comparison systems
+
+| Hypothesis | Comparison | Failure consequence |
+|---|---|---|
+| **H1 — routing** | The candidate selects the source-oracle jurisdiction and required playbooks from the artifact and request | Narrow the trigger or require an explicit mode; do not hide uncertain routing |
+| **H2 — coordination value** | The reference convener versus the source oracle on cross-jurisdiction artifacts | Reject the panel or reduce it to routing among specialist modes; convenience alone cannot be called better critique |
+| **H3 — internalization fidelity** | The self-contained candidate versus the reference convener on identical artifacts | Rework the extracted seat or keep the source installed; no retirement |
+| **H4 — retirement safety** | The passing self-contained candidate versus each source's behavior, authority, dependencies, delivery shape, and failure paths | Keep the affected source; other sources may retire only through their own gates |
+
+The three systems are:
+
+1. **Source oracle:** the strongest applicable original selected before outputs are seen. For a
+   source's home-jurisdiction case, that source is its own oracle. `autoplan` is an oracle or
+   existing-convener reference for plans only; it is not the baseline for diffs, API specs, IaC,
+   running artifacts, prompts, or CLAUDE.md.
+2. **Reference convener:** one temporary invocation that coordinates unchanged originals. It
+   tests routing and panel value without rewriting their behavior.
+3. **Self-contained candidate:** the proposed final superskill with retained behavior
+   internalized and no dependency on the source files it may later replace.
+
+### 9.2 Fixed corpus and method
+
+The later corpus must be versioned and selected before outputs are generated. It includes:
+
+- **home-jurisdiction cases:** code diff, OpenAPI specification, Terraform or CloudFormation,
+  decision or problem statement, plan, running developer experience, prompt or `SKILL.md`, and
+  CLAUDE.md;
+- **cross-jurisdiction advantage cases:** artifacts containing decisions on which two retained
+  perspectives have standing;
+- **expected-divergence cases:** `/diss` versus `review` on working code with stubbed tests
+  (§5.1); `plan-eng-review` versus the `/diss` perspective on an irreversible big-bang rewrite
+  (§5.2); and `/trim`'s reduction prior versus a completeness-first perspective on one
+  `SKILL.md` (§5.4);
+- **expected-convergence control:** `devex-review` and `plan-devex-review` must not manufacture
+  incompatible recommendations once decision and jurisdiction are held constant (§5.5); and
+- **prerequisite failures:** absent context-mode MCP, absent mysql MCP with its CLI fallback,
+  missing `design-api`, and individual reviewer-context failure.
+
+Run all three systems on identical artifact, evidence, and decision-catalogue inputs at least
+three times. A neutral wrapper may normalize the output schema but may not add perspective text,
+expected answers, or pair identities. A blinded evaluator receives de-identified,
+order-randomized outputs and the fixture rubric.
+
+Record critical-decision recall, supported-claim precision, unsupported-claim rate,
+source-unique supported findings, actionability, duplicate/noise load, informative-conflict
+yield, routing accuracy, input and output tokens, wall-clock time, and degradation state.
+`Decisions surfaced` alone is diagnostic, not quality.
+
+### 9.3 Gates
+
+1. **Source characterization.** Each proposed divergence must appear on the same decision and
+   target in at least two of three blind original-source runs; the convergence control must not
+   manufacture a conflict. A distinction that fails characterization is reclassified before it
+   becomes an internal seat.
+2. **Home-jurisdiction non-regression.** The reference convener and self-contained candidate
+   lose no seeded critical decision that the source oracle finds reproducibly, introduce no
+   higher unsupported-claim rate, and do not lower median actionability within any source's home
+   jurisdiction.
+3. **Positive coordination advantage.** On at least one preregistered cross-jurisdiction class,
+   both combined systems must add a supported critical decision or a supported normative conflict
+   that blind evaluation judges decision-changing and that the source oracle misses in at least
+   two of three runs. Routing convenience, lower maintenance, or lower token cost does not satisfy
+   this quality gate.
+4. **Internalization fidelity.** The self-contained candidate preserves the reference convener's
+   characterized divergences, convergence controls, source-unique supported findings, and
+   prerequisite degradation. A matching final recommendation does not excuse lost evidence or a
+   silenced perspective.
+5. **Retirement.** After gates 1–4 pass, each source separately requires preserved invocation
+   authority, delivery shape, external dependencies or fallbacks, failure behavior,
+   self-containment from that source's files, and explicit user approval. Failure blocks only that
+   source's retirement; it does not erase evidence earned for another source.
 
 Nothing here authorizes building a fixture or harness during phase 0.
 
@@ -550,12 +661,17 @@ in this document is invalid. Cite README headings instead.
 **Claims disproved on inspection and corrected here.** `grilling` as a perspective (§5.3);
 `diss-claudemd` as part of the venomous family (§5.4); Linus and Ramsay as separate voices, and
 the fixture built on them (§5.1); the `plan-eng-review` merge, disproved in the original review
-and re-verified here (§5.2). Two successive cost-scaling characterizations and the claim that
-fixtures guarantee conflict detection were corrected in the original review and are retained in
-Appendix C.
+and re-verified here (§5.2); and the description-level treatment of `autoplan` as mere sequential
+review, corrected by reading its full body (§§4, 6, 8). Two successive cost-scaling
+characterizations and the claim that fixtures guarantee conflict detection were corrected in the
+original review and are retained in Appendix C.
 
 ### Open questions
 
+- **Whether the panel earns its cost.** Documentary evidence establishes candidate distinctions,
+  not a quality win. *Consequence:* if §9's positive-advantage gate fails, retain a
+  self-contained interface only as explicit specialist modes after their own preservation gates,
+  or abandon the merger; do not ship the panel as a quality improvement.
 - **Playbook roster.** Which playbooks exist and at what granularity. Same budgeting question as
   the perspective roster, one layer down. *Consequence:* too fine and the seat table becomes
   unreadable; too coarse and §5.5's jurisdiction split has nowhere to live.
@@ -829,11 +945,12 @@ deletion, only for merger into another voice. The row now holds 16 after `devex-
 # Appendix C — Cost model and measurement protocol (historical)
 
 > **Historical.** `docs/phase-0.md` section 8 defers telemetry, conformance harnesses, and runtime
-> preservation fixtures, and `docs/design-requirements.md` section 6 limits this phase to
-> documentary distinctness with the confirming behavior *recorded, not built*. Retained as the
-> specification of what a later phase would have to measure. It authorizes no fixture, harness, or
-> benchmark, and none of its constants are measurements. **The Linus-versus-Ramsay fixture named
-> below is withdrawn by §5.1; the fixture slot is now `/diss` versus `review`.**
+> preservation fixtures, and `docs/design-requirements.md` section 7.9 requires the confirming
+> behavior to be *recorded, not built* during phase 0. Retained as the
+> implementation detail of what a later phase could measure; core §9 is authoritative. It
+> authorizes no fixture, harness, or benchmark, and none of its constants are measurements. **The
+> Linus-versus-Ramsay fixture is withdrawn by §5.1; the fixture slot is now `/diss` versus
+> `review`.**
 
 ## C.1 Cost model
 
@@ -865,36 +982,41 @@ phase's replayed input.
 
 ## C.2 Measurement protocol
 
-Cost measurement cannot establish that condensation preserved the voices. Three gates, in order.
+Cost measurement cannot establish that condensation preserved the voices or that combining them
+improved the critique. Compare three systems on identical inputs:
 
-**A. Source characterization — RED.** For each candidate pair with overlapping standing: build at
-least three fixed, versioned artifacts with fixture-supplied decision IDs and targets, including
-one expected-divergence case and one expected-convergence control. Run each **original source
-skill** blind on identical artifact + evidence + catalogue, three times, under a characterization
-wrapper that adds only the output schema and protocol limits — no perspective text, expected
-answer, or pair identity. A divergence fixture passes when incompatible `stance.disposition` values
-on the same decision and target appear in at least two of three runs; a convergence control passes
-when manufactured incompatibility does not. Persist claims, stances, and expected clashes as
-fixtures; runtime perspectives never see the expectation metadata.
+| Label | System | What it isolates |
+|---|---|---|
+| **A** | Source oracle selected before outputs are seen | Best applicable original quality |
+| **B** | Reference convener using unchanged originals | Routing and coordination value |
+| **C** | Self-contained candidate | Internalization fidelity |
 
-No observed disagreement across the corpus makes two voices **candidates** for merger; it never
-proves equivalence.
+`autoplan` may serve as A or as existing-convener evidence for plan cases. It is not a universal
+baseline for diffs, API specs, IaC, running artifacts, prompts, or CLAUDE.md.
 
-**B. Extraction preservation — GREEN.** Run each extracted seat on the same corpus with the same
-catalogues and three-run repetition. It must preserve every source fixture's expected divergence
-and convergence result, and must retain source-unique supported findings — a matching final
-disposition does not excuse losing a playbook's evidence. Any loss blocks retirement of the source.
+**Source characterization.** For each candidate pair with overlapping standing, build at least
+three fixed, versioned artifacts with fixture-supplied decision IDs and targets, including one
+expected-divergence case and one expected-convergence control. Run each original blind on
+identical artifact + evidence + catalogue, three times, under a wrapper that adds only output
+schema and protocol limits — no perspective text, expected answer, or pair identity. A
+divergence passes when incompatible `stance.disposition` values on the same decision and target
+appear in at least two of three runs; a convergence control passes when manufactured
+incompatibility does not. No observed disagreement makes two voices candidates for merger; it
+never proves equivalence.
 
-**C. Panel quality and cost.** Baseline: current `autoplan` on the fixed corpus. Comparison: the
-same artifacts through the panel at **N = 2, 4, 6**, with nested versioned rosters so the
-marginal-seat measurement does not silently change composition. A blinded evaluator receives
-de-identified, order-randomized outputs and the fixture rubric, scoring recall of seeded decisions,
-supported-claim precision and unsupported-claim rate, preservation of expected divergences and
-convergence controls, actionability, and reader load.
+**Three-way quality comparison.** Run A, B, and C on the fixed corpus with three-run repetition.
+For panels at **N = 2, 4, 6**, use nested versioned rosters so the marginal-seat measurement does
+not silently change composition. A blinded evaluator receives de-identified, order-randomized
+outputs and the fixture rubric, scoring recall of seeded decisions, supported-claim precision,
+unsupported-claim rate, source-unique supported findings, informative-conflict yield,
+actionability, duplicate/noise load, and reader load.
 
-The panel passes only if it preserves every mandatory divergence fixture, loses no seeded critical
-decision found by the baseline, introduces no higher unsupported-claim rate, and does not lower
-median actionability. `Decisions surfaced` is a diagnostic count, not a quality metric.
+B and C must first meet the home-jurisdiction non-regression floor against A. They must then
+demonstrate §9's positive cross-jurisdiction advantage. C must additionally preserve B's
+characterized divergences, convergence controls, source-unique supported findings, authority,
+and degradation behavior. If B fails, reject or narrow the panel before extraction. If B passes
+and C fails, rework internalization and keep the originals. `Decisions surfaced` is a diagnostic
+count, not a quality metric.
 
 For every dispatch, record phase, seat, fresh/resumed status, uncached input tokens, cache
 read/write tokens, output tokens, and wall-clock. The cost claims to defend are **marginal cost per
@@ -902,6 +1024,7 @@ seat**, **marginal cost per seat-bearing phase**, and total cost at the declared
 
 ## C.3 Panel-size cap
 
-A default cap is proposed as part of this design, to be set from C.2 results. Provisional default is
-**4 seats**, escalating to 6 only where the artifact warrants and the user opts in. The cap is a
-protocol parameter, not a per-skill choice, so it cannot drift upward one skill at a time.
+A default cap is considered only if the panel passes §9, then set from C.2 results. The historical
+provisional default is **4 seats**, escalating to 6 only where the artifact warrants and the user
+opts in. The cap is a protocol parameter, not a per-skill choice, so it cannot drift upward one
+skill at a time.

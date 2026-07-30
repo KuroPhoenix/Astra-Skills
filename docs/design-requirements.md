@@ -1,7 +1,7 @@
 # Astra skill design requirements
 
 **Date:** 2026-07-30
-**Status:** Approved structure; revised for agent review
+**Status:** Approved structure; three-system evaluation policy added
 
 ## 1. Purpose
 
@@ -13,8 +13,12 @@ It governs design work only. A compliant output explains:
 - why the skill should exist;
 - which existing artifacts inform it;
 - what behavior and distinctions must survive condensation;
-- what interface the future skill should present; and
-- which high-level architecture best fits that particular skill.
+- what advantage unification is expected to add beyond selecting the strongest applicable
+  source directly;
+- what interface the future skill should present;
+- which high-level architecture best fits that particular skill; and
+- how a later phase can distinguish routing value, coordination value, internalization
+  fidelity, and retirement safety.
 
 It does not create the skill. Exact prompts, `SKILL.md` frontmatter, tool declarations,
 packaging, tests, tuning, behavioral-preservation claims, and source retirement belong to
@@ -50,6 +54,18 @@ all candidate neighborhoods have been investigated and their triggers compared.
 > Propose one Astra skill only when the user wants one coherent job served through one
 > distinguishable interface, without discarding useful behavior, authority, prerequisites,
 > or component types from its sources.
+
+One public superskill does not imply one flattened prompt. A deep module may expose one
+invocation while preserving source-specific perspectives, playbooks, jurisdictions, authority,
+and failure behavior behind internal seams. Condensation removes duplicate interface and
+machinery; it does not erase useful specialist behavior merely to make the implementation look
+singular.
+
+Every merger proposal must declare its expected positive advantage. If it claims better
+judgment, it must name at least one task class on which combining sources should outperform the
+best applicable single source. If its advantage is routing or maintenance only, say so
+explicitly; those benefits do not establish better output and never excuse behavioral
+regression.
 
 The collision map is evidence to investigate, not a list of predetermined skills. A row may:
 
@@ -164,6 +180,28 @@ confirm or disprove the distinction, but do not build fixtures or a harness yet.
 
 Lack of observed disagreement is evidence for further investigation, not proof of equivalence.
 
+### 6.1 Three comparison systems
+
+Every later evaluation of a source-merging design distinguishes three systems:
+
+| System | Role |
+|---|---|
+| **Source oracle** | The strongest applicable original source for the artifact and jurisdiction, selected before outputs are seen |
+| **Reference convener** | A temporary adapter that coordinates unchanged originals behind the proposed interface |
+| **Self-contained candidate** | The proposed final adapter whose internal modules reproduce the retained behavior without depending on the originals |
+
+The source oracle establishes the quality floor. The reference convener isolates the value of
+routing and coordination from the risk of rewriting source behavior. The self-contained
+candidate isolates internalization fidelity. A neutral wrapper may normalize input and output
+shape for comparison, but it must not add perspective text, expected answers, or decision
+policy.
+
+The reference convener is a validation scaffold, not the end state when the approved goal is to
+delete the originals. If it beats the source oracle but the self-contained candidate does not
+match it, internalization damaged behavior. If better output is claimed and neither combined
+system beats the source oracle on the design's declared advantage class, the design has not
+established a quality benefit from combination.
+
 ## 7. Required per-skill design
 
 Every completed phase-0 design under `designs/` must contain the following sections.
@@ -212,10 +250,11 @@ Assign each occurrence:
 - contribution categories from section 5; and
 - any secondary role in another design.
 
-Mirror proposed changes to the collision source-claim ledger in `docs/phase-0.md` section 5.
-The phase-0 coordinator, not the design agent, applies those changes to the authoritative
-ledger. A claim determines who proposes a source's disposition; it never prevents an agent
-from inspecting that source as evidence.
+Mirror proposed changes to the collision source-claim ledger whose schema and protocol are in
+`docs/phase-0.md` section 5 and whose authoritative state is in
+`docs/phase-0-ledgers.md`. The phase-0 coordinator, not the design agent, applies those changes.
+A claim determines who proposes a source's disposition; it never prevents an agent from
+inspecting that source as evidence.
 
 Do not hide overlaps. `pair-agent`, `office-hours`, and `skillify` are known repeated README
 occurrences, but they are not the complete overlap set. Record cross-neighborhood semantic
@@ -231,8 +270,9 @@ Explain:
 - which behavior is actually shared;
 - which entries are aliases or shallow delegation;
 - which apparent duplicates are different jobs;
-- where source instructions conflict; and
-- why the proposed skill is one coherent module.
+- where source instructions conflict;
+- why the proposed skill is one coherent module; and
+- the positive advantage the merger is expected to add over the source oracle.
 
 ### 7.5 Preserved distinctions
 
@@ -248,10 +288,12 @@ Describe the high-level implementation appropriate to this skill:
 
 - internal modules and their responsibilities, if more than one is needed;
 - the workflow or information flow;
+- how one public interface preserves specialist behavior behind internal seams;
 - where user choices occur;
 - how factual uncertainty and unavailable prerequisites are represented;
-- failure and degradation behavior; and
-- any internal seam justified by actual variation.
+- failure and degradation behavior;
+- any internal seam justified by actual variation; and
+- which architectural choices remain hypotheses until the later comparison systems are run.
 
 Do not create a seam for hypothetical reuse. One adapter is a hypothetical seam; two justified
 adapters make it real. Extract a shared Astra module only after at least two per-skill designs
@@ -267,8 +309,9 @@ Do not express tool pre-approval as tool restriction. Detailed permission design
 deferred, but known authority requirements and forbidden effects must remain visible.
 
 For every consumed independent reference, propose a `consuming_designs` update to the
-reference and cleanup ledger in `docs/phase-0.md` section 6. The global ledger, not this
-design, owns the reference's keep, defer, or exclude disposition.
+reference and cleanup ledger whose schema is in `docs/phase-0.md` section 6 and whose state is
+in `docs/phase-0-ledgers.md`. The global ledger, not this design, owns the reference's keep,
+defer, or exclude disposition.
 
 ### 7.8 Manual bridge
 
@@ -277,10 +320,34 @@ best approximates the proposed skill. State missing or unavailable prerequisites
 
 ### 7.9 Deferred implementation and validation
 
-List only the later decisions and validation obligations specific to this skill, such as a
-contrastive behavior the future implementation must preserve, a prerequisite failure path, or
-a source-specific retirement gate. Do not repeat the global deferred-work list;
-`docs/phase-0.md` section 8 is authoritative for phase-wide exclusions.
+List only the later decisions and validation obligations specific to this skill. Every design
+that merges sources must define:
+
+- its declared advantage class and the behavior that would demonstrate a positive win;
+- the source-oracle, reference-convener, and self-contained-candidate comparison;
+- a fixed corpus covering each source's home jurisdiction, the claimed advantage class,
+  expected-divergence cases, expected-convergence controls, and prerequisite failures;
+- paired runs on identical artifacts, with repeated trials and blinded, order-randomized
+  evaluation where judgments are subjective;
+- quality measures appropriate to the job, including critical-decision or defect recall,
+  supported-claim precision, unsupported-claim rate, source-unique supported findings,
+  actionability, duplicate/noise load, routing accuracy, cost, and latency where applicable;
+- a home-jurisdiction non-regression gate against the source oracle;
+- a positive-advantage gate against the source oracle on at least one declared combination
+  class whenever better output is claimed;
+- an internalization-fidelity gate comparing the self-contained candidate with the reference
+  convener; and
+- a source-specific retirement gate covering behavior, authority, dependencies, delivery
+  shape, degradation, and user approval.
+
+The design must state what a failed gate changes. A failed coordination gate rejects or narrows
+the combined architecture. A convener win followed by a self-contained loss blocks
+internalization and retirement. Matching final recommendations alone is insufficient when a
+source-unique playbook or informative disagreement disappeared.
+
+Do not repeat the global deferred-work list; `docs/phase-0.md` section 8 is authoritative for
+phase-wide exclusions. Phase 0 records these obligations but does not build the corpus, wrapper,
+convener, candidate, harness, or benchmark.
 
 ### 7.10 Provenance and open questions
 
@@ -304,6 +371,12 @@ Possible designs include:
 Choose the smallest design that preserves the source value. Do not create universal panel,
 method-library, adapter-set, pipeline, or composition runtimes during this phase.
 
+Selecting one superskill as the future interface does not settle its internal architecture.
+Treat a panel, router, mode set, or direct workflow as a hypothesis until the skill-specific
+comparison in section 7.9 establishes its claimed advantage. A temporary reference convener may
+be implemented later to test that hypothesis; composition by reference is not an acceptable
+final implementation for a source whose retirement requires self-containment.
+
 ## 9. Worked example: Astra Critique
 
 The restored design at `designs/astra-critique.md` reproduces the last reviewed unified design
@@ -323,7 +396,7 @@ Its source analysis demonstrates the required reasoning:
 |---|---|
 | `grill-me`, `grill-with-docs` | Delegating stubs contribute machinery; they do not establish new perspectives. A stub can still carry authority fields |
 | `grilling` | An interrogation protocol that returns every decision to the user holds no priors of its own: it contributes protocol and machinery, not a perspective |
-| `autoplan` | Sequencing specialist reviews contributes protocol, not another perspective |
+| `autoplan` | Fresh specialist contexts, explicit blind filing, dual-model review, consensus tables, degradation tags, decision auditing, and staged auto-decisions contribute protocol and machinery, not another perspective |
 | `/diss`, `/diss-api`, `diss-infra` | Shared adversarial behavior can coexist with subject-specific jurisdictions and playbooks; register may vary without splitting the perspective |
 | `diss-claudemd` | A name matching a family is not membership in it. Read the body: this one shares `/trim`'s role and playbook, not `/diss`'s voice |
 | `/elon` | First-principles reconstruction contributes a distinct perspective |
@@ -335,10 +408,14 @@ Its source analysis demonstrates the required reasoning:
 | `plan-devex-review` | Time to first success and developer friction contribute a developer-experience perspective and playbooks |
 | `plan-devex-review`, `devex-review` | One perspective can span a plan and a running artifact: that is two jurisdictions with two playbooks, not two voices |
 
-The example chooses a panel because several sources have overlapping standing but can reach
-incompatible recommendations. Blind filing, conflict handling, verification, and procedural
-rendering are Astra Critique design decisions. Other Astra skills must not copy them unless
-their own source evidence establishes the same need.
+The example proposes a panel because several sources have overlapping standing but can reach
+incompatible recommendations. That architecture remains a hypothesis until its later
+source-oracle, reference-convener, and self-contained-candidate comparisons pass. `autoplan`
+already implements fresh reviewer contexts, blind filing, dual-model review, degradation, and
+decision auditing for plans; those mechanisms are baseline evidence to preserve or improve,
+not Astra Critique innovations. Astra Critique's claimed advantage is broader jurisdiction plus
+explicit handling of normative conflicts. Other Astra skills must not copy the panel unless
+their own source evidence and declared advantage establish the same need.
 
 `designs/astra-critique.md` was normalized in place to section 7 on 2026-07-30, preserving the
 condensation and panel reasoning in labeled historical appendices. That normalization resolved the
@@ -365,13 +442,16 @@ must:
 4. State the shared user job and personal value, then split entries that do not serve it.
 5. Map each source contribution, primary disposition, secondary role, and preserved
    distinction.
-6. Propose the smallest coherent interface and a skill-specific high-level design.
-7. Compare its trigger with any available peer designs and record possible collisions for the
+6. State the merger's expected positive advantage over the source oracle.
+7. Propose the smallest coherent interface and a skill-specific high-level design.
+8. Define the three comparison systems, skill-specific corpus classes, quality gates, and the
+   consequence of failure.
+9. Compare its trigger with any available peer designs and record possible collisions for the
    final reconciliation pass.
-8. Record the current manual bridge and skill-specific deferred work.
-9. Record proposed changes to both phase-0 ledgers inside the assigned design.
-10. Self-review against section 11.
-11. Change only the assigned design file unless given broader authority.
+10. Record the current manual bridge and skill-specific deferred work.
+11. Record proposed changes to both phase-0 ledgers inside the assigned design.
+12. Self-review against section 11.
+13. Change only the assigned design file unless given broader authority.
 
 Agents may inspect sources outside their assigned neighborhood; “change only the assigned
 design” is an edit boundary, not an evidence boundary. Agents do not assume peers have already
@@ -408,6 +488,18 @@ account for every source without taking an already claimed primary home.
 - [ ] Every overlap or cross-role names its primary home and explicit secondary role or exclusion.
 - [ ] Every merger and retained distinction has a written evidence basis.
 - [ ] The design states what later behavioral validation must prove.
+- [ ] One public interface does not flatten source-specific perspectives, playbooks,
+      jurisdictions, authority, or failure behavior.
+
+### Evaluation contract
+
+- [ ] The design names its expected positive advantage over the source oracle.
+- [ ] Source-oracle, reference-convener, and self-contained-candidate systems are distinguished.
+- [ ] Home-jurisdiction, advantage, divergence, convergence, and prerequisite-failure cases are
+      named.
+- [ ] Home non-regression, positive advantage, internalization fidelity, and retirement are
+      separate gates.
+- [ ] Every failed gate has an explicit architectural or retirement consequence.
 
 ### Design quality
 
@@ -433,9 +525,11 @@ A per-skill design is ready for review when:
    roster;
 3. source contributions and preserved distinctions are evidence-backed;
 4. the proposed architecture is concrete enough to guide later implementation planning;
-5. implementation details and behavioral validation remain explicitly deferred;
-6. the manual bridge is usable or its missing prerequisite and consequence are named; and
-7. the review checklist passes without placeholders or authority conflicts.
+5. the expected advantage and three-system validation contract can distinguish routing,
+   coordination, internalization, and retirement failures;
+6. implementation details and behavioral validation remain explicitly deferred;
+7. the manual bridge is usable or its missing prerequisite and consequence are named; and
+8. the review checklist passes without placeholders or authority conflicts.
 
 Passing these requirements means the design is grounded. It does not mean the skill is
 implemented, validated, installed, or safe to use as a replacement.

@@ -9,8 +9,19 @@ its interface, and the historical README amendments that followed from it.
 
 > **Current authority:** `docs/design-requirements.md` governs per-skill design work. This
 > document is the critique-specific worked design, not a universal condensation policy and
-> not an implemented skill. Its packaging, tiering, cost, and runtime details remain historical
-> proposals unless a current per-skill design explicitly retains them.
+> not an implemented skill.
+>
+> **Historical sections.** §2 (design decisions), §4 (field-level schema), §10 (packaging and
+> README amendments), and §11 (cost model and measurement protocol) predate the phase-0 scope,
+> as does every reference to fixtures, harnesses, or benchmarks elsewhere in this document.
+> `docs/phase-0.md` section 8 defers packaging, schemas, routers, tiers, telemetry, and
+> conformance harnesses. Those sections are retained as research evidence because the
+> condensation and panel reasoning they support is this document's substance. They are not
+> phase-0 requirements, and nothing in them is settled.
+>
+> **README anchors are stale.** The `README.md` hash recorded in §13 predates commit `a037f20`
+> and everything after it, so every `README.md:<line>` citation below is invalid under this
+> document's own rule (§13). Cite README headings instead.
 
 > 留其精華，去之糟粕 — but a voice is not 糟粕 merely because another voice already spoke.
 
@@ -44,11 +55,15 @@ it is real: `plan-ceo-review` loads 1,476 lines to deliver roughly 600 lines of 
 
 ---
 
-## 2. Decisions locked
+## 2. Proposed design decisions
 
-| # | Decision | Rationale |
+> **Historical.** These were recorded as locked decisions before phase 0 defined its scope.
+> They are proposals. D1 especially: packaging is deferred by `docs/phase-0.md` section 8, and
+> the install question D1 claimed to close is still listed as open in the README.
+
+| # | Proposed decision | Rationale |
 |---|---|---|
-| D1 | **Astra ships as one plugin. The plugin is the self-contained module.** | Shared `personas/`, `playbooks/`, `protocol/` are inside the unit. Unlike `guard` reaching into gstack, nothing here can be uninstalled independently. Closes `README.md:577`. |
+| D1 | *(historical — packaging deferred)* **Astra ships as one plugin. The plugin is the self-contained module.** | Shared `personas/`, `playbooks/`, `protocol/` would sit inside the unit. Unlike `guard` reaching into gstack, nothing could be uninstalled independently. Recorded against the README's install question, which remains open. |
 | D2 | **Decision catalogue → blind round → seat-declared conflict scan → targeted response → resolution → procedural rendering.** | Known decisions receive shared identifiers before seats run. Independence is preserved by *ordering* — each seat commits its claims before seeing any other's. Debate is bought without spending diversity of prior. |
 | D3 | **The chair is procedural. It sorts; it does not rule.** | A mediator with substantive power is a homogenizer in a neutral hat, and it touches the output last. |
 | D4 | **Distinctness is decided by the behavioral disagreement test (§9, §11.3).** | A panel whose members cannot disagree burns N dispatches to produce one opinion. Reading proposes a distinction; a contrastive run must exercise it. |
@@ -68,6 +83,12 @@ it is real: `plan-ceo-review` loads 1,476 lines to deliver roughly 600 lines of 
 | **Playbook** | *What* evidence it gathers and which tests it performs | `diss.md`, “Code Map” (`:141-180`), “Risk Classification” (`:182-205`), and verifier (`:282-295`); `plan-devex-review`, “TTHW Benchmarks” (`:922`); `cso`, “Attack Surface Census” (`:919-923`) |
 | **Jurisdiction** | *Which* artifact, this invocation | declared in the convening skill's panel table |
 | **Protocol** | Blindness, conflict handling, rendering, user control | `protocol/` |
+
+> **Historical directory layout.** The shared `personas/`, `playbooks/`, and `protocol/`
+> directories are a single-design proposal. `docs/design-requirements.md` section 7.6 and
+> `docs/phase-0.md` section 8 both require two designs demonstrating the same seam before a
+> shared Astra module is extracted. Read the four layers as analysis of what must stay
+> distinct, not as an approved layout.
 
 The playbook layer is not optional. `diss.md:151-193` builds a code map and risk
 classification *before any voice speaks*. That is neither Linus's personality nor generic
@@ -116,8 +137,13 @@ decision. The catalogue can therefore improve coverage but cannot guarantee it.
 
 ## 4. Panel module interface
 
-The panel is a deep module. This is its interface — every field below is load-bearing for at
-least one chair invariant (§6), conflict mechanism (§8), or reader bound.
+> **Historical.** `docs/phase-0.md` section 8 defers exact schemas. The YAML below is retained
+> because it records *which distinctions must survive condensation* — structured stance, claim
+> identity, revision status, reader bounds — not because any field is specified. Read it as
+> design reasoning, not as a contract.
+
+The panel is a deep module. This is the interface the design proposes — every field below is
+load-bearing for at least one chair invariant (§6), conflict mechanism (§8), or reader bound.
 
 ### PanelInvocation
 
@@ -429,7 +455,10 @@ quality measurements. The first mandatory contrastive fixture is Linus versus Ra
 working code with stubbed tests; it should yield incompatible dispositions without either
 runtime persona being told to disagree.
 
-### Worked example — adversarial critique cluster (15 skills)
+### Worked example — adversarial critique cluster (15 of the row's 16 skills)
+
+> `devex-review` was added to the row after this analysis was written and is **not** assessed
+> below. See §10.3 and §12.
 
 | Absorbed | Prior | Verdict |
 |---|---|---|
@@ -471,46 +500,72 @@ Ramsay refuses it. A roster carved by domain collapses both into "the code quali
 
 ---
 
-## 10. Packaging — README amendments
+## 10. Packaging — historical amendment proposals (not applied)
 
-D1 locks plugin-root sharing. The seam **moves**; no new exception is added.
+> **Historical and superseded.** This section proposed amendments to `README.md` that were
+> **never applied**. `docs/phase-0.md` section 8 defers packaging, and
+> `docs/design-requirements.md` section 2 keeps the README authoritative as source inventory,
+> so the README text these subsections proposed to replace still stands as written. Retained to
+> record what was considered and why.
 
-### 10.1 Replace §2(a) (`README.md:132-141`)
+Under D1, plugin-root sharing would move the self-containment seam rather than add a new
+exception.
 
-Current text declares skill-level self-containment with a single carve-out for router
-discovery. Replace with:
+### 10.1 Proposed replacement of Principles §2(a) — not applied
+
+The README declares **skill-level** self-containment with a single carve-out for router
+discovery (Principles, "2. Self-containment"). This section proposed replacing it with
+**plugin-level** self-containment:
 
 > **(a) Filesystem self-containment — the plugin is the module.** Every astra implementation
 > file lives inside the plugin. Skills may consume declared shared modules under
 > `protocol/`, `personas/`, and `playbooks/`; nothing reaches outside the plugin.
 
-Consequences:
+**That replacement was not made.** The README's skill-level rule and its router exception
+remain the active statement of the principle. The proposal's stated consequences would have
+been:
 
-- **The router exception disappears.** Router discovery becomes ordinary intra-plugin
-  composition, not a carve-out.
-- **MCP is not a filesystem exception at all.** It is an external runtime prerequisite under
-  §2(b), which is a different category. `README.md:548` is recategorized accordingly.
-- **`bin/` rule (`README.md:197`) and "vendor it, never link out" (`:615`) still apply**, at
-  the plugin boundary rather than the skill boundary.
-- **Skills are no longer independently portable.** Stated, not implied.
+- **The router exception disappears** — router discovery becomes ordinary intra-plugin
+  composition rather than a carve-out.
+- **MCP stops being a filesystem exception at all** — it becomes an external runtime
+  prerequisite under §2(b), a different category. The README's plugin treatment table would be
+  recategorized accordingly.
+- **The `bin/` rule and "vendor it, never link out" still apply**, at the plugin boundary
+  rather than the skill boundary.
+- **Skills are no longer independently portable** — stated, not implied.
 
-### 10.2 Close the install question (`README.md:577`)
+### 10.2 Proposed closure of the install question — not applied
 
-"Should astra ship as a plugin?" is answered: **yes**. The two costs that section names are
-accepted and become implementation constraints — paths resolve through
-`${CLAUDE_PLUGIN_ROOT}` / `${CLAUDE_SKILL_DIR}`, never literals; and command names are
-namespaced (`/astra:denounce`), which `/astra-tune` must match when mining transcripts.
+This section answered "Should astra ship as a plugin?" with **yes**, accepting the two costs the
+README names as implementation constraints: paths resolving through `${CLAUDE_PLUGIN_ROOT}` /
+`${CLAUDE_SKILL_DIR}` rather than literals, and namespaced command names (`/astra:denounce`)
+that any later transcript mining would have to match.
 
-### 10.3 Correct the collision map
+**The question remains open.** It is still listed under the README's open questions, and
+`docs/phase-0.md` section 8 defers install mechanism, packaging, and namespacing.
 
-The adversarial-critique row keeps `plan-eng-review` as a distinct persona. Cluster totals
-are unaffected — it was never proposed for deletion, only for merger into another voice.
-The same row retains `/trim` as a conditional prompt/skill-review composition pending its
-behavioral distinctness fixture; §9 now accounts for all 15 entries.
+### 10.3 Collision-map corrections — applied
+
+Both corrections proposed for the adversarial-critique row hold in the current README:
+`plan-eng-review` is retained as a distinct persona rather than merged into Linus, and `/trim`
+is retained as a conditional prompt/skill-review composition pending its behavioral-distinctness
+fixture. Cluster totals were unaffected — neither entry was ever proposed for deletion, only for
+merger into another voice.
+
+§9's worked example accounts for the 15 entries the row held at the time of writing. The row now
+holds 16: `devex-review` was subsequently found missing from the inventory and added. It is
+**not** analyzed in §9, and its relationship to `plan-devex-review` is an open question — see
+§12.
 
 ---
 
 ## 11. Cost model and measurement plan
+
+> **Historical.** `docs/phase-0.md` section 8 defers telemetry, conformance harnesses, and
+> runtime preservation fixtures, and `docs/design-requirements.md` section 6 limits this phase to
+> documentary distinctness with the confirming behavior *recorded, not built*. What follows is
+> retained as the specification of what a later phase would have to measure. It authorizes no
+> fixture, harness, or benchmark, and none of its constants are measurements.
 
 ### 11.1 Complete model
 
@@ -618,8 +673,8 @@ size.
 
 ### 11.4 Panel-size cap
 
-A default cap is declared as part of this design, set from §11.3 results. Provisional default
-is **4 seats**, escalating to 6 only where the artifact warrants and the user opts in.
+A default cap is proposed as part of this design, to be set from §11.3 results. Provisional
+default is **4 seats**, escalating to 6 only where the artifact warrants and the user opts in.
 The cap is a protocol parameter, not a per-skill choice, so it cannot drift upward one skill
 at a time. The claim and final-position limits in §4 are governed the same way and are
 validated by the reader-load measurements before implementation planning closes.
@@ -633,8 +688,13 @@ validated by the reader-load measurements before implementation planning closes.
 - **Conformance harness.** Where C1–C10 run, and whether a failing chair transcript blocks
   output or annotates it.
 - **Persona roster and Tier 1/Tier 2 assignment.** Unchanged from `README.md` open questions.
-- **monster-prompt.** Unchanged. D1 makes it sharper — if astra is one plugin, monster-prompt
-  is either inside it or explicitly outside.
+- **`devex-review` versus `plan-devex-review`.** Added to the adversarial-critique row after
+  this design was written, and not analyzed in §9. One audits a live developer experience, the
+  other reviews a plan; the names are near-identical, which is exactly the routing collision
+  this repo exists to catch. Whether they are one perspective across two jurisdictions or two
+  decision policies is untested.
+- **monster-prompt.** Unchanged. D1, if adopted, would sharpen it — if astra is one plugin,
+  monster-prompt is either inside it or explicitly outside.
 
 ---
 
@@ -669,5 +729,11 @@ b4e029d6c927b1ba671748b5d23e026d1c8059bde96e955fb504490da22b9b69  diss.md
 efd896c5a85f3983c2dd979676736855bfae5a6aca75ab32b78948ba8c6f5559  README.md working draft
 ```
 
-The `README.md` hash records the unstaged working draft whose amendments §10 specifies. That
-file remains a follow-up and is deliberately not part of this spec commit.
+The `README.md` hash records the then-unstaged working draft whose amendments §10 proposed. That
+draft was committed at `a037f20` and revised afterwards, so the recorded hash no longer matches
+the file. Under the rule above, **every `README.md:<line>` anchor in this document is invalid**
+and must not be relied on; cite README headings instead. The §10 amendments those anchors pointed
+at were never applied and are recorded as historical.
+
+Gstack and command hashes are unaffected — they were taken against `~/.claude/skills/gstack/` and
+`~/.claude/commands/` and remain the reproducible basis for §1, §3, §7, and §9.

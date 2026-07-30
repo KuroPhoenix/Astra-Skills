@@ -21,15 +21,18 @@ Not a tidiness project. Measured on this machine, July 2026:
 | Measurement | Value | Source |
 |---|---|---|
 | Entries in the skills directory | **271** | `~/.claude/skills/` — 71 real dirs, 200 symlinks |
-| Of those, live and invocable | **138** | 133 symlinks have missing targets |
+| Of those, live | **138** | 133 symlinks have missing targets |
+| Invocable skills those 138 entries hold | **192** | `gstack/` is **one** entry holding **54** sub-skills |
 | Distinct skills the agent invoked in one month | **16** | 214 transcripts, `Skill` tool calls |
 | Distinct skills invoked by any path | **17** | adds `python-patterns`, typed only |
-| Live skills in `~/.claude/skills/` that fired at all | **5 of 138** | `code-tracing`, `python-patterns`, `github`, `receiving-code-review`, `doc-coauthoring` |
+| Live skills in `~/.claude/skills/` that fired at all | **5 of 192** | `code-tracing`, `python-patterns`, `github`, `receiving-code-review`, `doc-coauthoring` |
 | The rest of the working set | plugin skills (9) · local commands (2) · 1 broken link | `superpowers:*`, `shell-scripting:*`, `/diss`, `/pr` |
 | gstack skills carrying usage-logging code | **82** | `grep -rl skill-usage.jsonl` |
 | Times that logging has ever executed | **0** | `~/.gstack/analytics/` does not exist |
 | Plugins enabled | **16** | from 4 marketplaces |
 | Components those plugins add | **47 skills · 6 commands · 6 agents · 3 MCP servers · 2 hooks · 1 LSP server** | see [Plugins](#plugins) |
+| Harness built-in skills | **12** | shipped with the CLI — no directory, no manifest |
+| **Total invocable skills** | **251** | 192 personal + 47 plugin + 12 built-in |
 | MCP tools referenced by local commands but **not configured** | **5** | jira, awslabs-mysql ×2, context-mode ×2 |
 
 The real working set, mined from transcripts. **Two cohorts, counted separately** — they
@@ -60,6 +63,55 @@ Only the agent-fired column is evidence about autonomous discovery; see
 
 **160 invocations total — 86 agent-fired across 16 skills, 74 typed. 17 distinct skills
 across both paths: 5 live personal skills, 9 plugin skills, 2 local commands, 1 broken link.**
+
+### Four source categories, not three
+
+The counts above span four delivery mechanisms, and one of them has no directory to scan. A
+census that reads only `~/.claude/skills/` misses two of the four:
+
+| Category | Count | Enumerated from |
+|---|---:|---|
+| Personal skills — top-level entries | 138 live · 133 dangling | `~/.claude/skills/*/SKILL.md` |
+| Personal skills — nested under one entry | **54** | `~/.claude/skills/gstack/*/SKILL.md` |
+| Plugin components | 47 skills · 6 cmds · 6 agents · 3 MCP · 2 hooks · 1 LSP | plugin **manifests** — see [Plugins](#plugins) |
+| Local commands | 8 | `~/.claude/commands/*.md` |
+| **Harness built-in skills** | **12** | **nothing on disk** — shipped with the CLI |
+
+Two consequences:
+
+**`gstack` is one entry holding 54 skills.** An entry count is not a skill count. `/browse`,
+`/ship`, `/guard`, `plan-ceo-review` and 50 others each carry their own description and each
+bill the context budget every turn, yet all 54 hide behind a single line in `ls`. The 271/138
+figures are entry counts and were never invocable-skill counts.
+
+**Harness built-ins have no path and no manifest.** These 12 are invocable, and ten of them
+already appeared in the collision map below without ever being counted here:
+
+`artifact-capabilities` `artifact-design` `dataviz` `fewer-permission-prompts` `init`
+`keybindings-help` `loop` `run` `schedule` `security-review` `simplify` `update-config`
+
+They cannot satisfy the provenance rule in `docs/design-requirements.md` section 4.1 — there is
+no immutable revision to hash, and their bytes are pinned to a CLI release that auto-updates.
+**Unresolved:** how a built-in earns a ledger row without a reproducible hash.
+
+#### Coverage check
+
+Every measured source, diffed against what this document claims:
+
+| Direction | Result |
+|---|---|
+| In the inventory, absent from this document | **3** — `artifact-capabilities`, `devex-review`, `run`, all now added below |
+| Claimed here, absent from the inventory | **0** — every remaining difference is a namespace prefix, an MCP server, or a plugin agent |
+
+Method: extract every backticked identifier from the collision map and the reference groups;
+diff against `find -L ~/.claude/skills -maxdepth 3 -name SKILL.md`, the plugin manifests,
+`~/.claude/commands/`, and the built-in list above. **Re-run on every plugin install and CLI
+update** — it is the only check that holds the map to the machine rather than to itself.
+
+`devex-review` is the instructive miss. It is a distinct live gstack skill whose name nearly
+duplicates `plan-devex-review`, which was already mapped: one audits a live developer
+experience, the other reviews a plan. That is exactly the routing collision this repo exists to
+catch, and it survived because nothing had yet diffed the map against disk.
 
 ### The two failures this repo fixes
 
@@ -398,10 +450,10 @@ entries separate, or exclude entries with a reason. **Usage** shows invocations 
 
 | Candidate neighborhood | Entries to investigate | n | Usage |
 |---|---|---:|---:|
-| **Adversarial critique** | `grilling`, `grill-me`, `grill-with-docs`, `/diss`, `/diss-api`, `diss-infra`, `diss-claudemd`, `/elon`, `/trim`, `office-hours`, `plan-ceo-review`, `plan-eng-review`, `plan-design-review`, `plan-devex-review`, `autoplan` | 15 | **50** |
+| **Adversarial critique** | `grilling`, `grill-me`, `grill-with-docs`, `/diss`, `/diss-api`, `diss-infra`, `diss-claudemd`, `/elon`, `/trim`, `office-hours`, `plan-ceo-review`, `plan-eng-review`, `plan-design-review`, `plan-devex-review`, `devex-review`, `autoplan` | 16 | **50** |
 | **Code review** | `code-review`, `review`, `requesting-code-review`, `receiving-code-review`, `superpowers:requesting-code-review`, `superpowers:receiving-code-review`, `feature-dev:code-reviewer`, `code-review:code-review`, `security-review`, `simplify`, `code-simplifier`, `health` | 12 | **9** |
 | **Browser & QA** | `agent-browser`, `browse`, `connect-chrome`, `open-gstack-browser`, `agentcore`, `vercel-sandbox`, `electron`, `webapp-testing`, `scrape`, `skillify`, `slack`, `pair-agent`, `setup-browser-cookies`, `benchmark`, `dogfood`, `qa`, `qa-only`, `playwright` MCP | 18 | 0 |
-| **Design & visual** | `design`, `design-system`, `design-consultation`, `design-html`, `design-shotgun`, `design-review`, `ui-styling`, `ui-ux-pro-max`, `frontend-design`, `theme-factory`, `brand`, `brand-guidelines`, `banner-design`, `canvas-design`, `algorithmic-art`, `slides`, `dataviz`, `artifact-design`, `web-artifacts-builder`, `diagram` | 20 | 0 |
+| **Design & visual** | `design`, `design-system`, `design-consultation`, `design-html`, `design-shotgun`, `design-review`, `ui-styling`, `ui-ux-pro-max`, `frontend-design`, `theme-factory`, `brand`, `brand-guidelines`, `banner-design`, `canvas-design`, `algorithmic-art`, `slides`, `dataviz`, `artifact-design`, `artifact-capabilities`, `web-artifacts-builder`, `diagram` | 21 | 0 |
 | **Plan & spec** | `superpowers:brainstorming`, `superpowers:writing-plans`, `superpowers:executing-plans`, `superpowers:subagent-driven-development`, `spec`, `to-spec`, `sdd`, `planb`, `plan-tune`, `wayfinder`, `to-tickets`, `implement`, `prototype`, `feature-dev:code-architect`, `feature-dev:feature-dev` | 15 | **15** |
 | **Ship & VCS** | `ship`, `land-and-deploy`, `canary`, `landing-report`, `setup-deploy`, `/pr`, `/commit`, `/build-push-ecr`, `commit-commands:commit`, `commit-commands:commit-push-pr`, `commit-commands:clean_gone`, `changelog`, `document-release`, `resolving-merge-conflicts`, `superpowers:finishing-a-development-branch`, `superpowers:using-git-worktrees`, `github` | 17 | **49** |
 | **Docs & knowledge** | `document-generate`, `doc-coauthoring`, `/doc`, `make-pdf`, `internal-comms`, `learn`, `teach`, `research`, `rtfm`, `init`, `claude-md-management:revise-claude-md`, `claude-md-management:claude-md-improver`, `domain-modeling`, `slack-gif-creator` | 14 | **2** |
@@ -409,17 +461,21 @@ entries separate, or exclude entries with a reason. **Usage** shows invocations 
 | **Codebase comprehension** | `how`, `code-tracing`, `codebase-design`, `improve-codebase-architecture`, `feature-dev:code-explorer` | 5 | **11** |
 | **Skill meta** | `skill-creator`, `skill-creator:skill-creator`, `writing-great-skills`, `superpowers:writing-skills`, `skillify`, `ask-matt`, `gstack`, `_gstack-command`, `prompt-lookup`, `benchmark-models`, `gstack-upgrade` | 11 | **1** |
 | **Delegation & autonomy** | `coding-agent`, `codex`, `superpowers:dispatching-parallel-agents`, `nightnight`, `loop`, `loop-goal`, `schedule`, `pair-agent` | 8 | 0 |
-| **Testing** | `tdd`, `superpowers:test-driven-development`, `bdd`, `spock`, `nextjs-test`, `shell-scripting:bats-testing-patterns`, `superpowers:verification-before-completion` | 7 | **6** |
+| **Testing** | `tdd`, `superpowers:test-driven-development`, `bdd`, `spock`, `nextjs-test`, `shell-scripting:bats-testing-patterns`, `superpowers:verification-before-completion`, `run` | 8 | **6** |
 | **Context & handoff** | `context-save`, `context-restore`, `strategic-compact`, `handoff`, `nowhat` | 5 | 0 |
 | **Safety** | `careful`, `freeze`, `unfreeze`, `guard` | 4 | 0 |
 | **Setup & config** | `setup-aurora-pg-mcp`, `setup-gbrain`, `sync-gbrain`, `setup-matt-pocock-skills`, `update-config`, `keybindings-help`, `fewer-permission-prompts`, `claude-code-setup:claude-automation-recommender` | 8 | 0 |
 | **iOS** | `ios-qa`, `ios-fix`, `ios-design-review`, `ios-sync`, `ios-clean` | 5 | 0 |
 | **Ops & routine** | `retro`, `meeting`, `office-hours` | 3 | 0 |
 
-**Inventory: 176 candidate occurrences across 17 neighborhoods (~173 distinct).** Three entries
+**Inventory: 179 candidate occurrences across 17 neighborhoods (176 distinct).** Three entries
 appear in two neighborhoods and are counted twice — `pair-agent` (browser / delegation),
 `office-hours` (critique / ops), and `skillify` (browser / skill-meta). Phase 0 assigns each a
 primary home and records any secondary role.
+
+`devex-review`, `artifact-capabilities`, and `run` were added by the [coverage
+check](#coverage-check) after the map was first written; the neighborhood each landed in is a
+candidate placement like every other row, not a decision.
 
 ### Not merge targets — reference skills
 

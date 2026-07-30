@@ -72,9 +72,16 @@ recoverable through Git history.
 
 ## 5. Collision source-claim ledger
 
-This document owns the authoritative ledger for all 176 collision-map occurrences in
+This document owns the authoritative ledger for all 179 collision-map occurrences in
 README.md section “The collision map.” The ledger is populated during phase-0 execution and
 must contain one row per occurrence, including repeated appearances of the same source.
+
+The occurrences span four delivery mechanisms, enumerated in README section “Four source
+categories, not three.” Two of them are invisible to a directory scan: 54 personal skills nest
+under the single `gstack/` entry, and 12 harness built-in skills have no path and no manifest at
+all. **Open:** a built-in cannot produce the immutable revision or content hash that
+`docs/design-requirements.md` section 4.1 requires, so the provenance rule needs either a
+version-pinning alternative or an explicit exception before those 12 rows can resolve.
 
 Each row records:
 
@@ -174,21 +181,27 @@ are extracted only after at least two implementations demonstrate the same seam.
 
 Phase 0 is complete when:
 
-1. Every collision-map occurrence has a resolved row in the collision source-claim ledger.
-2. Every live reference and every dangling entry has a `keep`, `defer`, or `exclude` row in the
+1. **The ledgers reconcile against the measured inventory.** Every invocable skill, command,
+   agent, MCP server, hook, and LSP server present on this machine appears in the collision
+   source-claim ledger, the reference and cleanup ledger, or an explicit out-of-scope record.
+   Coverage is established by diffing the ledgers against the machine — the procedure in README
+   section “Coverage check” — never by reading these documents alone. A source absent from the
+   collision map is not thereby out of scope; it is unaccounted for.
+2. Every collision-map occurrence has a resolved row in the collision source-claim ledger.
+3. Every live reference and every dangling entry has a `keep`, `defer`, or `exclude` row in the
    reference and cleanup ledger.
-3. Every occurrence has exactly one primary disposition, and every secondary role names its
+4. Every occurrence has exactly one primary disposition, and every secondary role names its
    primary home.
-4. Every proposed Astra skill complies with `docs/design-requirements.md`, including
+5. Every proposed Astra skill complies with `docs/design-requirements.md`, including
    `status: proposed`, a `now` / `next` / `later` priority, and evidence of personal value.
-5. Every proposed skill has one distinguishable job and survives the roster-wide trigger
+6. Every proposed skill has one distinguishable job and survives the roster-wide trigger
    comparison.
-6. Every manual bridge is usable, or its missing prerequisite and consequence are named.
-7. No agent, MCP server, hook, LSP server, command, or other component is flattened into
+7. Every manual bridge is usable, or its missing prerequisite and consequence are named.
+8. No agent, MCP server, hook, LSP server, command, or other component is flattened into
    prompt text without an explicit disposition.
-8. Reference skills remain independently addressable.
-9. The final roster count emerges from the evidence rather than being forced to equal 17.
-10. No implementation, runtime infrastructure, behavioral-preservation claim, or source
+9. Reference skills remain independently addressable.
+10. The final roster count emerges from the evidence rather than being forced to equal 17.
+11. No implementation, runtime infrastructure, behavioral-preservation claim, or source
     retirement is required to use the roster.
-11. README and the active documents use the layout and authority model in section 4.
-12. Existing skills, plugins, and unrelated `.idea/` files remain untouched.
+12. README and the active documents use the layout and authority model in section 4.
+13. Existing skills, plugins, and unrelated `.idea/` files remain untouched.

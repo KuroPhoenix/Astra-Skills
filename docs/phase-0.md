@@ -73,6 +73,7 @@ docs/
   design-requirements.md
   phase-0.md
   phase-0-ledgers.md
+  design-roadmap.md
 designs/
   astra-critique.md
 skills/
@@ -84,6 +85,7 @@ skills/
 | `docs/design-requirements.md` | The normative contract for every per-skill design |
 | `docs/phase-0.md` | Phase scope, ledger schemas and protocol, coordination, and acceptance |
 | `docs/phase-0-ledgers.md` | Coordinator-owned authoritative state for source claims, reference/cleanup dispositions, and separate component records |
+| `docs/design-roadmap.md` | Proposed design sequence, cross-design dependencies, neighborhood derivations, and provisional source allocation |
 | `designs/<astra-name>.md` | One proposed Astra skill's evidence, interface, distinctions, and high-level design |
 | `designs/astra-critique.md` | The Astra Critique design, normalized to `docs/design-requirements.md` section 7 and serving as its reference example |
 | `skills/` | Reserved for later implementation; empty during phase 0 |

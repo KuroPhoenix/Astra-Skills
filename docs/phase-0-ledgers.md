@@ -1,6 +1,6 @@
 # Astra phase-0 ledgers
 
-**Snapshot:** 2026-07-30
+**Snapshot:** 2026-07-31
 
 **Inventory baseline:** `README.md` at `07fcbdf` plus the live registrations named below
 
@@ -43,14 +43,14 @@ occurrence and list every candidate neighborhood.
 | `cm-adversarial-critique-06` | `diss-infra` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-adversarial-critique-07` | `diss-claudemd` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-adversarial-critique-08` | `/elon` | command | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-adversarial-critique-09` | `/trim` | command | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-adversarial-critique-09` | `/trim` | command | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: prompt or skill remediation | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-adversarial-critique-10` | `office-hours` | skill | live | Adversarial critique; Ops & routine | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-adversarial-critique-11` | `plan-ceo-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-adversarial-critique-12` | `plan-eng-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-adversarial-critique-13` | `plan-design-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-adversarial-critique-14` | `plan-devex-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-adversarial-critique-11` | `plan-ceo-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-adversarial-critique-12` | `plan-eng-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-adversarial-critique-13` | `plan-design-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-adversarial-critique-14` | `plan-devex-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-adversarial-critique-15` | `devex-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-adversarial-critique-16` | `autoplan` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-adversarial-critique-16` | `autoplan` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-code-review-01` | `code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-code-review-02` | `review` | skill | live | Code review | unassigned | unassigned | `astra-critique` (secondary evidence) | unclaimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-code-review-03` | `requesting-code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -81,27 +81,27 @@ occurrence and list every candidate neighborhood.
 | `cm-browser-and-qa-16` | `qa` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-17` | `qa-only` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-18` | `playwright` | MCP server | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-01` | `design` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-03` | `design-consultation` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-04` | `design-html` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-05` | `design-shotgun` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-06` | `design-review` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-07` | `ui-styling` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-08` | `ui-ux-pro-max` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-09` | `frontend-design` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-10` | `theme-factory` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-11` | `brand` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-12` | `brand-guidelines` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-13` | `banner-design` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-14` | `canvas-design` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-15` | `algorithmic-art` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-16` | `slides` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-17` | `dataviz` | built-in skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
-| `cm-design-and-visual-18` | `artifact-design` | built-in skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
-| `cm-design-and-visual-19` | `artifact-capabilities` | built-in skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
-| `cm-design-and-visual-20` | `web-artifacts-builder` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-21` | `diagram` | skill | live | Design & visual | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-design-and-visual-01` | `design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-03` | `design-consultation` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-04` | `design-html` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-05` | `design-shotgun` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-06` | `design-review` | skill | live | Design & visual | proposed Astra design | `astra-critique` | `astra-interface`: fix and verify; Testing (future design): bootstrap and regression | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
+| `cm-design-and-visual-07` | `ui-styling` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-08` | `ui-ux-pro-max` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-09` | `frontend-design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-10` | `theme-factory` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-11` | `brand` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-12` | `brand-guidelines` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-13` | `banner-design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-14` | `canvas-design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-15` | `algorithmic-art` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-16` | `slides` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-17` | `dataviz` | built-in skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source bytes unavailable and host-version provenance unresolved. |
+| `cm-design-and-visual-18` | `artifact-design` | built-in skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source bytes unavailable and host-version provenance unresolved. |
+| `cm-design-and-visual-19` | `artifact-capabilities` | built-in skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source bytes unavailable and host-version provenance unresolved. |
+| `cm-design-and-visual-20` | `web-artifacts-builder` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-21` | `diagram` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
 | `cm-plan-and-spec-01` | `superpowers:brainstorming` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-02` | `superpowers:writing-plans` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-03` | `superpowers:executing-plans` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -421,5 +421,8 @@ plugin-level deletion from silently removing a capability with a different lifec
 - Dangling cleanup rows: **133**.
 - Separate installed-component records: **8**.
 - Astra Critique occurrences are `claimed`, not `resolved`.
+- All 21 Design & visual occurrences are `claimed` for one investigation wave. `design-review`
+  is assigned to `astra-critique` with explicit secondary roles; the remaining 20 stay
+  `unassigned` pending the user-approved split into primary homes.
 - Every other collision occurrence remains `unclaimed` and `unassigned`.
 - No `keep`, `defer`, `exclude`, or retirement decision is inferred from this skeleton.

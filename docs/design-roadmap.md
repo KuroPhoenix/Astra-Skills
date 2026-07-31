@@ -2,6 +2,8 @@
 
 **Snapshot:** 2026-07-31
 **Status:** Proposed design-document sequence; runtime implementation remains deferred
+**Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
+designs, relocated one misfiled source, and excluded one broken source. See section 8.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
@@ -44,13 +46,13 @@ provenance rule is resolved.
 |---|---:|
 | Reviewed phase-0 design baselines | 1 |
 | Remaining confirmed-name documents | 4 |
-| Remaining provisional documents | 22 |
+| Remaining provisional documents | 20 |
 | Planned revision of an existing design | 1 |
 | Neighborhoods producing no Astra document or revision | 1 |
-| Proposed Astra roster after all remaining documents | 27 |
+| Proposed Astra roster after all remaining documents | 25 |
 
 The reviewed baseline is
-[`designs/astra-critique.md`](../designs/astra-critique.md). The 26 remaining documents are
+[`designs/astra-critique.md`](../designs/astra-critique.md). The 24 remaining documents are
 listed below. The proposed final count is not a target: it must shrink, grow, or retain independent
 sources if source inspection and trigger comparison require that. Critique is complete only as a
 reviewed document baseline; its code-review source expansion and peer handoff reconciliation
@@ -101,7 +103,6 @@ flowchart TD
     setup["astra-setup"]
 
     spec["astra-spec"]
-    architecture["astra-architecture"]
     plan["astra-plan"]
     implement["astra-implement"]
     debug["astra-debug"]
@@ -112,7 +113,6 @@ flowchart TD
     ship["astra-ship"]
     deploy["astra-deploy"]
 
-    research["astra-research"]
     knowledge["astra-knowledge"]
     document["astra-document"]
     skilldesign["astra-skill-design"]
@@ -123,10 +123,9 @@ flowchart TD
     brand --> interface
     brand --> presentation
 
-    understand --> architecture
     understand --> debug
+    understand --> plan
     spec --> plan
-    architecture --> plan
     context --> delegate
     guard --> delegate
     plan --> implement
@@ -149,7 +148,6 @@ flowchart TD
     setup --> deploy
     qa --> deploy
 
-    research --> document
     knowledge --> document
     brand --> document
     presentation --> document
@@ -172,6 +170,13 @@ Arrows point from an output or capability owner to a likely consumer. They are p
 both peer designs reconcile the relationship. Section 5 records source and ownership relations
 that do not belong in this implementation-flow view.
 
+**Amendment 1 changes to this graph.** The `astra-architecture` node was removed and its
+`architecture --> plan` edge succeeded by `understand --> plan`, because `astra-understand-code`
+absorbs the technical-design jurisdiction. The `astra-research` node was removed because `research`
+is now a retained independent source, not a peer: `astra-document` still consumes its output, but
+as an independent reference recorded in the reference and cleanup ledger, which is not an **I**
+relation between peers. Section 8 records the inspected evidence for both removals.
+
 ### 3.2 Critique review and handoff topology
 
 Critique is cross-cutting. A user may submit an artifact produced by any supported peer or outside
@@ -189,7 +194,7 @@ flowchart LR
     routes -->|none actionable or user defers| none["no immediate handoff;<br/>report retained"]
     routes -->|user selects at most one| handoff["H: common envelope +<br/>one destination profile"]
     handoff -.->|names only; never invokes| seeded["first-tranche seeds:<br/>Product Design · Interface<br/>Brand · Presentation"]
-    handoff -.->|names only; never invokes| candidate["candidate peers:<br/>Implement · Architecture<br/>Plan · Spec · Test"]
+    handoff -.->|names only; never invokes| candidate["candidate peers:<br/>Implement · Understand Code<br/>Plan · Spec · Test"]
     handoff -.->|owner unresolved| unresolved["infrastructure · prompts/CLAUDE.md<br/>running developer experience"]
 ```
 
@@ -219,11 +224,11 @@ The coverage states below are roadmap states, not implementation claims:
 | Identity or audience-signal inconsistency | `astra-brand` | **Seeded H** | Destination design must define the brand-specific problem payload. |
 | Narrative or data-comprehension problem | `astra-presentation` | **Seeded H** | Destination design must define the presentation-specific problem payload. |
 | Code defect requiring remediation | `astra-implement` | **Candidate H** | Reconcile with the Code review expansion and keep Critique read-only. |
-| Architecture or technical-design problem | `astra-architecture` | **Candidate H** | Distinguish architecture redesign from code remediation. |
+| Architecture or technical-design problem | `astra-understand-code` | **Candidate H** | Distinguish architecture redesign from code remediation. Re-targeted by amendment 1. Reconcile against `how`'s existing critique mode so two peers do not both own multi-lens architectural critique. |
 | Defect in an accepted execution plan | `astra-plan` | **Candidate H** | Keep plan revision separate from Critique's report. |
 | Specification gap or ambiguity | `astra-spec` | **Candidate H** | Distinguish changing intent from changing the execution plan. |
 | Missing or inadequate testing | `astra-test` | **Candidate H** | Preserve Critique's non-goal of executing or bootstrapping tests. |
-| Infrastructure or operational-change problem | Unresolved among Architecture, Implement, Deploy, or a retained peer | **Open owner** | The relevant peer designs must divide design, code, and deployment ownership. |
+| Infrastructure or operational-change problem | Unresolved among Understand Code, Implement, Deploy, or a retained peer | **Open owner** | The relevant peer designs must divide design, code, and deployment ownership. |
 | Prompt, `SKILL.md`, or CLAUDE.md problem | Unresolved among Skill Design, Document, or a retained peer | **Open owner** | The relevant peer designs must divide instruction design from artifact editing. |
 | Running developer-experience problem | Unresolved among Interface, QA, Setup, or a retained peer | **Open owner** | The relevant peer designs must divide product defects, verification, and environment setup. |
 | No actionable finding survives | `none` | **Terminal** | Emit no handoff. |
@@ -262,7 +267,7 @@ decisions easier to state.
 |---|---|---|
 | `designs/astra-guard.md` | **Provisional** | **R:** authority and trigger semantics with every mutation-capable skill; **I:** peers may consume explicit Guard state or warnings if their designs justify it; destructive-action boundaries remain local to each consumer |
 | `designs/astra-context.md` | **Provisional** | **R:** ownership and trigger semantics with `astra-delegate`, `astra-automate`, `astra-plan`, `astra-incident`; **I:** those peers may consume explicit restored or serialized context if their designs justify it |
-| `designs/astra-understand-code.md` | **Provisional** | **R:** `astra-architecture`, Critique code lenses, `astra-debug` |
+| `designs/astra-understand-code.md` | **Provisional; scope widened by amendment 1** | **R:** Spec, Plan, `astra-debug`, `astra-implement`, Critique code lenses and `how`'s existing critique mode; **H (candidate):** Critique architecture and technical-design problems; **absorbs** the Codebase-comprehension technical-design jurisdiction formerly proposed as `astra-architecture`; must justify why one invocation coordinates explaining what exists and choosing what should exist, or split again |
 | `designs/astra-test.md` | **Provisional** | **R:** `astra-implement`, `astra-qa`, `astra-ship`, `astra-interface`; **H (candidate):** Critique testing gaps; **P:** `run` built-in |
 | `designs/astra-delegate.md` | **Provisional** | **R:** Context, Guard, `astra-implement`, `astra-automate`; preserve agent delivery shape |
 | `designs/astra-setup.md` | **Provisional** | **R:** Browser, Deploy, Automation, iOS, Skill Design; **P:** three setup/config built-ins |
@@ -271,13 +276,12 @@ decisions easier to state.
 
 | Proposed design file or revision | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-spec.md` | **Provisional** | **R:** `astra-knowledge`, `astra-architecture`, Product Design; **H (candidate):** Critique specification gaps |
-| `designs/astra-architecture.md` | **Provisional** | **R:** `astra-understand-code`, Spec, Plan, `domain-modeling`, Critique infrastructure-route ownership; **H (candidate):** Critique architecture and technical-design problems |
-| `designs/astra-plan.md` | **Provisional** | **R:** Spec, Architecture, Context, Implement; **H (candidate):** Critique execution-plan defects |
-| `designs/astra-implement.md` | **Provisional** | **R:** Plan, Delegate, Test, Guard, Critique infrastructure-route ownership; **H (candidate):** Critique code-remediation problems; receives code-simplification sources from Code review |
-| `designs/astra-critique.md` source-expansion revision | **Existing design revision** | **R:** Code review, Understand Code, Test, Architecture; must not create a competing nested code-critique skill |
+| `designs/astra-spec.md` | **Provisional** | **R:** `astra-knowledge`, `astra-understand-code`, Product Design; **H (candidate):** Critique specification gaps |
+| `designs/astra-plan.md` | **Provisional** | **R:** Spec, `astra-understand-code`, Context, Implement; **H (candidate):** Critique execution-plan defects |
+| `designs/astra-implement.md` | **Provisional** | **R:** Plan, Delegate, Test, Guard, `astra-understand-code`, Critique infrastructure-route ownership; **H (candidate):** Critique code-remediation problems; receives code-simplification sources from Code review; consumes `codebase-design` as a retained independent reference |
+| `designs/astra-critique.md` source-expansion revision | **Existing design revision** | **R:** Code review, Understand Code, Test; must not create a competing nested code-critique skill; must reconcile `how`'s multi-lens critique mode and `improve-codebase-architecture`'s `/grilling` step as **H** edges rather than duplicated internal panels |
 | `designs/astra-debug.md` | **Provisional** | **R:** Understand Code, Test, Browser/QA, Incident |
-| `designs/astra-incident.md` | **Provisional** | **R:** Debug, Context, Document, Guard; keep stabilization distinct from causal diagnosis |
+| `designs/astra-incident.md` | **Provisional; narrowed by amendment 1** | **R:** Debug, Context, Document, Guard; keep stabilization distinct from causal diagnosis; `rca` and `firefighting` are concurrent sessions with mutually exclusive authority, so the declared advantage is **coordination only**, not better judgment; `triage` relocated out of this design |
 
 ### Wave 4 — browser, quality, and delivery
 
@@ -292,10 +296,9 @@ decisions easier to state.
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-research.md` | **Provisional** | **R:** Browser, Document, Knowledge, Critique evidence requirements |
-| `designs/astra-knowledge.md` | **Provisional** | **R:** Spec, Architecture, Document, Context; preserve `domain-modeling` as a cross-role |
-| `designs/astra-document.md` | **Provisional** | **R:** Research, Knowledge, Brand, Presentation, Ship, Incident, Critique prompt/CLAUDE.md route ownership |
-| `designs/astra-skill-design.md` | **Provisional** | **R:** Test, Research, Browser, Setup, Critique prompt/`SKILL.md` route ownership; preserve skill-scoped agents and benchmark delivery shapes |
+| `designs/astra-knowledge.md` | **Provisional** | **R:** Spec, `astra-understand-code`, Document, Context; preserve `domain-modeling` as a cross-role; must not absorb `research`, whose evidence-gathering outcome amendment 1 kept separate |
+| `designs/astra-document.md` | **Provisional** | **R:** Knowledge, Brand, Presentation, Ship, Incident, Critique prompt/CLAUDE.md route ownership; consumes `research` as a retained independent reference, not a peer output; must decide whether `diagram` belongs here rather than in Presentation |
+| `designs/astra-skill-design.md` | **Provisional** | **R:** Test, Browser, Setup, Critique prompt/`SKILL.md` route ownership; preserve skill-scoped agents and benchmark delivery shapes; `prompt-lookup` is no longer routed here or anywhere — amendment 1 excludes it |
 | `designs/astra-automate.md` | **Provisional** | **R:** Delegate, Context, Guard, Setup, Plan, Ship, and the six separate `loop-goal` lifecycle handlers; **P:** `loop` and `schedule` built-ins |
 
 ### Wave 6 — specialized platform decision
@@ -375,6 +378,15 @@ Cross-role behaviors must remain visible: `design-system` also informs Brand and
 `theme-factory` also informs Interface and Presentation; `ui-ux-pro-max` also informs Product;
 and `diagram` also informs Document.
 
+**Amendment 1 correction — `design` was missing every cross-role.** Its declaration spans all four
+proposed Design peers: brand identity and logo/CIP work (Brand), design tokens and UI styling
+(Interface), HTML presentations and slide building (Presentation), and mockups (Product Design).
+The ledger reserved it to `astra-brand` with no secondary roles recorded, which conflicts with
+`docs/phase-0.md` section 5's rule that secondary roles must be explicit. Section 8 proposes the
+correction. `design-shotgun` additionally carries a usability **perspective** — the Three Laws of
+Usability, the Goodwill Reservoir, billboard design, and wayfinding — that overlaps
+`ui-ux-pro-max`; Product and Interface must agree on one primary home for those priors.
+
 ### 5.5 Plan & spec
 
 **Derived Astra skills:** `astra-spec`, `astra-plan`, and `astra-implement`.
@@ -385,8 +397,10 @@ and `diagram` also informs Document.
 - **`astra-implement`:** `superpowers:executing-plans`,
   `superpowers:subagent-driven-development`, `implement`, and
   `feature-dev:feature-dev`.
-- **Cross-neighborhood primary home:** `feature-dev:code-architect` → `astra-architecture`.
-- **Independent candidate:** retain `prototype` unless the Product Design or Architecture
+- **Cross-neighborhood disposition:** `feature-dev:code-architect` is a retained agent coordinated
+  by `astra-understand-code`; see section 5.9. Amendment 1 changed this from a primary home in
+  `astra-architecture`.
+- **Independent candidate:** retain `prototype` unless the Product Design or Understand Code
   investigation proves its throwaway-experiment job belongs inside that skill without flattening
   its trigger.
 
@@ -411,18 +425,25 @@ commit, push, merge, deployment, and cleanup effects.
 
 ### 5.7 Docs & knowledge
 
-**Derived Astra skills:** `astra-document`, `astra-research`, and `astra-knowledge`.
+**Derived Astra skills:** `astra-document` and `astra-knowledge`. Amendment 1 withdrew
+`astra-research`.
 
 - **`astra-document`:** `document-generate`, `doc-coauthoring`, `/doc`, `make-pdf`,
   `internal-comms`, `rtfm`, `claude-md-management:revise-claude-md`, and
   `claude-md-management:claude-md-improver`.
-- **`astra-research`:** `research`.
 - **`astra-knowledge`:** `learn`, `teach`, `domain-modeling`, and `init`†.
+- **Retained independent:** `research`. Amendment 1 inspected its body: 12 lines, of which the
+  instruction is a background-agent dispatch plus a two-line primary-source playbook. It is a
+  single-source occurrence, so an `astra-research` wrapper would be a rename whose source oracle is
+  itself, making the positive-advantage gate vacuous. Keep it independent under the same reasoning
+  section 5.17 applies to `retro` and `meeting`.
 - **Cross-neighborhood primary home:** `slack-gif-creator` → `astra-brand`.
 
 Research establishes evidence; Knowledge maintains reusable understanding and domain language;
 Document produces or revises an artifact for a reader. Rendering a PDF is a Document delivery
-mode, not a separate knowledge job.
+mode, not a separate knowledge job. Because those three outcomes differ, withdrawing
+`astra-research` must not fold `research` into Knowledge or Document; `astra-document` consumes it
+as a retained independent reference instead.
 
 ### 5.8 Debug & incident
 
@@ -431,23 +452,60 @@ mode, not a separate knowledge job.
 - **`astra-debug`:** `investigate`, `diagnosing-bugs`,
   `superpowers:systematic-debugging`, `java-leak-resolver`, `staging-debug`, and
   `local-debug`.
-- **`astra-incident`:** `rca`, `firefighting`, and `triage`.
+- **`astra-incident`:** `rca` and `firefighting`.
+- **Relocated by amendment 1:** `triage`. Its body is an issue-tracker state machine — category
+  roles `bug`/`enhancement` and state roles `needs-triage`, `needs-info`, `ready-for-agent`,
+  `ready-for-human`, `wontfix` — that posts agent briefs, maintains an `.out-of-scope/` knowledge
+  base, and depends on a label mapping from `setup-matt-pocock-skills`. It never mentions an
+  outage, alert, or stabilization. README placed it here on the word *triage* alone. It is already
+  registered `disable-model-invocation: true`, so retaining it independently costs no context.
+  Candidate homes are `astra-ship` on `github` and `/pr` adjacency, or retained independent; the
+  relevant designs decide.
 
 Debug owns diagnosis and repair of a bounded failure. Incident owns stabilization, incident-state
 navigation, parallel causal investigation, and operational handoff. `rca` and `firefighting`
 retain distinct simultaneous roles rather than becoming one synthesized voice.
 
+**Amendment 1 evidence for that last sentence, and its consequence.** Each source names the other's
+jurisdiction and refuses it: `rca` runs as a separate agent session in parallel and declines to
+suggest stabilization; `firefighting` declines to find root cause, distinguishes *stabilized* from
+*understood*, and spawns `rca` through an `Agent(...)` call as a separate session. Those are two
+user outcomes and an agent-dispatch relation, so `docs/design-requirements.md` sections 6 and 4.3
+both forbid fusing them. `astra-incident` is therefore a coordination wrapper over two concurrent
+contexts, not a merger. Its declared advantage class is coordination, and its
+internalization-fidelity gate must reproduce a two-session parallel architecture — the strongest
+such obligation currently proposed in the roster.
+
 ### 5.9 Codebase comprehension
 
-**Derived Astra skills:** `astra-understand-code` and `astra-architecture`.
+**Derived Astra skill:** `astra-understand-code`. Amendment 1 withdrew `astra-architecture` and
+moved its jurisdiction here.
 
-- **`astra-understand-code`:** `how`, `code-tracing`, and `feature-dev:code-explorer`.
-- **`astra-architecture`:** `codebase-design`, `improve-codebase-architecture`, plus
-  `feature-dev:code-architect` from Plan & spec.
+- **`astra-understand-code`:** `how`, `code-tracing`, `feature-dev:code-explorer`, and
+  `improve-codebase-architecture`.
+- **Retained independent reference:** `codebase-design`. Its own declaration offers a shared
+  deep-module vocabulary *for other skills*, and `improve-codebase-architecture` consumes it three
+  times — for the module/interface/depth/seam/adapter/leverage/locality terms, for architecture
+  naming, and for its design-it-twice parallel sub-agent pattern. Fusing it would break live
+  consumers, which `docs/phase-0.md` section 9 criterion 10 forbids. Consuming designs:
+  `astra-understand-code` and `astra-implement`.
+- **Retained agent, coordinated not absorbed:** `feature-dev:code-architect` from Plan & spec. It
+  remains a separate execution context, and its stated policy — commit to one approach rather than
+  presenting options — conflicts with `improve-codebase-architecture`'s grill loop, which returns
+  every decision to the user. Differing authority may not be waived through prose merger.
 
-Understand Code explains and traces what exists without selecting a new design. Architecture owns
-module boundaries, technical-design choices, and implementation blueprints. Critique may review
-either result but does not own the solution.
+Understand Code explains and traces what exists, and now also owns module boundaries and
+technical-design choices. Because that joins two outcomes, its design must justify why one
+invocation coordinates them or split again; the justification available in the sources is that `how`
+requires understanding the architecture before judging it, and the same prerequisite holds before
+redesigning it.
+
+**Why no separate Architecture skill.** Its three proposed sources total 219 lines and each is
+disqualified from merging by a different rule: `codebase-design` is a reference with live consumers;
+`improve-codebase-architecture` is a 71-line orchestrator whose terminal step invokes `grilling`,
+Critique's own primary source, and whose vocabulary step invokes `codebase-design`; and
+`feature-dev:code-architect` is an agent. After applying those three rules nothing remains to merge.
+The `grilling` step becomes an **H** edge to Critique rather than an internal panel.
 
 ### 5.10 Skill meta
 
@@ -456,8 +514,13 @@ either result but does not own the solution.
 - **`astra-skill-design`:** `skill-creator`, `skill-creator:skill-creator`,
   `writing-great-skills`, `superpowers:writing-skills`, `skillify`, and
   `benchmark-models`.
-- **Cross-neighborhood primary homes:** `prompt-lookup` → `astra-research`;
-  `gstack-upgrade` → `astra-setup`.
+- **Cross-neighborhood primary home:** `gstack-upgrade` → `astra-setup`.
+- **Excluded by amendment 1:** `prompt-lookup`. All three of its capabilities are calls to the
+  prompts.chat MCP server, that server is not among the configured MCP servers on this machine, and
+  it ships no fallback path. That is the shape README already records as structurally broken for
+  `/trim`, and `docs/design-requirements.md` section 5 covers it under **Exclude**. Exclusion means
+  it is not in the personalized roster; it does not authorize deletion, and the disposition should
+  be revisited if the server is ever configured.
 - **Deferred routing components:** `ask-matt`, `gstack`, and `_gstack-command` do not produce
   another skill design. They remain migration inputs to the separately deferred Astra
   router/tuning decision.
@@ -576,6 +639,31 @@ For each remaining document:
 A source list in this roadmap is not sufficient evidence for a design and cannot satisfy any
 retirement gate.
 
+### 6.1 Pre-wave source-body triage
+
+Added by amendment 1. Before a wave is assigned, inspect the bodies of every source proposed for a
+design in that wave whose allocation rests only on this roadmap, and answer three questions before
+any of the ten steps above begin:
+
+1. **Is the source a reference?** A source whose own declaration offers knowledge to other skills,
+   or that a sibling source invokes for vocabulary or method, belongs in the reference and cleanup
+   ledger, not inside a merger.
+2. **Is the source live?** A source whose behavior is entirely calls to an unconfigured external
+   capability, with no fallback, is broken and takes an exclusion with the reason recorded.
+3. **Does the label match the body?** A source placed in a neighborhood by keyword must be checked
+   against its own instructions before it is allocated.
+
+If applying these three questions leaves a proposed design with nothing to merge, withdraw the
+design before drafting it. Amendment 1 ran this triage on the six candidates that carried three or
+fewer proposed sources and withdrew two designs; it did not cover the remaining waves. Running it
+first is cheaper than discovering the same result inside a completed ten-section document, and much
+cheaper than discovering it at a section 7 milestone after the document has been reviewed.
+
+Source count is a screening filter for this triage, not a verdict. Amendment 1's own screen would
+have condemned `astra-product-design`, whose two sources are 76.6% and 68.6% byte-identical and
+which is consequently the best-evidenced merger currently proposed. Measure the artifacts, not the
+ledger rows.
+
 ## 7. Final reconciliation milestones
 
 After all proposed documents and no-new-skill decisions have been reviewed:
@@ -592,7 +680,9 @@ After all proposed documents and no-new-skill decisions have been reviewed:
    report retains every independent route candidate even though the user selects zero or one
    immediate capsule.
 5. Decide whether provisional designs with one weak source should remain Astra skills or retain
-   the independent original.
+   the independent original. Amendment 1 discharged this for the six candidates carrying three or
+   fewer proposed sources; section 6.1 now runs the same test before each wave, so this milestone
+   covers only designs whose source weakness emerges during drafting.
 6. Resolve all † built-in provenance gaps.
 7. Decide keep/defer/exclude for the reference and cleanup ledger; reference skills do not need
    Astra wrappers merely to appear in the roadmap.
@@ -603,3 +693,102 @@ After all proposed documents and no-new-skill decisions have been reviewed:
 Only after that roster is selected may implementation planning begin. Runtime skill creation,
 router/tuning work, plugin packaging, behavioral harnesses, installation, and source retirement
 remain outside phase 0.
+
+## 8. Amendment 1 — source-body triage of the thin candidates
+
+**Date:** 2026-07-31
+**Scope:** the six proposed designs carrying three or fewer proposed sources
+**Authority:** this section amends roadmap allocations only. The ledger changes in section 8.3 are
+*proposed*; `docs/phase-0.md` section 1 names the phase-0 coordinator as the sole editor of
+`docs/phase-0-ledgers.md`, and section 5.1 step 4 has the coordinator apply them between waves.
+
+### 8.1 Inspection provenance
+
+All sixteen sources were inspected on 2026-07-31. Line counts and `sha256` prefixes are of the
+inspected bytes, as `docs/design-requirements.md` section 4.1 requires. `dataviz` is listed for
+completeness and remains **unavailable**.
+
+| Source | Component type | Lines | `sha256` prefix |
+|---|---|---:|---|
+| `research` | skill | 12 | `af378829f015` |
+| `prompt-lookup` | skill | 68 | `3b0097f8f23c` |
+| `codebase-design` | skill | 114 | `a8d50abac5a4` |
+| `improve-codebase-architecture` | skill | 71 | `4b4cb798c386` |
+| `how` | skill | 139 | `b6097e3854c7` |
+| `code-tracing` | skill | 98 | `9810975a10c4` |
+| `feature-dev:code-explorer` | agent | 51 | `3b277703de74` |
+| `feature-dev:code-architect` | agent | 34 | `c50fb08d59a4` |
+| `rca` | skill | 152 | `4ca9f6f1a52f` |
+| `firefighting` | skill | 290 | `7b47060da945` |
+| `triage` | skill | 112 | `d45827c299c0` |
+| `design-consultation` | skill | 1230 | `44379ed9283c` |
+| `design-shotgun` | skill | 1373 | `513d9e18dbe5` |
+| `slides` | skill | 40 | `2b90bdaf63f2` |
+| `diagram` | skill | 923 | `f57f8722f566` |
+| `dataviz` | built-in skill | unavailable | unavailable |
+
+### 8.2 Verdicts
+
+| Candidate | Proposed sources | Verdict | Basis |
+|---|---:|---|---|
+| `astra-research` | 2 | **Withdrawn** | One 12-line dispatch-plus-playbook source and one broken MCP wrapper of a different outcome. No merger exists; the wrapper's source oracle would be itself. |
+| `astra-architecture` | 3 | **Withdrawn** | 219 lines total; one reference with live consumers, one 71-line orchestrator of `codebase-design` and `grilling`, one agent whose decision policy conflicts with that orchestrator. No residue. |
+| `astra-incident` | 3 → 2 | **Retained, narrowed** | `triage` is issue-tracker work misfiled on a keyword. `rca` and `firefighting` are concurrent contexts with mutually exclusive authority, so the design is a coordination wrapper, not a merger. |
+| `astra-understand-code` | 3 → 4 | **Retained, widened** | Locate-only, explain, explain-then-critique, and delegate-to-agent are protocol, playbook, and component-type differences that belong inside one job. Absorbs the withdrawn Architecture jurisdiction. |
+| `astra-product-design` | 2 | **Retained** | 942 lines are byte-identical between its two sources — 76.6% of `design-consultation`, 68.6% of `design-shotgun` — and that block is gstack machinery. The remaining divergence is two protocols over one outcome. |
+| `astra-presentation` | 3 | **Retained** | Source count misled: 963 inspectable lines plus four `slides` reference files. Survives on condition that section 7.1's job statement can be written without an `or`; if it cannot, `diagram` moves to `astra-document`. |
+
+Net roster effect: 27 proposed designs become 25. One source is relocated, one is excluded, and one
+is reclassified as a retained independent reference.
+
+### 8.3 Proposed ledger changes
+
+For the coordinator to apply to `docs/phase-0-ledgers.md`. Every row below moves from
+`unassigned` / `unclaimed` unless noted.
+
+**Collision source-claim ledger.**
+
+| Occurrence ID | Source | Proposed primary disposition | Proposed primary home | Proposed secondary roles |
+|---|---|---|---|---|
+| `cm-docs-and-knowledge-08` | `research` | independent reference | retained independent | `astra-document` (consumes output) |
+| `cm-skill-meta-09` | `prompt-lookup` | exclude | — | — |
+| `cm-codebase-comprehension-01` | `how` | proposed Astra design | `astra-understand-code` | `astra-critique` (multi-lens critique mode) |
+| `cm-codebase-comprehension-02` | `code-tracing` | proposed Astra design | `astra-understand-code` | — |
+| `cm-codebase-comprehension-03` | `codebase-design` | independent reference | retained independent | `astra-understand-code`, `astra-implement` |
+| `cm-codebase-comprehension-04` | `improve-codebase-architecture` | proposed Astra design | `astra-understand-code` | `astra-critique` (`grilling` step becomes an **H** edge) |
+| `cm-codebase-comprehension-05` | `feature-dev:code-explorer` | proposed Astra design | `astra-understand-code` | — |
+| `cm-plan-and-spec-14` | `feature-dev:code-architect` | retained agent, coordinated | `astra-understand-code` | — |
+| `cm-debug-and-incident-04` | `rca` | proposed Astra design | `astra-incident` | — |
+| `cm-debug-and-incident-05` | `firefighting` | proposed Astra design | `astra-incident` | — |
+| `cm-debug-and-incident-09` | `triage` | **relocation pending** | unassigned — `astra-ship` or retained independent | `astra-critique` (invokes `grilling`), `astra-knowledge` (invokes `domain-modeling`) |
+| `cm-design-and-visual-01` | `design` | proposed Astra design *(unchanged)* | `astra-brand` *(unchanged)* | **add:** `astra-interface` (tokens, UI styling), `astra-presentation` (HTML presentations, slides), `astra-product-design` (mockups) |
+| `cm-design-and-visual-05` | `design-shotgun` | proposed Astra design *(unchanged)* | `astra-product-design` *(unchanged)* | **add:** `astra-interface` (usability priors overlapping `ui-ux-pro-max`) |
+
+Rows `cm-codebase-comprehension-01` through `-05`, `cm-debug-and-incident-04`, `-05`, `-09`,
+`cm-docs-and-knowledge-08`, `cm-plan-and-spec-14`, and `cm-skill-meta-09` also move from
+`Pending source inspection` to evidence citing section 8.1. They become `claimed`, not `resolved`.
+
+The two Design & visual rows are already `claimed` on roadmap authority with inspection pending;
+this amendment supplies inspected evidence for their secondary roles only and does not change either
+primary home.
+
+**Reference and cleanup ledger.** Two rows to add, both with disposition `keep` pending the user's
+decision, since `docs/phase-0.md` section 6 reserves keep/defer/exclude to the user:
+
+| Source | Component type | Reason | Consuming designs |
+|---|---|---|---|
+| `research` | skill | Single-source occurrence; a rename-only wrapper adds nothing and its positive-advantage gate would be vacuous. | `astra-document` |
+| `codebase-design` | skill | Self-declared shared vocabulary with live sibling consumers; fusing it would break them. | `astra-understand-code`, `astra-implement` |
+
+### 8.4 What this amendment does not establish
+
+- It does not claim any source is absorbed, preserved, or eligible for retirement.
+- It does not resolve `triage`'s new home. That belongs to the `astra-ship` design or to an explicit
+  retained-independent decision.
+- It does not resolve the `design` and `design-shotgun` secondary roles as *primary* boundaries; the
+  four Wave 1 designs still own that reconciliation.
+- It does not inspect the remaining waves. Sections 5.11, 5.13, 5.14, and 5.15 in particular
+  contain unexamined allocations of the same kind, including `nowhat` inside Context, the
+  `freeze`/`unfreeze` pair inside Guard, and the Delegate-versus-Automate boundary.
+- It leaves the twelve built-in provenance gaps untouched; `docs/phase-0.md` section 5 still governs
+  them.

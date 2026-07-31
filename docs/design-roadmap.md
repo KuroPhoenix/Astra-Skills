@@ -4,6 +4,9 @@
 **Status:** Proposed design-document sequence; runtime implementation remains deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
+**Amendment 2 (2026-07-31):** Source-body inspection of Context, Safety, Delegation & autonomy, and
+Browser & QA withdrew one source, collapsed one alias, and recorded delivery-shape, authority, and
+version obligations that the affected sections had omitted. No design was withdrawn. See section 9.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
@@ -265,8 +268,8 @@ decisions easier to state.
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-guard.md` | **Provisional** | **R:** authority and trigger semantics with every mutation-capable skill; **I:** peers may consume explicit Guard state or warnings if their designs justify it; destructive-action boundaries remain local to each consumer |
-| `designs/astra-context.md` | **Provisional** | **R:** ownership and trigger semantics with `astra-delegate`, `astra-automate`, `astra-plan`, `astra-incident`; **I:** those peers may consume explicit restored or serialized context if their designs justify it |
+| `designs/astra-guard.md` | **Provisional** | **R:** authority and trigger semantics with every mutation-capable skill; **I:** peers may consume explicit Guard state or warnings if their designs justify it; destructive-action boundaries remain local to each consumer; **must** disposition three `PreToolUse` hooks, two vendored `bin/` scripts, and template-generated `SKILL.md` provenance — see section 5.14 |
+| `designs/astra-context.md` | **Provisional; narrowed by amendment 2** | **R:** ownership and trigger semantics with `astra-delegate`, `astra-automate`, `astra-plan`, `astra-incident`; **I:** those peers may consume explicit restored or serialized context if their designs justify it; `nowhat` withdrawn to retained independent; `handoff`'s temp-directory destination, fresh-agent reader, and redaction duty must survive as declared behavior |
 | `designs/astra-understand-code.md` | **Provisional; scope widened by amendment 1** | **R:** Spec, Plan, `astra-debug`, `astra-implement`, Critique code lenses and `how`'s existing critique mode; **H (candidate):** Critique architecture and technical-design problems; **absorbs** the Codebase-comprehension technical-design jurisdiction formerly proposed as `astra-architecture`; must justify why one invocation coordinates explaining what exists and choosing what should exist, or split again |
 | `designs/astra-test.md` | **Provisional** | **R:** `astra-implement`, `astra-qa`, `astra-ship`, `astra-interface`; **H (candidate):** Critique testing gaps; **P:** `run` built-in |
 | `designs/astra-delegate.md` | **Provisional** | **R:** Context, Guard, `astra-implement`, `astra-automate`; preserve agent delivery shape |
@@ -287,8 +290,8 @@ decisions easier to state.
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-browser.md` | **Provisional** | **R:** Setup, Guard, QA, Skill Design; preserve MCP, browser-daemon, cloud-browser, Electron, and authenticated-session delivery shapes |
-| `designs/astra-qa.md` | **Provisional** | **R:** Browser, Test, Interface, Critique running-developer-experience route ownership; distinguish report-only from fix authority |
+| `designs/astra-browser.md` | **Provisional; restructured by amendment 2** | **R:** Setup, Guard, QA, Skill Design; preserve MCP, browser-daemon, cloud-browser, Electron, and authenticated-session delivery shapes; the four environment adapters become reference files behind one description, each retaining its own prerequisite and degradation; `connect-chrome` and `open-gstack-browser` collapse to one artifact with one shadowed identifier; **P:** the `agent-browser` CLI binary |
+| `designs/astra-qa.md` | **Provisional** | **R:** Browser, Test, Interface, Critique running-developer-experience route ownership; distinguish report-only from fix authority, which the sources express as declared tool authority rather than prose; merge against `qa` 2.0.0 and account for `qa-only` 1.0.0's 491 drifted body lines; reconcile the CLI, Python-Playwright, and MCP runtimes by component type |
 | `designs/astra-ship.md` | **Provisional** | **R:** Implement, Test, Guard, Context, Document; **I:** may consume Critique review evidence, but a clean review is not an **H** edge; preserve explicit user control over commits, pushes, PRs, and merges |
 | `designs/astra-deploy.md` | **Provisional** | **R:** Ship, Setup, Browser/QA, Guard, Critique infrastructure-route ownership; preserve provider-specific prerequisites and canary degradation |
 
@@ -299,7 +302,7 @@ decisions easier to state.
 | `designs/astra-knowledge.md` | **Provisional** | **R:** Spec, `astra-understand-code`, Document, Context; preserve `domain-modeling` as a cross-role; must not absorb `research`, whose evidence-gathering outcome amendment 1 kept separate |
 | `designs/astra-document.md` | **Provisional** | **R:** Knowledge, Brand, Presentation, Ship, Incident, Critique prompt/CLAUDE.md route ownership; consumes `research` as a retained independent reference, not a peer output; must decide whether `diagram` belongs here rather than in Presentation |
 | `designs/astra-skill-design.md` | **Provisional** | **R:** Test, Browser, Setup, Critique prompt/`SKILL.md` route ownership; preserve skill-scoped agents and benchmark delivery shapes; `prompt-lookup` is no longer routed here or anywhere — amendment 1 excludes it |
-| `designs/astra-automate.md` | **Provisional** | **R:** Delegate, Context, Guard, Setup, Plan, Ship, and the six separate `loop-goal` lifecycle handlers; **P:** `loop` and `schedule` built-ins |
+| `designs/astra-automate.md` | **Provisional** | **R:** Delegate, Context, Guard, Setup, Plan, Ship, and the six separate `loop-goal` lifecycle handlers, which must be pinned to `loop-goal` 1.3.0 because the orphaned 1.2.0 carries only four; `nightnight` spans Spec, Automate, Critique/QA, and Ship and needs explicit cross-roles; **P:** `loop` and `schedule` built-ins, plus `nightnight`'s two currently unmet prerequisites — the uninstalled `ralph-loop:ralph-loop` skill and a Jira MCP tool |
 
 ### Wave 6 — specialized platform decision
 
@@ -348,9 +351,9 @@ skill tree.
 
 **Derived Astra skills:** `astra-browser` and `astra-qa`.
 
-- **`astra-browser`:** `agent-browser`, `browse`, `connect-chrome`, `open-gstack-browser`,
-  `agentcore`, `vercel-sandbox`, `electron`, `scrape`, `slack`, `setup-browser-cookies`, and
-  `playwright` MCP.
+- **`astra-browser`:** `agent-browser`, `browse`, `connect-chrome` / `open-gstack-browser` (one
+  artifact; see below), `agentcore`, `vercel-sandbox`, `electron`, `scrape`, `slack`,
+  `setup-browser-cookies`, and `playwright` MCP.
 - **`astra-qa`:** `webapp-testing`, `benchmark`, `dogfood`, `qa`, and `qa-only`.
 - **Cross-neighborhood primary homes:** `skillify` → `astra-skill-design`; `pair-agent` →
   `astra-delegate`. Browser remains a secondary role for both.
@@ -358,6 +361,51 @@ skill tree.
 `astra-browser` must expose capability and environment selection without making cloud browsers,
 Electron, Slack, or authenticated cookies separate public child skills. `astra-qa` owns testing
 policy, evidence, and report/fix authority, not browser setup.
+
+**Amendment 2 — five findings.**
+
+- **`connect-chrome` and `open-gstack-browser` are one artifact, and one identifier is
+  unreachable.** Both `SKILL.md` files are symlinks into `~/.claude/skills/gstack/` with different
+  targets and different inodes, but identical bytes and identical length, and **both declare
+  `name: open-gstack-browser`**. The live roster registers only `connect-chrome`; the other
+  identifier is shadowed by that name collision and is not invocable. These are two collision-map
+  occurrences over one artifact, so one row is an alias whose `availability` cannot read plain
+  `live`, and the ledger's count of distinct source identifiers is overstated accordingly. Section
+  9.3 proposes both corrections.
+- **Four of the eleven Browser sources are adapters over one CLI, not peers.** `agentcore`,
+  `vercel-sandbox`, `electron`, and `slack` each declare `agent-browser` as their only tool
+  authority and each describes running that CLI somewhere else — AgentCore states the invariance
+  outright, that all standard commands work identically and only the browser's location differs.
+  Same playbook, different target: these are jurisdictions, and the README principle on granularity
+  puts jurisdictions of that shape into reference files behind one description rather than into four
+  separate descriptions. Demoting them is the largest context-budget saving currently identified in
+  this roadmap, and it is a tiering decision the deferred architecture section does not yet own.
+  What must survive the move is each adapter's **prerequisite and degradation**, which differ even
+  though the playbook does not: AWS credentials, a Vercel Sandbox plus a snapshot identifier, a
+  Chrome DevTools Protocol port, and an authenticated session respectively. The `agent-browser` CLI
+  itself is a binary prerequisite, not prose.
+- **`qa` and `qa-only` differ by declared tool authority over a drifted fork.** They share 1217
+  identical lines, 96.9% of `qa-only`. The decisive delta is that `qa` declares `Edit`, `Glob`, and
+  `Grep` and `qa-only` does not — the report-versus-fix boundary is expressed purely as tool
+  authority, which must remain visible rather than becoming a tool restriction. `qa` is version 2.0.0
+  and `qa-only` is 1.0.0, and 491 body lines differ, so `qa-only` is a fork of an older `qa` rather
+  than a clean report mode of the current one. The design must merge against 2.0.0 and account for
+  that drift; internalizing both without resolving it silently adopts 1.0.0 behavior and fails the
+  internalization-fidelity gate.
+- **Three delivery shapes drive a browser across these two skills.** The `agent-browser` CLI, the
+  Python Playwright scripts that `webapp-testing` writes with its own helper script and licence file,
+  and the `playwright` MCP server are three runtimes for one capability, currently split across
+  `astra-browser` and `astra-qa` with no reconciliation. `docs/phase-0.md` section 9 criteria 8 and 9
+  require resolving this by component type.
+- **A 79% shared block is split across the two skills.** `browse` and `benchmark` share 620
+  identical lines, 79.0% of `benchmark`, yet the former is proposed for Browser and the latter for
+  QA. Either QA vendors its own copy, which self-containment permits but which must be a recorded
+  decision, or `benchmark` consumes `astra-browser` over the existing `browser --> qa` relation with
+  the shared block owned by Browser. Separately, `dogfood` shares only 99 lines with `qa` and imposes
+  a stricter evidence standard — step-by-step screenshots and reproduction video for handoff — that
+  must be reconciled against `qa-only`'s report. `scrape` declares an extraction outcome rather than
+  a browser-driving or quality outcome and needs the same different-outcome test applied to `triage`
+  in section 5.8; amendment 2 inspected only its declaration, not its body.
 
 ### 5.4 Design & visual
 
@@ -543,6 +591,30 @@ external-state dependencies. `loop-goal` also contributes six lifecycle hook han
 separately in the phase-0 ledger. The Automate design must preserve, replace, or explicitly retain
 each handler by delivery shape; absorbing the `loop-goal` skill body does not account for them.
 
+**Amendment 2 — three additions.**
+
+- **The Delegate merger rests on machinery duplication.** `codex` and `pair-agent` share 876
+  byte-identical lines, 81.7% of `pair-agent`, in the same gstack preamble found elsewhere in this
+  roadmap. `coding-agent` shares only 121 lines with `codex`, so it carries independent content and
+  is not absorbed by that collapse. Declared advantage: maintenance.
+- **`loop-goal`'s six handlers are version-specific.** The installed 1.3.0 carries exactly six —
+  `check_dispatch`, `refresh_planner`, `check_confirm_gate`, `check_planner_self_exec`,
+  `archive_on_confirm`, and `mark_user_confirm` — plus a shared `_active_loop.sh` library. An
+  orphaned 1.2.0 is also on disk and carries only four of them. The claim above is therefore true of
+  1.3.0 and false of 1.2.0, so the ledger row must pin the version. The collision ledger schema has
+  no version field; this is the same provenance problem the built-ins raise, appearing in a source
+  whose bytes *are* available.
+- **`nightnight` spans four proposed peers and has two unmet prerequisites.** Its subcommands are
+  `start`, `speckit`, `loop`, `evaluate`, `split-pr`, `status`, and `cancel`, and its own
+  description is to extract acceptance criteria from Jira, loop overnight, evaluate holistically,
+  then split the work into pull requests. That crosses Spec, Automate, Critique or QA, and Ship; it
+  is a pipeline, not an automation primitive, and its cross-roles must be explicit. Its pre-flight
+  check requires the `ralph-loop:ralph-loop` skill, which is present in the plugin marketplace
+  catalogue but absent from the installed plugin cache, and a Jira MCP tool, where the only
+  configured MCP server is `github`. Unlike `prompt-lookup`, it declares and pre-flight-checks these
+  dependencies, so this is a declared prerequisite that is currently unmet rather than a broken
+  source. Record the unmet prerequisite and its consequence; do not exclude it.
+
 ### 5.12 Testing
 
 **Derived Astra skill:** `astra-test`.
@@ -559,12 +631,34 @@ test execution, and final verification remain distinguishable modes inside one t
 
 **Derived Astra skill:** `astra-context`.
 
-**Encapsulates:** `context-save`, `context-restore`, `strategic-compact`, `handoff`, and
-`nowhat`.
+**Encapsulates:** `context-save`, `context-restore`, `strategic-compact`, and `handoff`.
 
-The design must test whether `nowhat`'s meta-cognitive strategy switching belongs as a
-reorientation mode or should remain independent. It may not be silently reduced to context
-serialization.
+**Retained independent (amendment 2):** `nowhat`. Section 5.13 previously required the design to
+test whether its meta-cognitive strategy switching belonged here. Inspection settles it: across 293
+lines the body is a breakout layer over reasoning quality — two intervention layers, automatic
+strategy switching then the user as external signal, grounded in cited work on self-correction
+without new information degrading output and on chain-of-thought faithfulness plateauing. Its
+outcome is changing reasoning direction; it performs no context serialization. Different user
+outcome, so it remains independent. It also names a complementary skill, `PUA`, that is **not
+installed** — a dangling cross-reference to record, not to resolve here. Because it is
+model-invoked with a long bilingual trigger list, it costs a description slot; that is a tiering
+question deferred with the rest of the architecture.
+
+**Amendment 2 evidence for the remaining merger.** `context-save` and `context-restore` share 813
+byte-identical lines — 79.1% of save, 89.3% of restore — and that block is gstack machinery.
+Removing one copy of it is the merger's declared advantage, which is **maintenance**, not better
+judgment.
+
+Two distinctions must survive rather than be merged away:
+
+- **`handoff`** targets the operating system's temporary directory, explicitly *not* the workspace;
+  its reader is a fresh agent, whereas `context-save` maintains its own `list` and `resume` flow for
+  a later session of the same user; and it mandates redaction of API keys, passwords, and personally
+  identifiable information. Those are behavior and authority, not register. It is already registered
+  `disable-model-invocation: true`, so absorbing it saves no context.
+- **`strategic-compact`** produces no artifact. Its output is a heuristic for *when* to compact at
+  task boundaries rather than at arbitrary auto-compaction points. That is a playbook inside the
+  job, not a separate outcome.
 
 ### 5.14 Safety
 
@@ -573,7 +667,35 @@ serialization.
 **Encapsulates:** `careful`, `freeze`, `unfreeze`, and `guard`.
 
 Guard combines destructive-action warnings with explicit edit boundaries. Freeze and unfreeze
-must remain reversible user-controlled state transitions, not hidden automatic policy.
+must remain reversible user-controlled state transitions, not hidden automatic policy. Because
+`unfreeze` exists only to clear the boundary `freeze` sets, the two are inverse transitions over one
+piece of state and belong as explicit modes of one skill.
+
+**Amendment 2 — delivery shape, which this section previously omitted entirely.** `guard` is not a
+third safety policy. Its frontmatter is a hook manifest that composes the other two skills'
+executables:
+
+| Registration | Matcher | Command |
+|---|---|---|
+| `PreToolUse` | `Bash` | `$HOME/.claude/skills/gstack/careful/bin/check-careful.sh` |
+| `PreToolUse` | `Edit` | `$HOME/.claude/skills/gstack/freeze/bin/check-freeze.sh` |
+| `PreToolUse` | `Write` | `$HOME/.claude/skills/gstack/freeze/bin/check-freeze.sh` |
+
+`freeze` declares the same `Edit` and `Write` hooks independently. Three components must therefore
+carry explicit dispositions rather than becoming prose: the `PreToolUse` registrations, which remain
+lifecycle behavior; the two vendored `bin/` scripts; and the fact that all four `SKILL.md` files are
+generated from a `SKILL.md.tmpl` template by a `bun run gen:skill-docs` step, so the template and
+generator — not the `SKILL.md` — are the source of truth that the design's Location and provenance
+evidence must record. `docs/phase-0.md` section 9 criterion 9 makes omitting any of these an
+acceptance failure.
+
+**The merger's advantage is self-containment, and README already named this case.** Each of the four
+live registrations at `~/.claude/skills/{careful,freeze,guard,unfreeze}/` contains only a
+`SKILL.md`; every executable lives under `~/.claude/skills/gstack/`. The scripts are present, so the
+skills work, but each reaches sideways into a sibling for its implementation — which README's
+self-containment principle calls out by name as *the `guard` lesson*. Merging the four vendors both
+scripts locally and discharges that lesson. Declared advantage: **self-containment plus
+maintenance**, not better judgment.
 
 ### 5.15 Setup & config
 
@@ -792,3 +914,92 @@ decision, since `docs/phase-0.md` section 6 reserves keep/defer/exclude to the u
   `freeze`/`unfreeze` pair inside Guard, and the Delegate-versus-Automate boundary.
 - It leaves the twelve built-in provenance gaps untouched; `docs/phase-0.md` section 5 still governs
   them.
+
+## 9. Amendment 2 — Context, Safety, Delegation, and Browser & QA
+
+**Date:** 2026-07-31
+**Scope:** `astra-context`, `astra-guard`, `astra-delegate`, `astra-automate`, `astra-browser`, and
+`astra-qa`
+**Authority:** as in section 8. The ledger changes in 9.3 are proposed, not applied.
+
+### 9.1 Inspection provenance
+
+Twenty-nine sources inspected on 2026-07-31.
+
+| Source | Lines | `sha256` prefix | Source | Lines | `sha256` prefix |
+|---|---:|---|---|---:|---|
+| `context-save` | 1028 | `1c5635797c27` | `qa` | 1684 | `f80573f4bf3a` |
+| `context-restore` | 910 | `d006b63c8568` | `qa-only` | 1256 | `911aec7f512a` |
+| `nowhat` | 293 | `6de7b4c69999` | `browse` | 1022 | `a33632d9948a` |
+| `strategic-compact` | 103 | `c83c4c9d60d3` | `connect-chrome` | 1016 | `76d4dca3906e` |
+| `handoff` | 16 | `57c9f1f392d7` | `open-gstack-browser` | 1016 | `76d4dca3906e` |
+| `guard` | 90 | `ab22714e84c0` | `scrape` | 949 | `16a367c64fe5` |
+| `freeze` | 91 | `f8cb02804952` | `benchmark` | 785 | `e1061bb7f982` |
+| `careful` | 67 | `64adcd299248` | `agent-browser` | 779 | `b341cb091e16` |
+| `unfreeze` | 48 | `e0a396b1304d` | `setup-browser-cookies` | 632 | `17363a8db951` |
+| `codex` | 1596 | `cec7ff8dba8b` | `slack` | 285 | `16817a09c54f` |
+| `pair-agent` | 1072 | `1f76495f2d13` | `vercel-sandbox` | 280 | `15da32dca80c` |
+| `coding-agent` | 316 | `94c6b4de7743` | `electron` | 236 | `d97a2bc221b5` |
+| `superpowers:dispatching-parallel-agents` | 185 | `f0df13f58404` | `dogfood` | 220 | `c86db6b33c8f` |
+| `nightnight` | 157 | `e61f5e1bee29` | `agentcore` | 115 | `f616b6dbce7c` |
+| | | | `webapp-testing` | 95 | `51b7349e77ec` |
+
+`connect-chrome` and `open-gstack-browser` share one hash because they are one artifact.
+
+### 9.2 Verdicts
+
+No design was withdrawn. Every defect found is a recording defect rather than an existence defect,
+which is the opposite of amendment 1's result.
+
+| Design | Verdict | Change |
+|---|---|---|
+| `astra-context` | Retained | 5 sources to 4; `nowhat` withdrawn to retained independent |
+| `astra-guard` | Retained | Hooks, `bin/` scripts, and template provenance now recorded; advantage restated as self-containment |
+| `astra-delegate` | Retained | Machinery-duplication basis recorded |
+| `astra-automate` | Retained | `loop-goal` version pin, `nightnight` cross-roles and unmet prerequisites recorded |
+| `astra-browser` | Retained, restructured | Alias collapsed; four adapters demoted to references |
+| `astra-qa` | Retained | Authority-as-tool-declaration and fork-drift obligations recorded |
+
+Roster unchanged at 25. Amendment 2 changes source dispositions and design obligations only.
+
+### 9.3 Proposed ledger changes
+
+**Collision source-claim ledger.**
+
+| Occurrence ID | Source | Proposed primary disposition | Proposed primary home | Note |
+|---|---|---|---|---|
+| `cm-context-and-handoff-05` | `nowhat` | independent reference | retained independent | Different outcome; records a dangling reference to an uninstalled `PUA` skill |
+| `cm-browser-and-qa-03` | `connect-chrome` | proposed Astra design | `astra-browser` | Invocable registration of the shared artifact |
+| `cm-browser-and-qa-04` | `open-gstack-browser` | duplicate occurrence | `astra-browser` | Same bytes as `-03`; declares the same `name`; shadowed and not invocable — `availability` must change from `live` |
+| `cm-delegation-and-autonomy-06` | `loop-goal` | proposed Astra design | `astra-automate` | Pin to 1.3.0; the orphaned 1.2.0 carries four of the six handlers |
+| `cm-delegation-and-autonomy-04` | `nightnight` | proposed Astra design | `astra-automate` | Secondary roles: `astra-spec`, `astra-critique` or `astra-qa`, `astra-ship`. Prerequisites unmet |
+| `cm-browser-and-qa-05` | `agentcore` | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: AWS credentials |
+| `cm-browser-and-qa-06` | `vercel-sandbox` | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: Vercel Sandbox and a snapshot identifier |
+| `cm-browser-and-qa-07` | `electron` | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: a CDP port |
+| `cm-browser-and-qa-11` | `slack` | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: an authenticated session |
+| `cm-browser-and-qa-16` | `qa` | proposed Astra design | `astra-qa` | Version 2.0.0 is the merge baseline; declares `Edit`, `Glob`, `Grep` |
+| `cm-browser-and-qa-17` | `qa-only` | proposed Astra design | `astra-qa` | Version 1.0.0 fork; 491 body lines drifted; omits the mutation tools |
+| `cm-browser-and-qa-08` | `webapp-testing` | proposed Astra design | `astra-qa` | Distinct Python-Playwright runtime; reconcile with the `playwright` MCP row |
+| `cm-browser-and-qa-09` | `scrape` | **unresolved** | unassigned | Extraction outcome; body not yet inspected |
+
+**Reference and cleanup ledger.** One row to add, disposition `keep` pending the user's decision:
+
+| Source | Component type | Reason | Consuming designs |
+|---|---|---|---|
+| `nowhat` | skill | Reasoning-direction outcome distinct from context serialization; cited-literature basis; references an uninstalled `PUA` skill | — |
+
+**Ledger header correction.** The stated total of 176 distinct source identifiers across 179
+occurrences is overstated. `connect-chrome` and `open-gstack-browser` are two identifiers over one
+artifact with one declared name, so at most 175 distinct artifacts are represented. The coordinator
+should re-derive the figure during the coverage diff that `docs/phase-0.md` section 9 criterion 1
+requires, rather than adjusting it by one on this evidence alone.
+
+### 9.4 What this amendment does not establish
+
+- It does not settle `scrape`'s disposition; only its declaration was read.
+- It does not assign an owner to the tiering decision that demoting the four Browser adapters
+  implies. That decision belongs to the deferred architecture work, and section 8's roster figures
+  are unaffected by it.
+- It does not resolve the `loop-goal` version-pinning gap in the ledger schema, which currently has
+  no field for it.
+- It does not install, configure, or repair any unmet prerequisite.

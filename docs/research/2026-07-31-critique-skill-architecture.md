@@ -114,7 +114,8 @@ upstream systems.
 
 ### Use a shallow façade, not critique subskills
 
-Keep all user-facing Astra skills as peers:
+Keep all user-facing Astra skills as peers. The four named Design skills are only the first
+design tranche, not the complete destination roster:
 
 ```text
 astra-critique
@@ -122,6 +123,7 @@ astra-product-design
 astra-interface
 astra-brand
 astra-presentation
+... other peer Astra skills as their designs are approved
 ```
 
 Inside `astra-critique`, use directly selected **review lenses** or **rubrics**, not registered
@@ -147,15 +149,23 @@ The important boundary is semantic, not just directory layout:
 - each lens is a direct, self-contained reference from the core—no lens-to-lens references;
 - Critique never reads or executes the destination skill's full workflow.
 
+Critique's review jurisdictions and its destination profiles are separate concerns. It may
+critique code, architecture and technical-design choices, plans, specifications, infrastructure,
+prompts, running interfaces, and other supported artifacts regardless of which destination
+profiles have been written first. Profiles shape an optional post-report handoff; they do not
+define Critique's trigger scope.
+
 ### Keep destination-specific handoffs small
 
 A typed handoff need not embed every downstream skill. Use a stable common envelope—artifact,
 problem statement, finding IDs and evidence, observed impact, affected scope, user constraints,
 open decisions, and context gaps—plus a small destination profile for the selected peer.
-Destination profiles are support data, not skills. The handoff contains no proposed remedy,
-implementation sequence, tool choice, or Critique-authored success criteria. Critique emits the
-problem and stops; the peer skill owns solution exploration and the user decides whether to start
-it.
+Destination profiles are extensible support data, not skills or an allowlist. Each peer design
+that accepts Critique handoffs contributes its profile during roster reconciliation. The handoff
+contains no proposed remedy, implementation sequence, tool choice, or Critique-authored success
+criteria. Critique emits the problem and stops; the peer skill owns solution exploration and the
+user decides whether to start it. A missing profile is a reconciliation gap, not permission to
+reroute a code or architecture problem to one of the first Design peers.
 
 This makes the relation a **handoff edge between peer skills**, not a parent calling a child.
 

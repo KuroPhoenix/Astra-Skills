@@ -56,8 +56,9 @@ neighborhood is the only one where the user already invokes a source daily.
 ## 2. Interface and scope
 
 **Requests that should trigger it.** "Review this before I ship it." "Attack this plan." "Is this
-the right approach, or am I fooling myself?" "What breaks if I do this?" Reviewing a diff, a
-plan, a spec, an infra change, a prompt, a CLAUDE.md, or a running visual interface.
+the right architecture or design choice?" "Is this the right approach, or am I fooling myself?"
+"What breaks if I do this?" Reviewing a code diff, plan, specification, architecture decision,
+infra change, prompt, CLAUDE.md, or running visual interface.
 
 **Nearby requests that should not.**
 
@@ -72,8 +73,8 @@ plan, a spec, an infra change, a prompt, a CLAUDE.md, or a running visual interf
 
 **Accepted context, conceptually.** One artifact with an identifiable set of decisions in it, plus
 whatever evidence the artifact's own domain supplies (a diff and its repository, a plan and its
-stated intent, a prompt and the published practices it should meet, or a running interface and
-its reachable states and screenshots).
+stated intent, an architecture decision and its constraints, a prompt and the published practices
+it should meet, or a running interface and its reachable states and screenshots).
 
 **User-visible result.** A report in which every substantive sentence is attributable to a named
 reviewer, factual disputes have been checked against evidence, and every normative disagreement
@@ -493,8 +494,8 @@ exposure.
 degradation tags, consensus tables, and decision auditing already exist in `autoplan` for plans.
 They are behaviors to preserve or deliberately simplify, not Astra Critique's novelty. The
 candidate additions are artifact routing across diffs, API specs, IaC, plans, running developer
-experiences, prompts, and CLAUDE.md; a wider seat pool; evidence-only factual verification; and
-refusal to auto-decide normative conflicts.
+experiences, architecture and technical-design decisions, prompts, and CLAUDE.md; a wider seat
+pool; evidence-only factual verification; and refusal to auto-decide normative conflicts.
 
 **Where user choices occur.** Normative disagreements route to the user as an explicit choice with
 every surviving side quoted. Panel composition is declared data, overridable by the user.
@@ -525,6 +526,13 @@ mechanical rules and substantive priors are different kinds of thing. None of th
 caller-facing. There are no child Critique skills: all Astra skills remain public peers, and the
 handoff is an output edge mediated by the user rather than a parent invoking a child.
 
+**Review scope is independent of the destination roster.** The accepted artifact and directly
+selected lenses determine whether Critique can review a request. Destination profiles are
+consulted only after the critique report exists, to shape an optional handoff. A missing or
+not-yet-designed profile cannot make code, an architecture or design choice, a plan, IaC, a
+prompt, or any other supported jurisdiction out of scope, and it cannot force the problem into
+one of the currently documented Design destinations.
+
 **Report and typed-handoff shape.** The report renders before the handoff and remains useful even
 when no destination is available. Every peer receives the same conceptual envelope below; the
 exact field names, serialization, and runtime schema remain deferred:
@@ -549,18 +557,29 @@ the chair neither selects nor elaborates that fix and never promotes it into the
 The destination skill owns solution exploration, solution decisions, planning, and the criteria
 by which its solution will be judged.
 
-The destination profiles are support data, not a skill registry. Each later per-skill design owns
-its accepted job and contributes one small profile during roster reconciliation. After a
-destination is selected, the Critique core reads that one profile directly; it never reads the
-destination's full `SKILL.md` at runtime. The currently approved Design peers illustrate the
-variants:
+The destination profiles are support data, not a skill registry or allowlist. Each later
+per-skill design that accepts Critique handoffs owns its accepted job and contributes one small
+profile during roster reconciliation. Destination selection uses the reconciled Astra peer
+roster, not the examples below. After a destination is selected, the Critique core reads that one
+profile directly; it never reads the destination's full `SKILL.md` at runtime.
 
-| Destination | Additional payload |
+The four currently approved Design peers are the **first profile tranche only because their
+designs are being worked on first**. They illustrate payload variation; they do not limit what
+Critique can review or where it may hand off:
+
+| First-tranche Design destination | Problem-only additional payload |
 |---|---|
 | `astra-product-design` | Observed experience problem, affected user journey, supporting user evidence, and research gaps |
 | `astra-interface` | Affected surfaces and states, reproduction evidence, and observed accessibility or interaction defects |
 | `astra-brand` | Identity inconsistency, assets or tokens where it appears, and the conflicting audience signal |
 | `astra-presentation` | Audience, observed narrative or data-comprehension problem, affected slides or sections, and supporting evidence |
+
+Later roster-approved profiles may cover code changes, architecture or technical-design choices,
+plans and specifications, infrastructure, prompts, testing, or any other peer-owned problem
+class. Their exact skill names and payloads belong to those later designs; this document does not
+invent them in advance. If a correct peer exists but its profile is missing, Critique keeps the
+report and common problem envelope, marks the profile as a reconciliation prerequisite, and does
+not substitute an unrelated Design peer.
 
 If exactly one compatible destination nomination survives, the chair renders it. If several
 incompatible nominations survive, the chair presents the alternatives through
@@ -723,10 +742,12 @@ The later corpus must be versioned and selected before outputs are generated. It
   `SKILL.md` (§5.4);
 - **expected-convergence control:** `devex-review` and `plan-devex-review` must not manufacture
   incompatible recommendations once decision and jurisdiction are held constant (§5.5);
-- **handoff-routing cases:** findings whose problem class belongs respectively to
-  `astra-product-design`, `astra-interface`, `astra-brand`, and `astra-presentation`; a genuine
-  destination conflict that requires user choice; and a completed review for which no further
-  skill is actionable; and
+- **handoff-routing cases:** first-tranche Design examples for `astra-product-design`,
+  `astra-interface`, `astra-brand`, and `astra-presentation`; non-Design problems in code,
+  architecture or technical design, and plan or specification jurisdictions routed to their
+  roster-approved peers once those peer designs exist; a missing-profile case that must not fall
+  back to an unrelated Design peer; a genuine destination conflict that requires user choice;
+  and a completed review for which no further skill is actionable; and
 - **prerequisite failures:** absent context-mode MCP, absent mysql MCP with its CLI fallback,
   missing `design-api`, a missing selected lens, an unavailable destination peer, and individual
   reviewer-context failure.
@@ -739,10 +760,11 @@ order-randomized outputs and the fixture rubric.
 Record critical-decision recall, supported-claim precision, unsupported-claim rate,
 source-unique supported findings, actionability, duplicate/noise load, informative-conflict
 yield, routing accuracy, loaded-lens count, irrelevant-context input tokens, handoff-routing
-accuracy, finding-to-handoff traceability, solution-prescription leakage, unintended destination
-invocations, input and output tokens, wall-clock time, and degradation state.
-Solution-prescription leakage and unintended destination invocations must both remain zero.
-`Decisions surfaced` alone is diagnostic, not quality.
+accuracy across Design and non-Design fixtures, destination-coverage by Critique jurisdiction,
+finding-to-handoff traceability, solution-prescription leakage, unrelated-profile fallback,
+unintended destination invocations, input and output tokens, wall-clock time, and degradation
+state. Solution-prescription leakage, unrelated-profile fallback, and unintended destination
+invocations must all remain zero. `Decisions surfaced` alone is diagnostic, not quality.
 
 ### 9.3 Gates
 
@@ -769,8 +791,10 @@ Solution-prescription leakage and unintended destination invocations must both r
    skill. Each handoff identifies the correct peer and remains traceable to surviving finding IDs
    and evidence. It contains the problem, impact, scope, and preserved user constraints but no
    proposed solution, implementation steps, tool choice, or Critique-authored success criteria.
-   Genuine destination conflicts go to the user, no-action cases emit `none`, and any solution
-   leakage or unintended destination invocation fails the gate.
+   The routing corpus covers both Design and non-Design problems; a missing profile is reported
+   rather than replaced by an unrelated peer. Genuine destination conflicts go to the user,
+   no-action cases emit `none`, and any solution leakage, unrelated-profile fallback, or
+   unintended destination invocation fails the gate.
 6. **Retirement.** After gates 1–5 pass, each source separately requires preserved invocation
    authority, delivery shape, external dependencies or fallbacks, failure behavior,
    self-containment from that source's files, and explicit user approval. Failure blocks only that
@@ -848,10 +872,12 @@ original review and are retained in Appendix C.
   them are divided. The depth is settled: every lens is one-level, directly selected, and
   non-invocable. *Consequence:* too fine and the selection table becomes unreadable; too coarse
   and §5.5's jurisdiction split has nowhere to live.
-- **Destination-profile reconciliation.** The four Design-peer payloads are provisional until
-  those peer designs publish their accepted inputs. *Consequence:* each downstream design must
-  reconcile one compact profile into Critique's handoff references before that destination can
-  pass §9.3 gate 5; the report remains independently usable meanwhile.
+- **Destination-profile roster.** The four Design-peer payloads are the first tranche, not the
+  destination boundary. Exact profiles for code, architecture or technical design, plans and
+  specifications, infrastructure, prompts, testing, and other peer-owned jobs await their own
+  designs. *Consequence:* every peer that accepts Critique handoffs must reconcile one compact
+  profile before that route can pass §9.3 gate 5; a missing profile never narrows Critique's
+  review scope or redirects the problem to an unrelated Design peer.
 - **Does the evidence gate belong to the protocol or to each perspective?** `cso` parameterizes
   what `/diss` hard-codes (§5.1). *Consequence:* if it is a protocol parameter, `/diss`'s "no
   exceptions" filter becomes a default rather than a prior, which weakens the case for treating

@@ -1,7 +1,7 @@
 # Astra phase 0
 
-**Date:** 2026-07-30
-**Status:** Scope approved; coordinator assigned; ledger seeded
+**Date:** 2026-07-31
+**Status:** Scope approved; coordinator assigned; ledger seeded; Wave 1 primary homes reserved
 
 ## 1. Authority and ownership
 
@@ -200,10 +200,11 @@ Phase 0 excludes:
   runtime preservation fixtures; and
 - disabling, uninstalling, deleting, or retiring existing sources.
 
-Implementation begins only after the user selects a reviewed design. Shared runtime modules
-are extracted only after at least two implementations demonstrate the same seam. A later
-reference convener may be built as a validation scaffold, but it is not the final implementation
-for a design whose approved end state deletes the originals.
+Implementation planning begins only after the coordinator presents the reconciled final roster
+and the user selects it. Shared runtime modules are extracted only after at least two
+implementations demonstrate the same seam. A later reference convener may be built as a
+validation scaffold, but it is not the final implementation for a design whose approved end state
+deletes the originals.
 
 ## 9. Acceptance criteria
 

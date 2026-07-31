@@ -78,23 +78,25 @@ it should meet, or a running interface and its reachable states and screenshots)
 
 **User-visible result.** A report in which every substantive sentence is attributable to a named
 reviewer, factual disputes have been checked against evidence, and every normative disagreement
-is surfaced as an explicit choice rather than silently resolved. The report ends with either a
-typed, destination-specific handoff to one peer Astra skill or an explicit statement that no
-further skill is warranted.
+is surfaced as an explicit choice rather than silently resolved. The report retains a traceable
+route candidate for every independently actionable problem class. After it renders, the result
+adds either one user-selected, destination-specific handoff capsule or an explicit statement that
+no immediate handoff was selected. Unselected candidates remain in the report.
 
 The critique report is the primary result. The handoff is a smaller routing capsule derived from
 that report: it restates the problem and evidence for the owning peer but does not attempt to
 solve it.
 
 **Non-goals.** Making the change. Deciding tradeoffs on the user's behalf. Producing a single
-merged verdict that hides disagreement. Replacing test execution or security auditing. Invoking,
-loading, or executing the recommended destination skill. Defining the downstream solution,
-implementation plan, tool choice, or success criteria.
+merged verdict that hides disagreement. Prioritizing independent problems on the user's behalf.
+Replacing test execution or security auditing. Invoking, loading, or executing the recommended
+destination skill. Defining the downstream solution, implementation plan, tool choice, or success
+criteria.
 
 **Decisions that remain with the user.** Every normative tradeoff. Panel composition, when
-overridden. Whether to act on any finding. Whether an unresolved factual dispute blocks. Whether
-to accept the proposed destination, and which destination to choose when surviving reviewers
-classify the problem differently.
+overridden. Whether to act on any finding. Whether an unresolved factual dispute blocks. How to
+classify a problem when surviving reviewers nominate incompatible owners. Which independent route,
+if any, should become the immediate handoff.
 
 The interface is deliberately smaller than the behavior: one invocation and one artifact, against
 a panel whose composition, protocol, and conflict handling stay behind it. The output remains one
@@ -481,14 +483,15 @@ home-jurisdiction regression.
 
 **Information flow.** Artifact and agenda classification → direct lens selection → decision
 catalogue → fresh-context blind filing → seat-declared conflict scan → targeted response →
-factual verification or user resolution → procedural report rendering → problem-class and
-destination nomination → handoff validation → typed problem handoff rendering → stop. A
-home-jurisdiction request loads the strongest applicable lens and may select one seat; the
-protocol does not load extra lenses or convene extra perspectives merely because they exist.
-Cross-jurisdiction requests may fan out to several directly selected lenses, but no lens calls
-another. When several seats run, each commits its claims before seeing any other filing. Fresh
-contexts provide the isolation that `autoplan` already demonstrates; ordering controls later
-exposure.
+factual verification or user resolution → problem-class and destination nomination → procedural
+report rendering with every route candidate → same-problem classification resolution → user
+selection of zero or one immediate route → selected-profile validation → typed problem handoff
+rendering when selected → stop. A home-jurisdiction request loads the strongest applicable lens
+and may select one seat; the protocol does not load extra lenses or convene extra perspectives
+merely because they exist. Cross-jurisdiction requests may fan out to several directly selected
+lenses, but no lens calls another. When several seats run, each commits its claims before seeing
+any other filing. Fresh contexts provide the isolation that `autoplan` already demonstrates;
+ordering controls later exposure.
 
 **What is inherited and what is new.** Fresh contexts, blind filing, dual-model redundancy,
 degradation tags, consensus tables, and decision auditing already exist in `autoplan` for plans.
@@ -501,8 +504,11 @@ pool; evidence-only factual verification; and refusal to auto-decide normative c
 every surviving side quoted. Panel composition is declared data, overridable by the user.
 Whether to act is always the user's. Each seat may classify the problem and nominate the peer
 skill that owns that problem class. The procedural chair may validate and render those
-nominations but may not invent one or choose between incompatible surviving nominations. That
-conflict becomes a user choice before the final handoff is emitted.
+nominations but may not invent one or choose between incompatible surviving nominations. If the
+nominations conflict over the same problem, classification becomes a user choice. If several
+independent problems map to different peers, the report preserves every route and the user chooses
+which one, if any, continues now. The chair may not rank the independent routes or drop the
+unselected ones.
 
 **How uncertainty is represented.** Factual disputes go to an evidence-only verifier whose result
 describes the evidence — supported, contradicted, or indeterminate — never who wins. An
@@ -513,9 +519,11 @@ resolved.
 either runs a reduced playbook and says so, or is dropped with its absence reported. A missing
 lens invalidates that route rather than falling through to an unrelated lens. A panel that cannot
 convene any seat reports that rather than emitting a merged opinion. An unavailable destination
-does not erase the report; the handoff identifies the unavailable peer and the prerequisite or
-manual alternative. The `/diss` fallback shape — prefer MCP, detect absence, fall back — and
-`autoplan`'s per-voice degradation matrix are the observed models.
+does not erase the report; when its reconciled profile exists, the selected handoff identifies the
+unavailable peer and the prerequisite or manual alternative. A missing or inconsistent profile
+leaves the route candidate in the report and marks a reconciliation gap rather than fabricating a
+capsule. The `/diss` fallback shape — prefer MCP, detect absence, fall back — and `autoplan`'s
+per-voice degradation matrix are the observed models.
 
 **Depth and internal seams.** The public interface remains one invocation plus one artifact.
 Perspective / playbook / jurisdiction are internal seams because §5.1 and §5.5 demonstrate the
@@ -534,8 +542,10 @@ prompt, or any other supported jurisdiction out of scope, and it cannot force th
 one of the currently documented Design destinations.
 
 **Report and typed-handoff shape.** The report renders before the handoff and remains useful even
-when no destination is available. Every peer receives the same conceptual envelope below; the
-exact field names, serialization, and runtime schema remain deferred:
+when no destination is available. For every independently actionable problem it records the
+problem class, candidate destination or unresolved owner, finding IDs and evidence, and profile
+state. The table below is the conceptual common envelope for the zero or one selected immediate
+capsule; exact field names, serialization, and runtime schema remain deferred:
 
 | Field | Rule |
 |---|---|
@@ -558,10 +568,13 @@ The destination skill owns solution exploration, solution decisions, planning, a
 by which its solution will be judged.
 
 The destination profiles are support data, not a skill registry or allowlist. Each later
-per-skill design that accepts Critique handoffs owns its accepted job and contributes one small
-profile during roster reconciliation. Destination selection uses the reconciled Astra peer
-roster, not the examples below. After a destination is selected, the Critique core reads that one
-profile directly; it never reads the destination's full `SKILL.md` at runtime.
+per-skill design that accepts Critique handoffs is authoritative for its accepted problem class
+and destination-only payload. During final roster reconciliation, the coordinator records that
+accepted profile as the canonical peer contract; the Critique design consumes the reconciled
+snapshot rather than defining another peer's interface unilaterally. Destination selection uses
+that reconciled Astra peer roster, not the examples below. After the user selects an immediate
+route, the Critique core reads at most that one profile directly; it never reads the destination's
+full `SKILL.md` at runtime.
 
 The four currently approved Design peers are the **first profile tranche only because their
 designs are being worked on first**. They illustrate payload variation; they do not limit what
@@ -581,10 +594,11 @@ invent them in advance. If a correct peer exists but its profile is missing, Cri
 report and common problem envelope, marks the profile as a reconciliation prerequisite, and does
 not substitute an unrelated Design peer.
 
-If exactly one compatible destination nomination survives, the chair renders it. If several
-incompatible nominations survive, the chair presents the alternatives through
-`AskUserQuestion`, then renders the user's selection. If no actionable finding survives, the
-report says `destination_skill: none`. In every case Critique stops after rendering.
+If incompatible nominations for the same problem survive, the chair presents the classifications
+through `AskUserQuestion`. If several independent route candidates survive, the chair presents
+all of them without ranking and the user selects zero or one for the immediate capsule. The
+unselected candidates stay in the report. If no actionable finding survives, or the user defers
+all routes, the result emits no immediate handoff. In every case Critique stops after rendering.
 
 **Three later implementations exercise the same task interface.**
 
@@ -616,7 +630,7 @@ historical for exactly that reason.
 | `domain-modeling` | skill (reference) | **Documents only** — `grill-with-docs`'s other half is a separate job | Not this skill's concern; recorded as a cross-neighborhood role |
 | gbrain context | external runtime | **Documents only** — `office-hours` preflight, already optional upstream | Upstream already handles stale-but-usable fallback |
 | `git`, `gh`, JaCoCo XML | runtime | **Coordinates** — evidence sources for the code jurisdiction | Playbook runs reduced and says which evidence was unavailable |
-| Destination Astra skills | peer skills | **Documents only** — named in a typed handoff; Critique never reads or invokes their full workflows | Report remains complete; handoff marks the peer unavailable and names prerequisites or a manual bridge |
+| Destination Astra skills | peer skills | **Documents only** — each destination design owns its accepted problem class and profile; the coordinator reconciles the canonical snapshot; Critique names at most one user-selected peer and never reads or invokes its full workflow | Report retains every route candidate. A missing or inconsistent profile is a reconciliation gap; a known but unavailable peer can still be named with prerequisites or a manual bridge |
 
 **Planned self-contained delivery shape.** Exact filenames remain implementation work, but the
 depth constraint is normative:
@@ -685,12 +699,16 @@ Usable today, in this order:
    The pair is the manual approximation of a two-seat panel; the later characterization run must
    establish whether that disagreement is reproducible and useful rather than assumed.
 
-After any current review, manually append: next skill and reason; exact suggested invocation;
-problem statement; finding IDs and evidence; artifact and bounded problem scope; observed impact
-and affected scope; user constraints, open decisions, prerequisites, and context gaps. Do not add
-a proposed solution, implementation steps, tool choice, or new success criteria: the downstream
-skill owns them. Present alternative destinations to the user when reviewers disagree, then stop.
-This approximates the typed handoff without pretending that any current source implements it.
+After any current review, manually append one route candidate for every independent actionable
+problem: candidate skill and reason; problem statement; finding IDs and evidence; artifact and
+bounded problem scope; observed impact and affected scope; user constraints, open decisions,
+prerequisites, context gaps, and whether a reconciled destination profile exists. Do not add a
+proposed solution, implementation steps, tool choice, or new success criteria: the downstream
+skill owns them. Ask the user to select zero or one immediate candidate, then append its exact
+suggested invocation and destination-only payload only when the reconciled profile exists. If it
+does not, retain the selected route as a named reconciliation gap and emit no capsule. Preserve
+unselected candidates in the report and stop. This approximates the typed handoff without
+pretending that any current source implements it.
 
 **What the bridge does and cannot approximate.** `/autoplan` already supplies fresh independent
 reviewers, explicit blind filing, dual-model degradation, consensus tables, and an audit trail
@@ -714,7 +732,7 @@ Skill-specific only; `docs/phase-0.md` section 8 owns the phase-wide list.
 | **H2 — coordination value** | The reference convener versus the source oracle on cross-jurisdiction artifacts | Reject the panel or reduce it to routing among specialist modes; convenience alone cannot be called better critique |
 | **H3 — internalization fidelity** | The self-contained candidate versus the reference convener on identical artifacts | Rework the extracted seat or keep the source installed; no retirement |
 | **H4 — retirement safety** | The passing self-contained candidate versus each source's behavior, authority, dependencies, delivery shape, and failure paths | Keep the affected source; other sources may retire only through their own gates |
-| **H5 — bounded disclosure and handoff** | The self-contained candidate on single- and cross-jurisdiction cases plus downstream-routing cases | Reject the packaging or destination-profile set if unrelated lenses or destination skills load, the wrong peer is nominated, solution instructions leak into the handoff, or Critique starts another workflow |
+| **H5 — bounded disclosure and handoff** | The self-contained candidate on single- and cross-jurisdiction cases plus downstream-routing cases | Reject the packaging or destination-profile set if unrelated lenses or destination skills load, an independent route is lost, more than one immediate capsule is emitted, the wrong peer is nominated, solution instructions leak into the handoff, or Critique starts another workflow |
 
 The three systems are:
 
@@ -746,8 +764,10 @@ The later corpus must be versioned and selected before outputs are generated. It
   `astra-interface`, `astra-brand`, and `astra-presentation`; non-Design problems in code,
   architecture or technical design, and plan or specification jurisdictions routed to their
   roster-approved peers once those peer designs exist; a missing-profile case that must not fall
-  back to an unrelated Design peer; a genuine destination conflict that requires user choice;
-  and a completed review for which no further skill is actionable; and
+  back to an unrelated Design peer; incompatible nominations for the same problem that require a
+  classification choice; several independent problems with different accepted destinations whose
+  unselected routes must remain in the report; and a completed review for which no further skill
+  is actionable; and
 - **prerequisite failures:** absent context-mode MCP, absent mysql MCP with its CLI fallback,
   missing `design-api`, a missing selected lens, an unavailable destination peer, and individual
   reviewer-context failure.
@@ -761,10 +781,12 @@ Record critical-decision recall, supported-claim precision, unsupported-claim ra
 source-unique supported findings, actionability, duplicate/noise load, informative-conflict
 yield, routing accuracy, loaded-lens count, irrelevant-context input tokens, handoff-routing
 accuracy across Design and non-Design fixtures, destination-coverage by Critique jurisdiction,
-finding-to-handoff traceability, solution-prescription leakage, unrelated-profile fallback,
-unintended destination invocations, input and output tokens, wall-clock time, and degradation
-state. Solution-prescription leakage, unrelated-profile fallback, and unintended destination
-invocations must all remain zero. `Decisions surfaced` alone is diagnostic, not quality.
+route-candidate recall, unselected-route retention, finding-to-handoff traceability,
+solution-prescription leakage, unrelated-profile fallback, excess immediate capsules, unintended
+destination invocations, input and output tokens, wall-clock time, and degradation state.
+Solution-prescription leakage, unrelated-profile fallback, excess immediate capsules, dropped
+independent routes, and unintended destination invocations must all remain zero. `Decisions
+surfaced` alone is diagnostic, not quality.
 
 ### 9.3 Gates
 
@@ -792,9 +814,11 @@ invocations must all remain zero. `Decisions surfaced` alone is diagnostic, not 
    and evidence. It contains the problem, impact, scope, and preserved user constraints but no
    proposed solution, implementation steps, tool choice, or Critique-authored success criteria.
    The routing corpus covers both Design and non-Design problems; a missing profile is reported
-   rather than replaced by an unrelated peer. Genuine destination conflicts go to the user,
-   no-action cases emit `none`, and any solution leakage, unrelated-profile fallback, or
-   unintended destination invocation fails the gate.
+   rather than replaced by an unrelated peer. Same-problem destination conflicts go to the user;
+   multiple independent routes all remain in the report while zero or one becomes the immediate
+   capsule. No-action and defer-all cases emit no capsule. Any dropped route, excess capsule,
+   solution leakage, unrelated-profile fallback, or unintended destination invocation fails the
+   gate.
 6. **Retirement.** After gates 1–5 pass, each source separately requires preserved invocation
    authority, delivery shape, external dependencies or fallbacks, failure behavior,
    self-containment from that source's files, and explicit user approval. Failure blocks only that
@@ -875,9 +899,12 @@ original review and are retained in Appendix C.
 - **Destination-profile roster.** The four Design-peer payloads are the first tranche, not the
   destination boundary. Exact profiles for code, architecture or technical design, plans and
   specifications, infrastructure, prompts, testing, and other peer-owned jobs await their own
-  designs. *Consequence:* every peer that accepts Critique handoffs must reconcile one compact
-  profile before that route can pass §9.3 gate 5; a missing profile never narrows Critique's
-  review scope or redirects the problem to an unrelated Design peer.
+  designs. Each accepting peer design owns its problem class and payload; the coordinator records
+  the canonical profile during final roster reconciliation and Critique consumes that snapshot.
+  *Consequence:* every peer that accepts Critique handoffs must reconcile one compact profile
+  before that route can pass §9.3 gate 5; a missing or inconsistent profile remains visible in the
+  report, never narrows Critique's review scope, and never redirects the problem to an unrelated
+  Design peer.
 - **Does the evidence gate belong to the protocol or to each perspective?** `cso` parameterizes
   what `/diss` hard-codes (§5.1). *Consequence:* if it is a protocol parameter, `/diss`'s "no
   exceptions" filter becomes a default rather than a prior, which weakens the case for treating

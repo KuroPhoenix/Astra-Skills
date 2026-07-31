@@ -2,7 +2,7 @@
 
 **Snapshot:** 2026-07-31
 
-**Inventory baseline:** `README.md` at `07fcbdf` plus the live registrations named below
+**Inventory baseline:** `README.md` reconciled on 2026-07-31 plus the live registrations named below
 
 **State:** Seeded for coordination; unresolved values are explicit workflow states, not completed dispositions.
 
@@ -81,27 +81,27 @@ occurrence and list every candidate neighborhood.
 | `cm-browser-and-qa-16` | `qa` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-17` | `qa-only` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-18` | `playwright` | MCP server | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-01` | `design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-03` | `design-consultation` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-04` | `design-html` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-05` | `design-shotgun` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-01` | `design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-03` | `design-consultation` | skill | live | Design & visual | proposed Astra design | `astra-product-design` | — | claimed | Reserved by the phase-0 coordinator for `astra-product-design` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-04` | `design-html` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-05` | `design-shotgun` | skill | live | Design & visual | proposed Astra design | `astra-product-design` | — | claimed | Reserved by the phase-0 coordinator for `astra-product-design` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
 | `cm-design-and-visual-06` | `design-review` | skill | live | Design & visual | proposed Astra design | `astra-critique` | `astra-interface`: fix and verify; Testing (future design): bootstrap and regression | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-design-and-visual-07` | `ui-styling` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-08` | `ui-ux-pro-max` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-09` | `frontend-design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-10` | `theme-factory` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-11` | `brand` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-12` | `brand-guidelines` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-13` | `banner-design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-14` | `canvas-design` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-15` | `algorithmic-art` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-16` | `slides` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-17` | `dataviz` | built-in skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source bytes unavailable and host-version provenance unresolved. |
-| `cm-design-and-visual-18` | `artifact-design` | built-in skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source bytes unavailable and host-version provenance unresolved. |
-| `cm-design-and-visual-19` | `artifact-capabilities` | built-in skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source bytes unavailable and host-version provenance unresolved. |
-| `cm-design-and-visual-20` | `web-artifacts-builder` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
-| `cm-design-and-visual-21` | `diagram` | skill | live | Design & visual | unassigned | unassigned | — | claimed | Reserved by the phase-0 coordinator for the Design & visual investigation; source inspection pending. |
+| `cm-design-and-visual-07` | `ui-styling` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-08` | `ui-ux-pro-max` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-09` | `frontend-design` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-10` | `theme-factory` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-11` | `brand` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-12` | `brand-guidelines` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-13` | `banner-design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-14` | `canvas-design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-15` | `algorithmic-art` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-16` | `slides` | skill | live | Design & visual | proposed Astra design | `astra-presentation` | — | claimed | Reserved by the phase-0 coordinator for `astra-presentation` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-17` | `dataviz` | built-in skill | live | Design & visual | proposed Astra design | `astra-presentation` | — | claimed | Reserved by the phase-0 coordinator for `astra-presentation` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source bytes unavailable and host-version provenance unresolved. |
+| `cm-design-and-visual-18` | `artifact-design` | built-in skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source bytes unavailable and host-version provenance unresolved. |
+| `cm-design-and-visual-19` | `artifact-capabilities` | built-in skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source bytes unavailable and host-version provenance unresolved. |
+| `cm-design-and-visual-20` | `web-artifacts-builder` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-21` | `diagram` | skill | live | Design & visual | proposed Astra design | `astra-presentation` | — | claimed | Reserved by the phase-0 coordinator for `astra-presentation` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
 | `cm-plan-and-spec-01` | `superpowers:brainstorming` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-02` | `superpowers:writing-plans` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-03` | `superpowers:executing-plans` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -408,6 +408,12 @@ plugin-level deletion from silently removing a capability with a different lifec
 | huggingface-skills:mcp-server | MCP server | huggingface-skills@claude-plugins-official/1.0.20 | Out of scope — retain | External capability, not a prompt skill; later component-level migration must decide it separately. | plugin `.mcp.json` |
 | superpowers:SessionStart | hook | superpowers@claude-plugins-official/6.2.0 | Out of scope — retain | Lifecycle behavior cannot be flattened into a superskill; later hook ownership must decide it separately. | plugin `hooks/hooks.json` |
 | explanatory-output-style:SessionStart | hook | explanatory-output-style@claude-plugins-official/1.0.0 | Out of scope — retain | Lifecycle behavior cannot be flattened into a superskill; later hook ownership must decide it separately. | plugin `hooks/hooks.json` |
+| `loop-goal:PostToolUse:archive-on-confirm` | hook | loop-goal@monster-prompt/1.3.0 | Out of scope — retain | Lifecycle enforcement cannot be flattened into the skill body; `astra-automate` must preserve, replace, or explicitly retain this handler. | plugin manifest `hooks.PostToolUse`; `hooks/archive_on_confirm.sh` |
+| `loop-goal:SessionStart:refresh-planner` | hook | loop-goal@monster-prompt/1.3.0 | Out of scope — retain | Lifecycle enforcement cannot be flattened into the skill body; `astra-automate` must preserve, replace, or explicitly retain this handler. | plugin manifest `hooks.SessionStart`; `hooks/refresh_planner.sh` |
+| `loop-goal:UserPromptSubmit:mark-user-confirm` | hook | loop-goal@monster-prompt/1.3.0 | Out of scope — retain | Lifecycle enforcement cannot be flattened into the skill body; `astra-automate` must preserve, replace, or explicitly retain this handler. | plugin manifest `hooks.UserPromptSubmit`; `hooks/mark_user_confirm.sh` |
+| `loop-goal:PreToolUse:check-dispatch` | hook | loop-goal@monster-prompt/1.3.0 | Out of scope — retain | Lifecycle enforcement cannot be flattened into the skill body; `astra-automate` must preserve, replace, or explicitly retain this handler. | plugin manifest `hooks.PreToolUse` matcher `Agent\|Task`; `hooks/check_dispatch.sh` |
+| `loop-goal:PreToolUse:check-planner-self-exec` | hook | loop-goal@monster-prompt/1.3.0 | Out of scope — retain | Lifecycle enforcement cannot be flattened into the skill body; `astra-automate` must preserve, replace, or explicitly retain this handler. | plugin manifest `hooks.PreToolUse` matcher `Skill\|advisor\|Advisor\|Edit\|Write\|MultiEdit\|NotebookEdit`; `hooks/check_planner_self_exec.sh` |
+| `loop-goal:PreToolUse:check-confirm-gate` | hook | loop-goal@monster-prompt/1.3.0 | Out of scope — retain | Lifecycle enforcement cannot be flattened into the skill body; `astra-automate` must preserve, replace, or explicitly retain this handler. | plugin manifest `hooks.PreToolUse` matcher `Edit\|Write\|MultiEdit`; `hooks/check_confirm_gate.sh` |
 | clangd-lsp:clangd | LSP server | clangd-lsp@claude-plugins-official/1.0.0 | Out of scope — retain | Language infrastructure is orthogonal to superskill condensation. | marketplace manifest `lspServers.clangd` |
 | skill-creator:analyzer | skill-scoped agent | skill-creator:skill-creator | Tracked with parent | Not independently registered; preserve with the parent skill until that design decides its delivery shape. | skill-creator plugin `skills/skill-creator/agents/analyzer.md` |
 | skill-creator:comparator | skill-scoped agent | skill-creator:skill-creator | Tracked with parent | Not independently registered; preserve with the parent skill until that design decides its delivery shape. | skill-creator plugin `skills/skill-creator/agents/comparator.md` |
@@ -419,10 +425,17 @@ plugin-level deletion from silently removing a capability with a different lifec
 - Collision distinct source identifiers: **176**.
 - Live reference rows: **41**.
 - Dangling cleanup rows: **133**.
-- Separate installed-component records: **8**.
+- Separate installed-component records: **14**.
+- Collision primary dispositions: **37** proposed Astra design, **1** duplicate occurrence, and
+  **141** unassigned.
+- Collision primary homes: **18** `astra-critique` occurrences (including the duplicate),
+  **2** `astra-product-design`, **8** `astra-interface`, **7** `astra-brand`,
+  **3** `astra-presentation`, and **141** unassigned.
 - Astra Critique occurrences are `claimed`, not `resolved`.
 - All 21 Design & visual occurrences are `claimed` for one investigation wave. `design-review`
-  is assigned to `astra-critique` with explicit secondary roles; the remaining 20 stay
-  `unassigned` pending the user-approved split into primary homes.
+  remains assigned to `astra-critique` with explicit secondary roles; the remaining 20 have
+  provisional primary homes across the four user-approved Wave 1 designs. None is `resolved`.
+- The `loop-goal` skill remains a collision source for `astra-automate`; its six lifecycle handlers
+  are separate component records and remain installed pending delivery-shape reconciliation.
 - Every other collision occurrence remains `unclaimed` and `unassigned`.
 - No `keep`, `defer`, `exclude`, or retirement decision is inferred from this skeleton.

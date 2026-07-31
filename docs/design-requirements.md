@@ -1,7 +1,7 @@
 # Astra skill design requirements
 
-**Date:** 2026-07-30
-**Status:** Approved structure; three-system evaluation policy added
+**Date:** 2026-07-31
+**Status:** Approved structure; three-system evaluation and peer-handoff policy added
 
 ## 1. Purpose
 
@@ -305,6 +305,37 @@ Name agents, commands, tools, servers, hooks, runtimes, credentials, and externa
 that remain separate. Explain whether the future skill invokes, reads, coordinates, replaces,
 or merely documents each dependency.
 
+For every proposed relation with a peer Astra skill, state its direction and distinguish:
+
+- consuming the peer's output or capability;
+- emitting a user-mediated handoff that only names the peer; and
+- invoking the peer's workflow.
+
+Name the exact problem or information class that crosses the relation, the minimum payload, who
+decides whether the next workflow starts, and what happens when the peer is unavailable. Do not
+draw one unlabeled edge for several of these semantics.
+
+Because Astra Critique is a cross-cutting review loop, every peer design other than Critique must
+declare `accepts Critique handoff: yes | conditional | no`. A **yes** or **conditional**
+declaration must name the post-critique problem class the peer owns and the compact
+destination-only payload it needs in addition to Critique's common problem envelope. A **no**
+declaration must explain why the peer does not own a post-critique problem. It prevents a
+fabricated handoff; it does not narrow Critique's accepted artifacts or review jurisdictions.
+Critique handoffs are always user-mediated. Its report must retain every actionable finding and a
+traceable route candidate for every independently owned problem class. One run emits zero or one
+immediate handoff capsule: the user chooses whether any route continues and, when several
+independent routes survive, which one continues now. Unselected routes remain explicit in the
+report. If reviewers nominate incompatible destinations for the same problem, the user resolves
+that classification before a capsule is emitted. The Critique chair may not invent, prioritize,
+or silently drop a route, and Critique stops without reading or invoking the selected peer's full
+workflow.
+
+The destination peer's design owns the problem class it accepts and its destination-only payload.
+During final roster reconciliation, the coordinator records that accepted profile as the
+canonical peer contract and Critique consumes the reconciled snapshot. A missing, unavailable, or
+inconsistent profile remains a named reconciliation gap in the report; Critique must not guess a
+payload or redirect the problem to an unrelated peer.
+
 Do not express tool pre-approval as tool restriction. Detailed permission design remains
 deferred, but known authority requirements and forbidden effects must remain visible.
 
@@ -448,10 +479,13 @@ must:
    consequence of failure.
 9. Compare its trigger with any available peer designs and record possible collisions for the
    final reconciliation pass.
-10. Record the current manual bridge and skill-specific deferred work.
-11. Record proposed changes to both phase-0 ledgers inside the assigned design.
-12. Self-review against section 11.
-13. Change only the assigned design file unless given broader authority.
+10. For every design other than Critique, declare Critique handoff acceptance as **yes**,
+    **conditional**, or **no** and record any proposed handoff-profile change for roadmap
+    reconciliation. A Critique revision instead reconciles destination coverage from its side.
+11. Record the current manual bridge and skill-specific deferred work.
+12. Record proposed changes to both phase-0 ledgers inside the assigned design.
+13. Self-review against section 11.
+14. Change only the assigned design file unless given broader authority.
 
 Agents may inspect sources outside their assigned neighborhood; “change only the assigned
 design” is an edit boundary, not an evidence boundary. Agents do not assume peers have already
@@ -506,6 +540,14 @@ account for every source without taking an already claimed primary home.
 - [ ] The user-facing interface is smaller than the behavior it exposes.
 - [ ] Internal seams correspond to demonstrated variation.
 - [ ] The architecture is local to this skill rather than copied from Astra Critique.
+- [ ] Every peer relation distinguishes output or capability consumption, a user-mediated
+      handoff, and workflow invocation.
+- [ ] Every design other than Critique declares handoff acceptance as **yes**, **conditional**, or
+      **no**; every accepting relation names one owned problem class and compact destination
+      payload. Critique revisions reconcile destination coverage instead.
+- [ ] Critique preserves every independent route candidate in its report, emits at most one
+      user-selected immediate handoff, and consumes only coordinator-reconciled destination
+      profiles owned by the accepting peers.
 - [ ] Failure, uncertainty, degradation, and user decisions are addressed at design level.
 - [ ] A usable manual bridge exists, or its missing prerequisite and consequence are named.
 
@@ -527,9 +569,12 @@ A per-skill design is ready for review when:
 4. the proposed architecture is concrete enough to guide later implementation planning;
 5. the expected advantage and three-system validation contract can distinguish routing,
    coordination, internalization, and retirement failures;
-6. implementation details and behavioral validation remain explicitly deferred;
-7. the manual bridge is usable or its missing prerequisite and consequence are named; and
-8. the review checklist passes without placeholders or authority conflicts.
+6. peer relations are explicit, every design other than Critique declares handoff acceptance, no
+   relation conflates naming a peer with invoking it, and no independent route is lost merely
+   because only one immediate handoff may be emitted;
+7. implementation details and behavioral validation remain explicitly deferred;
+8. the manual bridge is usable or its missing prerequisite and consequence are named; and
+9. the review checklist passes without placeholders or authority conflicts.
 
 Passing these requirements means the design is grounded. It does not mean the skill is
 implemented, validated, installed, or safe to use as a replacement.

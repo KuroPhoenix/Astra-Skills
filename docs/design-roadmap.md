@@ -10,19 +10,21 @@
 
 ## 1. Purpose and certainty
 
-This roadmap answers four questions:
+This roadmap answers five questions:
 
 1. Which Astra skill design documents remain to be drafted?
 2. Which candidate neighborhood is expected to produce each Astra skill?
 3. Which original sources would that skill encapsulate if its design validates the proposal?
 4. Which other designs must be reconciled before ownership and triggers are final?
+5. Which problem classes may pass from Critique to a peer, and how complete is that handoff
+   coverage?
 
 The collision map is still evidence, not a predetermined roster. The roadmap therefore uses four
 states:
 
 | State | Meaning |
 |---|---|
-| **Complete** | A reviewed phase-0 design exists. |
+| **Reviewed baseline** | A reviewed phase-0 design exists; source expansion, peer integration, and final-roster reconciliation may remain open. |
 | **Confirmed name** | The user approved the skill split and name; source allocation still requires the individual design's inspection. |
 | **Provisional** | This roadmap proposes a skill and source allocation so work can be sequenced; the individual design may merge, split, rename, retain, or exclude sources with evidence. |
 | **No new Astra skill proposed** | The neighborhood does not currently justify another merged skill; sources are redirected to another design or retained independently. |
@@ -40,48 +42,52 @@ provenance rule is resolved.
 
 | Measure | Current proposal |
 |---|---:|
-| Completed design documents | 1 |
+| Reviewed phase-0 design baselines | 1 |
 | Remaining confirmed-name documents | 4 |
 | Remaining provisional documents | 22 |
 | Planned revision of an existing design | 1 |
 | Neighborhoods producing no Astra document or revision | 1 |
 | Proposed Astra roster after all remaining documents | 27 |
 
-The completed design is
+The reviewed baseline is
 [`designs/astra-critique.md`](../designs/astra-critique.md). The 26 remaining documents are
 listed below. The proposed final count is not a target: it must shrink, grow, or retain independent
-sources if source inspection and trigger comparison require that.
+sources if source inspection and trigger comparison require that. Critique is complete only as a
+reviewed document baseline; its code-review source expansion and peer handoff reconciliation
+remain open.
 
-## 3. Dependency semantics
+## 3. Dependency and handoff semantics
 
 Phase 0 permits designs to be drafted in parallel; peer designs do not need to exist first.
-Dependencies in this roadmap are therefore reconciliation edges, not blanket drafting blocks:
+Relations in this roadmap are therefore reconciliation or future information-flow edges, not
+blanket drafting blocks:
 
 | Code | Meaning |
 |---|---|
-| **R** | **Roster reconciliation:** ownership, trigger, or handoff boundaries must agree before either design is accepted into the final roster. |
-| **I** | **Later implementation dependency:** the future runtime skill is expected to consume or hand off to this peer, but its phase-0 design can still be drafted independently. |
+| **R** | **Roster reconciliation:** ownership, trigger, or relationship semantics must agree before either design is accepted into the final roster. |
+| **I** | **Later implementation dependency:** the future runtime skill is expected to consume a peer's output or capability. This does not include an optional Critique problem handoff. |
+| **H** | **Critique problem handoff:** after rendering every route candidate in its report, Critique may emit zero or one immediate capsule naming a peer that owns a selected problem class. The user decides whether and which route continues; Critique never invokes it. |
 | **P** | **Provenance dependency:** unavailable source bytes, host behavior, or an external component must be resolved before absorption or retirement can be claimed. |
 
-All proposed Astra skills are flat peers. Waves express design order, and dependency arrows express
-reconciliation or later consumption; neither creates a nested public skill tree or requires
-Critique to invoke a chain of child skills.
+All proposed Astra skills are flat peers. Waves express design order; none creates a nested public
+skill tree. An **H** relation is not an invocation dependency: it is a user-mediated output edge
+carrying a problem, evidence, impact, scope, constraints, and uncertainty, but no solution.
+The one-capsule limit bounds the next workflow; it does not permit Critique to omit other
+independently actionable routes from its report.
 
-Every proposed peer that accepts Critique findings also has an **R** edge back to
-`astra-critique`: it contributes a compact problem-only handoff profile during the final roster
-reconciliation. That common edge is omitted from most table cells below.
+Every proposed peer other than Critique must declare whether it accepts Critique handoffs:
+**yes**, **conditional**, or **no**. A yes or conditional peer names the problem class it owns and
+contributes a compact problem-only profile. A no declaration prevents a fabricated route but does
+not narrow Critique's review scope.
 
-Those destination profiles are support data, not a skill registry. Each destination design owns
-the job it accepts and contributes only its compact profile during roster reconciliation. At
-runtime, Critique selects a destination and reads that one profile directly; it never reads the
-destination's full `SKILL.md`. Critique's primary output remains the critique report. Its handoff
-describes the observed problem, affected context, evidence, uncertainty, and research gaps—not a
-solution. The selected downstream skill owns solution design and execution.
+### 3.1 Provisional peer dependency map
+
+The graph below shows only the strongest proposed **I** relationships among peers other than
+Critique. **R** and **P** relations remain in the wave tables. Critique is omitted because its
+review-and-return topology is a feedback loop, not a forward dependency chain.
 
 ```mermaid
 flowchart TD
-    critique["astra-critique<br/>complete"]
-
     product["astra-product-design"]
     brand["astra-brand"]
     interface["astra-interface"]
@@ -116,7 +122,6 @@ flowchart TD
     product --> interface
     brand --> interface
     brand --> presentation
-    critique --> interface
 
     understand --> architecture
     understand --> debug
@@ -139,7 +144,6 @@ flowchart TD
 
     implement --> ship
     test --> ship
-    critique --> ship
     guard --> ship
     ship --> deploy
     setup --> deploy
@@ -164,17 +168,80 @@ flowchart TD
     setup --> ios
 ```
 
-Arrows point from an upstream peer to a likely downstream consumer or reconciler. They show only
-the strongest expected relationships. Section 5 records additional reconciliation edges that
-would make the graph unreadable if every one were drawn.
+Arrows point from an output or capability owner to a likely consumer. They are provisional until
+both peer designs reconcile the relationship. Section 5 records source and ownership relations
+that do not belong in this implementation-flow view.
+
+### 3.2 Critique review and handoff topology
+
+Critique is cross-cutting. A user may submit an artifact produced by any supported peer or outside
+the Astra roster. Critique renders an attributable report first. That report may retain zero or
+more route candidates because independent findings can belong to different peers. The user then
+selects zero or one candidate as the immediate **H** handoff. The destination may be the same peer
+that produced the artifact, so this relationship is intentionally not forced into the acyclic
+graph above.
+
+```mermaid
+flowchart LR
+    artifact["reviewable artifact<br/>from a user or peer"] -->|review input| critique["astra-critique<br/>reviewed baseline;<br/>integration open"]
+    critique --> report["attributable critique report"]
+    report --> routes["0..n traceable route candidates"]
+    routes -->|none actionable or user defers| none["no immediate handoff;<br/>report retained"]
+    routes -->|user selects at most one| handoff["H: common envelope +<br/>one destination profile"]
+    handoff -.->|names only; never invokes| seeded["first-tranche seeds:<br/>Product Design · Interface<br/>Brand · Presentation"]
+    handoff -.->|names only; never invokes| candidate["candidate peers:<br/>Implement · Architecture<br/>Plan · Spec · Test"]
+    handoff -.->|owner unresolved| unresolved["infrastructure · prompts/CLAUDE.md<br/>running developer experience"]
+```
+
+If several reviewers nominate incompatible owners for the same problem, the user resolves the
+classification. If several independent problem classes map cleanly to different owners, all
+remain in the report and the user chooses which one, if any, becomes the immediate capsule.
+Critique's procedural chair does not prioritize them.
+
+Destination profiles are support data, not a skill registry or allowlist. Each destination
+design owns the problem class it accepts and the destination-only payload it needs. During final
+roster reconciliation, the coordinator records the accepted profile as the canonical peer
+contract and Critique consumes that reconciled snapshot. A missing or inconsistent profile leaves
+the route candidate in the report as a reconciliation gap; Critique neither guesses its payload
+nor substitutes an unrelated peer.
+
+Critique's accepted artifact and selected lenses determine review scope. In later runtime,
+Critique reads at most the selected compact profile and never reads or invokes the destination's
+full `SKILL.md`. The selected peer owns solution exploration and its own user-visible job; that
+peer's design independently defines any mutation or execution authority.
+
+The coverage states below are roadmap states, not implementation claims:
+
+| Critiqued problem class | Candidate destination | Coverage state | Required reconciliation |
+|---|---|---|---|
+| Product-experience or user-journey problem | `astra-product-design` | **Seeded H** | Destination design must accept, narrow, or decline the seed and own its payload. |
+| Interaction, accessibility, or visual-system defect | `astra-interface` | **Seeded H** | Destination design must preserve report-only versus fix authority. |
+| Identity or audience-signal inconsistency | `astra-brand` | **Seeded H** | Destination design must define the brand-specific problem payload. |
+| Narrative or data-comprehension problem | `astra-presentation` | **Seeded H** | Destination design must define the presentation-specific problem payload. |
+| Code defect requiring remediation | `astra-implement` | **Candidate H** | Reconcile with the Code review expansion and keep Critique read-only. |
+| Architecture or technical-design problem | `astra-architecture` | **Candidate H** | Distinguish architecture redesign from code remediation. |
+| Defect in an accepted execution plan | `astra-plan` | **Candidate H** | Keep plan revision separate from Critique's report. |
+| Specification gap or ambiguity | `astra-spec` | **Candidate H** | Distinguish changing intent from changing the execution plan. |
+| Missing or inadequate testing | `astra-test` | **Candidate H** | Preserve Critique's non-goal of executing or bootstrapping tests. |
+| Infrastructure or operational-change problem | Unresolved among Architecture, Implement, Deploy, or a retained peer | **Open owner** | The relevant peer designs must divide design, code, and deployment ownership. |
+| Prompt, `SKILL.md`, or CLAUDE.md problem | Unresolved among Skill Design, Document, or a retained peer | **Open owner** | The relevant peer designs must divide instruction design from artifact editing. |
+| Running developer-experience problem | Unresolved among Interface, QA, Setup, or a retained peer | **Open owner** | The relevant peer designs must divide product defects, verification, and environment setup. |
+| No actionable finding survives | `none` | **Terminal** | Emit no handoff. |
+| The user defers every actionable route | `none` for the immediate handoff | **Terminal for this run** | Retain every route candidate in the report; start no peer workflow. |
+| A clean review is followed by publication | `astra-ship` | **I only, not H** | Ship may consume review evidence, but Critique must not invent a problem handoff. |
+
+**Seeded H** means Critique currently contains an illustrative destination payload; it does not
+mean the destination has accepted it. **Candidate H** means Critique names the problem class and
+likely owner but the destination profile remains unwritten. **Open owner** requires an explicit
+roster decision rather than fallback to an unrelated peer.
 
 ## 4. Recommended design waves
 
-### Wave 0 — completed baseline
+### Wave 0 — reviewed baseline
 
 | Design | Status | Result |
 |---|---|---|
-| [`astra-critique`](../designs/astra-critique.md) | **Complete** | Owns adversarial critique and the audit/report portion of `design-review`; remains open to source-expansion revisions from later neighborhoods. |
+| [`astra-critique`](../designs/astra-critique.md) | **Reviewed baseline; integration open** | Owns adversarial critique and the audit/report portion of `design-review`; code-review source expansion and destination acceptance remain open. |
 
 ### Wave 1 — current Design tranche
 
@@ -184,19 +251,19 @@ decisions easier to state.
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-product-design.md` | **Confirmed name** | **R:** `astra-interface`, `astra-brand`, `astra-presentation`; **I:** `astra-critique` handoffs |
-| `designs/astra-brand.md` | **Confirmed name** | **R:** `astra-interface`, `astra-presentation`, `astra-document`; **I:** Design-token and asset consumers |
-| `designs/astra-interface.md` | **Confirmed name** | **R:** Product/Brand, `astra-critique`, `astra-test`, `astra-qa`; **P:** `artifact-design` and `artifact-capabilities` built-ins |
-| `designs/astra-presentation.md` | **Confirmed name** | **R:** `astra-brand`, `astra-document`, Product; **P:** `dataviz` built-in |
+| `designs/astra-product-design.md` | **Confirmed name** | **R:** `astra-interface`, `astra-brand`, `astra-presentation`; **H (seeded):** Critique product-experience and user-journey problems |
+| `designs/astra-brand.md` | **Confirmed name** | **R:** `astra-interface`, `astra-presentation`, `astra-document`; **H (seeded):** Critique identity and audience-signal problems; **I:** design-token and asset consumers |
+| `designs/astra-interface.md` | **Confirmed name** | **R:** Product/Brand, `astra-test`, `astra-qa`; **H (seeded):** Critique interaction, accessibility, and visual-system defects; **P:** `artifact-design` and `artifact-capabilities` built-ins |
+| `designs/astra-presentation.md` | **Confirmed name** | **R:** `astra-brand`, `astra-document`, Product; **H (seeded):** Critique narrative and data-comprehension problems; **P:** `dataviz` built-in |
 
 ### Wave 2 — cross-cutting foundations
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-guard.md` | **Provisional** | **R/I:** every mutation-capable skill; destructive-action boundaries remain local to each consumer |
-| `designs/astra-context.md` | **Provisional** | **R/I:** `astra-delegate`, `astra-automate`, `astra-plan`, `astra-incident` |
+| `designs/astra-guard.md` | **Provisional** | **R:** authority and trigger semantics with every mutation-capable skill; **I:** peers may consume explicit Guard state or warnings if their designs justify it; destructive-action boundaries remain local to each consumer |
+| `designs/astra-context.md` | **Provisional** | **R:** ownership and trigger semantics with `astra-delegate`, `astra-automate`, `astra-plan`, `astra-incident`; **I:** those peers may consume explicit restored or serialized context if their designs justify it |
 | `designs/astra-understand-code.md` | **Provisional** | **R:** `astra-architecture`, Critique code lenses, `astra-debug` |
-| `designs/astra-test.md` | **Provisional** | **R:** `astra-implement`, `astra-qa`, `astra-ship`, `astra-interface`, Critique verification; **P:** `run` built-in |
+| `designs/astra-test.md` | **Provisional** | **R:** `astra-implement`, `astra-qa`, `astra-ship`, `astra-interface`; **H (candidate):** Critique testing gaps; **P:** `run` built-in |
 | `designs/astra-delegate.md` | **Provisional** | **R:** Context, Guard, `astra-implement`, `astra-automate`; preserve agent delivery shape |
 | `designs/astra-setup.md` | **Provisional** | **R:** Browser, Deploy, Automation, iOS, Skill Design; **P:** three setup/config built-ins |
 
@@ -204,10 +271,10 @@ decisions easier to state.
 
 | Proposed design file or revision | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-spec.md` | **Provisional** | **R:** Critique, `astra-knowledge`, `astra-architecture`, Product Design |
-| `designs/astra-architecture.md` | **Provisional** | **R:** `astra-understand-code`, Spec, Plan, Critique, `domain-modeling` |
-| `designs/astra-plan.md` | **Provisional** | **R:** Spec, Architecture, Critique, Context, Implement |
-| `designs/astra-implement.md` | **Provisional** | **R:** Plan, Delegate, Test, Guard, Critique; receives code-simplification sources from Code review |
+| `designs/astra-spec.md` | **Provisional** | **R:** `astra-knowledge`, `astra-architecture`, Product Design; **H (candidate):** Critique specification gaps |
+| `designs/astra-architecture.md` | **Provisional** | **R:** `astra-understand-code`, Spec, Plan, `domain-modeling`, Critique infrastructure-route ownership; **H (candidate):** Critique architecture and technical-design problems |
+| `designs/astra-plan.md` | **Provisional** | **R:** Spec, Architecture, Context, Implement; **H (candidate):** Critique execution-plan defects |
+| `designs/astra-implement.md` | **Provisional** | **R:** Plan, Delegate, Test, Guard, Critique infrastructure-route ownership; **H (candidate):** Critique code-remediation problems; receives code-simplification sources from Code review |
 | `designs/astra-critique.md` source-expansion revision | **Existing design revision** | **R:** Code review, Understand Code, Test, Architecture; must not create a competing nested code-critique skill |
 | `designs/astra-debug.md` | **Provisional** | **R:** Understand Code, Test, Browser/QA, Incident |
 | `designs/astra-incident.md` | **Provisional** | **R:** Debug, Context, Document, Guard; keep stabilization distinct from causal diagnosis |
@@ -217,9 +284,9 @@ decisions easier to state.
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
 | `designs/astra-browser.md` | **Provisional** | **R:** Setup, Guard, QA, Skill Design; preserve MCP, browser-daemon, cloud-browser, Electron, and authenticated-session delivery shapes |
-| `designs/astra-qa.md` | **Provisional** | **R:** Browser, Test, Interface, Critique; distinguish report-only from fix authority |
-| `designs/astra-ship.md` | **Provisional** | **R:** Implement, Test, Critique, Guard, Context, Document; preserve explicit user control over commits, pushes, PRs, and merges |
-| `designs/astra-deploy.md` | **Provisional** | **R:** Ship, Setup, Browser/QA, Guard; preserve provider-specific prerequisites and canary degradation |
+| `designs/astra-qa.md` | **Provisional** | **R:** Browser, Test, Interface, Critique running-developer-experience route ownership; distinguish report-only from fix authority |
+| `designs/astra-ship.md` | **Provisional** | **R:** Implement, Test, Guard, Context, Document; **I:** may consume Critique review evidence, but a clean review is not an **H** edge; preserve explicit user control over commits, pushes, PRs, and merges |
+| `designs/astra-deploy.md` | **Provisional** | **R:** Ship, Setup, Browser/QA, Guard, Critique infrastructure-route ownership; preserve provider-specific prerequisites and canary degradation |
 
 ### Wave 5 — knowledge, meta-work, and autonomy
 
@@ -227,25 +294,26 @@ decisions easier to state.
 |---|---|---|
 | `designs/astra-research.md` | **Provisional** | **R:** Browser, Document, Knowledge, Critique evidence requirements |
 | `designs/astra-knowledge.md` | **Provisional** | **R:** Spec, Architecture, Document, Context; preserve `domain-modeling` as a cross-role |
-| `designs/astra-document.md` | **Provisional** | **R:** Research, Knowledge, Brand, Presentation, Ship, Incident |
-| `designs/astra-skill-design.md` | **Provisional** | **R:** Test, Research, Browser, Setup; preserve skill-scoped agents and benchmark delivery shapes |
-| `designs/astra-automate.md` | **Provisional** | **R:** Delegate, Context, Guard, Setup, Plan, Ship; **P:** `loop` and `schedule` built-ins |
+| `designs/astra-document.md` | **Provisional** | **R:** Research, Knowledge, Brand, Presentation, Ship, Incident, Critique prompt/CLAUDE.md route ownership |
+| `designs/astra-skill-design.md` | **Provisional** | **R:** Test, Research, Browser, Setup, Critique prompt/`SKILL.md` route ownership; preserve skill-scoped agents and benchmark delivery shapes |
+| `designs/astra-automate.md` | **Provisional** | **R:** Delegate, Context, Guard, Setup, Plan, Ship, and the six separate `loop-goal` lifecycle handlers; **P:** `loop` and `schedule` built-ins |
 
 ### Wave 6 — specialized platform decision
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-ios.md` | **Provisional, later** | **R:** Interface, QA, Debug, Test, Setup, Critique; the design may instead retain the iOS pack if a self-contained merger adds no personal value |
+| `designs/astra-ios.md` | **Provisional, later** | **R:** Interface, QA, Debug, Test, Setup, Critique iOS-problem route ownership; the design may instead retain the iOS pack if a self-contained merger adds no personal value |
 
 The Ops & routine neighborhood currently produces no merged Astra design. Section 5.17 records
 why `meeting` and `retro` should remain independent unless later evidence establishes one user job.
 
 ## 5. Neighborhood derivation and proposed source allocation
 
-Every source below is an exact collision-map identifier. These are roadmap proposals, not applied
-ledger dispositions.
+Every source below is an exact collision-map identifier. Allocations remain roadmap proposals
+unless the coordinator reserves or reconciles them in `docs/phase-0-ledgers.md`; that ledger is
+authoritative. The Wave 1 primary homes are now reserved as `claimed`, not `resolved`.
 
-### 5.1 Adversarial critique — complete
+### 5.1 Adversarial critique — reviewed baseline; integration open
 
 **Derived Astra skill:** `astra-critique`.
 
@@ -253,8 +321,10 @@ ledger dispositions.
 `diss-infra`, `diss-claudemd`, `/elon`, `/trim`, `office-hours`, `plan-ceo-review`,
 `plan-eng-review`, `plan-design-review`, `plan-devex-review`, `devex-review`, and `autoplan`.
 
-**Remaining work:** no new design document. Later source-expansion revisions reconcile Code
-review sources and any other critique jurisdiction; they do not narrow Critique to Design.
+**Remaining work:** no new standalone design document. Later source-expansion revisions reconcile
+Code review sources and any other critique jurisdiction. Each peer design must also accept,
+condition, or decline its candidate **H** relation; neither unfinished profiles nor declined
+destinations narrow Critique's review scope.
 
 ### 5.2 Code review
 
@@ -406,7 +476,9 @@ prompt prose.
 
 Delegate owns a bounded user-authorized delegation. Automate owns recurring, unattended, or
 goal-loop execution and therefore has stronger Context, Guard, cancellation, monitoring, and
-external-state dependencies.
+external-state dependencies. `loop-goal` also contributes six lifecycle hook handlers recorded
+separately in the phase-0 ledger. The Automate design must preserve, replace, or explicitly retain
+each handler by delivery shape; absorbing the `loop-goal` skill body does not account for them.
 
 ### 5.12 Testing
 
@@ -491,9 +563,15 @@ For each remaining document:
 5. State which roadmap allocation was confirmed, changed, split, retained, or excluded and why.
 6. Define source-oracle, reference-convener, self-contained-candidate, and source-specific
    retirement gates without claiming they have run.
-7. Record a problem-only `astra-critique` handoff profile if the peer accepts critique findings.
-8. Self-review, validate Markdown, commit the document, and obtain user review.
-9. Let the coordinator apply proposed ledger changes between waves.
+7. For every design other than Critique, declare Critique handoff acceptance as **yes**,
+   **conditional**, or **no**. For yes or conditional, name the owned problem class and compact
+   destination-only payload; for no, explain why the job does not own a post-critique problem. Do
+   not turn the relation into an invocation. The destination design owns that profile; the
+   Critique source-expansion revision instead reconciles the coverage classes from its side.
+8. Record a proposed update to this roadmap's section 3.2 inside the assigned design; the
+   coordinator applies the roadmap state after review.
+9. Self-review, validate Markdown, commit the document, and obtain user review.
+10. Let the coordinator apply proposed ledger changes between waves.
 
 A source list in this roadmap is not sufficient evidence for a design and cannot satisfy any
 retirement gate.
@@ -505,14 +583,21 @@ After all proposed documents and no-new-skill decisions have been reviewed:
 1. Compare every trigger and non-trigger across the proposed roster.
 2. Resolve every source occurrence to one primary disposition and zero or more explicit secondary
    roles.
-3. Reconcile Critique handoff profiles for every accepting peer.
-4. Decide whether provisional designs with one weak source should remain Astra skills or retain
+3. Resolve every section 3.2 Critique problem class to an accepted or conditional **H** profile,
+   an explicit `none`, or a retained independent peer. Record each accepting destination design
+   as the profile authority and give Critique the coordinator-reconciled canonical snapshot. Keep
+   **H** separate from lifecycle and review-evidence **I** relations.
+4. Verify that each **H** profile preserves the common problem envelope, adds only
+   destination-owned evidence, and never authorizes Critique to invoke the peer. Verify that a
+   report retains every independent route candidate even though the user selects zero or one
+   immediate capsule.
+5. Decide whether provisional designs with one weak source should remain Astra skills or retain
    the independent original.
-5. Resolve all † built-in provenance gaps.
-6. Decide keep/defer/exclude for the reference and cleanup ledger; reference skills do not need
+6. Resolve all † built-in provenance gaps.
+7. Decide keep/defer/exclude for the reference and cleanup ledger; reference skills do not need
    Astra wrappers merely to appear in the roadmap.
-7. Reconcile commands, agents, MCP servers, hooks, and LSP servers by component type.
-8. Present the final roster, priorities, exclusions, unresolved questions, and manual bridges to
+8. Reconcile commands, agents, MCP servers, hooks, and LSP servers by component type.
+9. Present the final roster, priorities, exclusions, unresolved questions, and manual bridges to
    the user.
 
 Only after that roster is selected may implementation planning begin. Runtime skill creation,

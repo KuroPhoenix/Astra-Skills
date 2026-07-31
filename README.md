@@ -33,7 +33,7 @@ Not a tidiness project. Measured on this machine, July 2026:
 | gstack skills carrying usage-logging code | **82** | `grep -rl skill-usage.jsonl` |
 | Times that logging has ever executed | **0** | `~/.gstack/analytics/` does not exist |
 | Plugins enabled | **16** | from 4 marketplaces |
-| Components those plugins add | **47 skills · 6 commands · 6 agents · 3 MCP servers · 2 hooks · 1 LSP server** | see [Plugins](#plugins) |
+| Components those plugins add | **47 skills · 6 commands · 6 agents · 3 MCP servers · 8 hook handlers (3 plugins) · 1 LSP server** | see [Plugins](#plugins) |
 | Harness built-in skills | **12** | shipped with the CLI — no directory, no manifest |
 | **Total invocable skills** | **197** | 138 personal + 47 plugin + 12 built-in |
 | MCP tools referenced by local commands but **not configured** | **5** | jira, awslabs-mysql ×2, context-mode ×2 |
@@ -76,7 +76,7 @@ census that reads only `~/.claude/skills/` misses two of the four:
 |---|---:|---|
 | Personal skills | 138 live · 133 dangling | `~/.claude/skills/*/SKILL.md` |
 | — of which gstack, surfaced by symlink | **55** | targets under `~/.claude/skills/gstack/` |
-| Plugin components | 47 skills · 6 cmds · 6 agents · 3 MCP · 2 hooks · 1 LSP | plugin **manifests** — see [Plugins](#plugins) |
+| Plugin components | 47 skills · 6 cmds · 6 agents · 3 MCP · 8 hook handlers (3 plugins) · 1 LSP | plugin **manifests** — see [Plugins](#plugins) |
 | Local commands | 8 | `~/.claude/commands/*.md` |
 | **Harness built-in skills** | **12** | **nothing on disk** — shipped with the CLI |
 
@@ -575,7 +575,7 @@ Counts below are what this machine's manifests declare today.
 | `karpathy-skills` | `github:forrestchang/andrej-karpathy-skills` | 1 |
 | `monster-prompt` | `directory:.../Intern/monster-prompt` | 1 |
 
-| Plugin | Skills | Cmds | Agents | MCP | Hooks | LSP |
+| Plugin | Skills | Cmds | Agents | MCP | Hook handlers | LSP |
 |---|---:|---:|---:|---:|---:|---:|
 | `huggingface-skills` | 25 | — | — | 1 | — | — |
 | `superpowers` | 14 | — | — | — | 1 | — |
@@ -590,10 +590,10 @@ Counts below are what this machine's manifests declare today.
 | `skill-creator` | 1 | — | — | — | — | — |
 | `claude-code-setup` | 1 | — | — | — | — | — |
 | `andrej-karpathy-skills` | 1 | — | — | — | — | — |
-| `loop-goal` | 1 | — | — | — | — | — |
+| `loop-goal` | 1 | — | — | — | 6 | — |
 | `explanatory-output-style` | — | — | — | — | 1 | — |
 | `clangd-lsp` | — | — | — | — | — | **1** |
-| **Total** | **47** | **6** | **6** | **3** | **2** | **1** |
+| **Total** | **47** | **6** | **6** | **3** | **8** | **1** |
 
 Notes from the inventory:
 
@@ -607,6 +607,11 @@ Notes from the inventory:
   simultaneously.
 - **`skill-creator` ships 3 further agents inside its skill directory** (`analyzer`,
   `comparator`, `grader`), scoped to the skill rather than global.
+- **`loop-goal` declares 6 hook-handler registrations across 4 lifecycle event types:**
+  `PostToolUse`, `SessionStart`, `UserPromptSubmit`, and `PreToolUse`. This table counts handler
+  registrations, not only hook-bearing plugins; the 8 handlers come from 3 plugins. Each handler
+  has its own phase-0 component record because disabling the plugin removes lifecycle behavior as
+  well as the `loop-goal` skill.
 
 ### Treatment by component type
 
@@ -618,7 +623,7 @@ Each component type needs a different decision. Only skills and commands fuse.
 | **Commands** | 6 (+8 local) | **Absorb** — a command is a user-invoked entry point | Same substance as a Tier 2 skill. |
 | **Agents** | 6 | **Keep, but budget** — an astra skill *dispatches* to an agent | An agent is a separate context with its own tools. It cannot be flattened into a skill, and its description costs the same as a skill's. |
 | **MCP servers** | 3 | **Declare, never vendor** — with a fallback | The self-containment exception. See [Principles §2](#2-self-containment). |
-| **Hooks** | 2 | **Own them** — astra ships its own | `PostToolUse` telemetry for `/astra-tune` is itself a hook. Conflicts are a real risk. |
+| **Hook handlers** | 8 across 3 plugins | **Track separately; retain until reconciled** | Lifecycle behavior cannot be flattened into a skill body. Each handler needs an explicit preserve, replace, or retain decision. |
 | **LSP servers** | 1 | **Keep — out of scope** | Language intelligence is orthogonal to skills. Nothing in astra replaces `clangd`. |
 | **Monitors** | 0 | **Keep — out of scope** | None installed, but a manifest-declared type to check for on future downloads. |
 

@@ -1,6 +1,6 @@
 # Astra phase-0 ledgers
 
-**Snapshot:** 2026-07-31
+**Snapshot:** 2026-08-03
 
 **Inventory baseline:** `README.md` reconciled on 2026-07-31 plus the live registrations named below
 
@@ -65,43 +65,43 @@ occurrence and list every candidate neighborhood.
 | `cm-code-review-12` | `health` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-01` | `agent-browser` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-02` | `browse` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-03` | `connect-chrome` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-04` | `open-gstack-browser` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-05` | `agentcore` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-06` | `vercel-sandbox` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-07` | `electron` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-08` | `webapp-testing` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-09` | `scrape` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-browser-and-qa-03` | `connect-chrome` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | — | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa): invocable registration of the shared artifact. |
+| `cm-browser-and-qa-04` | `open-gstack-browser` | skill | live bytes; registration shadowed | Browser & QA | duplicate occurrence | `astra-browser` | — | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa): same bytes and declared name as `connect-chrome`; not independently invocable. |
+| `cm-browser-and-qa-05` | `agentcore` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: AWS credentials | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
+| `cm-browser-and-qa-06` | `vercel-sandbox` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisites: Vercel Sandbox and snapshot identifier | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
+| `cm-browser-and-qa-07` | `electron` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: CDP port | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
+| `cm-browser-and-qa-08` | `webapp-testing` | skill | live | Browser & QA | proposed Astra design | `astra-qa` | Distinct Python-Playwright runtime; reconcile with the Playwright MCP occurrence | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
+| `cm-browser-and-qa-09` | `scrape` | skill | live | Browser & QA | unassigned | unassigned | Extraction outcome; body inspection still required | claimed | Amendment 2 inspected the declaration only; disposition remains open. |
 | `cm-browser-and-qa-10` | `skillify` | skill | live | Browser & QA; Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-11` | `slack` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-browser-and-qa-11` | `slack` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: authenticated session | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-browser-and-qa-12` | `pair-agent` | skill | live | Browser & QA; Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-13` | `setup-browser-cookies` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-14` | `benchmark` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-15` | `dogfood` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-16` | `qa` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-17` | `qa-only` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-browser-and-qa-16` | `qa` | skill | live | Browser & QA | proposed Astra design | `astra-qa` | Version 2.0.0; declares mutation-capable tools | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa); amendment 4 withdraws generated-line fork evidence. |
+| `cm-browser-and-qa-17` | `qa-only` | skill | live | Browser & QA | proposed Astra design | `astra-qa` | Version 1.0.0; report-only effect requires semantic verification because Bash/Write remain declared | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa); amendment 4 withdraws generated-line fork evidence. |
 | `cm-browser-and-qa-18` | `playwright` | MCP server | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-design-and-visual-01` | `design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-03` | `design-consultation` | skill | live | Design & visual | proposed Astra design | `astra-product-design` | — | claimed | Reserved by the phase-0 coordinator for `astra-product-design` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-04` | `design-html` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-05` | `design-shotgun` | skill | live | Design & visual | proposed Astra design | `astra-product-design` | — | claimed | Reserved by the phase-0 coordinator for `astra-product-design` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-06` | `design-review` | skill | live | Design & visual | proposed Astra design | `astra-critique` | `astra-interface`: fix and verify; Testing (future design): bootstrap and regression | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-design-and-visual-07` | `ui-styling` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-08` | `ui-ux-pro-max` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-09` | `frontend-design` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-10` | `theme-factory` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-11` | `brand` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-12` | `brand-guidelines` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-13` | `banner-design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-14` | `canvas-design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-15` | `algorithmic-art` | skill | live | Design & visual | proposed Astra design | `astra-brand` | — | claimed | Reserved by the phase-0 coordinator for `astra-brand` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-16` | `slides` | skill | live | Design & visual | proposed Astra design | `astra-presentation` | — | claimed | Reserved by the phase-0 coordinator for `astra-presentation` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-17` | `dataviz` | built-in skill | live | Design & visual | proposed Astra design | `astra-presentation` | — | claimed | Reserved by the phase-0 coordinator for `astra-presentation` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source bytes unavailable and host-version provenance unresolved. |
-| `cm-design-and-visual-18` | `artifact-design` | built-in skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source bytes unavailable and host-version provenance unresolved. |
-| `cm-design-and-visual-19` | `artifact-capabilities` | built-in skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source bytes unavailable and host-version provenance unresolved. |
-| `cm-design-and-visual-20` | `web-artifacts-builder` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | Reserved by the phase-0 coordinator for `astra-interface` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
-| `cm-design-and-visual-21` | `diagram` | skill | live | Design & visual | proposed Astra design | `astra-presentation` | — | claimed | Reserved by the phase-0 coordinator for `astra-presentation` per [design roadmap §5.4](design-roadmap.md#54-design--visual); source inspection pending. |
+| `cm-design-and-visual-01` | `design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | `astra-interface`: tokens, UI styling, slides, and HTML presentations; `astra-product-design`: mockups | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage): coordinating primary over a genuine split; 8 bundled executables. |
+| `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | proposed Astra design | `astra-interface` | `astra-brand`: primitive constraints; slide subsystem remains Interface-internal | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage): 10 bundled executables. |
+| `cm-design-and-visual-03` | `design-consultation` | skill | live | Design & visual | proposed Astra design | `astra-product-design` | Provisional root `DESIGN.md` editor for approved direction only | claimed | [Astra Product Design §3.1](../designs/astra-product-design.md#31-inspection-record): generated `44379ed9283c`; authoritative template `0568266027d7`. |
+| `cm-design-and-visual-04` | `design-html` | skill | live | Design & visual | proposed Astra design | `astra-interface` | Product-to-Interface implementation adapter; 1 bundled executable | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-05` | `design-shotgun` | skill | live | Design & visual | proposed Astra design | `astra-product-design` | — | claimed | [Astra Product Design §3.1](../designs/astra-product-design.md#31-inspection-record): generated `513d9e18dbe5`; authoritative template `ce541362b85e`. Shared `UX_PRINCIPLES` is tracked with the generation pipeline, not as an occurrence secondary. |
+| `cm-design-and-visual-06` | `design-review` | skill | live | Design & visual | proposed Astra design | `astra-critique` | `astra-interface`: fix and verify; `astra-test`: bootstrap and regression; `astra-ship`: commit authority | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence); [roadmap amendment 3 §10.5](design-roadmap.md#105-coordinator-applied-ledger-changes). |
+| `cm-design-and-visual-07` | `ui-styling` | skill | live | Design & visual | proposed Astra design | `astra-interface` | Canvas-art reference slice excluded from this occurrence; 4 bundled executables | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-08` | `ui-ux-pro-max` | skill | live | Design & visual | proposed Astra design | `astra-interface` | `astra-product-design`: usability evidence; `MASTER.md` exclusivity is not authoritative; 5 bundled executables | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-09` | `frontend-design` | skill | live | Design & visual | proposed Astra design | `astra-interface` | — | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-10` | `theme-factory` | skill | live | Design & visual | proposed Astra design | `astra-interface` | `astra-brand`: primitive constraints; mandated `theme-showcase.pdf` output retained | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-11` | `brand` | skill | live | Design & visual | proposed Astra design | `astra-brand` | Generic brand source oracle; 5 bundled executables, including token sync | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-12` | `brand-guidelines` | skill | live | Design & visual | proposed Astra design | `astra-brand` | Anthropic-specific profile; retain until a source-specific fidelity gate passes | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-13` | `banner-design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | Activation mode; retain pending dependency and output-fidelity evidence | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-14` | `canvas-design` | skill | live | Design & visual | independent reference | retained independent | `astra-interface`: consumed through `ui-styling`; 82 bundled files including 54 fonts | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-15` | `algorithmic-art` | skill | live | Design & visual | independent reference | retained independent | Seeded interactive p5.js generative-art outcome; 1 bundled executable | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-16` | `slides` | skill | live | Design & visual | proposed Astra design | `astra-interface` | Thin router; richer slide subsystem remains the source oracle | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-17` | `dataviz` | built-in skill | live registration; source bytes unavailable | Design & visual | defer | unassigned | No path or manifest; host-version provenance unresolved | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). User disposition remains pending. |
+| `cm-design-and-visual-18` | `artifact-design` | built-in skill | live registration; source bytes unavailable | Design & visual | defer | unassigned | No path or manifest; host-version provenance unresolved | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). User disposition remains pending. |
+| `cm-design-and-visual-19` | `artifact-capabilities` | built-in skill | live registration; source bytes unavailable | Design & visual | defer | unassigned | No path or manifest; host-version provenance unresolved | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). User disposition remains pending. |
+| `cm-design-and-visual-20` | `web-artifacts-builder` | skill | live | Design & visual | proposed Astra design | `astra-interface` | Delivery adapter, not design judgment; 2 bundled executables | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
+| `cm-design-and-visual-21` | `diagram` | skill | live | Design & visual | independent reference | retained independent | `astra-document` and `astra-interface`: consume editable-artifact output | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage). |
 | `cm-plan-and-spec-01` | `superpowers:brainstorming` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-02` | `superpowers:writing-plans` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-03` | `superpowers:executing-plans` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -114,8 +114,8 @@ occurrence and list every candidate neighborhood.
 | `cm-plan-and-spec-10` | `wayfinder` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-11` | `to-tickets` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-12` | `implement` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-plan-and-spec-13` | `prototype` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-plan-and-spec-14` | `feature-dev:code-architect` | agent | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-plan-and-spec-13` | `prototype` | skill | live | Plan & spec | independent reference | retained independent | `astra-product-design`: consumes throwaway prototype output | claimed | [Astra Product Design §3.1](../designs/astra-product-design.md#31-inspection-record): separate outcome; `agents/openai.yaml` is interface metadata, not an independently invocable agent. |
+| `cm-plan-and-spec-14` | `feature-dev:code-architect` | agent | live | Plan & spec | retained agent, coordinated | `astra-understand-code` | Separate execution context; decision policy conflicts with the user-returning orchestrator | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-plan-and-spec-15` | `feature-dev:feature-dev` | command | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-01` | `ship` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-02` | `land-and-deploy` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -141,7 +141,7 @@ occurrence and list every candidate neighborhood.
 | `cm-docs-and-knowledge-05` | `internal-comms` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-docs-and-knowledge-06` | `learn` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-docs-and-knowledge-07` | `teach` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-docs-and-knowledge-08` | `research` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-docs-and-knowledge-08` | `research` | skill | live | Docs & knowledge | independent reference | retained independent | `astra-document`: consumes output | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-docs-and-knowledge-09` | `rtfm` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-docs-and-knowledge-10` | `init` | built-in skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-docs-and-knowledge-11` | `claude-md-management:revise-claude-md` | command | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -151,17 +151,17 @@ occurrence and list every candidate neighborhood.
 | `cm-debug-and-incident-01` | `investigate` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-02` | `diagnosing-bugs` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-03` | `superpowers:systematic-debugging` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-debug-and-incident-04` | `rca` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-debug-and-incident-05` | `firefighting` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-debug-and-incident-04` | `rca` | skill | live | Debug & incident | proposed Astra design | `astra-incident` | Separate concurrent root-cause context | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
+| `cm-debug-and-incident-05` | `firefighting` | skill | live | Debug & incident | proposed Astra design | `astra-incident` | Stabilization context; coordinates rather than absorbs `rca` | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-debug-and-incident-06` | `java-leak-resolver` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-07` | `staging-debug` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-08` | `local-debug` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-debug-and-incident-09` | `triage` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-codebase-comprehension-01` | `how` | skill | live | Codebase comprehension | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-codebase-comprehension-02` | `code-tracing` | skill | live | Codebase comprehension | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-codebase-comprehension-03` | `codebase-design` | skill | live | Codebase comprehension | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-codebase-comprehension-04` | `improve-codebase-architecture` | skill | live | Codebase comprehension | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-codebase-comprehension-05` | `feature-dev:code-explorer` | agent | live | Codebase comprehension | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-debug-and-incident-09` | `triage` | skill | live | Debug & incident | unassigned | unassigned | `astra-critique`: invokes `grilling`; `astra-knowledge`: invokes `domain-modeling` | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates): relocation to Ship or retained-independent remains open. |
+| `cm-codebase-comprehension-01` | `how` | skill | live | Codebase comprehension | proposed Astra design | `astra-understand-code` | `astra-critique`: multi-lens critique mode | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
+| `cm-codebase-comprehension-02` | `code-tracing` | skill | live | Codebase comprehension | proposed Astra design | `astra-understand-code` | — | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
+| `cm-codebase-comprehension-03` | `codebase-design` | skill | live | Codebase comprehension | independent reference | retained independent | `astra-understand-code`, `astra-implement` | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
+| `cm-codebase-comprehension-04` | `improve-codebase-architecture` | skill | live | Codebase comprehension | proposed Astra design | `astra-understand-code` | `astra-critique`: `grilling` becomes an H candidate | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
+| `cm-codebase-comprehension-05` | `feature-dev:code-explorer` | agent | live | Codebase comprehension | proposed Astra design | `astra-understand-code` | Separate execution context | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-skill-meta-01` | `skill-creator` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-02` | `skill-creator:skill-creator` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-03` | `writing-great-skills` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -170,15 +170,15 @@ occurrence and list every candidate neighborhood.
 | `cm-skill-meta-06` | `ask-matt` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-07` | `gstack` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-08` | `_gstack-command` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-skill-meta-09` | `prompt-lookup` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-skill-meta-09` | `prompt-lookup` | skill | live | Skill meta | exclude | unassigned | — | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates): configured capability absent and no fallback; exclusion is provisional and authorizes no deletion. |
 | `cm-skill-meta-10` | `benchmark-models` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-11` | `gstack-upgrade` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-delegation-and-autonomy-01` | `coding-agent` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-delegation-and-autonomy-02` | `codex` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-delegation-and-autonomy-03` | `superpowers:dispatching-parallel-agents` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-delegation-and-autonomy-04` | `nightnight` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-delegation-and-autonomy-04` | `nightnight` | skill | live | Delegation & autonomy | proposed Astra design | `astra-automate` | `astra-spec`; `astra-critique` or `astra-qa`; `astra-ship`; Jira and `ralph-loop` prerequisites unmet | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-delegation-and-autonomy-05` | `loop` | built-in skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
-| `cm-delegation-and-autonomy-06` | `loop-goal` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-delegation-and-autonomy-06` | `loop-goal` | skill | live | Delegation & autonomy | proposed Astra design | `astra-automate` | Version 1.3.0; six handlers remain separate component records | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-delegation-and-autonomy-07` | `schedule` | built-in skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-delegation-and-autonomy-08` | `pair-agent` | skill | live | Browser & QA; Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-testing-01` | `tdd` | skill | live | Testing | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -193,7 +193,7 @@ occurrence and list every candidate neighborhood.
 | `cm-context-and-handoff-02` | `context-restore` | skill | live | Context & handoff | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-context-and-handoff-03` | `strategic-compact` | skill | live | Context & handoff | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-context-and-handoff-04` | `handoff` | skill | live | Context & handoff | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-context-and-handoff-05` | `nowhat` | skill | live | Context & handoff | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-context-and-handoff-05` | `nowhat` | skill | live | Context & handoff | independent reference | retained independent | Dangling reference to uninstalled `PUA` recorded | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-safety-01` | `careful` | skill | live | Safety | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-safety-02` | `freeze` | skill | live | Safety | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-safety-03` | `unfreeze` | skill | live | Safety | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -217,8 +217,8 @@ occurrence and list every candidate neighborhood.
 
 ## 2. Reference and cleanup ledger
 
-**Expected and present:** 174 rows — 41 exact live reference entries (12 language / stack,
-4 shell, and 25 Hugging Face) plus 133 dangling skill registrations.
+**Expected and present:** 181 rows — 48 exact live reference entries (12 language / stack,
+4 shell, 25 Hugging Face, and 7 retained-source candidates) plus 133 dangling skill registrations.
 
 | Source ID | Component type | Location or registration | Availability | Disposition | Reason | Consuming designs | Evidence |
 |---|---|---|---|---|---|---|---|
@@ -263,6 +263,13 @@ occurrence and list every candidate neighborhood.
 | `huggingface-skills:train-sentence-transformers` | skill | huggingface-skills@claude-plugins-official/1.0.20 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `huggingface-skills:transformers-js` | skill | huggingface-skills@claude-plugins-official/1.0.20 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `huggingface-skills:trl-training` | skill | huggingface-skills@claude-plugins-official/1.0.20 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
+| `research` | skill | `~/.claude/skills/research/SKILL.md` | live | unassigned | Recommend keep: single-source research outcome; a rename-only wrapper has no declared advantage. User disposition pending. | `astra-document` | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates); 12 lines, `af378829f015`. |
+| `codebase-design` | skill | `~/.claude/skills/codebase-design/SKILL.md` | live | unassigned | Recommend keep: shared vocabulary with live sibling consumers. User disposition pending. | `astra-understand-code`, `astra-implement` | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates); 114 lines, `a8d50abac5a4`. |
+| `nowhat` | skill | `~/.claude/skills/nowhat/SKILL.md` | live | unassigned | Recommend keep: thin independent handoff outcome; dangling `PUA` reference remains an explicit defect. User disposition pending. | — | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa); 293 lines, `6de7b4c69999`. |
+| `canvas-design` | skill | `~/.claude/skills/canvas-design/SKILL.md` | live | unassigned | Recommend keep: static original-art outcome with 82 bundled files, including 54 fonts. User disposition pending. | `astra-interface` | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage); 130 logical lines, `a1f288079624`. |
+| `algorithmic-art` | skill | `~/.claude/skills/algorithmic-art/SKILL.md` | live | unassigned | Recommend keep: seeded interactive generative-art outcome differs from applying an approved visual system. User disposition pending. | — | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage); 405 logical lines, `3bc4092c0980`. |
+| `diagram` | skill | `~/.claude/skills/gstack/diagram/SKILL.md` | live | unassigned | Recommend keep: editable Mermaid, Excalidraw, SVG, and PNG artifact outcome. User disposition pending. | `astra-document`, `astra-interface` | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage); 923 lines, `f57f8722f566`. |
+| `prototype` | skill | `~/.agents/skills/prototype/SKILL.md` | live | unassigned | Recommend keep: throwaway-prototype outcome is consumed but not owned by Product Design. User disposition pending. | `astra-product-design` | [Astra Product Design §3.1](../designs/astra-product-design.md#31-inspection-record); 26 lines, `03074862d4b6`. |
 | `adaptyv` | skill | `~/.claude/skills/adaptyv` | dangling | unassigned | Broken symlink; awaiting user cleanup disposition. | — | Unavailable: symlink target missing on 2026-07-30. |
 | `aeon` | skill | `~/.claude/skills/aeon` | dangling | unassigned | Broken symlink; awaiting user cleanup disposition. | — | Unavailable: symlink target missing on 2026-07-30. |
 | `anndata` | skill | `~/.claude/skills/anndata` | dangling | unassigned | Broken symlink; awaiting user cleanup disposition. | — | Unavailable: symlink target missing on 2026-07-30. |
@@ -418,24 +425,32 @@ plugin-level deletion from silently removing a capability with a different lifec
 | skill-creator:analyzer | skill-scoped agent | skill-creator:skill-creator | Tracked with parent | Not independently registered; preserve with the parent skill until that design decides its delivery shape. | skill-creator plugin `skills/skill-creator/agents/analyzer.md` |
 | skill-creator:comparator | skill-scoped agent | skill-creator:skill-creator | Tracked with parent | Not independently registered; preserve with the parent skill until that design decides its delivery shape. | skill-creator plugin `skills/skill-creator/agents/comparator.md` |
 | skill-creator:grader | skill-scoped agent | skill-creator:skill-creator | Tracked with parent | Not independently registered; preserve with the parent skill until that design decides its delivery shape. | skill-creator plugin `skills/skill-creator/agents/grader.md` |
+| `gstack:skill-doc-generation-pipeline` | build generator + resolver library | gstack `a3259400a366593e0c909dd9ac3e59752efd2488` | Out of scope — retain shared | Generated gstack skill bytes are not authoritative authored duplication; preserve the generator and resolver modules as shared provenance until every relevant consumer is reconciled. | [Astra Product Design §3.1](../designs/astra-product-design.md#31-inspection-record): generator `cd62a5046ee6`; registry `9e07dfe5a4ec`; Product-consumed resolver inventory recorded there. |
 
 ## 4. Coordinator checks
 
 - Collision rows: **179**.
 - Collision distinct source identifiers: **176**.
-- Live reference rows: **41**.
+- Live reference rows: **48**.
 - Dangling cleanup rows: **133**.
-- Separate installed-component records: **14**.
-- Collision primary dispositions: **37** proposed Astra design, **1** duplicate occurrence, and
-  **141** unassigned.
+- Separate installed-component records: **15**.
+- Collision primary dispositions: **47** proposed Astra design, **7** independent reference,
+  **1** retained agent coordinated, **3** defer, **1** exclude, **2** duplicate occurrence, and
+  **118** unassigned.
 - Collision primary homes: **18** `astra-critique` occurrences (including the duplicate),
-  **2** `astra-product-design`, **8** `astra-interface`, **7** `astra-brand`,
-  **3** `astra-presentation`, and **141** unassigned.
-- Astra Critique occurrences are `claimed`, not `resolved`.
+  **2** `astra-product-design`, **8** `astra-interface`, **4** `astra-brand`,
+  **7** retained independent, **5** `astra-understand-code`,
+  **2** `astra-incident`, **6** `astra-browser`, **3** `astra-qa`, **2** `astra-automate`,
+  and **122** unassigned.
+- The four-row difference between the **118** unassigned disposition count and **122** unassigned
+  primary-home count is the three deferred built-ins plus provisionally excluded `prompt-lookup`.
+- Every reconciled occurrence remains `claimed`, not `resolved`.
 - All 21 Design & visual occurrences are `claimed` for one investigation wave. `design-review`
-  remains assigned to `astra-critique` with explicit secondary roles; the remaining 20 have
-  provisional primary homes across the four user-approved Wave 1 designs. None is `resolved`.
+  remains assigned to `astra-critique` with explicit secondary roles; the other 20 follow the
+  amendment-3 split across three Wave 1 designs, three independent references, and three deferred
+  built-ins. None is `resolved`.
 - The `loop-goal` skill remains a collision source for `astra-automate`; its six lifecycle handlers
   are separate component records and remain installed pending delivery-shape reconciliation.
-- Every other collision occurrence remains `unclaimed` and `unassigned`.
-- No `keep`, `defer`, `exclude`, or retirement decision is inferred from this skeleton.
+- Every collision occurrence not cited by amendments 1–4 remains `unclaimed` and `unassigned`.
+- Reference-ledger recommendations remain `unassigned`; no `keep` or retirement decision is
+  inferred. Collision `defer` and `exclude` states are claimed proposals pending the user's decision.

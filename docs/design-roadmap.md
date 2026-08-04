@@ -1,6 +1,6 @@
 # Astra phase-0 skill design roadmap
 
-**Snapshot:** 2026-07-31
+**Snapshot:** 2026-08-03
 **Status:** Proposed design-document sequence; runtime implementation remains deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
@@ -10,8 +10,13 @@ version obligations that the affected sections had omitted. No design was withdr
 **Amendment 3 (2026-07-31):** Wave 1 pre-wave triage of all 21 Design & visual occurrences moved one
 source, split three umbrellas, returned three sources to independent, deferred three built-ins,
 recorded 36 bundled executables and 55 binary assets the neighborhood had never declared, and
-resolved the competing design-artifact authority claims. On the user's decision, `astra-presentation`
+proposed a reconciliation for the competing design-artifact authority claims. On the user's decision, `astra-presentation`
 folded into `astra-interface`; the roster is 24. See section 10.
+**Amendment 4 (2026-08-03):** Independent review of `astra-product-design` retained the merger on
+source-authored evidence, corrected its authority, provenance, dependency, and peer contracts,
+applied coordinator-safe ledger proposals from amendments 1–3, and withdrew generated-output line
+duplication as maintenance or fork evidence wherever earlier roadmap sections relied on it. See
+section 11.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
@@ -52,8 +57,8 @@ provenance rule is resolved.
 
 | Measure | Current proposal |
 |---|---:|
-| Reviewed phase-0 design baselines | 1 |
-| Remaining confirmed-name documents | 3 |
+| Reviewed phase-0 design baselines | 2 |
+| Remaining confirmed-name documents | 2 |
 | Remaining provisional documents | 20 |
 | Planned revision of an existing design | 1 |
 | Neighborhoods producing no Astra document or revision | 1 |
@@ -62,9 +67,11 @@ provenance rule is resolved.
 Amendment 3 reduced the confirmed-name count from four to three and the roster from 25 to 24 by
 folding `astra-presentation` into `astra-interface`. That was a user decision recorded in section
 10.2, not a source-evidence verdict; section 10.2 also records the obligation it transfers.
+Amendment 4 moved `astra-product-design` from confirmed-name drafting to a reviewed baseline without
+changing the roster.
 
-The reviewed baseline is
-[`designs/astra-critique.md`](../designs/astra-critique.md). The 23 remaining documents are
+The reviewed baselines are [`designs/astra-critique.md`](../designs/astra-critique.md) and
+[`designs/astra-product-design.md`](../designs/astra-product-design.md). The 22 remaining documents are
 listed below. The proposed final count is not a target: it must shrink, grow, or retain independent
 sources if source inspection and trigger comparison require that. Critique is complete only as a
 reviewed document baseline; its code-review source expansion and peer handoff reconciliation
@@ -237,7 +244,7 @@ The coverage states below are roadmap states, not implementation claims:
 
 | Critiqued problem class | Candidate destination | Coverage state | Required reconciliation |
 |---|---|---|---|
-| Product-experience or user-journey problem | `astra-product-design` | **Seeded H** | Destination design must accept, narrow, or decline the seed and own its payload. |
+| Approved design-direction problem | `astra-product-design` | **Accepted and narrowed H; design reviewed** | Product Design owns whether the approved direction is wrong for the product or its users. Payload: approved variant and `approved.json`, contradicted `DESIGN.md` anchors, memorable-thing statement, and originating decision stage. User-journey materialization belongs to Interface. |
 | Interaction, accessibility, or visual-system defect | `astra-interface` | **Seeded H** | Destination design must preserve report-only versus fix authority. |
 | Identity or audience-signal inconsistency | `astra-brand` | **Seeded H** | Destination design must define the brand-specific problem payload. |
 | Narrative or data-comprehension problem | `astra-interface` | **Seeded H; re-targeted by amendment 3** | Re-targeted from `astra-presentation`, which amendment 3 folded into Interface. Interface therefore owns two seeded problem classes and must give each a separately named payload or narrow one; a single merged payload would lose the distinction Critique needs to route. `designs/astra-critique.md` line 588 still names `astra-presentation` as this destination and must be reconciled by the Critique source-expansion revision, not by this roadmap. |
@@ -269,15 +276,15 @@ roster decision rather than fallback to an unrelated peer.
 ### Wave 1 — current Design tranche
 
 The user selected this tranche next. Amendment 3 ran section 6.1's pre-wave triage over all 21
-occurrences and reduced the tranche from four designs to three. Draft `astra-product-design` and
-`astra-brand` first; their direction and identity boundaries make the `astra-interface` ownership
-decisions easier to state. Interface is deliberately last: amendment 3 gives it the largest
-jurisdiction, the deck outcome, two seeded Critique classes, and the token-generator conflict, so
-it should be written once the two boundaries that constrain it are fixed.
+occurrences and reduced the tranche from four designs to three. Product Design is now reviewed;
+draft `astra-brand` next because its identity boundary constrains `astra-interface`. Interface is
+deliberately last: amendment 3 gives it the largest jurisdiction, the deck outcome, two seeded
+Critique classes, and the token-generator conflict, so it should be written once both Product and
+Brand boundaries are fixed.
 
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
-| `designs/astra-product-design.md` | **Confirmed name; promise narrowed by amendment 3** | **R:** `astra-interface`, `astra-brand`; **H (seeded):** Critique product-experience and user-journey problems; owns `DESIGN.md` editorship but not peer jurisdictions; must agree with Interface on one primary home for the `design-shotgun` usability priors that overlap `ui-ux-pro-max` |
+| [`designs/astra-product-design.md`](../designs/astra-product-design.md) | **Reviewed baseline; reconciliation open** | **R:** `astra-interface`, `astra-brand`; **H (accepted and narrowed):** Critique design-direction problems, not user-journey materialization; accepts Product's side of provisional `DESIGN.md` editorship; shared `UX_PRINCIPLES` is a generation-pipeline component whose behavior each Product/Interface/Critique consumer must classify, not a Product-versus-Interface primary-home contest |
 | `designs/astra-brand.md` | **Confirmed name; narrowed by amendment 3** | **R:** `astra-interface`, `astra-document`; **H (seeded):** Critique identity and audience-signal problems; **I:** design-token and asset consumers; loses `theme-factory`, `canvas-design`, and `algorithmic-art`; **must** disposition four `scripts/*.cjs` executables, one Python test, and the `docs/brand-guidelines.md` → `assets/design-tokens.json` sync it owns — see section 10.3 |
 | `designs/astra-interface.md` | **Confirmed name; scope widened by amendment 3** | **R:** Product/Brand, `astra-test`, `astra-qa`, `astra-document`; **H (seeded):** Critique interaction, accessibility, and visual-system defects **and** narrative or data-comprehension problems; **absorbs** the deck jurisdiction formerly proposed as `astra-presentation`; **must** write section 7.1's job statement without an `or` or split again, disposition 22 bundled executables across five sources, and resolve which token generator is authoritative — see sections 10.2 to 10.4; **P:** `artifact-design`, `artifact-capabilities`, and `dataviz` built-ins, all deferred by amendment 3 |
 
@@ -289,7 +296,7 @@ it should be written once the two boundaries that constrain it are fixed.
 | `designs/astra-context.md` | **Provisional; narrowed by amendment 2** | **R:** ownership and trigger semantics with `astra-delegate`, `astra-automate`, `astra-plan`, `astra-incident`; **I:** those peers may consume explicit restored or serialized context if their designs justify it; `nowhat` withdrawn to retained independent; `handoff`'s temp-directory destination, fresh-agent reader, and redaction duty must survive as declared behavior |
 | `designs/astra-understand-code.md` | **Provisional; scope widened by amendment 1** | **R:** Spec, Plan, `astra-debug`, `astra-implement`, Critique code lenses and `how`'s existing critique mode; **H (candidate):** Critique architecture and technical-design problems; **absorbs** the Codebase-comprehension technical-design jurisdiction formerly proposed as `astra-architecture`; must justify why one invocation coordinates explaining what exists and choosing what should exist, or split again |
 | `designs/astra-test.md` | **Provisional** | **R:** `astra-implement`, `astra-qa`, `astra-ship`, `astra-interface`; **H (candidate):** Critique testing gaps; **P:** `run` built-in |
-| `designs/astra-delegate.md` | **Provisional** | **R:** Context, Guard, `astra-implement`, `astra-automate`; preserve agent delivery shape |
+| `designs/astra-delegate.md` | **Provisional; advantage reopened by amendment 4** | **R:** Context, Guard, `astra-implement`, `astra-automate`; preserve agent delivery shape; generated preamble duplication is not maintenance value, so re-triage its four sources and prove a source-authored positive advantage or split/retain them |
 | `designs/astra-setup.md` | **Provisional** | **R:** Browser, Deploy, Automation, iOS, Skill Design; **P:** three setup/config built-ins |
 
 ### Wave 3 — core project-development loop
@@ -308,7 +315,7 @@ it should be written once the two boundaries that constrain it are fixed.
 | Proposed design file | Status | Reconcile with |
 |---|---|---|
 | `designs/astra-browser.md` | **Provisional; restructured by amendment 2** | **R:** Setup, Guard, QA, Skill Design; preserve MCP, browser-daemon, cloud-browser, Electron, and authenticated-session delivery shapes; the four environment adapters become reference files behind one description, each retaining its own prerequisite and degradation; `connect-chrome` and `open-gstack-browser` collapse to one artifact with one shadowed identifier; **P:** the `agent-browser` CLI binary |
-| `designs/astra-qa.md` | **Provisional** | **R:** Browser, Test, Interface, Critique running-developer-experience route ownership; distinguish report-only from fix authority, which the sources express as declared tool authority rather than prose; merge against `qa` 2.0.0 and account for `qa-only` 1.0.0's 491 drifted body lines; reconcile the CLI, Python-Playwright, and MCP runtimes by component type |
+| `designs/astra-qa.md` | **Provisional; fork evidence corrected by amendment 4** | **R:** Browser, Test, Interface, Critique running-developer-experience route ownership; preserve report-only versus fix effects without treating frontmatter pre-approval as enforcement; compare the 2.0.0 and 1.0.0 templates plus shared resolver semantics because generated-line counts do not prove fork drift; reconcile the CLI, Python-Playwright, and MCP runtimes by component type |
 | `designs/astra-ship.md` | **Provisional** | **R:** Implement, Test, Guard, Context, Document; **I:** may consume Critique review evidence, but a clean review is not an **H** edge; preserve explicit user control over commits, pushes, PRs, and merges |
 | `designs/astra-deploy.md` | **Provisional** | **R:** Ship, Setup, Browser/QA, Guard, Critique infrastructure-route ownership; preserve provider-specific prerequisites and canary degradation |
 
@@ -401,24 +408,26 @@ policy, evidence, and report/fix authority, not browser setup.
   though the playbook does not: AWS credentials, a Vercel Sandbox plus a snapshot identifier, a
   Chrome DevTools Protocol port, and an authenticated session respectively. The `agent-browser` CLI
   itself is a binary prerequisite, not prose.
-- **`qa` and `qa-only` differ by declared tool authority over a drifted fork.** They share 1217
-  identical lines, 96.9% of `qa-only`. The decisive delta is that `qa` declares `Edit`, `Glob`, and
-  `Grep` and `qa-only` does not — the report-versus-fix boundary is expressed purely as tool
-  authority, which must remain visible rather than becoming a tool restriction. `qa` is version 2.0.0
-  and `qa-only` is 1.0.0, and 491 body lines differ, so `qa-only` is a fork of an older `qa` rather
-  than a clean report mode of the current one. The design must merge against 2.0.0 and account for
-  that drift; internalizing both without resolving it silently adopts 1.0.0 behavior and fails the
-  internalization-fidelity gate.
+- **`qa` and `qa-only` differ by declared mutation capability and version.** *Amendment 2's
+  quantitative fork basis is superseded:* the 1217 identical lines and 491-line delta were measured
+  on generated `SKILL.md` outputs. Both authored templates invoke the same `QA_METHODOLOGY` resolver;
+  their templates share 91 lines by multiset intersection, 61 non-blank. `qa` still declares
+  `Edit`, `Glob`, and `Grep` while `qa-only` does not, and their declared versions remain 2.0.0 and
+  1.0.0. Those are real obligations, but neither generated-line count proves that `qa-only` is an
+  older behavioral fork. The QA design must compare templates plus resolver output semantically and
+  must preserve report-only versus fix effects without mistaking tool pre-approval for enforcement.
 - **Three delivery shapes drive a browser across these two skills.** The `agent-browser` CLI, the
   Python Playwright scripts that `webapp-testing` writes with its own helper script and licence file,
   and the `playwright` MCP server are three runtimes for one capability, currently split across
   `astra-browser` and `astra-qa` with no reconciliation. `docs/phase-0.md` section 9 criteria 8 and 9
   require resolving this by component type.
-- **A 79% shared block is split across the two skills.** `browse` and `benchmark` share 620
-  identical lines, 79.0% of `benchmark`, yet the former is proposed for Browser and the latter for
-  QA. Either QA vendors its own copy, which self-containment permits but which must be a recorded
-  decision, or `benchmark` consumes `astra-browser` over the existing `browser --> qa` relation with
-  the shared block owned by Browser. Separately, `dogfood` shares only 99 lines with `qa` and imposes
+- **Browser and Benchmark share capability setup, not a measured authored block.** *Amendment 2's
+  620-line / 79% basis is superseded:* it measured generated outputs; the authored templates share
+  81 lines by multiset intersection, 34 non-blank, much of it frontmatter, fences, `PREAMBLE`, and
+  `BROWSE_SETUP`. The `browser --> qa` relation may still be justified because Benchmark consumes a
+  browser capability, but it may not be justified as removing copied authored prose. The two designs
+  must classify that capability relation from templates and resolver sources. Separately,
+  `dogfood` shares only 99 generated lines with `qa` and imposes
   a stricter evidence standard — step-by-step screenshots and reproduction video for handoff — that
   must be reconciled against `qa-only`'s report. `scrape` declares an extraction outcome rather than
   a browser-driving or quality outcome and needs the same different-outcome test applied to `triage`
@@ -429,8 +438,8 @@ policy, evidence, and report/fix authority, not browser setup.
 **Derived Astra skills:** `astra-product-design`, `astra-interface`, and `astra-brand`. Amendment 3
 folded `astra-presentation` into `astra-interface` on the user's decision.
 
-- **`astra-product-design`:** `design-consultation` and `design-shotgun`, plus the mockup slice of
-  `design`.
+- **`astra-product-design`:** `design-consultation` and `design-shotgun`; consumes the mockup slice
+  of coordinating-home source `design` as an explicit secondary role.
 - **`astra-interface`:** `design-system`, `design-html`, `ui-styling` less its canvas-art reference
   slice, `ui-ux-pro-max`, `frontend-design`, `web-artifacts-builder`, `slides`, and `theme-factory`
   moved in from Brand, plus the token/UI-routing and slide/HTML-presentation slices of `design`.
@@ -456,11 +465,18 @@ proposed Design peers: brand identity and logo/CIP work (Brand), design tokens a
 *Superseded in part by amendment 3: the slide and HTML-presentation cross-role now points at
 `astra-interface`, so `design` spans three peers rather than four. The finding that the ledger
 recorded no cross-role at all still stands.*
-The ledger reserved it to `astra-brand` with no secondary roles recorded, which conflicts with
+The ledger originally reserved it to `astra-brand` with no secondary roles recorded, which conflicts with
 `docs/phase-0.md` section 5's rule that secondary roles must be explicit. Section 8 proposes the
-correction. `design-shotgun` additionally carries a usability **perspective** — the Three Laws of
-Usability, the Goodwill Reservoir, billboard design, and wayfinding — that overlaps
-`ui-ux-pro-max`; Product and Interface must agree on one primary home for those priors.
+correction, and the coordinator applied the current three-home split in amendment 4.
+
+**Amendment 4 correction — `UX_PRINCIPLES` is a shared build input, not an occurrence cross-role.**
+The Three Laws of Usability, Goodwill Reservoir, billboard design, and wayfinding text is generated
+from one resolver partial consumed by `design-shotgun`, `design-html`, `design-review`, and
+`plan-design-review`, spanning Product, Interface, and Critique. It is not authored inside
+`design-shotgun`, so the earlier Product-versus-Interface primary-home question is withdrawn and no
+Interface secondary role is attached to that occurrence. Each consuming design must classify the
+behavior it needs. A shared Astra module may be proposed only after at least two designs demonstrate
+the same interface and variation; meanwhile the generation-pipeline component preserves provenance.
 
 **Amendment 3 — six findings.**
 
@@ -471,8 +487,10 @@ Usability, the Goodwill Reservoir, billboard design, and wayfinding — that ove
   `canvas-design`, `algorithmic-art`, and `diagram` return to independent; three built-ins defer;
   `brand-guidelines` is an Anthropic-specific profile, not a generic workflow; and `design-review`
   splits four ways rather than three. What the inspection did **not** find is a reason to add
-  `astra-visual-art`: static and generative art selection is routing, and section 3's rule denies a
-  merger whose only advantage is routing.
+  `astra-visual-art`: `canvas-design`, `algorithmic-art`, and `diagram` produce different static,
+  interactive-generative, and editable-diagram outcomes with different delivery shapes. A wrapper
+  would currently add routing convenience only, and no personal-value evidence justifies replacing
+  their distinguishable interfaces with another public Astra job.
 - **Three umbrella sources decompose, and the ledger schema cannot express that.** `design`,
   `design-system`, and `ui-styling` each carry behavior belonging to more than one peer, and the
   split is a behavioral decomposition rather than one owner informing another. But
@@ -496,9 +514,9 @@ Usability, the Goodwill Reservoir, billboard design, and wayfinding — that ove
   `assets/design-tokens.json`, and `ui-ux-pro-max` directs the agent to use `design-system/MASTER.md`
   *exclusively*. The conflict is executable: `brand/scripts/sync-brand-to-tokens.cjs`,
   `design-system/scripts/generate-tokens.cjs`, and `ui-ux-pro-max/scripts/design_system.py` are
-  three programs that write or derive the same token file. Section 10.4 states the authority stack
-  the Wave 1 designs must honour, and it resolves which *generator* wins, not merely which document
-  is quoted.
+  three programs that write or derive the same token file. Section 10.4 proposes an authority stack
+  that would determine which *generator* wins, not merely which document is quoted. Product Design
+  accepts its side; Brand, Interface, the coordinator, and the user must still reconcile it.
 - **`astra-presentation`'s retention basis was already void when the user folded it.** Amendment 1
   section 8.2 retained it on "963 inspectable lines plus four `slides` reference files", counting
   `diagram` and `dataviz`. Amendment 3 returns `diagram` to independent and defers `dataviz`,
@@ -506,7 +524,7 @@ Usability, the Goodwill Reservoir, billboard design, and wayfinding — that ove
   the sole oracle — and `theme-factory` at 59. Its real substance was always the slide subsystem
   inside `design-system`, an Interface-owned source. The user's fold therefore removes a cross-peer
   split rather than creating one; the burden it transfers is recorded in section 10.2.
-- **`canvas-design` is a font library with a `SKILL.md` attached.** Its 129-line body ships with 82
+- **`canvas-design` is a font library with a `SKILL.md` attached.** Its 130-line body ships with 82
   bundled files, 54 of them TrueType fonts, plus 28 licence texts. Amendment 3's retain
   recommendation was written from the body alone; the bundle makes it much stronger, because
   vendoring 54 binaries to satisfy self-containment is not a merger any declared advantage would
@@ -677,10 +695,12 @@ each handler by delivery shape; absorbing the `loop-goal` skill body does not ac
 
 **Amendment 2 — three additions.**
 
-- **The Delegate merger rests on machinery duplication.** `codex` and `pair-agent` share 876
-  byte-identical lines, 81.7% of `pair-agent`, in the same gstack preamble found elsewhere in this
-  roadmap. `coding-agent` shares only 121 lines with `codex`, so it carries independent content and
-  is not absorbed by that collapse. Declared advantage: maintenance.
+- **The Delegate merger's machinery-duplication basis is withdrawn by amendment 4.** Amendment 2
+  measured generated output: the authored `codex` and `pair-agent` templates share only 106 lines by
+  multiset intersection, 30 non-blank, mostly declaration keys and fence markers. The common gstack
+  preamble is already maintained in the generator and creates no Astra maintenance advantage.
+  `coding-agent` remains independent evidence, but the Delegate design must re-triage all four
+  sources and establish one coherent job plus a real positive advantage or split/retain them.
 - **`loop-goal`'s six handlers are version-specific.** The installed 1.3.0 carries exactly six —
   `check_dispatch`, `refresh_planner`, `check_confirm_gate`, `check_planner_self_exec`,
   `archive_on_confirm`, and `mark_user_confirm` — plus a shared `_active_loop.sh` library. An
@@ -728,10 +748,12 @@ installed** — a dangling cross-reference to record, not to resolve here. Becau
 model-invoked with a long bilingual trigger list, it costs a description slot; that is a tiering
 question deferred with the rest of the architecture.
 
-**Amendment 2 evidence for the remaining merger.** `context-save` and `context-restore` share 813
-byte-identical lines — 79.1% of save, 89.3% of restore — and that block is gstack machinery.
-Removing one copy of it is the merger's declared advantage, which is **maintenance**, not better
-judgment.
+**Amendment 2's maintenance evidence is withdrawn by amendment 4.** The 813-byte-identical-line
+claim measured generated `SKILL.md` outputs. The authored templates share 69 lines by multiset
+intersection, 35 non-blank; some represent a real checkpoint data model and shared summary shape,
+but the large common gstack preamble is already maintained in the generator. The coherent
+save/restore lifecycle still supports investigation as one job, but its design must establish an
+authored maintenance, routing, or coordination advantage rather than inherit the generated count.
 
 Two distinctions must survive rather than be merged away:
 
@@ -865,10 +887,12 @@ fewer proposed sources and withdrew two designs; it did not cover the remaining 
 first is cheaper than discovering the same result inside a completed ten-section document, and much
 cheaper than discovering it at a section 7 milestone after the document has been reviewed.
 
-Source count is a screening filter for this triage, not a verdict. Amendment 1's own screen would
-have condemned `astra-product-design`, whose two sources are 76.6% and 68.6% byte-identical and
-which is consequently the best-evidenced merger currently proposed. Measure the artifacts, not the
-ledger rows.
+Source count is a screening filter for this triage, not a verdict. *The following Amendment 1 basis
+is superseded by amendment 4:* `astra-product-design` was called the best-evidenced merger because
+its generated outputs were 76.6% and 68.6% byte-identical. The authored templates do not support
+that maintenance claim. The merger remains reviewed on one outcome, one upstream-shared approval
+loop, complementary quality gates, and a live invocation/reimplementation defect. Measure authored
+sources and their generator, not only generated artifacts or ledger rows.
 
 **Amendment 3 adds a fourth question: what does the source ship?** Wave 1's triage read bodies and
 found the allocation broadly sound, then found 36 executables and 55 binary assets that no body
@@ -917,9 +941,9 @@ remain outside phase 0.
 
 **Date:** 2026-07-31
 **Scope:** the six proposed designs carrying three or fewer proposed sources
-**Authority:** this section amends roadmap allocations only. The ledger changes in section 8.3 are
-*proposed*; `docs/phase-0.md` section 1 names the phase-0 coordinator as the sole editor of
-`docs/phase-0-ledgers.md`, and section 5.1 step 4 has the coordinator apply them between waves.
+**Authority:** this section amended roadmap allocations only when written. The section 8.3 rows
+were proposals; the phase-0 coordinator applied their current `claimed` states on 2026-08-03 under
+amendment 4. They remain provisional, not `resolved` or user-approved.
 
 ### 8.1 Inspection provenance
 
@@ -954,16 +978,16 @@ completeness and remains **unavailable**.
 | `astra-architecture` | 3 | **Withdrawn** | 219 lines total; one reference with live consumers, one 71-line orchestrator of `codebase-design` and `grilling`, one agent whose decision policy conflicts with that orchestrator. No residue. |
 | `astra-incident` | 3 → 2 | **Retained, narrowed** | `triage` is issue-tracker work misfiled on a keyword. `rca` and `firefighting` are concurrent contexts with mutually exclusive authority, so the design is a coordination wrapper, not a merger. |
 | `astra-understand-code` | 3 → 4 | **Retained, widened** | Locate-only, explain, explain-then-critique, and delegate-to-agent are protocol, playbook, and component-type differences that belong inside one job. Absorbs the withdrawn Architecture jurisdiction. |
-| `astra-product-design` | 2 | **Retained** | 942 lines are byte-identical between its two sources — 76.6% of `design-consultation`, 68.6% of `design-shotgun` — and that block is gstack machinery. The remaining divergence is two protocols over one outcome. |
+| `astra-product-design` | 2 | **Retained; basis superseded by amendment 4** | The 942-line claim measured generated output whose shared preamble is already maintained upstream. The reviewed basis is one outcome, one shared approval loop, complementary robustness/quality behavior, and the defect where Shotgun expects Consultation to invoke it while Consultation reimplements generation. See the design §§4 and 9. |
 | `astra-presentation` | 3 | **Retained** — *superseded by amendment 3* | Source count misled: 963 inspectable lines plus four `slides` reference files. Survives on condition that section 7.1's job statement can be written without an `or`; if it cannot, `diagram` moves to `astra-document`. *Amendment 3 voided this basis by returning `diagram` to independent and deferring `dataviz`; the user then folded the design into `astra-interface`, which inherits the unmet `or` condition. See section 10.2.* |
 
 Net roster effect: 27 proposed designs become 25. One source is relocated, one is excluded, and one
 is reclassified as a retained independent reference.
 
-### 8.3 Proposed ledger changes
+### 8.3 Proposed ledger changes — applied as claims by amendment 4
 
-For the coordinator to apply to `docs/phase-0-ledgers.md`. Every row below moves from
-`unassigned` / `unclaimed` unless noted.
+The coordinator applied the rows below to `docs/phase-0-ledgers.md` on 2026-08-03. Every affected
+row is `claimed`, not `resolved`; later amendments noted in the table control where they conflict.
 
 **Collision source-claim ledger.**
 
@@ -981,7 +1005,7 @@ For the coordinator to apply to `docs/phase-0-ledgers.md`. Every row below moves
 | `cm-debug-and-incident-05` | `firefighting` | proposed Astra design | `astra-incident` | — |
 | `cm-debug-and-incident-09` | `triage` | **relocation pending** | unassigned — `astra-ship` or retained independent | `astra-critique` (invokes `grilling`), `astra-knowledge` (invokes `domain-modeling`) |
 | `cm-design-and-visual-01` | `design` | proposed Astra design *(unchanged)* | `astra-brand` *(unchanged)* | **add:** `astra-interface` (tokens, UI styling), `astra-presentation` (HTML presentations, slides), `astra-product-design` (mockups) — *the `astra-presentation` secondary is withdrawn by amendment 3 section 10.5; the rest stands* |
-| `cm-design-and-visual-05` | `design-shotgun` | proposed Astra design *(unchanged)* | `astra-product-design` *(unchanged)* | **add:** `astra-interface` (usability priors overlapping `ui-ux-pro-max`) |
+| `cm-design-and-visual-05` | `design-shotgun` | proposed Astra design *(unchanged)* | `astra-product-design` *(unchanged)* | *Amendment 4 withdraws the proposed Interface secondary:* `UX_PRINCIPLES` is a shared resolver input, not authored content of this occurrence |
 
 Rows `cm-codebase-comprehension-01` through `-05`, `cm-debug-and-incident-04`, `-05`, `-09`,
 `cm-docs-and-knowledge-08`, `cm-plan-and-spec-14`, and `cm-skill-meta-09` also move from
@@ -991,8 +1015,8 @@ The two Design & visual rows are already `claimed` on roadmap authority with ins
 this amendment supplies inspected evidence for their secondary roles only and does not change either
 primary home.
 
-**Reference and cleanup ledger.** Two rows to add, both with disposition `keep` pending the user's
-decision, since `docs/phase-0.md` section 6 reserves keep/defer/exclude to the user:
+**Reference and cleanup ledger.** Two rows were added with disposition `unassigned` and a
+coordinator recommendation to keep, pending the user's `keep` / `defer` / `exclude` decision:
 
 | Source | Component type | Reason | Consuming designs |
 |---|---|---|---|
@@ -1017,7 +1041,8 @@ decision, since `docs/phase-0.md` section 6 reserves keep/defer/exclude to the u
 **Date:** 2026-07-31
 **Scope:** `astra-context`, `astra-guard`, `astra-delegate`, `astra-automate`, `astra-browser`, and
 `astra-qa`
-**Authority:** as in section 8. The ledger changes in 9.3 are proposed, not applied.
+**Authority:** as in section 8. The section 9.3 rows were proposed when written and applied by the
+phase-0 coordinator as `claimed`, not `resolved`, on 2026-08-03 under amendment 4.
 
 ### 9.1 Inspection provenance
 
@@ -1052,14 +1077,14 @@ which is the opposite of amendment 1's result.
 |---|---|---|
 | `astra-context` | Retained | 5 sources to 4; `nowhat` withdrawn to retained independent |
 | `astra-guard` | Retained | Hooks, `bin/` scripts, and template provenance now recorded; advantage restated as self-containment |
-| `astra-delegate` | Retained | Machinery-duplication basis recorded |
+| `astra-delegate` | Retained provisionally; advantage reopened by amendment 4 | Generated-output machinery duplication is not an Astra maintenance advantage; the design must establish a source-authored positive advantage or split/retain its sources |
 | `astra-automate` | Retained | `loop-goal` version pin, `nightnight` cross-roles and unmet prerequisites recorded |
 | `astra-browser` | Retained, restructured | Alias collapsed; four adapters demoted to references |
-| `astra-qa` | Retained | Authority-as-tool-declaration and fork-drift obligations recorded |
+| `astra-qa` | Retained; fork basis withdrawn by amendment 4 | Version and declaration differences remain real, but generated-line counts do not prove an older behavioral fork; compare templates and resolver semantics |
 
 Roster unchanged at 25. Amendment 2 changes source dispositions and design obligations only.
 
-### 9.3 Proposed ledger changes
+### 9.3 Proposed ledger changes — applied as claims by amendment 4
 
 **Collision source-claim ledger.**
 
@@ -1075,21 +1100,21 @@ Roster unchanged at 25. Amendment 2 changes source dispositions and design oblig
 | `cm-browser-and-qa-07` | `electron` | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: a CDP port |
 | `cm-browser-and-qa-11` | `slack` | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: an authenticated session |
 | `cm-browser-and-qa-16` | `qa` | proposed Astra design | `astra-qa` | Version 2.0.0 is the merge baseline; declares `Edit`, `Glob`, `Grep` |
-| `cm-browser-and-qa-17` | `qa-only` | proposed Astra design | `astra-qa` | Version 1.0.0 fork; 491 body lines drifted; omits the mutation tools |
+| `cm-browser-and-qa-17` | `qa-only` | proposed Astra design | `astra-qa` | Version 1.0.0; omits `Edit`, `Glob`, and `Grep`, but still declares Bash/Write. Amendment 4 withdraws the generated-line fork/drift claim pending semantic comparison |
 | `cm-browser-and-qa-08` | `webapp-testing` | proposed Astra design | `astra-qa` | Distinct Python-Playwright runtime; reconcile with the `playwright` MCP row |
 | `cm-browser-and-qa-09` | `scrape` | **unresolved** | unassigned | Extraction outcome; body not yet inspected |
 
-**Reference and cleanup ledger.** One row to add, disposition `keep` pending the user's decision:
+**Reference and cleanup ledger.** One row was added as `unassigned`, with a recommendation to keep
+pending the user's decision:
 
 | Source | Component type | Reason | Consuming designs |
 |---|---|---|---|
 | `nowhat` | skill | Reasoning-direction outcome distinct from context serialization; cited-literature basis; references an uninstalled `PUA` skill | — |
 
-**Ledger header correction.** The stated total of 176 distinct source identifiers across 179
-occurrences is overstated. `connect-chrome` and `open-gstack-browser` are two identifiers over one
-artifact with one declared name, so at most 175 distinct artifacts are represented. The coordinator
-should re-derive the figure during the coverage diff that `docs/phase-0.md` section 9 criterion 1
-requires, rather than adjusting it by one on this evidence alone.
+**Ledger accounting clarification.** The 176 distinct source identifiers across 179 occurrences is
+correct as an identifier count. `connect-chrome` and `open-gstack-browser` are two identifiers over
+one artifact with one declared name, so at most 175 distinct artifacts are represented. The final
+coverage diff must report both measures rather than relabel one as the other.
 
 ### 9.4 What this amendment does not establish
 
@@ -1101,11 +1126,12 @@ requires, rather than adjusting it by one on this evidence alone.
   no field for it.
 - It does not install, configure, or repair any unmet prerequisite.
 
-## 10. Amendment 3 — Wave 1 Design & visual
+## 10. Amendment 3 — Wave 1 Design & visual source triage
 
 **Date:** 2026-07-31, re-verified 2026-08-01
 **Scope:** all 21 Design & visual occurrences plus cross-neighborhood `prototype`
-**Authority:** as in sections 8 and 9. The ledger changes in 10.5 are proposed, not applied.
+**Authority:** as in sections 8 and 9. The section 10.5 rows were proposed when written and applied
+by the phase-0 coordinator as `claimed`, not `resolved`, on 2026-08-03 under amendment 4.
 **Research input:** [`docs/research/2026-07-31-wave-1-design-architecture.md`](research/2026-07-31-wave-1-design-architecture.md).
 
 ### 10.1 Inspection provenance
@@ -1132,15 +1158,15 @@ matched, so the recorded line anchors remain valid under
 | `design-consultation` | skill | 1230 | `44379ed9283c` |
 | `diagram` | skill | 923 | `f57f8722f566` |
 | `ui-ux-pro-max` | skill | 685 | `adcc153bf7d8` |
-| `algorithmic-art` | skill | 404 | `3bc4092c0980` |
+| `algorithmic-art` | skill | 405 | `3bc4092c0980` |
 | `ui-styling` | skill | 324 | `f8b6c3832d2a` |
 | `design` | skill | 313 | `413f4ab913d0` |
 | `design-system` | skill | 244 | `655468bb723a` |
 | `banner-design` | skill | 196 | `913d9c4b2a3b` |
-| `canvas-design` | skill | 129 | `a1f288079624` |
+| `canvas-design` | skill | 130 | `a1f288079624` |
 | `brand` | skill | 97 | `6a450ee1a83a` |
 | `brand-guidelines` | skill | 73 | `1120b3769e29` |
-| `web-artifacts-builder` | skill | 73 | `81c5002c6643` |
+| `web-artifacts-builder` | skill | 74 | `81c5002c6643` |
 | `theme-factory` | skill | 59 | `c35893e221e2` |
 | `frontend-design` | skill | 42 | `b81e2ff87ed8` |
 | `slides` | skill | 40 | `2b90bdaf63f2` |
@@ -1149,10 +1175,12 @@ matched, so the recorded line anchors remain valid under
 | `artifact-design` | built-in skill | unavailable | unavailable |
 | `artifact-capabilities` | built-in skill | unavailable | unavailable |
 
-Two anchor defects were found during re-verification and are corrected here rather than carried
-forward. The research input cites `algorithmic-art` to line 405 in a 404-line file, and its roadmap
-anchor `L359-L376` was written against `df1d422`, where section 5.4 sat at those lines; amendment 2
-moved section 5.4 and the anchor is stale. Neither affects a verdict.
+Re-verification found one stale anchor and one line-count convention defect. The earlier census used
+newline counts, so it undercounted `algorithmic-art`, `canvas-design`, and
+`web-artifacts-builder`, whose final lines lack trailing newlines; they contain 405, 130, and 74
+logical lines respectively. The research input's `algorithmic-art` line-405 anchor was therefore
+valid. Separately, its roadmap anchor `L359-L376` was written against `df1d422`, where section 5.4
+sat at those lines; amendment 2 moved that section. Neither correction changes a verdict.
 
 ### 10.2 Verdicts
 
@@ -1166,7 +1194,7 @@ wrong. No design was withdrawn on evidence. One was folded on the user's decisio
 | `astra-brand` | Retained, narrowed | 7 sources to 4; `theme-factory` moves to Interface, `canvas-design` and `algorithmic-art` return to independent; `brand-guidelines` reclassified as a source-specific profile |
 | `astra-interface` | Retained, widened | 8 sources to 8 by exchange: two built-ins defer out, `slides` and `theme-factory` move in; absorbs the deck jurisdiction |
 | `astra-presentation` | **Folded into `astra-interface`** | User decision; roster 25 to 24 |
-| `astra-visual-art` | **Not proposed** | Static and generative art selection is routing, which section 3 denies as a sole advantage; `canvas-design`'s 54-font bundle makes self-containment worse, not better |
+| `astra-visual-art` | **Not proposed** | Static art, interactive generative art, and editable diagrams are distinguishable jobs and delivery shapes. A wrapper currently adds routing only, with no demonstrated personal-value reason to replace those independent interfaces; `canvas-design`'s 54-font bundle also makes internalization costly |
 
 **What the fold decides and what it does not.** The user folded `astra-presentation` into
 `astra-interface` after amendment 3 showed its retention basis had been voided. That is within the
@@ -1221,12 +1249,12 @@ Three obligations follow, and each Wave 1 design owns the ones touching its sour
   `design-system` must reproduce or replace ten programs, not paraphrase their output. This is the
   concrete price of the approved end state, and it belongs in each design's section 7.9 rather than
   being discovered at the retirement gate.
-- **Tests ship with the scripts.** Four of the 36 are test files
+- **Tests ship with the scripts.** Five of the 36 are test files
   (`test_sync_brand_to_tokens.py`, `test_validate_tokens.py`, `test_core.py`, and the two under
   `ui-styling/scripts/tests/`). They are existing behavioral evidence for the very programs a
   self-contained candidate would have to reproduce, and no design should discard them silently.
 
-### 10.4 Layered artifact authority
+### 10.4 Provisional layered artifact authority
 
 Inspection found three sources claiming source-of-truth over the same design artifacts:
 `design-consultation` writes root `DESIGN.md`
@@ -1237,9 +1265,10 @@ Inspection found three sources claiming source-of-truth over the same design art
 
 The conflict is executable, not rhetorical: `brand/scripts/sync-brand-to-tokens.cjs`,
 `design-system/scripts/generate-tokens.cjs`, and `ui-ux-pro-max/scripts/design_system.py` are three
-programs deriving the same token file. The stack below therefore resolves which generator wins, not
-only which document is quoted. The three Wave 1 designs must honour it or propose a replacement with
-evidence.
+programs deriving the same token file. The stack below is a reconciliation hypothesis for which
+generator wins, not only which document is quoted. Product Design accepts its side. Brand and
+Interface must accept or amend their sides, after which the coordinator presents any normative
+conflict to the user; the roadmap cannot settle that conflict by itself.
 
 1. **User decisions are final.** Normative conflicts return to the user rather than being resolved
    by precedence.
@@ -1256,10 +1285,11 @@ evidence.
 7. **`design-system/MASTER.md`** becomes a generated read-only view or is removed. The instruction
    to use it *exclusively* does not survive, because it would override levels 2 and 4 by prose.
 
-### 10.5 Proposed ledger changes
+### 10.5 Coordinator-applied ledger changes
 
-For the coordinator to apply to `docs/phase-0-ledgers.md`. All 21 rows are currently `claimed` with
-inspection pending; amendment 3 supplies the inspection. They remain `claimed`, not `resolved`.
+The coordinator applied all 21 inspected rows to `docs/phase-0-ledgers.md` on 2026-08-03. They
+remain `claimed`, not `resolved`; the table records the amendment-3 transition from the earlier
+reservation state.
 
 **Collision source-claim ledger.** Rows whose primary home or disposition changes are in bold.
 
@@ -1269,7 +1299,7 @@ inspection pending; amendment 3 supplies the inspection. They remain `claimed`, 
 | `cm-design-and-visual-02` | `design-system` | proposed Astra design | `astra-interface` | `astra-brand`. The Presentation secondary is **withdrawn** — the slide subsystem is now Interface-internal. 10 executables |
 | `cm-design-and-visual-03` | `design-consultation` | proposed Astra design | `astra-product-design` | `DESIGN.md` editorial owner per 10.4 level 3 |
 | `cm-design-and-visual-04` | `design-html` | proposed Astra design | `astra-interface` | Implementation adapter; 1 executable |
-| `cm-design-and-visual-05` | `design-shotgun` | proposed Astra design | `astra-product-design` | `astra-interface` (usability priors) — unchanged from amendment 1 |
+| `cm-design-and-visual-05` | `design-shotgun` | proposed Astra design | `astra-product-design` | No occurrence secondary role for `UX_PRINCIPLES`; amendment 4 records that resolver partial in the shared generation-pipeline component and requires Product, Interface, and Critique to classify their own consumption |
 | `cm-design-and-visual-06` | `design-review` | proposed Astra design | `astra-critique` | **add `astra-ship`** (commit authority, `gstack/design-review/SKILL.md:L1851-L1852`). Existing: `astra-interface` fix and verify, Testing bootstrap and regression |
 | `cm-design-and-visual-07` | `ui-styling` | proposed Astra design | `astra-interface` | Canvas-art slice excluded — it is a `references/canvas-design-system.md` pointer. 4 executables |
 | `cm-design-and-visual-08` | `ui-ux-pro-max` | proposed Astra design | `astra-interface` | `astra-product-design`. Its `MASTER.md` exclusivity claim does not survive 10.4. 5 executables |
@@ -1287,22 +1317,24 @@ inspection pending; amendment 3 supplies the inspection. They remain `claimed`, 
 | `cm-design-and-visual-20` | `web-artifacts-builder` | proposed Astra design | `astra-interface` | Delivery adapter, not design judgment; 2 executables |
 | `cm-design-and-visual-21` | `diagram` | **independent reference** | **`astra-presentation` → retained independent** | Consumed by `astra-document` and `astra-interface` |
 
-**Reference and cleanup ledger.** Three rows to add, all with disposition `keep` pending the user's
-decision, since `docs/phase-0.md` section 6 reserves keep, defer, and exclude to the user.
+**Reference and cleanup ledger.** Three rows to add with disposition `unassigned` and a coordinator
+recommendation to keep, pending the user's `keep` / `defer` / `exclude` decision.
 
 | Source | Component type | Reason | Consuming designs |
 |---|---|---|---|
-| `canvas-design` | skill | Static original art with a bundled 54-font library; vendoring 54 binaries to satisfy self-containment is a cost no declared advantage justifies | `astra-interface` |
-| `algorithmic-art` | skill | Seeded interactive generative art; a different outcome from applying an approved visual system, and pairing it with `canvas-design` would be routing only | — |
-| `diagram` | skill | Offline Mermaid plus editable Excalidraw and SVG/PNG triplet; its outcome is an editable artifact, not deck narrative | `astra-document`, `astra-interface` |
+| `canvas-design` | skill | `unassigned`; recommend keep because it is static original art with a bundled 54-font library, and internalizing 54 binaries has no declared advantage | `astra-interface` |
+| `algorithmic-art` | skill | `unassigned`; recommend keep because seeded interactive generative art is a different outcome from applying an approved visual system | — |
+| `diagram` | skill | `unassigned`; recommend keep because offline Mermaid plus editable Excalidraw and SVG/PNG is an editable-artifact outcome, not deck narrative | `astra-document`, `astra-interface` |
 
-**Ledger count corrections.** Section 4 of `docs/phase-0-ledgers.md` currently records 37 proposed
-Astra design dispositions, 1 duplicate occurrence, and 141 unassigned. After amendment 3 the split
-is **31** proposed Astra design, **3** independent reference, **3** defer, **1** duplicate
-occurrence, and 141 unassigned — 179 in total. Primary homes become 18 `astra-critique` including
-the duplicate, 2 `astra-product-design`, 8 `astra-interface`, **4** `astra-brand`, **0**
-`astra-presentation`, 3 retained independent, 3 deferred, and 141 unassigned. Live reference rows
-rise from 41 to **44**. Interface's count is unchanged at 8 by exchange, not by standing still: it
+**Ledger count corrections.** Amendment 3 by itself changed the former 37 / 1 / 141 split to
+**31** proposed Astra design, **3** independent reference, **3** defer, **1** duplicate occurrence,
+and **141** unassigned. After the coordinator also applied amendments 1, 2, and the reviewed Product
+refinements, the current 179 collision rows are **47** proposed Astra design, **7** independent
+reference, **1** retained agent coordinated, **3** defer, **1** exclude, **2** duplicate occurrence,
+and **118** unassigned. Current primary homes are 18 `astra-critique`, 2
+`astra-product-design`, 8 `astra-interface`, 4 `astra-brand`, 7 retained independent, 5
+`astra-understand-code`, 2 `astra-incident`, 6 `astra-browser`, 3 `astra-qa`, 2 `astra-automate`,
+and 122 unassigned. Live reference rows are **48**. Interface's count remains 8 by exchange: it
 loses two built-ins and gains `slides` and `theme-factory`.
 
 ### 10.6 What this amendment does not establish
@@ -1313,9 +1345,9 @@ loses two built-ins and gains `slides` and `theme-factory`.
   retained artifact jobs.
 - It does not discharge `astra-interface`'s section 7.1 job-statement obligation. Section 10.2
   records the obligation; only the Interface design can answer it.
-- It does not resolve how the ledger should express a three-way behavioral split. Section 10.5
-  proposes a coordinating primary home per umbrella so the schema stays valid, which is a
-  workaround, not a resolution.
+- It does not resolve how the ledger should express a three-way behavioral split. Section 10.5's
+  applied claim records a coordinating primary home per umbrella so the schema stays valid; that is
+  a workaround, not a resolved architecture.
 - It does not reconcile `designs/astra-critique.md`, which still names `astra-presentation` as a
   destination at line 588 and lists it at line 764. That is a design file, not the roadmap; the
   Critique source-expansion revision owns the correction.
@@ -1326,3 +1358,103 @@ loses two built-ins and gains `slides` and `theme-factory`.
   alone.
 - It does not change amendment 2's finding that at most 175 distinct artifacts are represented
   across the 179 occurrences.
+
+## 11. Amendment 4 — Product review and coordinator reconciliation
+
+**Date:** 2026-08-03
+**Scope:** review of [`designs/astra-product-design.md`](../designs/astra-product-design.md),
+source-of-truth correction for generated gstack skills, and coordinator application of the
+ledger proposals already recorded in amendments 1–3.
+**Authority:** the Product design remains a reviewed phase-0 baseline. Ledger edits reserve
+`claimed` states only. This amendment does not select the final roster, approve a reference
+disposition, authorize implementation, or retire an original source.
+
+### 11.1 Product review verdict
+
+`astra-product-design` is **retained as a reviewed baseline**, but not on Amendment 1's maintenance
+claim. `design-consultation` and `design-shotgun` produce the same approved-direction outcome, use
+the same upstream approval loop, and expose a real integration defect: Shotgun documents invocation
+from Consultation, while Consultation instead reimplements generation. The sources also carry
+complementary failure behavior worth testing in one design.
+
+The advantage is narrower than the submitted draft stated. Consultation already runs `$D check`
+and an anti-slop self-gate. Shotgun adds bounded rate-limit retry, missing/empty-output verification,
+per-variant status, the `/tmp` write workaround, and sequential fallback. Therefore the positive
+advantage is **generation-failure robustness and quality-gate completeness**, not the introduction
+of a quality gate where none existed. If the measurable gates in the Product design do not show
+that advantage, the merger is withdrawn rather than falling back to generated-file maintenance.
+
+The review also made these compliance corrections:
+
+- source evidence now records complete declarations, authoritative templates, generated artifacts,
+  section templates, resolver definitions, invocations, availability, and cross-neighborhood
+  occurrences;
+- `prototype/agents/openai.yaml` is interface metadata, not a separately invocable agent;
+- Explore versus Record is a forbidden-effect contract. Current Bash-capable frontmatter is
+  pre-approval evidence, not enforcement of a repository-write ban;
+- `$D`, `$B`, and the feedback endpoint are external prerequisites that may remain retained.
+  Self-containment forbids runtime dependency on original skills; it does not require vendoring
+  every external binary or service;
+- peer contracts now split Spec and Plan and name payload, accepting owner, and unavailable-peer
+  behavior; and
+- Product accepts only its side of the provisional `DESIGN.md` and token-authority stack. Brand,
+  Interface, the coordinator, and the user still have standing over their jurisdictions.
+
+### 11.2 Generated-output evidence correction
+
+The five comparisons below had treated generated `SKILL.md` bytes as authored duplication. All are
+generated by the same gstack pipeline. The shared generated preamble is already maintained upstream,
+so deleting a second generated copy creates no Astra maintenance advantage.
+
+| Pair | Earlier generated-output basis | Authored-template multiset intersection | Amendment-4 effect |
+|---|---:|---:|---|
+| `design-consultation` / `design-shotgun` | 942 byte-identical lines | 95 lines; 36 non-blank | Product retained on outcome, shared approval, complementary robustness, and the invocation defect |
+| `context-save` / `context-restore` | 813 byte-identical lines | 69 lines; 35 non-blank | Context remains provisional; its design must prove an authored maintenance, routing, or coordination advantage |
+| `codex` / `pair-agent` | 876 byte-identical lines | 106 lines; 30 non-blank | Delegate's maintenance basis is withdrawn; its source allocation must be re-triaged |
+| `qa` / `qa-only` | 1217 identical lines plus 491-line delta | 91 lines; 61 non-blank | Version and declaration differences stand; older-fork and drift claims require semantic evidence |
+| `browse` / `benchmark` | 620 identical lines / 79% | 81 lines; 34 non-blank | A browser-capability relation may stand; copied-authored-block removal does not justify it |
+
+Future designs over generated gstack skills must inspect the authored template, every consumed
+resolver or section template, and the generator registration. Generated output remains relevant for
+runtime fidelity and hashing, but it cannot be the sole source oracle or merger advantage.
+
+### 11.3 Shared build-input disposition
+
+`UX_PRINCIPLES` is authored once in the gstack resolver and consumed by `design-shotgun`,
+`design-html`, `design-review`, and `plan-design-review`, spanning Product Design, Interface, and
+Critique. It is not a `design-shotgun`-authored occurrence slice and has no exclusive Astra primary
+home at this phase.
+
+The coordinator therefore removed the Shotgun-to-Interface occurrence secondary and added one
+`gstack:skill-doc-generation-pipeline` component record. Each consuming design must classify the
+behavior it needs. A shared Astra module may be proposed only after at least two designs demonstrate
+the same stable seam and meaningful variation; until then, the component record preserves global
+provenance without prejudging architecture.
+
+### 11.4 Applied ledger state
+
+The coordinator applied every evidence-backed proposal from amendments 1–3 plus the Product review
+refinements to [`docs/phase-0-ledgers.md`](phase-0-ledgers.md). The resulting machine-counted state is:
+
+- **179 collision rows:** 47 proposed Astra design, 7 independent reference, 1 retained agent
+  coordinated, 3 defer, 1 exclude, 2 duplicate occurrence, and 118 unassigned;
+- **176 distinct source identifiers**, representing at most 175 distinct artifacts because the two
+  browser registrations share one artifact;
+- **48 live reference rows** and **133 dangling cleanup rows**; and
+- **15 separate component records**, including the gstack generation pipeline.
+
+All 63 coordinator-updated collision occurrences are `claimed`, not `resolved`; the other 116 remain
+`unclaimed`. The seven new reference rows are `unassigned` recommendations, not inferred `keep`
+decisions. No original was removed or made retirement-eligible.
+
+### 11.5 Open obligations before the next Wave 1 design
+
+1. `astra-brand` must accept, narrow, or reject the provisional artifact-authority stack; account
+   for its four scripts, test, token sync, source-specific Anthropic profile, and Critique handoff.
+2. `astra-interface` must write one job statement without an `or`, distinguish its two Critique
+   handoff payloads, account for 22 bundled executables, and resolve the token-generator conflict.
+3. Brand, Interface, and Critique must each classify their actual `UX_PRINCIPLES` behavior. This is
+   a roster-wide coordinator pass, not a bilateral Product/Interface ownership vote.
+4. The user still decides every reference-ledger `keep` / `defer` / `exclude` outcome and the final
+   roster. Implementation planning remains deferred until that selection under
+   `docs/phase-0.md` section 7.

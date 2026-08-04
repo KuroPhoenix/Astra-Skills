@@ -1,6 +1,12 @@
 # Wave 1 Design Architecture Research
 
 > Date: 2026-07-31 · Status: research input, not a roster or retirement decision
+>
+> **Superseded roster recommendation:** the user subsequently folded `astra-presentation` into
+> `astra-interface`; roadmap amendment 3 owns that decision. References below to four peers or a
+> Presentation home preserve the source-audit result at the time it was written and are not current
+> roster state. The source evidence remains usable, with Presentation obligations read as Interface
+> obligations unless a later design splits them again.
 
 ## Bottom line
 
@@ -24,7 +30,9 @@ All 21 Design & visual occurrences and cross-neighborhood `prototype` were inspe
 - gstack sources: commit `a3259400a366593e0c909dd9ac3e59752efd2488`; active registrations point into `~/.claude/skills/gstack/`.
 - Anthropic vendor sources: detached nested-repo commit `98669c11ca63e9c81c11501e1437e5c47b556621`; active entries are symlinks into that tree.
 - Direct personal/ClaudeKit sources lack a containing immutable revision; exact inspected `SKILL.md` SHA-256 values are recorded in the disposition table.
-- `prototype` registration: `/home/kurophoenix/.agents/skills/prototype/agents/openai.yaml`; body SHA `03074862d4b6e4eaf472aa75146e1d193dd9e3bba0e4303a9b2425562d1d44cc`.
+- `prototype` source: `/home/kurophoenix/.agents/skills/prototype/SKILL.md`; body SHA
+  `03074862d4b6e4eaf472aa75146e1d193dd9e3bba0e4303a9b2425562d1d44cc`.
+  `agents/openai.yaml` is three lines of interface metadata, not an independently invocable agent.
 - Built-ins have no path or manifest, so they cannot satisfy reproducible provenance (`README.md:L92-L100`).
 
 The roadmap allocations are provisional and none of the 21 rows is resolved (`docs/design-roadmap.md:L359-L376`; `docs/phase-0-ledgers.md:L84-L104`, `L431-L441`).
@@ -72,7 +80,7 @@ Use this authority stack:
 | `brand` | Voice, identity, messaging, asset governance, token sync | Brand; generic brand source oracle | O/I; `/home/kurophoenix/.claude/skills/brand/SKILL.md:L14-L55`; SHA `6a450ee1…d44` |
 | `brand-guidelines` | Fixed Anthropic colors and typography | Brand profile/reference; retain until source-specific fidelity passes | O/I; `/home/kurophoenix/.claude/skills/brand-guidelines/SKILL.md:L1-L71`; vendor SHA `1120b376…9fe` |
 | `banner-design` | Multi-format campaign creative and export | Brand activation mode; retain pending dependency/output fidelity | O/I; `/home/kurophoenix/.claude/skills/banner-design/SKILL.md:L28-L143`; SHA `913d9c4b…acc` |
-| `canvas-design` | Static original art plus philosophy, PNG/PDF | **Retain**; future Visual Art static mode candidate | O/I; `/home/kurophoenix/.claude/skills/canvas-design/SKILL.md:L1-L129`; vendor SHA `a1f28807…44b` |
+| `canvas-design` | Static original art plus philosophy, PNG/PDF | **Retain**; future Visual Art static mode candidate | O/I; `/home/kurophoenix/.claude/skills/canvas-design/SKILL.md:L1-L130`; vendor SHA `a1f28807…44b` |
 | `algorithmic-art` | Seeded interactive p5.js generative art | **Retain**; future Visual Art generative mode candidate | O/I; `/home/kurophoenix/.claude/skills/algorithmic-art/SKILL.md:L101-L217`, `L221-L405`; vendor SHA `3bc4092c…eef` |
 | `slides` | Thin router to presentation references | Presentation, but not sole oracle; preserve richer `design-system` slide behavior | O/I; `/home/kurophoenix/.claude/skills/slides/SKILL.md:L21-L40`; SHA `2b90bdaf…ccb` |
 | `dataviz` | Built-in name only | **Defer** | U; `README.md:L92-L100` |

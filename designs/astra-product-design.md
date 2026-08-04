@@ -1,6 +1,6 @@
 # Astra Product Design — phase-0 design
 
-**Date:** 2026-08-01 · **Wave:** 1 · **Status:** `proposed`
+**Date:** 2026-08-01 · **Reviewed/amended:** 2026-08-03 · **Wave:** 1 · **Status:** `proposed`
 
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns phase
 > scope and the global ledgers; `docs/design-roadmap.md` section 10 (amendment 3) supplies this
@@ -56,7 +56,9 @@ prerequisite for the tranche rather than a leaf.
 
 ### 2.1 Requests that should trigger it
 
-- "Set up a design system for this project" / "create DESIGN.md" / "design from scratch"
+- "Establish the visual direction for this project" / "create the design-direction contract in
+  DESIGN.md" / "design from scratch". A generic "set up a design system" request triggers this
+  skill only when the user wants direction and approval, not token or component implementation.
 - "Show me some design options for this screen" / "explore design variants" / "visual brainstorm"
 - "I don't like how this looks" *about a running page*, where the user wants alternative directions
   rather than a defect report
@@ -83,7 +85,7 @@ is this skill.
 
 A product context, at whatever fidelity is available: a codebase, a `README.md`, prior
 `/office-hours` output, an existing `DESIGN.md`, a running local site, a screenshot, or nothing but
-a spoken description. All five are observed intake paths across the two sources (**O**).
+a spoken description. All seven are observed intake paths across the two sources (**O**).
 
 ### 2.4 User-visible result
 
@@ -119,8 +121,10 @@ on disagreement (`design-consultation/SKILL.md.tmpl:L213`, `design-shotgun/SKILL
 
 ### 3.1 Inspection record
 
-Inspected 2026-08-01. gstack sources are at commit `a3259400a366593e0c909dd9ac3e59752efd2488`,
-release `1.60.1.0`; live registrations point into `~/.claude/skills/gstack/`.
+Inspected 2026-08-01 and re-reviewed through the authored generator inputs on 2026-08-03.
+gstack sources are at commit `a3259400a366593e0c909dd9ac3e59752efd2488`, release
+`1.60.1.0`; the tree was clean during re-review and live registrations point into
+`~/.claude/skills/gstack/`.
 
 **Primary sources — claimed by this design.**
 
@@ -134,39 +138,76 @@ release `1.60.1.0`; live registrations point into `~/.claude/skills/gstack/`.
 | `design-shotgun` | skill (generated) | `~/.claude/skills/gstack/design-shotgun/SKILL.md` | `/design-shotgun` | live | 1373 | `513d9e18dbe5` |
 | `design-shotgun` | **template (source of truth)** | `…/design-shotgun/SKILL.md.tmpl` | not invocable | live | 344 | `ce541362b85e` |
 
-**Generator and shared partials — inspected, claimed by no design.**
+**Generator and resolver sources — inspected, claimed by no design.**
 
 | Identifier | Component type | Lines | `sha256` prefix | Bearing on this design |
 |---|---|---:|---|---|
-| `scripts/gen-skill-docs.ts` | build script | 1230 | `cd62a5046ee6` | Expands `{{…}}` placeholders; makes both `SKILL.md` files derived artifacts |
-| `scripts/resolvers/index.ts` | resolver registry | 105 | `9e07dfe5a4ec` | Registers `UX_PRINCIPLES`, `DESIGN_OUTSIDE_VOICES`, `DESIGN_SETUP`, `DESIGN_SHOTGUN_LOOP`, `TASTE_PROFILE` |
+| `scripts/gen-skill-docs.ts` | build generator | 1230 | `cd62a5046ee6` | Expands every `{{…}}` placeholder and makes both `SKILL.md` files derived artifacts |
+| `scripts/resolvers/index.ts` | resolver registry | 105 | `9e07dfe5a4ec` | Maps every placeholder below to its source resolver |
+| `scripts/resolvers/design.ts` | design resolver library | 1157 | `15bb7329e323` | Authored definitions of `DESIGN_SETUP`, `TASTE_PROFILE`, `UX_PRINCIPLES`, `DESIGN_OUTSIDE_VOICES`, and `DESIGN_SHOTGUN_LOOP` |
+| `scripts/resolvers/preamble.ts` | host-chassis resolver | 124 | `d6e6e2f5cd68` | Entry point for the large generated `PREAMBLE`; this upstream sharing is not Astra maintenance value |
+| `scripts/resolvers/browse.ts` | browser resolver library | 138 | `70226a0c6c2a` | Defines `BROWSE_SETUP` and its setup/degradation behavior |
+| `scripts/resolvers/gbrain.ts` | optional memory resolver library | 270 | `57991423d881` | Defines `GBRAIN_CONTEXT_LOAD` and `GBRAIN_SAVE_RESULTS` |
+| `scripts/resolvers/learnings.ts` | optional learnings resolver library | 117 | `cf67cf308faf` | Defines `LEARNINGS_SEARCH` and `LEARNINGS_LOG` |
+| `scripts/resolvers/utility.ts` | utility resolver library | 417 | `9f71ca8edea7` | Defines `SLUG_EVAL`; `BIN_DIR` is a direct path resolver in `index.ts` |
 
-**Cross-neighborhood sources — inspected as evidence, primary claim not taken.**
+The two primary templates and the consultation section template consume the following complete
+placeholder set. This is the build-input accounting that the generated-file finding requires:
 
-| Identifier | Component type | Lines | `sha256` prefix | Primary home | Role here |
-|---|---|---:|---|---|---|
-| `design` | skill | 313 | `413f4ab913d0` | `astra-brand` | Contributes a mockup jurisdiction; this design proposes a **secondary role**, not a claim |
-| `ui-ux-pro-max` | skill | 685 | `adcc153bf7d8` | `astra-interface` | Usability priors overlapping the shared `UX_PRINCIPLES` partial |
-| `plan-design-review` | template | 294 | `412bb57ed787` | `astra-critique` | Shares three partials with this design's sources |
-| `design-html` | template | 600 | `5d885cf8da57` | `astra-interface` | Named downstream in `design-shotgun`'s exit menu |
-| `prototype` | skill | 26 | `03074862d4b6` | retained independent | Amendment 3 discharged the Product Design half of its disposition |
-| `prototype/LOGIC.md` | reference | 79 | `cf372862bccd` | retained independent | — |
-| `prototype/UI.md` | reference | 112 | `e2ca04434be5` | retained independent | — |
-| `prototype/agents/openai.yaml` | agent registration | 3 | `5af65e43ab41` | retained independent | Separate execution context |
+| Placeholder | Consumers here | Phase-0 treatment |
+|---|---|---|
+| `PREAMBLE` | both primary templates | Shared gstack host chassis. Track with the generation pipeline; do not count its generated duplication as a merger benefit |
+| `BROWSE_SETUP` | consultation | Preserve browser discovery, user-approved setup, and degradation or replace them explicitly |
+| `DESIGN_SETUP` | both | Preserve designer/browser discovery and the no-designer HTML fallback |
+| `GBRAIN_CONTEXT_LOAD`, `GBRAIN_SAVE_RESULTS` | consultation | Optional gbrain integration; preserve optionality and non-blocking failure, not the gstack implementation |
+| `LEARNINGS_SEARCH`, `LEARNINGS_LOG` | consultation | Optional source-learnings integration; later design must retain, replace, or explicitly drop it with evidence |
+| `SLUG_EVAL`, `BIN_DIR` | consultation / shotgun | State-path and helper discovery; retain or replace before source retirement |
+| `TASTE_PROFILE` | both | Product-specific durable taste state and migration behavior; must survive in this design |
+| `DESIGN_OUTSIDE_VOICES` | consultation | Optional external design voices with host-specific suppression and non-blocking degradation |
+| `UX_PRINCIPLES` | shotgun | Shared usability priors consumed by Product, Interface, and Critique sources; see section 4.3 |
+| `DESIGN_SHOTGUN_LOOP` | both | Shared comparison, feedback, approval, and `approved.json` machinery |
 
-**Declarations (frontmatter), verbatim fields that bear on behavior.**
+**Cross-neighborhood sources — inspected as evidence, primary claim not taken.** Generated gstack
+skills list both their runtime output and their authored template.
+
+| Identifier | Component type | Location / invocation / availability | Lines and provenance | Primary home | Role here |
+|---|---|---|---|---|---|
+| `design` | skill | `~/.claude/skills/design/SKILL.md`; `design`; live | 313; `413f4ab913d0` | `astra-brand` | Mockup jurisdiction; proposed secondary role only |
+| `ui-ux-pro-max` | skill | `~/.claude/skills/ui-ux-pro-max/SKILL.md`; `ui-ux-pro-max`; live | 685; `adcc153bf7d8` | `astra-interface` | Independent usability source used to test the shared `UX_PRINCIPLES` classification |
+| `plan-design-review` | generated skill + authored template | `~/.claude/skills/gstack/plan-design-review/{SKILL.md,SKILL.md.tmpl}`; `/plan-design-review`; live | 1514 / 294; `0f756585231f` / `412bb57ed787` | `astra-critique` | Shares three build partials; different review outcome |
+| `design-html` | generated skill + authored template | `~/.claude/skills/gstack/design-html/{SKILL.md,SKILL.md.tmpl}`; `/design-html`; live | 1511 / 600; `ed44f14e570b` / `5d885cf8da57` | `astra-interface` | Downstream implementation adapter; different outcome |
+| `prototype` | skill | `~/.agents/skills/prototype/SKILL.md`; `prototype`; live | 26; `03074862d4b6` | retained independent | Different, throwaway-experiment outcome; consumed, not owned |
+| `prototype/LOGIC.md` | reference | `~/.agents/skills/prototype/LOGIC.md`; read by `prototype`; live | 79; `cf372862bccd` | retained with `prototype` | Logic-prototype playbook only |
+| `prototype/UI.md` | reference | `~/.agents/skills/prototype/UI.md`; read by `prototype`; live | 112; `e2ca04434be5` | retained with `prototype` | UI-prototype playbook only |
+| `prototype/agents/openai.yaml` | interface metadata | `~/.agents/skills/prototype/agents/openai.yaml`; not independently invocable; live | 3; `5af65e43ab41` | tracked with `prototype` | Display metadata only; **not** a separate execution context |
+
+**Complete primary declarations.** Descriptions are reproduced in substance without changing their
+trigger claims; every other field and nested query field is listed exactly.
 
 | Field | `design-consultation` | `design-shotgun` |
 |---|---|---|
+| `name` | `design-consultation` | `design-shotgun` |
 | `version` | `1.0.0` | `1.0.0` |
 | `preamble-tier` | `3` | `2` |
+| `description` | Product research and a complete aesthetic/type/color/layout/spacing/motion system; preview generation; writes `DESIGN.md`; routes existing-site audit to `/plan-design-review`; triggers on design system, brand, and `DESIGN.md` work | Multiple AI variants, comparison board, structured feedback, iteration; standalone exploration; triggers on variants/options/brainstorming or dissatisfaction with a current look |
 | `allowed-tools` | Bash, Read, **Write**, **Edit**, Glob, Grep, AskUserQuestion, **WebSearch** | Bash, Read, Glob, Grep, **Agent**, AskUserQuestion |
 | `triggers` | design system · create a brand · design from scratch | explore design variants · show me design options · visual design brainstorm |
-| `gbrain.context_queries` | `existing-design-md`, `prior-design-decisions`, `brand-guidelines` (CEO-plan notes) | `prior-approved-variants`, `design-md`, `recent-design-docs` |
+| `gbrain.schema` | `1` | `1` |
+| `gbrain.context_queries` | `existing-design-md`: filesystem, `DESIGN.md`, tail 1, render `Existing DESIGN.md (if any)`; `prior-design-decisions`: filesystem, `~/.gstack/projects/{repo_slug}/*-design-*.md`, mtime descending, limit 3; `brand-guidelines`: list of `ceo-plan` records tagged `repo:{repo_slug}` containing `brand`, updated descending, limit 3 | `prior-approved-variants`: filesystem, `~/.gstack/projects/{repo_slug}/designs/*/approved.json`, mtime descending, limit 5; `design-md`: filesystem, `DESIGN.md`, tail 1; `recent-design-docs`: filesystem, `~/.gstack/projects/{repo_slug}/*-design-*.md`, mtime descending, limit 3; each retains its declared `render_as` label |
 
-The `allowed-tools` divergence is the single most important declaration in this design. It is
-authority expressed as a tool declaration — the same pattern amendment 2 found between `qa` and
-`qa-only` — and section 5.1 records why it must survive.
+**Complete cross-source declaration inventory.** `design` declares `name`, `description`,
+`argument-hint`, `license: MIT`, and `metadata.{author: claudekit, version: 2.1.0}`.
+`ui-ux-pro-max` declares only `name` and `description`. `plan-design-review` declares `name`,
+`preamble-tier: 3`, `interactive: true`, `version: 2.0.0`, `description`, `allowed-tools`, and three
+`triggers`. `design-html` declares `name`, `preamble-tier: 2`, `version: 1.0.0`, `description`,
+three `voice-triggers`, three `triggers`, and `allowed-tools`. `prototype` declares `name`,
+`description`, and `interface.{display_name, short_description}`; its three-line `openai.yaml`
+repeats only the two interface display fields.
+
+The declaration difference is evidence of different pre-approved capabilities, not an enforced
+filesystem boundary: Shotgun's Bash access can still write. Section 5.1 therefore preserves an
+explicit **forbidden-effect contract** for Explore and a user-confirmed mutation contract for
+Record; detailed permission enforcement remains deferred.
 
 ### 3.2 Disposition and contribution
 
@@ -175,33 +216,37 @@ Contribution categories are from `docs/design-requirements.md` section 5.
 | Occurrence | Primary disposition | Primary home | Contribution | Secondary role |
 |---|---|---|---|---|
 | `design-consultation` (`cm-design-and-visual-03`) | proposed Astra design | `astra-product-design` | **Protocol** (research-led proposal ordering) · **Playbook** (competitive research, three-layer synthesis, coherence validation, anti-slop self-gate) · **Perspective** (opinionated consultant priors: propose don't present, coherence over local optima, font blacklist) · **Jurisdiction** (the root `DESIGN.md` contract) · **Machinery** (generated preamble) | — |
-| `design-shotgun` (`cm-design-and-visual-05`) | proposed Astra design | `astra-product-design` | **Protocol** (concept → confirm → parallel generate → board → confirm → save) · **Playbook** (anti-convergence test, parallel generation with retry and fallback, taste memory) · **Prerequisite** (`$D` designer binary, `Agent` capability, feedback endpoint) · **Machinery** (generated preamble) | `astra-interface` (usability priors — but see section 4.3, which reopens this) |
+| `design-shotgun` (`cm-design-and-visual-05`) | proposed Astra design | `astra-product-design` | **Protocol** (concept → confirm → parallel generate → board → confirm → save) · **Playbook** (anti-convergence test, parallel generation with retry and fallback, taste memory) · **Prerequisite** (`$D` designer binary, `Agent` capability, feedback endpoint) · **Machinery** (generated preamble) | —; `UX_PRINCIPLES` is tracked as a separate shared build input, not misattributed as an Interface-owned behavior of this occurrence |
 | `design` mockup slice (`cm-design-and-visual-01`) | proposed Astra design | `astra-brand` *(unchanged)* | **Jurisdiction** (mockups) | **`astra-product-design`** — secondary role only |
 | `ui-ux-pro-max` (`cm-design-and-visual-08`) | proposed Astra design | `astra-interface` *(unchanged)* | **Perspective** (usability priors) | `astra-product-design` — evidence only, no claim |
-| `prototype` (`cm-plan-and-spec-*`) | independent reference | retained independent | **Separate** — different outcome | Consumed, not owned |
+| `plan-design-review` (`cm-adversarial-critique-13`) | proposed Astra design | `astra-critique` | **Separate** review outcome · shared build machinery | Evidence only; no Product claim |
+| `design-html` (`cm-design-and-visual-04`) | proposed Astra design | `astra-interface` | **Separate** implementation outcome · downstream adapter | Named handoff only; no Product claim |
+| `prototype` (`cm-plan-and-spec-13`) | independent reference | retained independent | **Separate** — different outcome | Consumed, not owned |
 
 ### 3.3 Proposed ledger changes
 
 Amendment 3 already proposes the neighborhood-level rows (`docs/design-roadmap.md` section 10.5).
-This design adds or refines three, for the coordinator to apply:
+This design adds or refines three. The coordinator applied them as `claimed`, not `resolved`, on
+2026-08-03 after review:
 
 | Occurrence ID | Field | Proposed value | Basis |
 |---|---|---|---|
 | `cm-design-and-visual-03` | `evidence` | Replace `source inspection pending` with a link to section 3.1 of this design, recording **both** the generated `SKILL.md` hash `44379ed9283c` and the authoritative `SKILL.md.tmpl` hash `0568266027d7` | The generated file is not the source of truth; recording only its hash would make the provenance rule satisfiable by a derived artifact |
 | `cm-design-and-visual-05` | `evidence` | Same treatment: `513d9e18dbe5` (generated) plus `ce541362b85e` (template) | As above |
-| `cm-design-and-visual-05` | `secondary_roles` | Amendment 1 added `astra-interface` for the usability priors. **Qualify it:** those priors are the shared `UX_PRINCIPLES` partial, not authored `design-shotgun` content, and four skills across three proposed homes consume it. The secondary role should read *"shared partial, ownership unresolved — see `astra-product-design` §4.3"* rather than asserting an Interface role | Section 4.3 |
+| `cm-design-and-visual-05` | `secondary_roles` | Remove the Amendment 1 `astra-interface` role. `UX_PRINCIPLES` is a resolver-owned build input consumed by four skills across three homes, not authored `design-shotgun` content and not evidence that Interface owns part of this occurrence | Section 4.3 |
 
-**Separate installed-component records.** Four template partials and one generator are behavior-
-bearing components with no ledger row. They belong in the separate installed-component record, not
-in the collision ledger, because they are not collision-map occurrences:
+**Separate installed-component record.** The build generator and resolver library are not
+collision-map occurrences. The coordinator records one generation-pipeline component globally and
+this design enumerates its exact consumed placeholders above. The record stays shared and retained
+until every generated consumer that matters to the roster has migrated; it does not assign one Astra
+design as exclusive owner of a resolver partial.
 
-| Component | Type | Consumers |
+| Component | Type | Consumers / treatment |
 |---|---|---|
-| `gen-skill-docs.ts` + `scripts/resolvers/` | build generator | every gstack skill |
-| `UX_PRINCIPLES` partial (86 lines as inlined) | template partial | `design-shotgun`, `design-html`, `design-review`, `plan-design-review` |
-| `DESIGN_SHOTGUN_LOOP` partial (115 lines) | template partial | `design-shotgun`, `design-consultation`, `plan-design-review` |
-| `DESIGN_OUTSIDE_VOICES` partial (69 lines) | template partial | `design-consultation`, `design-review`, `plan-design-review` |
-| `DESIGN_SETUP` partial (52 lines) | template partial | all five design gstack skills |
+| `gstack:skill-doc-generation-pipeline` | build generator + resolver modules | Every generated gstack skill; retain as shared provenance. For this design the consumed placeholder set is the table in section 3.1 |
+
+The reference ledger also adds `prototype` with disposition `unassigned` pending the user's
+`keep` / `defer` / `exclude` decision and `consuming_designs: [astra-product-design]`.
 
 ---
 
@@ -273,8 +318,9 @@ choice** (**O** for both instruction sets; **I** that the divergence is unintend
 strongest merger evidence available, because it is a duplication a merged skill genuinely removes —
 unlike the generated preamble, which it does not.
 
-**A second, larger finding: the shared partials cross Astra home boundaries.** The four design
-partials are consumed as follows:
+**A second, larger finding: shared build inputs cross Astra home boundaries.** Four design-specific
+partials are consumed across homes (the product-internal `TASTE_PROFILE` is accounted for in
+section 3.1 separately):
 
 | Partial | Consumers | Proposed Astra homes spanned |
 |---|---|---|
@@ -285,11 +331,13 @@ partials are consumed as follows:
 
 Amendment 1 recorded that `design-shotgun` "carries a usability **perspective** … that overlaps
 `ui-ux-pro-max`; Product and Interface must agree on one primary home for those priors"
-(`docs/design-roadmap.md` section 5.4). **That framing is too narrow.** `design-shotgun` does not
-carry those priors — it references a partial that four skills reference, two of which
-(`design-review`, `plan-design-review`) are `astra-critique` sources. The ownership question is not
-Product versus Interface; it is a four-way question in which Critique is a claimant, and it cannot
-be settled inside this design. Section 10 records it as an open question with its consequence.
+(`docs/design-roadmap.md` section 5.4). **That is the wrong accounting model.** `design-shotgun`
+references a resolver partial that four skills reference, two of which (`design-review` and
+`plan-design-review`) are `astra-critique` sources. A build partial is not a collision occurrence and
+does not need one exclusive Astra primary home. Each consuming design must classify the behavior it
+actually uses and preserve or reject it explicitly; the coordinator tracks all consumers. A shared
+Astra runtime module remains forbidden until at least two completed designs demonstrate the same
+interface and variation. Section 10 records that roster-wide classification question.
 
 ### 4.4 Which apparent duplicates are different jobs
 
@@ -311,7 +359,7 @@ None of the claimed pair. But two adjacent things are different jobs and are not
 | Failure handling | none stated for `$D variants` | 3 retries on rate limit, regenerate on empty output, quality gate, sequential fallback, explicit per-variant failure reporting, never silently skip | Adopt shotgun's; this is the primary advantage claim |
 | Anti-slop control | **self-gate** — "Would a human designer be embarrassed to put their name on this?" with a named reject list (`sections/proposal-and-preview.md.tmpl:L143-L148`) | absent from the generation step | Apply to both paths |
 | Anti-convergence control | cross-session only ("never propose the same choices twice") | within-session, with a concrete test — "if someone could swap the headline text between two variants without noticing, they're too similar" (`design-shotgun/SKILL.md.tmpl:L200-L207`) | Keep both; they govern different axes |
-| Write authority | declares `Write` and `Edit`; writes `DESIGN.md` and appends to `CLAUDE.md` | declares neither; writes only through `$D` and `cp` under Bash | **Preserve as two authority states** — section 5.1 |
+| Mutation contract | declares `Write` and `Edit`; instructs writes to `DESIGN.md` and `CLAUDE.md` | omits `Write`/`Edit` but Bash can still mutate; its instructions constrain durable output to `~/.gstack` | Preserve Explore's forbidden repo effects and Record's explicit confirmation — section 5.1 |
 | Invocation belief | does not call shotgun | believes consultation calls it | Defect; the merge resolves it |
 
 ### 4.6 Why this is one coherent module
@@ -324,7 +372,7 @@ Held against `docs/design-requirements.md` section 6:
 | Phase 0–6 vs Step 0–6 ordering | Step ordering | **Protocol** |
 | System-level tokens vs screen-level variants | Subject matter | **Jurisdiction** |
 | Consultant register ("strong opinions") vs partner register ("brainstorming partner") | Tone only | Optional style, not a perspective |
-| `Write`/`Edit`/`WebSearch` vs `Agent` | **Different authority and prerequisite** | **Preserve explicitly; never waive through prose** |
+| `Write`/`Edit`/`WebSearch` vs `Agent`, plus different instructed output locations | **Different pre-approval, prerequisite, and intended effects** | Preserve explicitly; do not misstate tool pre-approval as enforcement |
 
 Four of the five differences are exactly the categories the requirements say belong *inside* one
 skill. The fifth is the one that must not be flattened, and section 6 gives it a seam rather than a
@@ -339,8 +387,10 @@ source.
 **Advantage class is better output, on two named classes — not maintenance, and not routing.**
 
 1. **Generation-failure robustness.** For the identical operation "produce N candidate directions
-   and show them", `design-consultation` has no retry, no rate-limit handling, no quality gate, no
-   per-variant failure reporting, and no fallback; `design-shotgun` has all five. A user who enters
+   and show them", `design-consultation` has a `$D check` plus anti-slop self-gate, but no bounded
+   rate-limit retry, missing/empty-output verification, per-variant failure reporting,
+   `/tmp`-then-copy sandbox workaround, or total-failure sequential fallback; `design-shotgun` has
+   those recovery behaviors. A user who enters
    through the design-system door today gets a materially worse failure mode than one who enters
    through the exploration door, for the same underlying binary. The merged skill should beat
    `design-consultation` as source oracle on any corpus case that induces a generation failure —
@@ -358,27 +408,29 @@ combining these sources improves aesthetic judgment, and section 9's gates do no
 
 ## 5. Preserved distinctions
 
-### 5.1 Two authority states, expressed as tool declarations
+### 5.1 Two effect states, informed but not enforced by tool declarations
 
 `design-consultation` declares `Write` and `Edit`; `design-shotgun` declares neither and declares
-`Agent` instead (**O**, section 3.1). This is authority, not convenience: the exploration job
-deliberately cannot edit the repository, and the consultation job deliberately can — it writes
-`DESIGN.md` to the repo root and appends a Design System section to `CLAUDE.md`
-(`sections/proposal-and-preview.md.tmpl:L216`, `L272-L280`).
+`Agent` instead (**O**, section 3.1). This declaration difference is pre-approval evidence, not a
+write sandbox: Shotgun also declares Bash and its own workflow writes through `$D` and `cp`.
+The behavioral distinction comes from the instructed effects. Shotgun requires durable artifacts
+under `~/.gstack` and never instructs repository mutation; Consultation writes `DESIGN.md` and a
+Design System note in `CLAUDE.md` (`sections/proposal-and-preview.md.tmpl:L216`, `L272-L280`).
 
-`docs/design-requirements.md` section 6 forbids waiving a difference in authority through prose
-merger, and section 7.7 forbids expressing tool pre-approval as tool restriction. The design
-therefore preserves **two named authority states** the user can see and choose between:
+`docs/design-requirements.md` section 6 forbids waiving effect or authority differences through a
+prose merger, and section 7.7 forbids expressing tool pre-approval as tool restriction. The design
+therefore proposes **two named effect states** the user can see and choose between. Their eventual
+permission enforcement remains later-phase work:
 
-| State | May write | Reached by |
+| State | Forbidden and permitted effects | Reached by |
 |---|---|---|
-| **Explore** | only under `~/.gstack/projects/$SLUG/designs/` | default for exploration intake; always available |
-| **Record** | additionally the repo's `DESIGN.md` and `CLAUDE.md` | entered only after the user approves a direction *and* confirms recording |
+| **Explore** | No repository writes; durable design artifacts only under `~/.gstack/projects/$SLUG/designs/` (temporary generation may use `/tmp` before copying) | default for exploration intake |
+| **Record** | Explore effects plus the specifically confirmed repo `DESIGN.md` and `CLAUDE.md` updates | entered only after the user approves a direction *and* confirms recording |
 
 **Concrete decision where this matters:** a user exploring three homepage directions on a client
-repository must not end the session with a modified `CLAUDE.md`. Today `design-shotgun` cannot
-produce that outcome and `design-consultation` can. Collapsing them into one always-writing skill
-would be a silent authority expansion.
+repository must not end the session with a modified `CLAUDE.md`. Shotgun does not instruct that
+effect; Consultation does. Collapsing them into one always-writing skill would silently expand the
+proposed effect contract even though the current tool declarations alone do not enforce it.
 
 ### 5.2 Two intake protocols
 
@@ -442,12 +494,12 @@ self-contained HTML preview page; `open` fails → print the path.
 
 | Prerequisite | Owner | Required for | Behavior when absent |
 |---|---|---|---|
-| `$D` designer binary (`DESIGN_SETUP`) | external | all mockup generation | consultation degrades to an HTML preview page; shotgun has no equivalent fallback — an unresolved gap, section 10 |
-| `$B` browse binary (`BROWSE_SETUP`) | external | visual competitive research; live-site screenshot | research degrades to WebSearch; the evolve path becomes unavailable |
+| `$D` designer binary (`DESIGN_SETUP`) | separately retained external capability; executable verified 2026-08-03 (`7a3091782c78`) | all mockup generation | consultation degrades to an HTML preview page; shotgun has no equivalent fallback — a gap this design resolves with rung 4 |
+| `$B` browse binary (`BROWSE_SETUP`) | separately retained external capability; executable verified 2026-08-03 (`e97ed1a3f007`) | visual competitive research; live-site screenshot | research degrades to WebSearch; the evolve path becomes unavailable |
 | `Agent` capability | host | parallel generation | sequential fallback |
 | Feedback endpoint (HTTP POST) | `DESIGN_SHOTGUN_LOOP` | comparison board feedback | falls back to `AskUserQuestion` |
-| `gstack-slug`, `gstack-taste-update` | gstack `bin/` | state directory naming; taste profile updates | unstated in the sources — an unresolved gap, section 10 |
-| `~/.gstack/projects/$SLUG/` | filesystem | all durable artifacts | hard requirement: *"Never save to `.context/`, `docs/designs/`, or `/tmp/`… This is enforced."* |
+| `gstack-slug`, `gstack-taste-update` | source-owned gstack CLI scripts; executables verified 2026-08-03 (`442fce24ba87`, `0160f80754cb`) | state directory naming; taste profile updates | Retain/relocate or replace before source retirement; absence handling is unresolved |
+| `~/.gstack/projects/$SLUG/` | filesystem | all durable artifacts | Hard requirement for final artifacts; `/tmp` remains allowed only as transient generation space before copy |
 | WebSearch | host | competitive research | degrades to built-in knowledge |
 
 ---
@@ -483,7 +535,7 @@ Each seam below corresponds to demonstrated variation, per `docs/design-requirem
 | **Intake** | Establish product context and a design brief | Two observed protocols with different prerequisites (`WebSearch`/`$B` vs screenshot/`$D evolve`) and different entry conditions (greenfield vs "I don't like THIS") — section 5.2 |
 | **Direction generation** | Produce N distinct candidate directions | Two observed strategies with different failure profiles — section 5.3. Two implementations exist today, so this is a real adapter set, not a hypothetical one |
 | **Approval** | Comparison board, ratings, feedback, confirmation, `approved.json` | Already unified upstream as one partial; **no seam** — one implementation |
-| **Recording** | Token extraction, `DESIGN.md` composition, `CLAUDE.md` note, taste update | Gated by the authority state of section 5.1; plan-mode and disk-mode are two observed variants |
+| **Recording** | Token extraction, `DESIGN.md` composition, `CLAUDE.md` note, taste update | Gated by the effect state of section 5.1; plan-mode and disk-mode are two observed variants |
 
 The Approval module deliberately has no seam. Building one would be exactly the hypothetical seam
 section 7.6 forbids, and it would also re-fragment behavior gstack has already unified.
@@ -524,7 +576,7 @@ skill never blocks on disagreement and never refuses to record a direction it di
 
 ### 6.6 Architectural choices that remain hypotheses
 
-The two-authority-state model, the four-rung ladder, and the two-intake seam are hypotheses until
+The two-effect-state model, the four-rung ladder, and the two-intake seam are hypotheses until
 section 9's comparisons run. Specifically: if the corpus shows users never distinguish Explore from
 Record, the states collapse into one confirmation prompt; if the batch rung never outperforms
 parallel on cost or latency, the ladder loses a rung.
@@ -537,15 +589,14 @@ parallel on cost or latency, the ladder loses a rung.
 
 | Component | Type | Relation | On unavailability |
 |---|---|---|---|
-| `$D` gstack designer | external binary | **invokes** | Degrade to rung 4; announce |
-| `$B` gstack browse | external binary | **invokes** | Research degrades to WebSearch; evolve path unavailable |
+| `$D` designer | separately retained external binary | **invokes** | Degrade to rung 4; announce |
+| `$B` browse | separately retained external binary | **invokes** | Research degrades to WebSearch; evolve path unavailable |
 | `Agent` subagents | separate execution contexts | **invokes**; never flattened into prompt text | Degrade to rung 2 |
 | Comparison board feedback endpoint | local HTTP service | **invokes** | Fall back to `AskUserQuestion` |
-| `gstack-slug`, `gstack-taste-update` | CLI scripts | **invokes** | Unresolved — section 10 |
-| `gen-skill-docs.ts` + resolvers | build generator | **documents only** | Not a runtime dependency; it is a provenance fact |
+| `gstack-slug`, `gstack-taste-update` | source-owned CLI scripts | **invokes** | Retain/relocate or replace; unresolved — section 10 |
+| `gstack:skill-doc-generation-pipeline` | build generator + resolver modules | **documents only** | Not a runtime dependency; shared provenance retained until all relevant generated consumers migrate |
 | `~/.gstack/projects/$SLUG/` | state directory | **reads and writes** | Hard requirement |
-| `prototype` | retained independent skill + agent | **reads** findings if the user has them | Proceed without |
-| `codebase-design` | retained independent reference | none | — |
+| `prototype` | retained independent skill; companion file is display metadata, not an agent | **reads** findings if the user has them | Proceed without |
 
 Per `docs/design-requirements.md` section 4.3, none of these is flattened into prompt text. The
 `Agent` relation in particular stays a separate execution context, because the parallel generation
@@ -553,12 +604,13 @@ protocol depends on the isolation.
 
 ### 7.2 Peer relations
 
-| Peer | Direction | Semantics | Payload | Who starts the next workflow |
+| Peer | Direction and semantics | Minimum payload / information class | Who decides or starts | If the peer is unavailable |
 |---|---|---|---|---|
-| `astra-interface` | this → Interface | **Consumes output** | Approved variant path, extracted tokens, `DESIGN.md` | User |
-| `astra-brand` | Brand → this | **Consumes capability** | Brand primitives and constraints from `docs/brand-guidelines.md`; this skill must not redefine them | n/a |
-| `astra-critique` | Critique → this | **User-mediated handoff** — see 7.4 | Section 7.4 | User |
-| `astra-spec`, `astra-plan` | this → them | **Consumes output** in plan mode: the approved direction is written into the plan file, not to disk | Plan-file section | User |
+| `astra-interface` | Product → Interface; Interface **consumes output**, never an invoked workflow | Approved variant path and `approved.json`; applicable `DESIGN.md` anchors; extracted token candidates explicitly labeled non-authoritative until projected | User | Product Design still completes and retains a named manual handoff; no implementation is fabricated |
+| `astra-brand` | Brand → Product; Product **consumes Brand output** | Versioned `docs/brand-guidelines.md` identity constraints, primitive meanings, and unresolved brand decisions; not generic “brand capability” | User decides whether provisional non-brand exploration may continue | State the missing constraint; do not invent identity values. Record remains blocked for brand-owned fields unless the user explicitly accepts provisional values |
+| `astra-critique` | Critique → Product; **user-mediated handoff** only | Section 7.4's common envelope plus destination-only payload | User | Section 7.4 |
+| `astra-spec` | Product → Spec; Spec **consumes output** when intent is being recorded | Approved-direction summary, artifact anchors, assumptions, and unresolved product decisions | User | Keep the approved direction artifact; the user may transfer it manually later |
+| `astra-plan` | Product → Plan; Plan **consumes output** in plan mode | Approved-direction plan section, artifact anchors, extracted token candidates, and Record/Explore choice | User | Keep the approved direction artifact; do not write or invoke a plan workflow |
 
 No relation here is an invocation of a peer's workflow. The `astra-interface` edge in particular is
 output consumption: this skill names `/design-html` as a next step today and must continue to *name*
@@ -566,8 +618,9 @@ rather than invoke it.
 
 ### 7.3 Artifact authority
 
-This design accepts the authority stack in `docs/design-roadmap.md` section 10.4 without amendment.
-Its specific obligations:
+This design accepts the Product side of the **provisional reconciliation hypothesis** in
+`docs/design-roadmap.md` section 10.4. It becomes a roster contract only after Brand, Interface, the
+coordinator, and the user reconcile it. Product Design's specific obligations are:
 
 - Root `DESIGN.md` is **this skill's editorial jurisdiction** — level 3. Editor and chair, not judge
   over Brand or Interface jurisdictions.
@@ -601,16 +654,15 @@ The payload carries **no proposed remedy**. Receiving a handoff re-enters this s
 the prior direction as context, not at Recording — a direction the user has disputed must be
 re-approved, not patched in place.
 
-**Roadmap reconciliation proposed.** `docs/design-roadmap.md` section 3.2 currently states, for the
-product-experience row, that the destination "must accept, narrow, or decline the seed and own its
-payload." This design **accepts and narrows**: the seed said "product-experience or user-journey
-problem"; this design owns the *direction* half and explicitly declines the user-journey half, which
-belongs to Interface where the journey is materialized. The coordinator should record that
-narrowing.
+**Roadmap reconciliation applied 2026-08-03.** The prior seed said "product-experience or
+user-journey problem." This design **accepts and narrows** it: Product Design owns the *direction*
+half and explicitly declines the user-journey half, which belongs to Interface where the journey is
+materialized. The coordinator recorded that narrower profile in roadmap section 3.2; it remains a
+claimed phase-0 contract, not runtime behavior.
 
 ### 7.5 Reference and cleanup ledger
 
-Proposed `consuming_designs` updates:
+Coordinator-applied `consuming_designs` updates (still pending the user's lifecycle disposition):
 
 | Source | Proposed update | Basis |
 |---|---|---|
@@ -645,12 +697,14 @@ direction in prose. Conversely, entering through `/design-consultation` for a de
 its Phase 5 generation runs without retry, rate-limit handling, or fallback — so on a rate-limited
 API the design-system path fails where the exploration path would have recovered.
 
-**Missing prerequisites and their consequences.** If the `$D` designer binary is not installed,
+**Prerequisites and their consequences.** The source-prescribed checks were run on 2026-08-03:
+`$D` and `$B` are executable at the gstack paths recorded in section 5.6, so both manual workflows
+are currently usable. If `$D` later becomes unavailable,
 `/design-consultation` still works and falls back to an HTML preview page, but `/design-shotgun`
 has no documented fallback and its central step cannot run. If `$B` browse is absent, competitive
-research degrades to WebSearch and the "I don't like THIS" evolve path is unavailable. Neither
-prerequisite was verified as installed during this inspection (**U** — only the `DESIGN_SETUP`
-check's existence was observed, not its result on this machine).
+research degrades to WebSearch and the "I don't like THIS" evolve path is unavailable. The local
+feedback endpoint was not started during this documentary review; its declared
+`AskUserQuestion` fallback remains the manual bridge.
 
 ---
 
@@ -675,7 +729,7 @@ gates fail.
 |---|---|
 | **Source oracle** | The stronger applicable original, chosen before outputs are seen: `design-consultation` for design-system briefs; `design-shotgun` for screen-exploration briefs. Both at gstack `1.60.1.0` / `a3259400`, pinned |
 | **Reference convener** | A thin adapter that dispatches to the unchanged originals by intake type and forwards `approved.json` between them. This also isolates the value of fixing the section 4.3 defect, since the convener can close it without rewriting either source |
-| **Self-contained candidate** | The merged skill of section 6, vendoring the four partials and reproducing both generation strategies without gstack |
+| **Self-contained candidate** | The merged skill of section 6, internalizing the Product-specific behavior from every resolver input in section 3.1 and reproducing both generation strategies without depending on either original skill. It may still invoke separately retained `$D` and `$B` external capabilities |
 
 A neutral wrapper normalizes brief format and result shape only. It adds no design priors, no font
 opinions, and no expected answers.
@@ -713,9 +767,9 @@ recommendations; **authority containment** (zero unapproved repository writes in
 |---|---|---|
 | **Home non-regression** | Candidate vs each source oracle on its own jurisdiction | Blocks the merge. Neither entry point may get worse |
 | **Positive advantage** | Candidate vs source oracle on the two declared classes | Failure means combination bought no output benefit. Because maintenance is explicitly not claimed (section 4.1), there is no fallback justification: the correct response is to withdraw the merger and keep both sources, or reduce the proposal to a router |
-| **Internalization fidelity** | Self-contained candidate vs reference convener | A convener win with a candidate loss blocks internalization and therefore blocks retirement. Vendoring the four partials is the most likely failure point |
+| **Internalization fidelity** | Self-contained candidate vs reference convener | A convener win with a candidate loss blocks internalization and therefore blocks retirement. Resolver-derived Product behavior and the consultation section template are the highest-risk internalization points |
 | **Authority containment** | Explore-state sessions | Any unapproved repository write is a hard failure, not a tuning issue |
-| **Source-specific retirement** | Behavior, authority, dependencies, delivery shape, degradation, user approval | Failure leaves both sources installed. Additionally blocked while any of `$D`, `$B`, or the feedback endpoint remains an unvendored external prerequisite |
+| **Source-specific retirement** | Behavior, authority, dependencies, delivery shape, degradation, user approval | Failure leaves both sources installed. External `$D`, `$B`, and feedback capabilities may remain declared, separately retained prerequisites; not vendoring them is not itself a retirement blocker, but the candidate must preserve their invocation and degradation contracts. Source-owned `gstack-slug` and `gstack-taste-update` must be retained/relocated or replaced |
 
 **A note on what "matching recommendations" would not prove.** If the candidate reaches the same
 approved variant as the oracle but lost the EUREKA check, the SAFE/RISK framing, or the
@@ -728,14 +782,12 @@ a disappeared source-unique playbook a failure even when final recommendations a
 
 ### 10.1 Inspected sources
 
-All hashes and line counts in section 3.1, inspected 2026-08-01. gstack at commit
-`a3259400a366593e0c909dd9ac3e59752efd2488`, release `1.60.1.0`. Seventeen files were hashed: eleven
-under `~/.claude/skills/gstack/`, two personal-skill `SKILL.md` files at
-`~/.claude/skills/{design,ui-ux-pro-max}/SKILL.md`, and four under
-`~/.agents/skills/prototype/`. Cross-neighborhood skills are registered at the standard
-`~/.claude/skills/<name>/SKILL.md` path and invoked by their bare skill name; `prototype` registers
-its agent through `agents/openai.yaml`. `prototype` has no containing immutable revision, so its
-four content hashes are its provenance record.
+All hashes and line counts in section 3.1 were inspected on 2026-08-01 and the generator/resolver
+sources plus executable prerequisites were added on 2026-08-03. gstack is pinned at
+`a3259400a366593e0c909dd9ac3e59752efd2488`, release `1.60.1.0`. Cross-neighborhood skills are
+registered at the locations in section 3.1. `prototype` has no containing immutable revision, so
+its four content hashes are its provenance record; `agents/openai.yaml` supplies display metadata,
+not an independently invocable agent.
 
 Line anchors in this document refer to the `.tmpl` files where the behavior is authored and to the
 generated `SKILL.md` where a generated artifact is being described. A hash mismatch on any file
@@ -743,13 +795,9 @@ invalidates its anchors until re-inspection, per `docs/design-requirements.md` s
 
 ### 10.2 Evidence gaps
 
-- **`$D` and `$B` installation state on this machine is unverified (U).** Only the existence of the
-  `DESIGN_SETUP` and `BROWSE_SETUP` checks was observed, not their result. This affects section 8's
-  manual bridge, which is why section 8 states the consequence rather than asserting the bridge works.
-- **The four template partials were measured as inlined output, not read at their definitions (I).**
-  Sizes come from the generated files; the resolver functions in `scripts/resolvers/index.ts` were
-  located but their bodies were not read. Sizes are therefore approximate and consumer lists are
-  exact.
+- **The local feedback service was not started (U for current liveness).** Its declaration and
+  `AskUserQuestion` fallback were inspected, so endpoint downtime does not make the manual bridge
+  unusable.
 - **`design-shotgun` has no observed fallback when `$D` is absent (O for the absence, I for the
   consequence).** No instruction in its template covers that case.
 - **The gbrain `context_queries` were read as declarations, not traced to their retrieval behavior (I).**
@@ -761,8 +809,9 @@ invalidates its anchors until re-inspection, per `docs/design-requirements.md` s
    defect where one source believes the other invokes it.
 2. **Architecture is one workflow with three seams, not a panel and not a mode router.** Provisional
    until section 9.
-3. **Two authority states rather than one.** Provisional, but the safe default: collapsing them
-   later is reversible, and silently expanding write authority is not.
+3. **Two effect states rather than one.** Provisional, but the safe default: current frontmatter is
+   pre-approval evidence, while the proposed no-repo-write Explore contract supplies the actual
+   behavioral boundary.
 4. **The generation ladder resolves in favour of `design-shotgun`'s protocol.** This is the
    substance of advantage class 1; if that gate fails, this decision fails with it.
 
@@ -770,25 +819,27 @@ invalidates its anchors until re-inspection, per `docs/design-requirements.md` s
 
 | # | Question | Consequence if unresolved |
 |---|---|---|
-| 1 | **Who owns the `UX_PRINCIPLES` priors?** Four skills across Product Design, Interface, and Critique consume the partial. Amendment 1 framed this as Product-versus-Interface; section 4.3 shows Critique is also a claimant | Three designs could each vendor the same 86 lines and drift apart, or all three could decline it and lose it. This cannot be settled inside one design; it needs the coordinator's roster-wide pass |
+| 1 | **Which `UX_PRINCIPLES` behavior belongs in each consumer?** Four source skills across Product Design, Interface, and Critique consume one resolver partial; it does not require an exclusive Astra owner | Each peer must classify the priors it actually needs. After at least two designs demonstrate the same seam, the coordinator may propose a shared module; until then each design owns its fidelity and the global component record preserves provenance |
 | 2 | **Does the `DESIGN_SHOTGUN_LOOP` partial cross the Critique boundary?** `plan-design-review` uses the same approval loop | If Critique vendors it too, the same board machinery exists in two Astra skills — acceptable under self-containment, but it must be a recorded decision, not an accident |
-| 3 | **Is `DESIGN.md` authoritative over, or subordinate to, `docs/brand-guidelines.md` in practice?** Section 10.4 of the roadmap says subordinate on identity; `design-consultation` today consults neither | Until the Brand design exists, this skill may write brand-adjacent values into `DESIGN.md` with no check. The safe interim rule is stated in section 7.3; it is unverified |
-| 4 | **Do `gstack-slug` and `gstack-taste-update` need vendoring or replacement?** Both are gstack `bin/` scripts this skill's state model depends on | The retirement gate cannot pass while the state directory naming and the taste profile are owned by scripts outside the candidate |
+| 3 | **Will Brand and Interface accept the roadmap's provisional artifact-authority stack?** `design-consultation` today consults neither `docs/brand-guidelines.md` nor the token projection | Until both peer designs and the user reconcile it, Record must not invent brand-owned values; Product's section 7.3 acceptance settles only its side |
+| 4 | **Should `gstack-slug` and `gstack-taste-update` be retained/relocated or replaced?** Both are source-owned scripts this skill's state model depends on | The retirement gate cannot pass until their behavior and absence handling have an independent home; external `$D` and `$B` do not need to be vendored merely for self-containment |
 | 5 | **Should the batch generation rung survive?** It exists only because `design-consultation` implements it | If it never wins on cost or latency, it is dead weight and the ladder loses a rung |
 | 6 | **Does the user actually distinguish Explore from Record?** | If not, the two states collapse into one confirmation and section 6.2's Recording seam is over-built |
 
-### 10.5 Roadmap reconciliation proposed
+### 10.5 Coordinator reconciliation applied
 
-For the coordinator to apply after review, per `docs/design-roadmap.md` section 6 step 8:
+Applied on 2026-08-03 as claimed/provisional state, per `docs/design-roadmap.md` section 6 step 8:
 
 1. **Section 3.2 coverage table, product-experience row:** record that this destination **accepts
    and narrows** — it owns the design-direction problem class and declines the user-journey half to
    `astra-interface`.
-2. **Section 5.4:** record that the `design-shotgun` usability-priors cross-role is a shared template
-   partial spanning three proposed homes, not authored `design-shotgun` content, and that its
-   ownership is an open roster question rather than a Product-versus-Interface decision.
+2. **Section 5.4:** withdraw the `design-shotgun` → Interface secondary-role claim. Record
+   `UX_PRINCIPLES` in the shared generation-pipeline component and require each of the three peer
+   designs to classify its own use; do not invent exclusive ownership for a non-occurrence.
 3. **Section 8.2:** annotate the `astra-product-design` verdict row. Its stated basis — 942
    byte-identical lines — measures generated output. The verdict is unchanged; the basis is
    replaced by section 4.3 of this design.
-4. **Separate installed-component record:** add the generator and the four template partials as
-   components with no collision-ledger row.
+4. **Separate installed-component record:** add one gstack skill-document generation-pipeline record
+   with the exact Product-consumed placeholder inventory in section 3.1.
+5. **Reference ledger:** add `prototype` with `disposition: unassigned` pending the user and
+   `consuming_designs: [astra-product-design]`.

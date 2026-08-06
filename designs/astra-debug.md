@@ -157,10 +157,23 @@ question 9 asks for, and the payload every peer row in section 7.2 draws from:
 | `regression_guard` | The regression test and its location, **or** the explicit finding that no correct seam exists | Observed, including the negative form |
 | `residue` | Instrumentation added, prototypes created, state mutated, and whether each was removed | Observed |
 | `scope_exceeded` | What the cause implies that Debug did not do, and which peer owns it | Inferred, named |
+| `acceptance_ref` | An identifier for the user's acceptance of this diagnosis, or `null` when the user has not accepted it | **Recorded only when it happened.** Never inferred from conversation, and never written by Debug on its own authority |
 | `status` | `CLOSED`, `CLOSED_WITH_CONCERNS`, `BLOCKED`, or `ESCALATED_ARCHITECTURE` | — |
 
 `cause: unestablished` with `status: BLOCKED` is a complete, successful, deliverable result. Three of
 the six sources say so explicitly (**O**), and section 5.8 records the language each uses.
+
+**Why `acceptance_ref` exists.** `astra-plan` section 7.1 names six required inbound fields and
+section 2.5 makes the sixth load-bearing: accepted Debug evidence "must identify the diagnosed
+cause, evidence, affected contract, remediation constraint, and **user acceptance of the
+diagnosis**." Acceptance is a user act in conversation — this design keeps it that way, since
+section 2.6 item 2 reserves the decision to the user — but without a field carrying its *record*,
+a faithful Plan implementation handed a Debug Report must either block or infer acceptance from
+conversation, and inferring is precisely what Plan forbids itself elsewhere. The field mirrors
+`astra-spec`'s `approval.decision_ref` pattern: the artifact carries the record, not the decision.
+Plan validates it at intake. `null` is the honest default and blocks nothing that was not already
+blocked. Added by roadmap amendment 6; it closes the one real payload mismatch the tranche
+reconciliation found on this seam.
 
 ### 2.5 Effect authority and non-goals
 
@@ -963,11 +976,12 @@ adding it. Its boundaries against classes that already exist:
 
 | Nearby class | Owner | Why it is not `unexplained-failure` |
 |---|---|---|
-| Code defect requiring remediation | `astra-implement` | The cause is known and the fix is bounded; nothing needs discriminating |
+| Code defect requiring remediation | `astra-implement` | The cause is known, an approved plan already covers the remedy, and the fix is bounded; nothing needs discriminating |
+| Code defect with no plan to fix it | `astra-plan`, `unplanned-code-remediation` | The cause is known but no approved plan exists, so the next step is writing one, not a causal loop (roadmap amendment 6 decision D1) |
 | Architecture or technical-design problem | `astra-understand-code` | A structural judgment about code that may work correctly |
 | Missing or inadequate testing | `astra-test` | The gap is in evidence coverage, not in an unexplained behavior |
 | Specification gap or ambiguity | `astra-spec` | Intent is unclear; behavior may be correct for some reading |
-| Defect in an accepted execution plan | `astra-plan` | A plan defect, with no runtime failure |
+| Defect in an accepted execution plan | `astra-plan`, `execution-plan-defect` | A plan defect, with no runtime failure |
 
 Critique owns the common envelope — `artifact`, `agenda`, `problem_statement`, `finding_ids`,
 `evidence`, `observed_impact`, `affected_scope`, `constraints`, `open_decisions`, `prerequisites`,
@@ -976,7 +990,7 @@ Critique owns the common envelope — `artifact`, `agenda`, `problem_statement`,
 | Debug-only field | Allowed values / meaning |
 |---|---|
 | `problem_class` | Literal `unexplained-failure` |
-| `observed_behavior` | The wrong behavior as observed, separated from any suspicion about its cause |
+| `observed_behavior` | The envelope `finding_ids` carrying the wrong behavior, plus **only** what the envelope does not already state: the observation stripped of any suspicion about its cause. It **references** `problem_statement` and `evidence` rather than restating them — the convention `astra-test`'s `proof_obligation` sets, and the duplication class `astra-implement` corrected in its own payload on 2026-08-04. A second copy of the problem text can diverge from the envelope's, leaving Debug owning an unreconciled problem statement |
 | `reproduction_status` | `supplied` (a command is included), `described` (steps in prose only), or `none` |
 | `failure_determinism` | `deterministic`, `intermittent`, `unknown` |
 
@@ -992,7 +1006,11 @@ Acceptance rules:
    precondition (section 2.3 item 3).
 5. A capsule grants **no effect authority.** Instrumentation and repair still require section 2.3
    item 5 authorization, requested fresh.
-6. A finding that Critique itself explained causally is not this class — it routes to Implement.
+6. A finding that Critique itself explained causally is not this class. It routes to
+   `astra-implement`'s `approved-code-remediation` when an approved plan already covers the remedy,
+   and otherwise to `astra-plan`'s `unplanned-code-remediation` — the second destination added by
+   roadmap amendment 6 decision D1, which closed a route that previously had no receiving contract.
+   Debug does not redirect the finding itself; it stops with the reason and the user reselects.
 
 ### 7.4 Trigger collisions recorded for roster reconciliation
 

@@ -23,6 +23,18 @@ and 6.1 carried counts and coverage states that the drafted documents had alread
 amendment reconciles those sections, records the seven declared Critique handoff profiles, adds the
 `astra-debug` coverage row, and states plainly what remains unapplied. **It marks no design as
 reviewed and changes no ledger row.** See section 12.
+**Amendment 6 (2026-08-04):** The tranche was reconciled pairwise across all 28 bilateral pairs — 19
+agree, 2 carry minor payload mismatches, 7 are structurally one-sided pending the Critique revision,
+none is absent, and no two designs claim the same occurrence as primary. Reconciliation escalated
+seven normative questions that evidence could not settle; all seven were decided by the user.
+Deployment and release infrastructure are now **out of roster scope**, excluding `staging-debug` and
+`changelog` on job-boundary grounds and scope-deferring four uninspected sources; `astra-plan` gains
+an obligation to declare a second conditional handoff class; `triage` and
+`commit-commands:clean_gone` are retained independent; all ten standing reference rows are kept.
+On the user's further direction, five recorded repairs were then executed the same day in four
+design files — the D1 class, the stale `astra-presentation` reroute, and three payload fixes;
+section 13.8 records them. **It marks no design as reviewed and changes no ledger row.** See
+section 13.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
@@ -272,17 +284,17 @@ The coverage states below are roadmap states, not implementation claims:
 | Approved design-direction problem | `astra-product-design` | **Accepted and narrowed H; design reviewed** | Product Design owns whether the approved direction is wrong for the product or its users. Payload: approved variant and `approved.json`, contradicted `DESIGN.md` anchors, memorable-thing statement, and originating decision stage. User-journey materialization belongs to Interface. |
 | Interaction, accessibility, or visual-system defect | `astra-interface` | **Seeded H** | Destination design must preserve report-only versus fix authority. |
 | Identity or audience-signal inconsistency | `astra-brand` | **Seeded H** | Destination design must define the brand-specific problem payload. |
-| Narrative or data-comprehension problem | `astra-interface` | **Seeded H; re-targeted by amendment 3** | Re-targeted from `astra-presentation`, which amendment 3 folded into Interface. Interface therefore owns two seeded problem classes and must give each a separately named payload or narrow one; a single merged payload would lose the distinction Critique needs to route. `designs/astra-critique.md` line 588 still names `astra-presentation` as this destination and must be reconciled by the Critique source-expansion revision, not by this roadmap. |
-| Code defect requiring remediation | `astra-implement` | **Declared H; design drafted** | Declared `conditional` for `approved-code-remediation`. Accepted only with an approved bounded remediation plan attached; otherwise Plan is the destination. Reconcile with the Code review expansion and keep Critique read-only. |
+| Narrative or data-comprehension problem | `astra-interface` | **Seeded H; re-targeted by amendment 3** | Re-targeted from `astra-presentation`, which amendment 3 folded into Interface. Interface therefore owns two seeded problem classes and must give each a separately named payload or narrow one; a single merged payload would lose the distinction Critique needs to route. **Reconciled by amendment 6 section 13.8:** both stale `astra-presentation` anchors in `designs/astra-critique.md` — the destination table and the section 9.2 routing corpus, the latter an anchor amendment 3 did not cite — now name `astra-interface`, and the destination table gained an explicit problem-class column so Interface's two classes stay separately payloaded. The Critique source-expansion revision inherits the profiles, not this correction. |
+| Code defect requiring remediation | `astra-implement` | **Declared H; design drafted** | Declared `conditional` for `approved-code-remediation`. Accepted only with an approved bounded remediation plan attached; otherwise Plan is the destination. **Amendment 6:** that fallback had no receiving contract — Plan's declared class and both of its intake doors rejected a known-cause defect with no plan. Decision D1 resolves it, and section 13.8 records the resolution as **applied**: `astra-plan` §7.2.2 now declares `unplanned-code-remediation`, so the fallback is receivable and the Critique source-expansion revision may encode it. Reconcile with the Code review expansion and keep Critique read-only. |
 | Architecture or technical-design problem | `astra-understand-code` | **Declared H; design drafted** | Declared `yes` for `architecture-or-technical-design`. Re-targeted by amendment 1. Still reconcile against `how`'s existing critique mode so two peers do not both own multi-lens architectural critique. |
-| Defect in an accepted execution plan | `astra-plan` | **Declared H; design drafted** | Declared `conditional` for `execution-plan-defect`. Keep plan revision separate from Critique's report. |
+| Defect in an accepted execution plan | `astra-plan` | **Declared H; design drafted** | Declared `conditional` for `execution-plan-defect`. Keep plan revision separate from Critique's report. **Amendment 6:** decision D1 obliges Plan's next revision to declare a *second* conditional class for a known-cause defect with no plan, carrying its own payload and no `plan_lifecycle_state` field, so `execution-plan-defect` is not stretched to cover planning from scratch. Two distinct jobs, two classes. |
 | Specification gap or ambiguity | `astra-spec` | **Declared H; design drafted** | Declared `yes` for `specification-gap-or-ambiguity`, with a two-field destination payload. Distinguish changing intent from changing the execution plan. |
 | Missing or inadequate testing | `astra-test` | **Declared H; design drafted** | Declared `yes` for `test-evidence-gap`. Preserve Critique's non-goal of executing or bootstrapping tests. |
 | **Observed failure whose cause is unestablished** | `astra-debug` | **Declared H; design drafted** *(new in amendment 5)* | Declared `conditional` for `unexplained-failure`. Distinguish from Implement's remediation class (cause already known), Understand Code's architecture class (no runtime failure), and Test's evidence-gap class (coverage, not causation). The payload carries no suspected cause: a suspicion is a partial solution, which Critique may not emit. See [`designs/astra-debug.md`](../designs/astra-debug.md) section 7.3. |
 | **Published artifact misrepresents the change** | `astra-ship` | **Declared H; design drafted** *(new in amendment 5)* | Declared `conditional` for `publication-defect` — commit history, release metadata, PR/MR body, integration state, or workspace residue. `landed_state: merged` never authorizes history rewriting. Distinct from the clean-review **I** row below. |
-| Infrastructure or operational-change problem | Diagnosis half claimed by `astra-debug`; change half unresolved among Understand Code, Implement, Deploy, or a retained peer | **Partially narrowed; owner still open** | Amendment 5: `astra-debug` claims only *identifying* that a cause is infrastructural, on the evidence of `staging-debug`'s and `local-debug`'s infrastructure classifiers, and explicitly declines the change half. The remaining peer designs must still divide design, code, and deployment ownership. |
-| Prompt, `SKILL.md`, or CLAUDE.md problem | Unresolved among Skill Design, Document, or a retained peer | **Open owner** | The relevant peer designs must divide instruction design from artifact editing. |
-| Running developer-experience problem | Unresolved among Interface, QA, Setup, or a retained peer | **Open owner** | The relevant peer designs must divide product defects, verification, and environment setup. |
+| Infrastructure or operational-change problem | Diagnosis half claimed by `astra-debug`; change half unresolved among Understand Code, Implement, or a retained peer | **Partially narrowed; deployment portion out of scope; owner still open** | Amendment 5: `astra-debug` claims only *identifying* that a cause is infrastructural, on the evidence of `staging-debug`'s and `local-debug`'s infrastructure classifiers, and explicitly declines the change half. **Amendment 6:** decision D2 puts the change half's *deployment* portion out of roster scope, so Deploy is no longer a candidate owner for it; `staging-debug` is excluded and Debug's classifier evidence now rests on `local-debug` alone. The design and code portions remain open among the remaining peers. |
+| Prompt, `SKILL.md`, or CLAUDE.md problem | Unresolved among Skill Design, Document, or a retained peer | **Open owner** | The relevant peer designs must divide instruction design from artifact editing. **Amendment 6:** all three Plan-&-spec-derived designs are now drafted and none claims the class — Spec's non-goals exclude project mutation, Plan's core has zero write authority, and Implement mutates only what an approved plan names. The ledger's applied `/trim` secondary role ("Plan & spec: prompt or skill remediation") therefore points at a neighborhood that produced no owner and should be re-aimed when Skill Design or Document is drafted. |
+| Running developer-experience problem | Unresolved among Interface, QA, Setup, or a retained peer | **Open owner** | The relevant peer designs must divide product defects, verification, and environment setup. Amendment 6: unchanged — the tranche supplied no evidence, and `astra-test` section 2.2 explicitly routes exploratory QA out. |
 | No actionable finding survives | `none` | **Terminal** | Emit no handoff. |
 | The user defers every actionable route | `none` for the immediate handoff | **Terminal for this run** | Retain every route candidate in the report; start no peer workflow. |
 | A clean review is followed by publication | `astra-ship` | **I only, not H** | Ship may consume review evidence, but Critique must not invent a problem handoff. |
@@ -346,11 +358,11 @@ Brand boundaries are fixed.
 | Proposed design file or revision | Status | Reconcile with |
 |---|---|---|
 | [`designs/astra-spec.md`](../designs/astra-spec.md) | **Drafted; awaiting review** *(amendment 5)* | **R:** `astra-knowledge`, `astra-understand-code`, Product Design; **H declared `yes`:** `specification-gap-or-ambiguity` with a two-field destination payload |
-| [`designs/astra-plan.md`](../designs/astra-plan.md) | **Drafted; awaiting review** *(amendment 5)* | **R:** Spec, `astra-understand-code`, Context, Implement; **H declared `conditional`:** `execution-plan-defect`. Its open question 9 — the exact accepted diagnosis artifact — is answered by `astra-debug` section 2.4 |
+| [`designs/astra-plan.md`](../designs/astra-plan.md) | **Drafted; awaiting review; amended in place by amendment 6** | **R:** Spec, `astra-understand-code`, Context, Implement; **H declared `conditional`:** **two** classes — `execution-plan-defect` (§7.2.1) and `unplanned-code-remediation` (§7.2.2). Its open question 9 — the exact accepted diagnosis artifact — is answered by `astra-debug` section 2.4. **Decision D1's obligation is discharged, not pending:** section 13.8 records the second class as applied, with a two-field payload, an `unknown`-bearing `spec_coverage` field, a rule that this class does **not** require an accepted Spec, a matching intake door at section 2.5, and a boundary statement against four neighbouring classes. Review should check that §7.2.2 and §2.5 do not overlap and that §2.4's Spec gate is correctly bypassed rather than weakened |
 | [`designs/astra-implement.md`](../designs/astra-implement.md) | **Drafted; awaiting review** *(amendment 5)* | **R:** Plan, Delegate, Test, Guard, `astra-understand-code`, Critique infrastructure-route ownership; **H declared `conditional`:** `approved-code-remediation`; receives code-simplification sources from Code review; consumes `codebase-design` as a retained independent reference. Its three Ship-dependent retirement gates are answered by `astra-ship` section 6.4 |
 | `designs/astra-critique.md` source-expansion revision | **Existing design revision; not started** | **R:** Code review, Understand Code, Test; must not create a competing nested code-critique skill; must reconcile `how`'s multi-lens critique mode and `improve-codebase-architecture`'s `/grilling` step as **H** edges rather than duplicated internal panels. **Amendment 5 adds:** it must also read the seven declared destination profiles in section 3.2 and correct the stale `astra-presentation` destination at `designs/astra-critique.md` lines 588 and 764 |
-| [`designs/astra-debug.md`](../designs/astra-debug.md) | **Drafted; awaiting review** *(amendment 5)* | **R:** Understand Code, Test, Browser/QA, Incident; **H declared `conditional`:** `unexplained-failure`. **Proposes moving `staging-debug` to `astra-deploy` as coordinating home — see section 12.2.** The "root cause analysis" trigger collision with `astra-incident` is open |
-| `designs/astra-incident.md` | **Provisional; narrowed by amendment 1** | **R:** Debug, Context, Document, Guard; keep stabilization distinct from causal diagnosis; `rca` and `firefighting` are concurrent sessions with mutually exclusive authority, so the declared advantage is **coordination only**, not better judgment; `triage` relocated out of this design |
+| [`designs/astra-debug.md`](../designs/astra-debug.md) | **Drafted; awaiting review** *(amendment 5)* | **R:** Understand Code, Test, Browser/QA, Incident; **H declared `conditional`:** `unexplained-failure`. **Amendment 6:** its proposal to move `staging-debug` to `astra-deploy` is **void** — decision D2 excluded the source outright, so the design's five remaining sources stand and its infrastructure-classifier evidence now rests on `local-debug` alone. The "root cause analysis" collision with `astra-incident` is settled provisionally by decision D3 (live-incident context → Incident; otherwise Debug; the bare string is not a router key), pending Incident's confirmation on drafting. Its `local-debug` steps 1–3 secondary role onto `astra-test` remains Test-unconfirmed |
+| `designs/astra-incident.md` | **Provisional; narrowed by amendment 1** | **R:** Debug, Context, Document, Guard; keep stabilization distinct from causal diagnosis; `rca` and `firefighting` are concurrent sessions with mutually exclusive authority, so the declared advantage is **coordination only**, not better judgment; `triage` relocated out of this design and **retained independent by amendment 6 decision D5**. **Amendment 6 adds an obligation:** it **must confirm or amend decision D3's provisional routing rule** for "root cause analysis" — live-incident signals route here, everything else to `astra-debug`, and the bare string is never a router key. Incident is the only party that can accept a rule proposed from Debug's side alone |
 
 ### Wave 4 — browser, quality, and delivery
 
@@ -359,7 +371,7 @@ Brand boundaries are fixed.
 | `designs/astra-browser.md` | **Provisional; restructured by amendment 2** | **R:** Setup, Guard, QA, Skill Design; preserve MCP, browser-daemon, cloud-browser, Electron, and authenticated-session delivery shapes; the four environment adapters become reference files behind one description, each retaining its own prerequisite and degradation; `connect-chrome` and `open-gstack-browser` collapse to one artifact with one shadowed identifier; **P:** the `agent-browser` CLI binary |
 | `designs/astra-qa.md` | **Provisional; fork evidence corrected by amendment 4** | **R:** Browser, Test, Interface, Critique running-developer-experience route ownership; preserve report-only versus fix effects without treating frontmatter pre-approval as enforcement; compare the 2.0.0 and 1.0.0 templates plus shared resolver semantics because generated-line counts do not prove fork drift; reconcile the CLI, Python-Playwright, and MCP runtimes by component type |
 | [`designs/astra-ship.md`](../designs/astra-ship.md) | **Drafted; awaiting review** *(amendment 5)* | **R:** Implement, Test, Guard, Context, Document; **I:** may consume Critique review evidence, but a clean review is not an **H** edge; **H declared `conditional`:** `publication-defect`; preserve explicit user control over commits, pushes, PRs, and merges |
-| `designs/astra-deploy.md` | **Provisional; inbound claim from amendment 5** | **R:** Ship, Setup, Browser/QA, Guard, Critique infrastructure-route ownership; preserve provider-specific prerequisites and canary degradation. **Must accept or decline `staging-debug` as a coordinating primary home** — `astra-debug` section 3.4 proposes the move and Deploy holds the effect surface; if Deploy declines, the source stays independent and the ledger must say so rather than leaving it `unassigned` |
+| `designs/astra-deploy.md` | **Provisional; out of roster scope for now (amendment 6)** | **R:** Ship, Setup, Browser/QA, Guard, Critique infrastructure-route ownership; preserve provider-specific prerequisites and canary degradation. **Amendment 6 decision D2 puts deployment and release infrastructure out of scope for the minimal coding roster.** Both inbound claims from amendment 5 are void, not deferred: `staging-debug` and `changelog` are excluded outright rather than rehomed here. Its four proposed sources — `land-and-deploy`, `canary`, `setup-deploy`, `/build-push-ecr` — are **scope-deferred**, still `unclaimed` and `Pending source inspection`, which the ledger's state vocabulary says cannot support exclusion until inspected. The design is annotated, **not withdrawn**: a later scope change reopens it without resurrecting a deleted node. Do not draft it until the user returns deployment to scope |
 
 ### Wave 5 — knowledge, meta-work, and autonomy
 
@@ -600,16 +612,45 @@ Implement changes the project. Their user approvals and mutation authority must 
 **Derived Astra skills:** `astra-ship` and `astra-deploy`.
 
 - **`astra-ship`:** `ship`, `landing-report`, `/pr`, `/commit`,
-  `commit-commands:commit`, `commit-commands:commit-push-pr`,
-  `commit-commands:clean_gone`, `changelog`, `document-release`,
+  `commit-commands:commit`, `commit-commands:commit-push-pr`, `document-release`,
   `resolving-merge-conflicts`, `superpowers:finishing-a-development-branch`,
   `superpowers:using-git-worktrees`, and `github`.
 - **`astra-deploy`:** `land-and-deploy`, `canary`, `setup-deploy`, and
-  `/build-push-ecr`.
+  `/build-push-ecr` — **all scope-deferred by amendment 6.** They remain `unclaimed` and
+  `Pending source inspection`, a state the ledger says cannot support exclusion, so they are
+  out of scope without being excluded. Inspection must precede any exclusion.
+- **Excluded by amendment 6:** `changelog`. The user's ground is a **job boundary** — deployment
+  and release infrastructure are out of scope for this minimal coding roster — which meets
+  `docs/design-requirements.md` section 5's *irrelevant* criterion. It is **not** excluded for its
+  unmet Jira MCP prerequisite, which section 5.11's rule would forbid. `astra-ship` section 3.3 had
+  already withdrawn it from this neighborhood on independent evidence: it generates quarterly,
+  Jira-derived deployment runbooks typed `[sql migration]`, `[aws infra]`, `[istio]`, `[k8s]`,
+  `[terraform]`, or `[manual]`, and "the name collides with `ship`'s CHANGELOG step; the job does
+  not." **Ship loses no capability** — its release-metadata writer role comes from the `ship`
+  source. As with `prompt-lookup`, exclusion means absence from the personalized roster; it
+  authorizes no deletion and should be revisited if deployment returns to scope.
+- **Retained independent by amendment 6 (decision D6):** `commit-commands:clean_gone`. `astra-ship`
+  section 3.3 deferred it because its force-deletion authority model is unconfirmed and "requires a
+  user decision before any allocation." Branch hygiene stays available, but keeping it outside
+  Astra keeps an unaudited force-delete outside the roster's authority surface. The unconfirmed
+  authority model is recorded as an open defect on the row; no Astra design inherits it.
+- **Coordinator items proposed by `astra-ship`, not decided here:** `github` → independent
+  reference consumed by Ship rather than encapsulated (its reference row is kept by decision D7);
+  `document-release` → deferred toward `astra-document`; `superpowers:using-git-worktrees` →
+  deferred cross-peer, its creation half being `astra-implement`'s intake prerequisite and its
+  teardown half Ship's.
 
 Ship owns working-tree-to-reviewed-change publication. Deploy owns landing through production
 verification. The designs must keep read-only status/report modes distinct from irreversible
 commit, push, merge, deployment, and cleanup effects.
+
+**Amendment 6 scope note.** Deploy's whole jurisdiction is out of roster scope for now. The design
+is annotated rather than withdrawn, so returning deployment to scope reopens it without
+resurrecting a deleted node; see section 13.3 decision D2. One trigger consequence survives the
+scope change and must be encoded roster-wide: "resolve merge conflicts" **outside** a landing flow
+is claimed by no design, because Ship claims conflicts only "when the merge is part of preparing
+this change-set to land" and `astra-implement` requires an approved plan task. Minor — the manual
+bridge survives — but flagged for the Ship review.
 
 ### 5.7 Docs & knowledge
 
@@ -642,17 +683,33 @@ as a retained independent reference instead.
 **Derived Astra skills:** `astra-debug` and `astra-incident`.
 
 - **`astra-debug`:** `investigate`, `diagnosing-bugs`,
-  `superpowers:systematic-debugging`, `java-leak-resolver`, `staging-debug`, and
-  `local-debug`.
+  `superpowers:systematic-debugging`, `java-leak-resolver`, and `local-debug`.
 - **`astra-incident`:** `rca` and `firefighting`.
-- **Relocated by amendment 1:** `triage`. Its body is an issue-tracker state machine — category
-  roles `bug`/`enhancement` and state roles `needs-triage`, `needs-info`, `ready-for-agent`,
-  `ready-for-human`, `wontfix` — that posts agent briefs, maintains an `.out-of-scope/` knowledge
-  base, and depends on a label mapping from `setup-matt-pocock-skills`. It never mentions an
-  outage, alert, or stabilization. README placed it here on the word *triage* alone. It is already
-  registered `disable-model-invocation: true`, so retaining it independently costs no context.
-  Candidate homes are `astra-ship` on `github` and `/pr` adjacency, or retained independent; the
-  relevant designs decide.
+- **Excluded by amendment 6:** `staging-debug`. The user's ground is a **job boundary** —
+  deployment and release infrastructure are out of scope for this minimal coding roster — meeting
+  `docs/design-requirements.md` section 5's *irrelevant* criterion. It is **not** excluded on any
+  prerequisite ground — registry or cluster access availability is not the reason, and section
+  5.11's rule would forbid it if it were. The inspection supporting it
+  already exists: `astra-debug` section 3.4 enumerates all eight steps, and steps 2, 3, and 8 build
+  a Docker image, push it to ECR, run `helmfile apply` against a shared staging EKS cluster, and
+  later restore that cluster, while only steps 5–6 are diagnosis. Every irreversible effect in the
+  source is a deployment effect. Amendment 5's proposed move to `astra-deploy` is therefore **void,
+  not deferred**. Exclusion authorizes no deletion and should be revisited if deployment returns to
+  scope. **No diagnostic capability leaves the coding loop:** `local-debug` stays, and Debug's
+  section 7.4 claim on "it works locally but fails in staging" is a *difference* question that
+  never depended on this source.
+- **Relocated by amendment 1; retained independent by amendment 6 (decision D5):** `triage`. Its
+  body is an issue-tracker state machine — category roles `bug`/`enhancement` and state roles
+  `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix` — that posts agent
+  briefs, maintains an `.out-of-scope/` knowledge base, and depends on a label mapping from
+  `setup-matt-pocock-skills`. It never mentions an outage, alert, or stabilization. README placed
+  it here on the word *triage* alone. It is already registered `disable-model-invocation: true`, so
+  retaining it independently costs no context. Amendment 1 named `astra-ship` its candidate decider
+  "on `github` and `/pr` adjacency, or retained independent; the relevant designs decide" — but
+  `astra-ship` never mentions the source and `astra-debug` section 3.6 records no view, so with the
+  tranche complete the question had no owner left and the row would have failed acceptance
+  criterion 4 by default. The user decided it directly on amendment 1's own evidence. The row can
+  now close.
 
 Debug owns diagnosis and repair of a bounded failure. Incident owns stabilization, incident-state
 navigation, parallel causal investigation, and operational handoff. `rca` and `firefighting`
@@ -979,7 +1036,11 @@ After all proposed documents and no-new-skill decisions have been reviewed:
    during drafting.
 6. Resolve all † built-in provenance gaps.
 7. Decide keep/defer/exclude for the reference and cleanup ledger; reference skills do not need
-   Astra wrappers merely to appear in the roadmap.
+   Astra wrappers merely to appear in the roadmap. **Amendment 6 discharges this for ten rows:**
+   the user decided `keep` for `sdd`, `health`, `github`, `research`, `codebase-design`, `nowhat`,
+   `canvas-design`, `algorithmic-art`, `diagram`, and `prototype` (decision D7). The remaining
+   reference rows still await a disposition, and the three new rows must be added by the
+   coordinator before the `keep` can be recorded against them.
 8. Reconcile commands, agents, MCP servers, hooks, and LSP servers by component type.
 9. Present the final roster, priorities, exclusions, unresolved questions, and manual bridges to
    the user.
@@ -1401,7 +1462,10 @@ loses two built-ins and gains `slides` and `theme-factory`.
   a workaround, not a resolved architecture.
 - It does not reconcile `designs/astra-critique.md`, which still names `astra-presentation` as a
   destination at line 588 and lists it at line 764. That is a design file, not the roadmap; the
-  Critique source-expansion revision owns the correction.
+  Critique source-expansion revision owns the correction. *Corrected by amendment 6 section 13.8 on
+  the user's direction, ahead of that revision: both anchors now name `astra-interface`, and the
+  destination table gained a problem-class column so Interface's two classes stay separately
+  payloaded.*
 - It does not decide `keep`, `defer`, or `exclude` for the three new reference rows. That is the
   user's decision under `docs/phase-0.md` section 6.
 - It does not inspect the remaining waves' bundled components. Section 6.1's fourth question is now
@@ -1553,13 +1617,15 @@ schedule this reconciliation as part of the tranche.
 | One new Critique problem class, `unexplained-failure` | `astra-debug` §7.3 | New section 3.2 row; the class did not previously exist |
 | One new Critique problem class, `publication-defect` | `astra-ship` §7.3 | New section 3.2 row, distinct from the pre-existing clean-review **I** row |
 | Infrastructure open-owner narrowed | `astra-debug` §7.6 | Debug claims the *diagnosis* half and declines the change half; owner still open |
-| `staging-debug` proposed to move to `astra-deploy` | `astra-debug` §3.4 | Section 5.8's Debug source list drops to five; Deploy gains an inbound claim it must accept or decline |
+| `staging-debug` proposed to move to `astra-deploy` | `astra-debug` §3.4 | Section 5.8's Debug source list drops to five; Deploy gains an inbound claim it must accept or decline. *Superseded by amendment 6: decision D2 excluded the source outright on job-boundary grounds, so the list still drops to five but the inbound Deploy claim is void, never accepted or declined. See section 13.3.* |
 | `astra-plan` open question 9 answered | `astra-debug` §2.4 | The accepted diagnosis artifact is defined; Plan's provisional payload can be reconciled |
 | `astra-implement`'s three Ship-dependent retirement gates answered | `astra-ship` §6.4 | Written, not tested |
 | Second instance of the missing ledger version field | `astra-debug` §3.2 | `superpowers` 6.2.0 joins `loop-goal` 1.3.0; two instances now argue for a schema field rather than free-text evidence cells |
 
 Section 5.8's source list is **not** rewritten here beyond the `staging-debug` note, because the
-coordinator arbitrates that move and Deploy has not yet had standing to respond.
+coordinator arbitrates that move and Deploy has not yet had standing to respond. *Amendment 6
+rewrote it: an exclusion on job-boundary grounds is the user's decision, not a coordinator
+arbitration, so it did not wait on Deploy's standing.*
 
 ### 12.3 What "all eight drafted" does and does not mean
 
@@ -1590,5 +1656,352 @@ Debug relation rows that earlier designs had to write blind now have a counterpa
 - It does not apply, propose, or alter a single ledger row; `docs/phase-0-ledgers.md` is unchanged
   and its coordinator remains its sole editor.
 - It does not resolve `staging-debug`'s home, the Debug-versus-Incident trigger collision, or any
-  section 3.2 open owner.
+  section 3.2 open owner. *Amendment 6 resolved the first two: `staging-debug` is excluded (D2) and
+  the trigger collision has a provisional context rule (D3). The section 3.2 open owners remain.*
 - It does not inspect the nine neighborhoods section 6.1 still lists as uninspected at bundle depth.
+
+## 13. Amendment 6 — tranche reconciliation and seven user decisions
+
+**Date:** 2026-08-04
+**Scope:** roster-wide pairwise reconciliation of the eight tranche designs per `docs/phase-0.md`
+section 7 step 4, and the seven normative questions that reconciliation escalated
+**Authority:** as in amendments 1–5, with one addition. Sections 13.1–13.2 record a reconciliation
+result and update roadmap state only. Section 13.3 records **user decisions** taken on 2026-08-04
+under the approval authority `docs/phase-0-ledgers.md` reserves to the user: job boundaries,
+exclusions, priorities, and the reference ledger's `keep`/`defer`/`exclude` outcomes. Section 13.8
+records design-file edits the user directed after the decisions were taken; sections 13.1–13.7
+were written before that direction and 13.8 states what it superseded. This amendment marks no
+design reviewed, resolves no ledger row, and approves no roster. Every ledger consequence in
+section 13.6 remains for the coordinator to apply.
+**Research input:**
+[`docs/research/2026-08-04-cross-design-reconciliation.md`](research/2026-08-04-cross-design-reconciliation.md).
+
+### 13.1 Reconciliation result
+
+All 28 bilateral pairs of the eight-member tranche were compared over the 53 directed relation
+rows: **19 agreed** (5 with a minor finding attached), **2 carry minor payload mismatches**, **7
+are structurally one-sided**, and **none is absent**. No two designs claim the same occurrence as
+primary, verified across all eight proposal tables, so the coordinator has no conflicting-claim
+rejection to record.
+
+The two mismatches are repairable at coordinator level and neither needed a user ruling:
+
+- **Understand Code ↔ Test.** Test's inbound minimum requires an artifact snapshot and accepted
+  architecture constraints; Understand Code's Test-row payload names neither, and is the only
+  Understand Code row that omits repository/revision. A faithful packet could arrive without the
+  revision Test needs to bind evidence, and Test would stop — safe but avoidable.
+- **Plan ↔ Debug.** Plan's six named inbound fields include `diagnosis acceptance`, and its
+  section 2.5 makes that field load-bearing. The Debug Report spine has no acceptance field
+  because acceptance is a user act in conversation, and Debug's `scope_exceeded` maps onto none of
+  Plan's six. Five of six fields map; Debug's field-for-field claim overstates by one.
+
+The seven one-sided pairs are all Critique pairs. Each destination design declares its own profile,
+but Critique's reviewed baseline predates all seven, so its side lives in the generic envelope
+contract plus section 3.2 until the source-expansion revision consumes them. This is structural,
+not a defect.
+
+**One acceptance-claim drift worth recording.** `astra-debug` section 7.2 declares six peer rows
+"accepted as written." Checked against the peers' own text: three are faithful (Ship verbatim;
+Spec and Implement trivially reworded), Test's and Understand Code's quotes each silently drop one
+payload element — "attempts limited to test scope" and "reproduction context if supplied" — and the
+Plan row is the overstatement above. Nothing behaves differently today, but section 7 milestone 3
+makes the coordinator's snapshot canonical: **it must be built from the peer-owned rows, treating
+Debug's section 7.2 as acceptance evidence only.** The owning design is authoritative for its own
+side of a seam.
+
+### 13.2 Section 3.2 changes
+
+- The **code-defect** row's `plan-required` fallback is resolved by decision D1 below; the
+  Implement row's "otherwise Plan is the destination" now has a receiving contract to point at.
+- The **execution-plan-defect** row records that `astra-plan` will carry a *second* conditional
+  class, so `execution-plan-defect` no longer has to stretch to cover planning from scratch.
+- The **narrative or data-comprehension** row's second stale anchor — `designs/astra-critique.md`'s
+  section 9.2 routing corpus, which amendment 3 did not cite — was found and, with the destination
+  table anchor, **repaired**; see section 13.8. The Critique source-expansion revision inherits the
+  seven declared profiles, not this correction.
+- The **infrastructure or operational-change** row records that its deployment portion is now out
+  of roster scope by decision D2. The change half's design and code portions remain open.
+- The **prompt, `SKILL.md`, or CLAUDE.md** row records that all three Plan-&-spec-derived designs
+  are now drafted and **none claims the class** — Spec's non-goals exclude project mutation, Plan's
+  core has zero write authority, and Implement mutates only what an approved plan names. The
+  ledger's applied `/trim` secondary role ("Plan & spec: prompt or skill remediation") therefore
+  points at a neighborhood that produced no owner for it, and should be re-aimed when Skill Design
+  or Document is drafted rather than left misdirecting the reader.
+- The **running developer-experience** row is unchanged. The tranche supplied no evidence;
+  `astra-test` section 2.2 explicitly routes exploratory QA out.
+
+Section 2 is unchanged. No roster count moves: D2's exclusions are source-level, and the roster
+stays at 24 proposed designs.
+
+### 13.3 User decisions
+
+Seven normative questions could not be settled by evidence because the designs involved were each
+internally consistent. All seven were put to the user and decided on 2026-08-04.
+
+| | Question | Decision |
+|---|---|---|
+| **D1** | Where does a known-cause code defect with no approved remediation plan go? | `astra-plan` declares a **second conditional handoff sub-class** with its own payload |
+| **D2** | `staging-debug`'s primary home | **Excluded**, with a roster-wide deployment scope boundary |
+| **D3** | "root cause analysis" trigger collision | **Context-conditional routing**, provisional |
+| **D4** | The unowned execution residue | **Release tagging** pre-approved for loss; the rest awaits Delegate and Automate |
+| **D5** | `triage`, whose designated decider decided nothing | **Retained independent** |
+| **D6** | `commit-commands:clean_gone` | **Retained independent**, authority defect recorded |
+| **D7** | The ten standing reference rows | **Keep all ten** |
+
+**D1 — the `plan-required` route had no receiving contract.** `astra-implement` section 7.4 routes
+any code-defect finding without an approved plan to `astra-plan`, and section 3.2's Implement row
+says the same. But Plan could not receive it: `execution-plan-defect`'s payload requires
+`plan_lifecycle_state` (draft-before-approval, approved-not-started, or approved-in-progress) and a
+defect with no plan is none of these; section 2.1's trigger requires an accepted Spec; and section
+2.5's only inbound diagnosis door is scoped to **Accepted Debug evidence**, which a Critique
+finding is not — `astra-debug` section 7.3 rule 6 expressly excludes findings Critique already
+explained causally. Because Critique may neither redirect to an unrelated peer nor invent a
+payload, the most common review outcome dead-ended. Both designs were internally consistent; only
+the user could choose which one widens.
+
+**Decision:** `astra-plan` declares a second conditional handoff sub-class alongside
+`execution-plan-defect`, carrying its own payload with no `plan_lifecycle_state` field. The
+alternative — generalizing section 2.5's inbound diagnosis contract — was the smaller edit, but the
+sub-class keeps planning-from-scratch distinct from plan-repair, which are different jobs with
+different evidence. The obligation attaches to `astra-plan`'s next revision and is recorded on its
+Wave 3 row. On the user's further direction the obligation was then discharged the same day rather
+than deferred — `astra-plan` section 7.2.2 now declares `unplanned-code-remediation`, so the route
+is receivable and Critique's source-expansion revision may encode it as available. See section
+13.8.
+
+**D2 — deployment and release infrastructure are out of scope for this roster.** The user's
+ground is a **job boundary**: this is a minimal coding-skill roster, and container images, registry
+pushes, and cluster deployment are not jobs it should own for now.
+
+The ground matters, because two different exclusion rules are in play and only one applies.
+`docs/design-requirements.md` section 5 defines **Exclude** as a source "deliberately omitted
+because it is unavailable, **irrelevant**, broken, or not worth retaining" — irrelevance to the
+roster's job is the criterion met here. This is **not** the unmet-prerequisite case that section
+5.11 forbids excluding on ("Record the unmet prerequisite and its consequence; do not exclude
+it"), even though both excluded sources happen to carry unmet prerequisites. Had the ground been
+"no ECR access" or "no Jira MCP," that rule would bar the exclusion. It is a scope decision, and
+`docs/phase-0-ledgers.md` reserves job boundaries and exclusions to the user.
+
+Excluded, both on inspection evidence that already exists:
+
+- **`cm-debug-and-incident-07` `staging-debug`** — inspected in depth by `astra-debug` section 3.4,
+  which enumerates all eight steps. Steps 2, 3, and 8 build a Docker image, push it to ECR, run
+  `helmfile apply` against a shared staging EKS cluster, and later restore that cluster; only
+  steps 5–6 are diagnosis. Every irreversible effect in the source is a deployment effect.
+- **`cm-ship-and-vcs-12` `changelog`** — inspected by `astra-ship` section 3.3, which had already
+  withdrawn it from Ship & VCS: it generates quarterly, Jira-derived deployment runbooks typed
+  `[sql migration]`, `[aws infra]`, `[istio]`, `[k8s]`, `[terraform]`, or `[manual]`. Ship's own
+  finding is that "the name collides with `ship`'s CHANGELOG step; the job does not"
+  (`designs/astra-ship.md` line 255), so **excluding it costs `astra-ship` no capability** — Ship's
+  release-metadata writer role comes from the `ship` source and survives untouched.
+
+Not excluded, because the ledger forbids it: **`cm-ship-and-vcs-02` `land-and-deploy`,
+`cm-ship-and-vcs-03` `canary`, `cm-ship-and-vcs-05` `setup-deploy`, and `cm-ship-and-vcs-08`
+`/build-push-ecr`** all read `Pending source inspection`, and the ledger's state vocabulary is
+explicit that this state "cannot support absorption, preservation, exclusion, or retirement." They
+are recorded **scope-deferred**: out of scope for this roster, exclusion available only after
+inspection. The rule is not a formality — it is what stops a roster from discarding sources nobody
+read.
+
+**Consequences.** `astra-deploy` remains a proposed Wave 4 design, annotated out-of-scope-for-now
+rather than withdrawn, so a later scope change reopens it without resurrecting a deleted node. Its
+two inbound claims both vanish: the research report's assessment that `staging-debug` should move
+to Deploy as coordinating home is **void**, not deferred, and `changelog`'s recommended Deploy home
+is void with it. No diagnostic capability is lost from the coding loop — `astra-debug` keeps
+`local-debug`, and its section 7.4 claim on "it works locally but fails in staging" is a
+*difference* question that never depended on the excluded source. Consistent with the
+`prompt-lookup` precedent, **both exclusions are provisional, authorize no deletion, and should be
+revisited if deployment ever enters the roster's scope.**
+
+**D3 — "root cause analysis" routes on context, not on the string.** Both holders had standing:
+`rca` is claimed for the unwritten `astra-incident` (applied, amendment 1), and the phrase is a
+declared trigger of `investigate`, an `astra-debug` source. The rule adopted is `astra-debug`
+section 7.4's: live-incident signals — an ongoing outage, paging or alerting language, "production
+is down" — route to `astra-incident`, where `rca` runs as the parallel causal session amendment 1
+characterized; absent those signals, `astra-debug`. **The bare string is not a router key.** The
+two readings partition cleanly on a fact both designs already state: `rca` presupposes a concurrent
+outage, and Debug's job has "no outage clock" (`astra-debug` section 4.4). This is **provisional**
+— `astra-incident` is unwritten and is the only party that can accept it, so its design must
+confirm or amend the rule on drafting.
+
+**D4 — the unowned execution residue.** Two designs independently and explicitly refused a set of
+behaviors, leaving them with no owner anywhere in the roster: `planb`'s five refused behaviors
+(plan-file writes, host task creation, general subagent dispatch, advisor calls, live adaptation),
+gstack `spec`'s fresh-worktree agent spawn, `/pr`'s Jira comment, tracker writes, and release
+tagging. This is refusal by matching design decision, not oversight.
+
+**Decision:** **release tagging** is pre-approved for loss, consistent with the D2 scope boundary —
+the affected source's retirement gate may pass without replacing it. Everything else is recorded as
+an explicit unowned list awaiting the deferred `astra-delegate` and `astra-automate` designs, whose
+subject matter subagent dispatch and live adaptation squarely are. No other deletion is approved,
+and each affected source's retirement gate must still account for its residue behavior. Note that
+tracker behavior is **not** being scoped out: D5 retains `triage`, an issue-tracker state machine.
+
+**D5 — `triage`.** Amendment 1 relocated it out of Debug & incident and named `astra-ship` its
+candidate decider "on `github` and `/pr` adjacency, or retained independent; the relevant designs
+decide." `astra-ship` never mentions the source, and `astra-debug` section 3.6 records only that it
+has no view. With the tranche complete, no drafted design owned the question, and the row would
+have failed acceptance criterion 4 by default.
+
+**Decision: retained independent.** Amendment 1's evidence already supported it — the body is an
+issue-tracker state machine that never mentions an outage, alert, or stabilization, and it is
+registered `disable-model-invocation: true`, so retaining it costs no context budget. Nothing in
+Ship's thirteen-source analysis pulls it in. The row can now close.
+
+**D6 — `commit-commands:clean_gone`.** `astra-ship` section 3.3 deferred it because its
+force-deletion authority model is unconfirmed and "requires a user decision before any allocation."
+
+**Decision: retained independent, with the unconfirmed authority model recorded as an open defect
+on the row.** Branch hygiene is coding-relevant, so the capability stays available; keeping it
+outside Astra keeps an unaudited force-delete outside the roster's authority surface, where the
+user invokes it deliberately. No Astra design inherits its authority model, and no retirement is
+implied.
+
+**D7 — the ten standing reference rows.** `sdd`, `health`, and `github` — added by this tranche —
+join `research`, `codebase-design`, `nowhat`, `canvas-design`, `algorithmic-art`, `diagram`, and
+`prototype`, all of which have carried a coordinator "Recommend keep; user disposition pending"
+since amendments 1–3.
+
+**Decision: keep all ten.** This discharges section 7 milestone 7 for these rows. A reference is
+defined as "independently useful knowledge that should remain addressable rather than fused"
+(`docs/design-requirements.md` section 5), so keeping one fuses nothing and consumes no roster
+budget — the minimal-roster boundary drawn in D2 is a reason to exclude *jobs*, not a reason to
+prune addressable references. `nowhat`'s dangling `PUA` reference remains an explicit recorded
+defect, unchanged by this decision.
+
+### 13.4 Trigger-surface decisions recorded
+
+- **"root cause analysis"** — the D3 context rule. `astra-incident` must confirm on drafting.
+- **`local-debug` steps 1–3 (BDD execution)** — `astra-debug` section 3.4 assigns `astra-test` a
+  secondary role and routes bare execution triggers ("run feature tests", "run BDD tests",
+  "behave") to Test. Test's design predates the inspection and is silent. **Recommendation: Test
+  should accept**, because the slice sits inside its declared triggers and its `bdd` jurisdiction,
+  and Debug's split follows the source's own boundary marker at step 4. Recorded as
+  Debug-proposed, Test-unconfirmed; if Test declines, BDD pipeline execution has no owner.
+- **"fix staging" / "debug staging" phrasings** — with `staging-debug` excluded by D2, the
+  deploy-and-retest reading has no owner and is out of scope. The difference-explanation reading
+  ("it works locally but fails in staging") remains `astra-debug`'s under its section 7.4 claim.
+  The roster-wide trigger table must encode that split, because the phrasings survive their source.
+- **"turn this into an issue/ticket"** — input-state adjacency: an idea routes to `astra-spec`; an
+  approved plan routes to `astra-plan`'s draft projection.
+- **"resolve merge conflicts" outside a landing flow** — claimed by no design. `astra-ship` claims
+  conflicts only "when the merge is part of preparing this change-set to land," and `astra-implement`
+  requires an approved plan task. A user who syncs a base branch mid-implementation and hits
+  conflicts falls between them. Minor: the manual bridge survives. Flagged for the Ship review.
+
+### 13.5 Section 5 allocation deviations recorded
+
+Where a drafted design's inspection deviated from this roadmap's proposed allocation, the deviation
+is recorded here as **the design's evidence-backed proposal for the coordinator**, not as an
+applied change. Unlike section 13.3's decisions, none of these is a user ruling.
+
+- **5.2 Code review:** `simplify` deferred on unavailable bytes and unresolved host-version
+  provenance; `health` proposed a retained independent reference rather than an `astra-implement`
+  source, since a report-only quality dashboard is a different outcome from approved-plan mutation.
+  `code-simplifier` stands as proposed.
+- **5.5 Plan & spec:** `sdd` → retained independent reference, with `astra-spec` consuming only its
+  persistent-spec and backward-revision slice; `plan-tune` and `wayfinder` → retained independent;
+  `feature-dev:feature-dev` deferred as a cross-peer item (phase 5 is an Implement candidate,
+  phases 1–4 and 6 need Spec, Understand Code, Plan, and Critique reconciliation); `planb` split,
+  its authoring slice to `astra-plan`, with five execution behaviors refused by both Plan and
+  Implement and now explicitly unowned — see decision D4.
+- **5.6 Ship & VCS:** recorded in that section above.
+- **5.8 Debug & incident:** recorded in that section above.
+- **5.12 Testing:** allocation confirmed unchanged; `run` deferred on unavailable bytes.
+
+### 13.6 Ledger consequences, unapplied
+
+`docs/phase-0-ledgers.md` is unchanged by this amendment and its coordinator remains its sole
+editor. The following are the decisions' ledger consequences, for that coordinator to apply:
+
+- Roughly 40 collision rows consolidated from the seven drafted designs' section 3.x proposals,
+  every one proposed **`claimed`** and none `resolved`, since `resolved` is reserved for
+  reconciliation after the user's review of the designs themselves.
+- **D2:** `cm-debug-and-incident-07` and `cm-ship-and-vcs-12` → disposition `exclude`, primary home
+  `unassigned`, claim status `claimed`, evidence citing this section and the user's job-boundary
+  decision — **not** an unmet prerequisite. `cm-ship-and-vcs-02`, `-03`, `-05`, and `-08` → scope
+  note only; they stay `unclaimed` and `Pending source inspection`.
+- **D5, D6:** `cm-debug-and-incident-09` and `cm-ship-and-vcs-11` → `retained independent`, the
+  latter carrying the unconfirmed force-deletion authority model as a recorded defect.
+- **D7:** ten reference rows → `keep`.
+- **Payload repairs that need no user ruling** — all **applied** on 2026-08-04 per section 13.8,
+  ahead of section 7 milestone 3's canonical snapshot rather than after it: `acceptance_ref` added
+  to the Debug Report spine mirroring Spec's `approval.decision_ref` pattern; revision and
+  accepted-constraint fields added to Understand Code's Test-row payload; Understand Code's
+  `analysis_question` and Debug's `observed_behavior` normalized to the reference-not-restate
+  convention Test's `proof_obligation` already used; and Understand Code's `requested_mode` given
+  the `unknown` escape Test's `required_test_mode` has. The coordinator's snapshot should be taken
+  from the repaired text, and must still be built from the peer-owned rows rather than any
+  design's summary of a peer.
+- **Anchor hygiene:** `astra-plan` section 10.1's recorded Implement snapshot is stale — it records
+  `2aac0600…` and the file is now `b087c479…`, changed by Implement's 2026-08-04 revision. The
+  drift is benign in direction, since that revision adopted Plan's schema and answered Plan's
+  blocking question 2, but the anchor is formally stale and Plan's own rule requires relation
+  reconciliation on a hash change. Plan's other four snapshots still match. `astra-debug` recorded
+  no peer snapshots at all, so its acceptance claims have no equivalent staleness check; future
+  cross-design acceptance claims should follow Plan's snapshot-hash practice.
+
+### 13.7 What this amendment does not establish
+
+- It does not mark any design reviewed. Seven of nine remain `proposed` and self-reviewed only,
+  and this reconciliation of unreviewed drafts can be invalidated by the user's review of any one
+  of them.
+- It does not apply a single ledger row. *Written before the user directed the design-file edits;
+  section 13.8 supersedes the design-file half of this bullet. The ledger half stands: the D2
+  exclusions and every other row in section 13.6 remain **recorded obligations, not applied
+  changes**.*
+- It does not convert any **Declared H** profile into a canonical peer contract; section 7
+  milestone 3 still owns that, and the section 13.5 payload repairs should land first.
+- It does not verify behavior. Every agreement in section 13.1 is textual: no source was executed,
+  no comparison system built, and no gate run.
+- It does not close the remaining section 3.2 open owners. The infrastructure row's design and code
+  portions, the prompt/`SKILL.md`/CLAUDE.md class, and the running developer-experience class all
+  remain unowned; D2 removed the deployment portion from scope rather than assigning it.
+- It could not consult the absent counterparties. `astra-incident`, `astra-document`,
+  `astra-guard`, and `astra-qa` are unwritten, so D3's rule and every inbound claim on them is one
+  design's side only.
+- It does not run acceptance criterion 1's inventory coverage diff, and it does not inspect the
+  nine neighborhoods section 6.1 still lists as uninspected at bundle depth.
+
+### 13.8 Applied in the same session, after the decisions
+
+Sections 13.1–13.7 were written on the basis that every repair would be deferred to the revision
+it was assigned to. The user then directed that five of them be executed immediately. That work
+was done on 2026-08-04 in the same session, and this section records it, superseding 13.7's
+second bullet. **Four design files changed. `docs/phase-0-ledgers.md` remains untouched and its
+coordinator remains its sole editor.**
+
+| Obligation | Where it landed | State |
+|---|---|---|
+| **D1** — Plan's second conditional class | `designs/astra-plan.md` §§2.1, 2.5, 7.2 | **Applied.** Declared as `unplanned-code-remediation`, with a two-field payload and a boundary statement against four neighbouring classes |
+| **F2** — stale `astra-presentation` destination | `designs/astra-critique.md` destination table and §9.2 routing corpus | **Applied.** Rerouted to `astra-interface` |
+| **F4** — missing diagnosis-acceptance field | `designs/astra-debug.md` §2.4 | **Applied.** `acceptance_ref` added to the Debug Report spine, mirroring `astra-spec`'s `approval.decision_ref` |
+| **F13** — Understand Code's Test-row payload | `designs/astra-understand-code.md` §7.2 | **Applied.** Revision snapshot and accepted architecture constraints added |
+| **F9** — payload fields restating the envelope | `designs/astra-understand-code.md` §7.3, `designs/astra-debug.md` §7.3 | **Applied.** `analysis_question` and `observed_behavior` normalized to reference-not-restate; `requested_mode` gained the `unknown` escape |
+
+**The reroute is not a rename.** Amendment 3 folded `astra-presentation` into `astra-interface`,
+which already held a destination row, so Interface now appears **twice** in Critique's table —
+once for interaction, accessibility, and visual-system defects, once for narrative and
+data-comprehension problems. Section 3.2 requires separately named payloads for the two, and a
+merged row would have lost the distinction Critique routes on. The table therefore gained an
+explicit problem-class column, and the §9.2 corpus now requires both classes as separable routing
+cases rather than one Interface case.
+
+**One ripple the new class forced.** `astra-debug` section 7.3 rule 6 read: "A finding that
+Critique itself explained causally is not this class — it routes to Implement." Once a second Plan
+class existed, that became wrong in half the cases, so the rule was split — Implement when an
+approved plan already covers the remedy, Plan's `unplanned-code-remediation` otherwise — and
+Debug's boundary table gained the matching row. Adding a class to one design silently invalidated
+a routing rule in another, which is exactly the drift a reconciliation pass exists to catch.
+
+**What these edits do not change.** All four files remain unreviewed drafts. Correcting a drafted
+design does not make it reviewed, resolve a ledger row, or convert a declared profile into a
+canonical peer contract. The corrections make the tranche *internally consistent*; section 7
+milestone 3 still owns the canonical snapshot, and acceptance criterion 2 still reads **0 resolved
+rows of 179**.
+
+**Deliberately untouched:** `designs/astra-spec.md`, `designs/astra-implement.md`,
+`designs/astra-test.md`, and `designs/astra-ship.md`, which the user is reviewing concurrently. One
+optional follow-up sits in that set — `astra-implement` section 7.4 rule 4 routes
+`remediation_authority: plan-required | unknown` to `astra-plan` without naming a class. It is
+correct as written and would only gain precision from naming `unplanned-code-remediation`.

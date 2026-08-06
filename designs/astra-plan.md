@@ -95,10 +95,16 @@ external prerequisite; it does not invent a peer.
 - “Create a plan revision for this accepted change in constraints.”
 - “Render a draft ticket projection from this approved plan without publishing
   tickets.”
+- “Plan the fix for this accepted review finding.” — the
+  `unplanned-code-remediation` handoff class, added by roadmap amendment 6
+  decision D1; see sections 2.5 and 7.2.2.
 
-The trigger is not the word “plan”; it is the combination of an accepted Spec,
-available implementation evidence, and a request for an executable work
-artifact.
+The trigger is not the word “plan”; it is the combination of an accepted
+statement of intent, available implementation evidence, and a request for an
+executable work artifact. On the ordinary path that accepted intent is a
+whole-revision-accepted Spec, gated by section 2.4. For a Critique
+`unplanned-code-remediation` handoff it is the user-accepted finding itself,
+which is why that route does not stall behind a Spec that may not exist.
 
 ### 2.2 Nearby requests that should not trigger it
 
@@ -318,6 +324,19 @@ commands passed, invent evidence, or invoke `astra-test`.
 identify the diagnosed cause, evidence, affected contract, remediation
 constraint, and user acceptance of the diagnosis. Raw symptoms do not become a
 diagnosis inside Plan.
+
+**Accepted Critique finding** is the intake substitute for an
+`unplanned-code-remediation` handoff, and it is the one evidence contract here
+that is *not* optional: for that class it is the whole input. It arrives as
+Critique's common envelope plus the two-field payload in section 7.2.2, and it
+must already establish the defect's cause, its evidence, and the affected
+contract — Plan does not re-derive them and does not accept a finding whose
+cause is unestablished. Its acceptance is the user's explicit selection of the
+`astra-plan` route, which is the same machine-visible, non-inferred acceptance
+this design requires of `approval.decision_ref` for a Spec and of the diagnosis
+acceptance above for Debug evidence. A request of this shape arriving *without*
+an accepted finding is an ordinary planning request and falls back to section
+2.4's Spec gate.
 
 ### 2.6 Proposed executable-Plan output contract
 
@@ -935,14 +954,34 @@ provenance/external-behavior dependency. They do not imply peer invocation.
 
 ### 7.2 Critique handoff acceptance
 
-**Accepts Critique handoff: conditional.** The owned post-critique problem class
-is `execution-plan-defect`; the conditions are explicit user selection, a valid
-common envelope, and the compact destination-only payload below.
+**Accepts Critique handoff: conditional.** Plan owns **two** post-critique
+problem classes. For both, the conditions are explicit user selection, a valid
+common envelope, and the compact destination-only payload named below.
+
+| Owned class | The finding it carries | Distinguishing fact |
+|---|---|---|
+| `execution-plan-defect` | A plan exists and is wrong | There is a plan, and the plan is the defective artifact |
+| `unplanned-code-remediation` | Code is defective, its cause is established, and no approved plan exists to fix it | There is no plan to be defective |
 
 Critique owns the common envelope. Plan must not repeat its artifact, agenda,
 problem statement, finding IDs/evidence, observed impact/affected scope,
-constraints/open decisions, prerequisites, or context gaps inside the
+constraints/open decisions, prerequisites, or context gaps inside **either**
 destination payload.
+
+**Why the second class exists.** `astra-implement` section 7.4 rule 4 routes
+every code-defect finding without an approved plan here, and roadmap section
+3.2's Implement row says the same: “otherwise Plan is the destination.”
+`execution-plan-defect` could not receive that route. Its payload requires a
+`plan_lifecycle_state`, and a defect with no plan is in none of those states;
+section 2.1's trigger required an accepted Spec; and section 2.5's only inbound
+diagnosis door was scoped to Debug evidence, which a Critique finding is not.
+The most common review outcome therefore had a declared destination whose
+contract rejected it at every entrance. Widening `execution-plan-defect` would
+have collapsed two different jobs — repairing a plan and writing one — into a
+payload describing neither. Roadmap amendment 6 decision D1 records the user's
+choice of a second class over that widening.
+
+#### 7.2.1 `execution-plan-defect`
 
 The compact Plan-only destination payload is exactly:
 
@@ -965,8 +1004,70 @@ Acceptance rules:
    Implement state; Plan can only render a revision proposal and request a user
    decision.
 
-Malformed or unselected handoffs stop with a compact reason. Plan neither
-silently expands the payload nor asks Critique to repair it.
+#### 7.2.2 `unplanned-code-remediation`
+
+The compact Plan-only destination payload is exactly:
+
+```yaml
+problem_class: unplanned-code-remediation
+spec_coverage: governed-by-accepted-spec | no-spec-governs | spec-contradicts-finding | unknown
+```
+
+Two fields, because the common envelope already carries everything else Plan
+needs. The cause, its evidence, the affected contract, and the remediation
+constraints are envelope content; restating them here would create a second,
+divergeable copy of the problem — the duplication class `astra-implement`
+corrected in its own payload on 2026-08-04, cutting nine fields to three.
+
+`spec_coverage` is the single fact the envelope cannot carry, because it is a
+statement about *Plan's* intake rather than about the problem. It answers the
+only question that determines whether Plan can proceed: does accepted intent
+already govern the affected contract? `unknown` is a first-class value, not a
+failure — Critique knows what it reviewed and may have had no Spec in its
+review context, and forcing a guess would make Critique decide Plan's intake
+for it. This follows `astra-test`'s `required_test_mode`, which carries
+`unknown` for the same reason.
+
+Acceptance rules:
+
+1. Critique has already emitted its report with all candidate routes retained.
+2. The user selected zero or one route and explicitly selected `astra-plan`.
+3. The common envelope is present and the destination payload contains no
+   remedy, new success criterion, implementation sequence, tool choice, or
+   duplicated common-envelope evidence.
+4. **The envelope establishes the cause.** A finding whose cause is
+   unestablished belongs to `astra-debug`'s `unexplained-failure`, not here;
+   `astra-debug` section 7.3 rule 6 draws the same boundary from its side, so
+   the two contracts meet without a gap and without an overlap.
+5. **No approved plan governs the affected contract.** If one does and the plan
+   is what is wrong, the class is `execution-plan-defect`. If one does and the
+   plan is sound while the code departs from it, the destination is
+   `astra-implement`'s `approved-code-remediation`, not Plan.
+6. **The user's route selection is the acceptance act**, and Plan records it as
+   such. Plan does not additionally infer acceptance from conversation — the
+   inference it forbids itself everywhere else.
+7. **This class does not require an accepted Spec.** Section 2.4's
+   whole-revision gate governs Spec-driven planning and does not gate this
+   class. Plan's behavior is set by `spec_coverage`:
+   `governed-by-accepted-spec` — plan normally, binding tasks to that Spec;
+   `no-spec-governs` — plan the remediation against the accepted finding as its
+   statement of intent, and record in the Plan artifact that no Spec governs it;
+   `spec-contradicts-finding` — **stop**, because a contradiction between
+   accepted intent and an accepted finding is a specification decision the user
+   owns and `astra-spec` owns the artifact; `unknown` — establish coverage with
+   the user before planning, and never infer it.
+
+Malformed or unselected handoffs stop with a compact reason, for either class.
+Plan neither silently expands a payload nor asks Critique to repair one.
+
+**Boundary against the four neighbouring classes.** A finding routes here only
+when all four of these are false: the cause is unestablished (`astra-debug`,
+`unexplained-failure`); a plan exists and is defective (`execution-plan-defect`,
+section 7.2.1); a plan exists, is sound, and the code departs from it
+(`astra-implement`, `approved-code-remediation`); or the accepted intent itself
+is wrong rather than the code (`astra-spec`,
+`specification-gap-or-ambiguity`). Plan does not redirect a misrouted finding —
+it stops with the reason, and the user reselects.
 
 ### 7.3 Retained Architect and source coordination
 

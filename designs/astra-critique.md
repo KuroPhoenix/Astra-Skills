@@ -576,16 +576,19 @@ that reconciled Astra peer roster, not the examples below. After the user select
 route, the Critique core reads at most that one profile directly; it never reads the destination's
 full `SKILL.md` at runtime.
 
-The four currently approved Design peers are the **first profile tranche only because their
+The three currently approved Design peers are the **first profile tranche only because their
 designs are being worked on first**. They illustrate payload variation; they do not limit what
-Critique can review or where it may hand off:
+Critique can review or where it may hand off. `astra-interface` appears twice: roadmap amendment 3
+folded the proposed `astra-presentation` into it on the user's decision, so Interface now owns two
+seeded problem classes. Roadmap section 3.2 requires each to keep a **separately named payload**,
+because one merged payload would lose exactly the distinction Critique needs in order to route:
 
-| First-tranche Design destination | Problem-only additional payload |
-|---|---|
-| `astra-product-design` | Observed experience problem, affected user journey, supporting user evidence, and research gaps |
-| `astra-interface` | Affected surfaces and states, reproduction evidence, and observed accessibility or interaction defects |
-| `astra-brand` | Identity inconsistency, assets or tokens where it appears, and the conflicting audience signal |
-| `astra-presentation` | Audience, observed narrative or data-comprehension problem, affected slides or sections, and supporting evidence |
+| First-tranche Design destination | Owned problem class | Problem-only additional payload |
+|---|---|---|
+| `astra-product-design` | Approved design-direction problem | Observed experience problem, affected user journey, supporting user evidence, and research gaps |
+| `astra-interface` | Interaction, accessibility, or visual-system defect | Affected surfaces and states, reproduction evidence, and observed accessibility or interaction defects |
+| `astra-interface` | Narrative or data-comprehension problem | Audience, observed narrative or data-comprehension problem, affected slides or sections, and supporting evidence |
+| `astra-brand` | Identity or audience-signal inconsistency | Identity inconsistency, assets or tokens where it appears, and the conflicting audience signal |
 
 Later roster-approved profiles may cover code changes, architecture or technical-design choices,
 plans and specifications, infrastructure, prompts, testing, or any other peer-owned problem
@@ -761,7 +764,10 @@ The later corpus must be versioned and selected before outputs are generated. It
 - **expected-convergence control:** `devex-review` and `plan-devex-review` must not manufacture
   incompatible recommendations once decision and jurisdiction are held constant (§5.5);
 - **handoff-routing cases:** first-tranche Design examples for `astra-product-design`,
-  `astra-interface`, `astra-brand`, and `astra-presentation`; non-Design problems in code,
+  `astra-brand`, and **both** of `astra-interface`'s seeded classes — an interaction,
+  accessibility, or visual-system defect and a narrative or data-comprehension problem — which the
+  corpus must keep as two separable routing decisions rather than one Interface case; non-Design
+  problems in code,
   architecture or technical design, and plan or specification jurisdictions routed to their
   roster-approved peers once those peer designs exist; a missing-profile case that must not fall
   back to an unrelated Design peer; incompatible nominations for the same problem that require a

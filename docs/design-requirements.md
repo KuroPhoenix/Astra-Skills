@@ -180,6 +180,31 @@ confirm or disprove the distinction, but do not build fixtures or a harness yet.
 
 Lack of observed disagreement is evidence for further investigation, not proof of equivalence.
 
+Absorption is evaluated against the surviving Astra stack as a whole, not by requiring one
+source to match one public skill end to end. A source is a proposed absorption candidate only
+when all three of these tests pass:
+
+1. **Problem equivalence:** the source's user job is already owned by one or more surviving
+   skills and introduces no independent user outcome or decision authority.
+2. **Methodology equivalence:** the source's material protocol, playbooks, perspectives, and
+   jurisdictions can be preserved behind those skills' existing interfaces and authority
+   sequence. A bundled workflow may be divided across several surviving skills.
+3. **Input/output equivalence:** the source's accepted inputs and material outputs can be mapped
+   losslessly into the versioned Astra artifact chain, including source-specific evidence,
+   degradation, and effect records. The mapping may normalize representation but may not discard
+   a source-unique decision or artifact.
+
+A different CLI, agent context, device bridge, framework, provider, or generated delivery shape
+does not by itself create a separate public job. Preserve it as an internal profile, adapter,
+agent, or prerequisite at the appropriate seam. Conversely, similarity on only one or two axes
+is not absorption: a distinct outcome, authority model, or durable output remains independent or
+deferred even when the generic coding stack could technically perform some of its steps.
+
+For a coordinator-approved cross-stack bundle, one shared source-evidence record may hold the
+canonical hashes and bundle census. Each consuming design must still adopt its exact source IDs,
+local authority, secondary roles, preserved distinctions, and source-specific retirement gates;
+a shared table cannot centralize or blur per-skill authority.
+
 ### 6.1 Three comparison systems
 
 Every later evaluation of a source-merging design distinguishes three systems:

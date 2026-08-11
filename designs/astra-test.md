@@ -1,7 +1,6 @@
 # Astra Test — phase-0 design
 
-**Date:** 2026-08-03 · **Authoritative drafting-tranche position:** 6 of 8 ·
-**Status:** `proposed`
+**Date:** 2026-08-03 · **Six-skill reconciliation:** 2026-08-11 · **Status:** `proposed`
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership;
 > `docs/design-requirements.md` is the sole per-skill contract; the current user handoff fixes the
@@ -10,7 +9,9 @@
 > retirement.
 >
 > **Conformance.** Sections 1–10 map one-to-one and in order onto
-> `docs/design-requirements.md` sections 7.1–7.10. The available bodies for
+> `docs/design-requirements.md` sections 7.1–7.10. Section 11 applies the cumulative consultant,
+> immutable-artifact, and new-cycle rules in requirements section 7.11 and governs conflicting
+> eight-peer wording. The available bodies for
 > `cm-testing-01..07`, their directly relevant registrations, and every file in their source bundles
 > were inspected in full. `cm-testing-08` (`run`) has no inspectable immutable body and remains
 > provenance-deferred.
@@ -42,9 +43,9 @@ playbook, executing it, and checking whether a claim is supported are modes that
 outcome. They do not turn Test into the owner of product intent, production-code mutation, causal
 diagnosis, independent judgment, or publication.
 
-**Personal value: explicit.** The user selected `astra-test` as the sixth public peer in this exact
-initial tranche: `astra-critique`, `astra-understand-code`, `astra-spec`, `astra-plan`,
-`astra-implement`, `astra-test`, `astra-debug`, and `astra-ship`. The user also explicitly requires
+**Personal value: explicit.** The user selected `astra-test` for the reconciled public stack:
+`astra-critique`, `astra-understand-code`, `astra-spec`, `astra-implement`, `astra-test`, and
+`astra-ship`. Plan and Debug remain superseded historical evidence. The user also explicitly requires
 construction, framework, execution, and final-verification modes to remain distinct. That is direct
 evidence of personal project-development value. As supporting evidence only, the inventory records
 six agent-fired uses of `superpowers:test-driven-development`, the only usage in this neighborhood.
@@ -79,9 +80,9 @@ They are not public peers, internal modules, or absorbed capabilities in this de
 |---|---|---|
 | “What should this product or API do?” | `astra-spec` | Test consumes accepted behavior; it does not invent it |
 | “Explain this subsystem or choose its architecture” | `astra-understand-code` | Comprehension and technical design are not evidence construction |
-| “Turn the accepted behavior into an implementation sequence” | `astra-plan` | Planning owns dependency order and production mutation scope |
+| “Turn the accepted behavior into exact repository delivery work” | `astra-implement` | Implement owns dependency order and mutation scope under the approved Specification |
 | “Change the production code so this test passes” | `astra-implement` | Test may write test/evidence artifacts, never production code |
-| “Why is this failure happening?” when the cause is unknown | `astra-debug` | A failing test is evidence, not a diagnosis |
+| “Why is this failure happening?” | `astra-critique diagnose` | A failing test is evidence, not a diagnosis |
 | “Judge whether this implementation or test strategy is good” | `astra-critique` | Independent judgment remains read-only and public |
 | “Commit, push, open a PR, merge, release, or deploy this” | `astra-ship` for publication; deployment remains external | Fresh evidence carries no publication authority |
 | Exploratory browser QA or an operational probe without an accepted assertion | Explicit manual/external workflow | This design owns reproducible tests and evidence, not an extra public peer |
@@ -90,8 +91,8 @@ They are not public peers, internal modules, or absorbed capabilities in this de
 
 One invocation supplies or makes resolvable:
 
-1. an accepted-behavior source: specification, OpenAPI contract, bug reproduction, approved plan,
-   or user ruling;
+1. an Approved Change Specification or other accepted-behavior authority, plus its immutable
+   identity and acceptance criteria;
 2. the artifact and immutable-enough target snapshot: repository/worktree, revision or dirty-state
    note, relevant paths, and existing test assets;
 3. the evidence target: behavior, regression, framework setup, suite, or completion claim;
@@ -100,7 +101,9 @@ One invocation supplies or makes resolvable:
 6. available runtimes, exact project-native commands when already known, and required environment;
 7. permission or prohibition for dependency installation, network access, live endpoints, test-data
    creation, and cleanup; and
-8. the freshness requirement and any evidence the caller already has.
+8. the freshness requirement and any evidence the caller already has; and
+9. on the primary change path, the Approved Delivery Roadmap, Execution Ledger, atomic commit
+   identities, and exact delivered revision.
 
 An absent accepted behavior, target snapshot, or effect boundary is a stop condition. Test may ask
 the user to resolve it or name the relevant peer; it may not guess and continue.
@@ -111,7 +114,9 @@ The future module exposes one conceptual operation: **establish evidence for thi
 behavior at this artifact snapshot**. A caller may request one mode or an ordered combination, but
 does not need to know which source playbooks or framework adapters sit behind the seam.
 
-The result is a reusable **Test evidence packet** plus any authorized test artifacts. It records:
+The result is a reusable, versioned **Test Evidence Packet** plus any authorized test artifacts.
+It carries an immutable packet ID, revision, content hash, input artifact identities, consultant
+determinations, and exact tested revision. It records:
 
 - accepted-behavior and artifact-snapshot references;
 - selected mode and framework jurisdiction, including why routing was certain or uncertain;
@@ -157,7 +162,7 @@ conflicting TDD policies; authorizes test-infrastructure files and dependency ch
 network, live-system, test-data, or cleanup effect; decides whether a failing result is a product
 bug, a changed specification, or a test defect when the evidence does not settle it; approves any
 production mutation through Implement; accepts or rejects incomplete evidence; and chooses whether
-to start Critique, Implement, Debug, or Ship after Test stops.
+to start a new Critique cycle or Ship after Test stops.
 
 ---
 
@@ -936,5 +941,80 @@ provenance. Those repository records establish the **U/P** state, not its behavi
 
 ---
 
-This document is phase-0 prose only. It changes no ledger or installed source, runs no behavioral
-validation, and grants no retirement authority.
+## 11. Six-skill verification amendment
+
+Test is the independent evidence authority after Implement, not an implementation repair stage.
+This section supersedes the historical seven-peer relation table where it conflicts with the
+cumulative consultant graph. Sections 1–10 remain source evidence and preserve Test's construction,
+framework, execution, and final-verification playbooks for later source allocation.
+
+### 11.1 Primary-path intake and authority
+
+For a delivered change, Test pins:
+
+- the Finding Set when Critique authority is present;
+- the Approved Change Specification revision/hash and every applicable requirement and criterion;
+- the Approved Delivery Roadmap revision/hash;
+- the Execution Ledger, atomic commit identities, and exact delivered revision; and
+- an Understanding Report when its current-state claims were used downstream.
+
+Stale or mismatched identities stop verification. Test may select and run evidence methods within
+its approved test/evidence scope, but it cannot weaken a criterion, reinterpret a finding, expand
+the delivered functionality, or repair production code. Implement's focused checks are inputs,
+not proof that Test may simply repeat the completion claim.
+
+On the normal path, durable tests, fixtures, configuration, and test documentation required by the
+Specification are Implement Roadmap tasks and appear in atomic commits before Test begins. If Test
+discovers that a new durable repository artifact is required, it records the gap rather than
+silently adding publishable scope. Any separately authorized Test-created artifact remains
+uncommitted evidence until a new approved change cycle incorporates it.
+
+### 11.2 Cumulative consultant gate
+
+One persistent consultant for each present upstream authority participates before Test issues its
+packet:
+
+| Consultant | Judgment preserved |
+|---|---|
+| Critique | Whether Finding IDs, causal claims, and proof obligations are represented honestly |
+| Spec | Whether the tested claims and expected outcomes match the approved requirements, criteria, constraints, and branch |
+| Implement | Whether the tested revision, delivered scope, atomic commits, and Execution Ledger are the actual implementation result |
+| Understand Code, conditional | Whether relied-on current-state claims remain correctly interpreted at the tested revision |
+
+Consultants return `pass`, `drift`, or `authority_gap`; they do not choose Test methodology or
+dictate the overall evidence state. Test independently decides whether the evidence supports the
+claim. An unavailable required consultant fails closed unless the user records reduced assurance.
+
+Test exposes its own narrow read-only `consult` mode to Ship. It validates packet identity,
+freshness, adequacy, tested revision, gaps, skips, residue, and the exact claims the publication
+would make. It cannot authorize a push, PR, merge, release, or deployment.
+
+### 11.3 Test Evidence Packet and traceability
+
+The packet records the pinned artifact chain, mode and framework jurisdiction, exact commands and
+working directories, environment facts, start/end timestamps, exit states, failure counts,
+relevant logs and artifacts, red/green evidence, mutation sensitivity where applicable, coverage
+denominator where actually measured, cleanup and residue, gaps and skips, consultant
+determinations, and an overall `supported`, `failed`, `blocked`, or `inconclusive` state.
+
+Every claim maps through:
+
+```text
+finding -> requirement -> acceptance criterion -> roadmap task -> atomic commit
+        -> test evidence
+```
+
+A genuine `failed`, or an `inconclusive` result that blocks an approved criterion, cannot be
+repaired inside Test or waived by a consultant. It creates a new Critique finding and therefore a
+new immutable change cycle if the user continues. Earlier artifacts and the failed packet remain
+unchanged and are referenced by the new cycle.
+
+### 11.4 Deferred reconciliation
+
+The complete Test source inventory, browser/QA adjacency, durable-test effect boundary, and
+six-peer relation table still require later absorption and coordinator reconciliation. This
+amendment changes no ledger, source installation, runtime skill, harness, comparison system, or
+retirement state. Test is policy-grounded but not yet fully fleshed out from every related source.
+
+This document is phase-0 prose only. It runs no behavioral validation and grants no retirement
+authority.

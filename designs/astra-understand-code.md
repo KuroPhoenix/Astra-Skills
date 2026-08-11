@@ -1,6 +1,6 @@
 # Astra Understand Code — phase-0 design
 
-**Date:** 2026-08-03 · **Public tranche position:** 2 of 8 · **Status:** `proposed`
+**Date:** 2026-08-03 · **Six-skill reconciliation:** 2026-08-11 · **Status:** `proposed`
 
 > **Authority.** `docs/design-requirements.md` is the sole per-skill contract;
 > `docs/phase-0.md` owns phase scope and global accounting; the current user instruction fixes the
@@ -12,8 +12,9 @@
 > or hypothesis rather than as observed runtime behavior.
 >
 > **Conformance.** Sections 1–10 map one-to-one and in order to
-> `docs/design-requirements.md` sections 7.1–7.10. Phase 0 is prose only. Every original remains
-> installed.
+> `docs/design-requirements.md` sections 7.1–7.10. Section 11 applies the conditional consultant
+> contract in requirements section 7.11 and governs conflicting eight-peer wording. Phase 0 is
+> prose only. Every original remains installed.
 
 ---
 
@@ -39,11 +40,10 @@ scope also protects a recurring project-development need: learn unfamiliar code 
 Implement, Test, or Debug acts on it. Usage supports but does not decide priority: `code-tracing`
 recorded 11 July invocations, all agent-fired (**O**, README “Actual working set”).
 
-The authoritative public tranche, and no substitute roster, is `astra-critique`,
-`astra-understand-code`, `astra-spec`, `astra-plan`, `astra-implement`, `astra-test`,
-`astra-debug`, and `astra-ship`. They are flat peers. Context, Guard, Delegate, Automate, Incident,
-and Deploy are deferred general-purpose peers and appear here only as honest manual or external
-bridges.
+The reconciled public stack is `astra-critique`, `astra-understand-code`, `astra-spec`,
+`astra-implement`, `astra-test`, and `astra-ship`. They are flat peers. Plan and Debug remain
+superseded historical evidence. Context, Guard, Delegate, Automate, Incident, and Deploy are
+deferred general-purpose peers and appear here only as honest manual or external bridges.
 
 ---
 
@@ -59,10 +59,11 @@ Conceptually, the future module accepts three caller-visible facts:
 3. an optional explicit mode when the caller needs `locate`, `trace`, `explain`, or
    `technical-design` behavior rather than safe automatic selection.
 
-Its result is one **understanding report** whose detail varies by mode but whose claims remain tied
-to paths, symbols, revisions, and stated uncertainty. The invocation and these behavioral promises
-are the module's external interface. Search strategy, agent fan-out, reconciliation, diagrams, and
-technical-design vocabulary stay in the implementation behind that seam.
+Its result is one versioned **Understanding Report** whose detail varies by mode but whose claims
+remain tied to paths, symbols, revisions, evidence anchors, content hash, and stated uncertainty.
+The invocation and these behavioral promises are the module's external interface. Search strategy,
+agent fan-out, reconciliation, diagrams, and technical-design vocabulary stay in the
+implementation behind that seam.
 
 `technical-design` is never selected implicitly. The source contributing that mode disables model
 invocation in both its Claude declaration and OpenAI metadata (**O**); a future candidate must
@@ -86,10 +87,10 @@ preserve the explicit-user gate even if explanation remains model-invocable.
 |---|---|---|
 | “Attack this architecture or diff and tell me what is wrong” | `astra-critique` | Adversarial judgment and independent code/architecture lenses are Critique's job |
 | “Decide what product behavior should exist” | `astra-spec` | Intent and acceptance behavior are not facts about existing code |
-| “Turn this decision into executable tasks” | `astra-plan` | Task decomposition and approval state are downstream |
+| “Turn this decision into exact repository tasks” | `astra-implement` after `astra-spec` | Change authority and delivery decomposition are downstream |
 | “Make or refactor the change” | `astra-implement` | Project mutation is forbidden here |
 | “Design or execute the test strategy” | `astra-test` | This peer may explain existing tests but does not own testing methodology |
-| “Why is this failing?” where cause is unknown | `astra-debug` | Causal diagnosis uses a failure-first loop; Understand supplies a map at most |
+| “Why is this failing?” | `astra-critique diagnose` | Causal diagnosis uses a failure-first loop; Understand supplies a map at most |
 | “Commit, push, open a PR, merge, or publish” | `astra-ship` | VCS finalization and publication are effects outside this interface |
 | “Choose one complete feature architecture and implementation blueprint for me” | retained `feature-dev:code-architect` agent | Decisive blueprint authority and separate agent delivery remain independent |
 | “Deploy this” or “stabilize an outage” | external/manual Deploy or Incident bridge | Those deferred peers are neither implemented nor absorbed here |
@@ -1059,4 +1060,52 @@ roster-wide trigger and ownership pass. This design deliberately does not edit
 
 This draft was self-reviewed against `docs/design-requirements.md` sections 11 and 12. It contains
 no placeholder, implementation artifact, runtime validation claim, source-retirement claim, or
-authority to change the exact eight-peer public tranche.
+runtime authority beyond this proposed design.
+
+---
+
+## 11. Six-skill consultant amendment
+
+Understand Code remains an optional read-only skill rather than a mandatory chronological stage.
+Its authority participates downstream whenever a decision directly relies on an Understanding
+Report's current-state claims. This section supersedes the final eight-peer roster sentence above
+but preserves sections 1–10 as source and validation evidence.
+
+### 11.1 Understanding Report identity
+
+Every Understanding Report carries an immutable artifact ID, revision, content hash, repository
+and revision identity, bounded question, mode, evidence anchors, observed claims, inferences,
+unavailable inputs, and unresolved gaps. A downstream artifact references those identities rather
+than copying the report into a divergeable summary.
+
+The report explains current state. It does not create a Critique finding, select intended change,
+authorize a Specification, prescribe delivery tasks, mutate the repository, judge independent
+Test sufficiency, or authorize publication.
+
+### 11.2 Conditional `consult` mode
+
+Understand exposes one narrow read-only `consult` mode. It receives:
+
+- the exact Understanding Report identity/revision/hash;
+- the downstream artifact identity/revision/hash;
+- the specific current-state claims the downstream artifact relies on; and
+- any newly observed repository revision or evidence claimed to affect those facts.
+
+It returns `pass` when the downstream interpretation remains supported, `drift` when the active
+downstream draft can correct a misread without changing upstream authority, or `authority_gap`
+when the report is stale, contradicted, or too narrow for the required claim. It cannot broaden the
+original question, make a change decision, approve the downstream artifact, or read sideways into
+another peer's files.
+
+One fresh persistent Understand consultant is used for the downstream invocation and reused at
+its checkpoints. It participates in Spec, Implement, Test, or Ship only when that peer directly
+relies on the report. A casual reference, optional context, or desire for extra confidence does not
+create the relation. When required and unavailable, the downstream skill blocks unless the user
+records reduced assurance.
+
+### 11.3 Deferred reconciliation
+
+The relation table in section 7 remains historical eight-peer evidence until the coordinator
+reconciles all 15 pairs in the six-skill roster. No source row, retained-agent disposition,
+runtime mechanism, harness, or retirement claim changes here. The design is policy-grounded but
+not yet expanded with additional related sources.

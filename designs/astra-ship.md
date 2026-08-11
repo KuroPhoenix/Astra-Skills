@@ -1,6 +1,6 @@
 # Astra Ship — phase-0 design
 
-**Date:** 2026-08-04 · **Wave:** 4 · **Public tranche position:** 8 of 8 · **Status:** `proposed`
+**Date:** 2026-08-04 · **Wave:** 4 · **Six-skill reconciliation:** 2026-08-11 · **Status:** `proposed`
 
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns phase
 > scope and the global ledgers; `docs/design-roadmap.md` supplies the provisional roster, the Ship &
@@ -9,9 +9,9 @@
 > source retirement.
 >
 > **Conformance.** Sections 1–10 map one-to-one and in order onto `docs/design-requirements.md`
-> sections 7.1–7.10. Section 9 defines the source oracle, reference convener, self-contained
-> candidate, comparison gates, and per-source retirement gates. This document was self-reviewed
-> against requirements sections 11 and 12.
+> sections 7.1–7.10. Section 11 applies the cumulative consultant, narrow-PR, and Publication
+> Record contract in requirements section 7.11 and governs conflicting eight-peer, commit-shaping,
+> or publication wording. Section 9's comparison and retirement gates remain evidence obligations.
 >
 > **Peer reconciliation.** Ship is the last member of the initial public tranche to be designed, so
 > unusually little here is one-sided. Five completed contracts — [`astra-spec`](astra-spec.md),
@@ -43,22 +43,23 @@
 | Status | `proposed` |
 | Priority | `now` |
 | Candidate neighborhoods | Ship & VCS (primary); no secondary claimed |
-| User job | **When I want verified changes turned into a published, reviewable change-set, with every irreversible effect authorized one at a time.** |
+| User job | **When I want one verified functionality published as one narrowly scoped, reviewable PR, with its atomic history preserved and every irreversible effect explicitly authorized.** |
 | Critique handoff acceptance | **conditional** — see section 7.3 |
 
-**The job expresses one outcome.** A published change-set is a single artifact with several parts:
-shaped commit history, release metadata, an integration decision, a pull or merge request that
-describes the change honestly, and a workspace left in a stated condition. Producing the changes,
-proving them, judging them, and running them in production are different jobs with different owners.
+**The job expresses one outcome.** A Publication Record binds one approved functionality, its
+verified atomic history, release metadata if authorized, the pull or merge request, integration
+state, and final workspace condition. Producing the changes, proving them, judging them, and
+running them in production are different jobs with different owners.
 
 **Name and promise.** `astra-ship` is a verb with a hard prerequisite: verified changes. It does not
-mean "finish my work for me." `astra-implement` performs authorized mutations and hands off;
-`astra-test` owns fresh evidence; `astra-critique` independently judges; `astra-ship` publishes;
-and deployment stays outside the initial tranche entirely. These are flat peers, and Ship invokes
-none of them.
+mean "finish my work for me." `astra-implement` performs authorized mutations and atomic commits;
+`astra-test` owns fresh evidence; cumulative consultants preserve upstream authority;
+`astra-ship` verifies publication boundaries and publishes; and deployment stays outside this
+stack. These are flat peers.
 
-The initial public tranche remains exactly `astra-critique`, `astra-understand-code`, `astra-spec`,
-`astra-plan`, `astra-implement`, `astra-test`, `astra-debug`, and `astra-ship`.
+The reconciled public stack is `astra-critique`, `astra-understand-code`, `astra-spec`,
+`astra-implement`, `astra-test`, and `astra-ship`. Plan and Debug remain superseded historical
+evidence.
 
 **Personal value: explicit.** The user selected `astra-ship` as one of exactly eight skills in the
 initial public tranche, and `docs/design-roadmap.md` Wave 4 states the requirement directly:
@@ -74,7 +75,7 @@ publication path whose defaults do not have to be fought.
 
 - "Ship this," "land this branch," "open a PR for this," or "get this ready to merge," with verified
   changes already present.
-- "Shape these changes into reviewable commits" — commit authoring without publication.
+- "Verify these atomic commits and publish their one-functionality PR."
 - "Write the changelog and bump the version for this change-set."
 - "What version slot would this claim, and what else is in the queue?" — the read-only mode.
 - "Finish this branch" — the integration decision, including merge locally, push and open a PR, or
@@ -87,11 +88,11 @@ publication path whose defaults do not have to be fought.
 
 | Request | Correct owner or prerequisite | Why it is outside Ship |
 |---|---|---|
-| "Build this feature" / "implement this plan" | `astra-spec`, `astra-plan`, `astra-implement` | Ship publishes changes; it does not author them |
-| "Fix the failing test so I can ship" | `astra-implement` after `astra-test` or `astra-debug` | A red suite is a stop condition, not a task Ship may take on |
+| "Build this feature" | `astra-spec`, then `astra-implement` | Ship publishes changes; it does not author them |
+| "Fix the failing test so I can ship" | New Critique cycle, then Spec and Implement | A red suite is a stop condition, not a task Ship may take on |
 | "Write the tests" / "prove this works" | `astra-test` | Ship consumes evidence and never generates it |
 | "Review this diff" / "is this good code?" | `astra-critique` | Independent judgment is a separate, read-only surface |
-| "Why did this break?" | `astra-debug` | Root-cause work precedes any change-set |
+| "Why did this break?" | `astra-critique diagnose` | Root-cause work precedes any new change-set |
 | "Deploy this" / "roll it out" / "run the canary" | deferred `astra-deploy`; external today | Landing a change is not running it in production |
 | "Document what this project does" | deferred `astra-document` | Ship consumes a documentation result; it does not own doc accuracy |
 | "Write the DB migration deployment note for this Jira ticket" | deferred `astra-deploy` | See section 3.3 on `changelog`: a different artifact and a different job |
@@ -102,18 +103,22 @@ publication path whose defaults do not have to be fought.
 
 An invocation must supply or make resolvable:
 
-1. the **working base**: repository, current branch, whether the checkout is a linked worktree or a
-   detached HEAD, the base branch this work forked from, and the dirty-state snapshot;
-2. the **change-set scope**: which local changes belong to this publication and which pre-existing
-   changes must not be swept in;
-3. **verification evidence**: which checks were run, on which revision, with what result;
-4. the **effect authorization**: which of section 6.4's effect classes the user has approved for
+1. the full authoritative chain: optional Understanding Report, Finding Set when present, Approved
+   Change Specification, Approved Delivery Roadmap, Execution Ledger, atomic commit identities,
+   and Test Evidence Packet;
+2. the **working base**: repository, current branch, linked-worktree or detached state, base branch,
+   ancestry, conflict state, delivered revision, and dirty-state snapshot;
+3. the **change-set scope**: its one functionality, files and languages changed, authored and
+   generated line counts, PR dependency/stacking order, and protected pre-existing changes;
+4. **fresh verification evidence** tied to the exact delivered revision;
+5. the **effect authorization**: which of section 6.4's effect classes the user has approved for
    this invocation;
-5. the **integration intent**, or an explicit request for the section 6.3 menu; and
-6. **forge context** when a PR/MR is requested: host, remote, authentication state, and any existing
+6. the **integration intent**, or an explicit request for the section 6.3 menu; and
+7. **forge context** when a PR/MR is requested: host, remote, authentication state, and any existing
    PR/MR for this branch.
 
-If items 1–3 are absent and cannot be recovered read-only, Ship stops before any effect. If item 4
+If items 1–4 are absent, stale, or inconsistent and cannot be recovered read-only, Ship stops
+before any effect. If item 5
 is absent, Ship may still run its read-only modes and then request authorization; it never treats
 the invocation itself as blanket approval.
 
@@ -122,19 +127,18 @@ handoff defined in `astra-implement` section 2.4, and this design accepts it fie
 
 | Ship intake item | `astra-implement` handoff field |
 |---|---|
-| 1. Working base | current branch/worktree state, `baseline.base_revision`, dirty-state note |
-| 2. Change-set scope | files changed, behavioral summary, checkpoint commit identifiers |
-| 3. Verification evidence | exact verification commands, outcomes, and failure evidence |
-| 5. Integration intent | *absent by design* — Implement stops before it, so the user supplies it |
-| — | `plan_id` and executed `plan_version`, carried through into the PR/MR body |
+| 1–2. Roadmap, ledger, commits, and working base | Roadmap identity/version/hash, final revision, branch/worktree, baseline, dirty-state note, task and atomic commit map |
+| 3. Change-set scope | one functionality, files/languages, authored/generated lines, behavioral summary, and PR stack |
+| 4. Focused implementation evidence | exact commands, outcomes, and failure evidence; Test supplies the independent packet separately |
+| 6. Integration intent | *absent by design* — Implement stops before publication, so the user supplies it |
 
-Implement's handoff deliberately contains **no** effect authorization. That is correct and is not a
-gap: item 4 comes from the user, per `astra-plan` section 2.6's rule that an approval applies to
-exactly one version and effect scope.
+Implement's handoff deliberately contains **no Ship effect authorization**. That is correct and is
+not a gap: item 5 comes from the user and is separate from Roadmap mutation/commit approval.
 
 **Freshness is a precondition, not a formality.** If any tracked file changed after the evidence in
-item 3 was produced, that evidence is stale. Ship re-runs the checks or stops; it never publishes on
-a claim it cannot date. This is `superpowers:verification-before-completion`'s rule, which
+item 4 was produced, that evidence is stale. Ship stops and requires a fresh Test packet; a Ship-run
+mechanical check cannot silently replace Test authority. It never publishes on a claim it cannot
+date. This is `superpowers:verification-before-completion`'s rule, which
 `astra-test` owns as `cm-testing-07` and names Ship as a consumer of (**O**).
 
 ### 2.4 User-visible result
@@ -142,7 +146,8 @@ a claim it cannot date. This is `superpowers:verification-before-completion`'s r
 The result is a **publication record**. It contains:
 
 - the exact effects performed, each with the authorization that permitted it;
-- the resulting commit list with messages and the shaping rationale;
+- the verified atomic implementation commit list, plus any separately authorized
+  publication-owned commit and its reason;
 - release metadata written, if any: version, changelog entry, and where each was written;
 - the integration outcome: merged locally, pushed with a PR/MR URL, or deliberately kept;
 - verification evidence as consumed, with its revision and timestamp, never restated as fresher
@@ -159,9 +164,11 @@ occurred, or that a landed change has been deployed.
 `astra-ship` does not:
 
 - write, edit, or refactor production code, tests, or documentation content;
-- decide product intent, revise a plan, or judge code quality independently;
+- decide product intent, revise a Specification or Delivery Roadmap, or judge code quality
+  independently;
 - run a deployment, release rollout, canary, or infrastructure change;
 - perform any effect in section 6.4 that the current invocation has not authorized;
+- squash, reword, reorder, or otherwise cosmetically rewrite Implement's verified atomic commits;
 - force-push, rewrite published history, or delete a branch or worktree it does not own;
 - treat a passing review, a green suite, or its own successful prior run as authorization;
 - invoke a peer Astra skill; or
@@ -170,7 +177,7 @@ occurred, or that a landed change has been deployed.
 ### 2.6 Decisions that remain with the user
 
 The user decides whether to publish at all; which effect classes are authorized and in what order;
-how history is shaped when shaping is destructive; the integration path; the base branch; whether a
+the integration path; the base branch; whether a
 version bump is warranted and at what level; whether a failing or stale check blocks; whether a
 merge conflict resolution is acceptable; whether a branch or worktree is deleted; whether any
 tracker or forge side effect occurs; and whether anything proceeds toward deployment. No source
@@ -1240,3 +1247,106 @@ Before any implementation work, the coordinator must reconcile:
 
 Until then, this document is an evidence-backed architectural hypothesis, not a replacement
 instruction.
+
+---
+
+## 11. Six-skill publication amendment
+
+Ship is the final publication authority in the six-skill stack. It verifies that one delivered
+functionality, its atomic history, evidence, and proposed PR remain inside every upstream contract
+before performing separately authorized publication effects. This section supersedes historical
+Plan/Debug relations and any source-derived assumption that Ship should reshape implementation
+commits before publication.
+
+### 11.1 Cumulative consultant gate
+
+One fresh persistent consultant for each present upstream authority participates in the Ship
+invocation:
+
+| Consultant | Judgment preserved at Ship |
+|---|---|
+| Critique | Claims that Finding IDs are resolved, contradicted, accepted, or still open |
+| Spec | The PR is exactly one complete approved functionality and preserves every requirement, criterion, constraint, branch, and non-goal |
+| Implement | Atomic commit coverage, actual delivered scope, language partition, authored/generated line accounting, and Execution Ledger accuracy |
+| Test | Packet freshness, adequacy, tested revision, gaps, skips, residue, and the exact claims publication may repeat |
+| Understand Code, conditional | Current-state interpretations relied on by the publication remain supported |
+
+Each consultant receives immutable upstream and proposed-publication artifact identities and
+returns `pass`, `drift`, or `authority_gap`. Ship may repair `drift` only when it is a
+publication-owned representation defect within an already authorized effect—for example, a PR
+body that misstates an accurately recorded fact. A missing requirement, code defect, behavior
+defect, stale evidence, inaccurate Execution Ledger, invalid Finding claim, or new user decision
+creates `authority_gap` and stops publication. Consultants cannot mutate, approve, or expand an
+upstream contract.
+
+An unavailable required consultant fails closed unless the user records reduced assurance.
+Mechanical hash, ancestry, line-count, conflict, and freshness checks still run; they supplement
+rather than replace authority judgment.
+
+### 11.2 Publication gate
+
+Before any push, PR, merge, or cleanup effect, Ship verifies:
+
+- every artifact identity and hash in the chain matches the proposed publication revision;
+- every Finding ID traces through requirement, criterion, Roadmap task, atomic commit, and Test
+  evidence;
+- the PR serves exactly one functionality, feature, or bug fix;
+- authored changes target 400–500 lines or less, with explicit justification and user approval
+  recorded before any result above 500 authored lines is published;
+- different implementation languages occupy separate PRs with their dependency or stacking order
+  explicit;
+- generated output is reported separately and does not conceal authored line count;
+- tests and durable documentation in the PR directly support its functionality;
+- base, ancestry, conflicts, branch/worktree ownership, protected user changes, and forge state
+  are current; and
+- the Test Evidence Packet is fresh for the exact head to publish.
+
+Failure of any gate stops before an irreversible effect. Ship never makes a large PR acceptable by
+changing the count, relabeling multiple functions as one, or hiding authored changes among
+generated output.
+
+### 11.3 Commit and publication authority
+
+Implement owns atomic implementation commits and creates them immediately after focused
+verification. Ship verifies and publishes that history; it does not postpone, squash, reorder,
+reword, or otherwise reshape those commits for cosmetic convenience.
+
+Ship may create a separately authorized publication-owned commit for a version, changelog entry,
+or other release metadata inside its source-supported authority. That commit must itself be atomic,
+must not contain production/test changes or unrelated documentation, and is recorded distinctly in
+the Publication Record. Push, PR, merge, tracker, release, and cleanup effects remain separately
+authorized according to section 6.4.
+
+Publication-only defects may be repaired within Ship's authority and rechecked by affected
+consultants. A code, behavior, evidence, Finding, requirement, or delivery-ledger defect creates a
+new immutable Critique cycle rather than rewriting an earlier artifact.
+
+### 11.4 Publication Record
+
+The versioned Publication Record carries its own immutable ID, revision, content hash, input
+artifact identities, consultant determinations, exact effect authorizations, effects attempted and
+observed results, PR/MR identity and URL, base/head/ancestry, atomic implementation commits,
+publication-owned commits, authored/generated line counts, language and dependency partition,
+Test evidence identity and timestamp, integration state, final workspace state, skipped or denied
+effects, residue, and follow-ups.
+
+It completes the traceability chain:
+
+```text
+finding -> requirement -> acceptance criterion -> roadmap task -> atomic commit
+        -> test evidence -> PR
+```
+
+The record never claims deployment merely because a PR merged. Deploy, rollout, canary, and live
+incident authority remain outside this minimal stack.
+
+### 11.5 Deferred reconciliation
+
+The Ship source inventory still requires source-by-source reconciliation against Implement's new
+commit authority and the narrow-PR policy. WIP squashing, generic commit shaping, worktree creation,
+tracker effects, release tagging, deployment-oriented changelogs, and project-specific queue
+machinery remain open dispositions rather than silently absorbed behavior.
+
+This amendment changes no ledger, runtime skill, harness, comparison system, source installation,
+push, PR, or retirement state. Ship is policy-grounded but not yet fully fleshed out from every
+related source.

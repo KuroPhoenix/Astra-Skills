@@ -2,6 +2,9 @@
 
 **Normalized:** 2026-07-31 · **Original design:** 2026-07-29 (`f264c20`, reviewed at `ff889a4`)
 
+**Six-skill reconciliation:** 2026-08-11 · surviving public home for review, diagnosis, and
+Critique-authority consultation; `astra-debug` is superseded historical evidence
+
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns
 > phase scope and the global ledgers. This is one per-skill design, not a universal condensation
 > policy and not an implemented skill.
@@ -18,8 +21,10 @@
 > headings, never line numbers.
 >
 > **Conformance.** Sections 1–10 map one-to-one and in order onto
-> `docs/design-requirements.md` sections 7.1–7.10. Self-reviewed against that document's section 11
-> checklist; the appendices carry no phase-0 requirements.
+> `docs/design-requirements.md` sections 7.1–7.10. Section 11 applies the six-skill contract in
+> requirements section 7.11 and has normative precedence over conflicting pre-reconciliation
+> wording. Self-reviewed against that document's section 11 checklist; the appendices carry no
+> phase-0 requirements.
 
 > 留其精華，去之糟粕 — but a voice is not 糟粕 merely because another voice already spoke.
 
@@ -33,9 +38,10 @@
 | Status | `proposed` |
 | Priority | `now` |
 | Candidate neighborhood | Adversarial critique (16 occurrences) plus one Design & visual cross-neighborhood source |
+| Six-skill role | Surviving public home for review findings, causal findings, and read-only Critique consultation; Debug source reassignment remains deferred |
 
-**User job.** *When I want an artifact or decision attacked by reviewers who can genuinely
-disagree with each other, before I commit to it.*
+**User job.** *When I want evidence-backed findings about what is wrong or why an observed
+failure occurs, before any solution is selected or target behavior is changed.*
 
 **Personal value — explicit.** The user's standing global instructions make adversarial critique
 a permanent requirement, not a preference: `claude/rules/persona.md` mandates *"Truth over
@@ -57,18 +63,20 @@ neighborhood is the only one where the user already invokes a source daily.
 
 **Requests that should trigger it.** "Review this before I ship it." "Attack this plan." "Is this
 the right architecture or design choice?" "Is this the right approach, or am I fooling myself?"
-"What breaks if I do this?" Reviewing a code diff, plan, specification, architecture decision,
-infra change, prompt, CLAUDE.md, or running visual interface.
+"What breaks if I do this?" "Why is this failing?" "Find the root cause." Reviewing a code diff,
+plan, specification, architecture decision, infra change, prompt, CLAUDE.md, or running visual
+interface; or diagnosing an observed deterministic, intermittent, performance, resource, or
+environment-difference failure.
 
 **Nearby requests that should not.**
 
 | Request | Belongs to |
 |---|---|
-| "Why is this failing?" | Debug & incident — diagnosis, not judgment |
 | "Do the tests pass?" | Testing |
 | "Find the vulnerabilities" | `cso`'s jurisdiction and attacker priors |
 | "Explain how this works" | Codebase comprehension |
 | "Make this change" | Any implementation skill — this skill never edits |
+| "Add instrumentation or repair the failure" | `astra-spec` then `astra-implement`; Critique identifies the evidence obligation but never mutates the target |
 | "Interview me until my plan is sharp" | Sharpened but distinct — see §5.7 |
 
 **Accepted context, conceptually.** One artifact with an identifiable set of decisions in it, plus
@@ -76,18 +84,20 @@ whatever evidence the artifact's own domain supplies (a diff and its repository,
 stated intent, an architecture decision and its constraints, a prompt and the published practices
 it should meet, or a running interface and its reachable states and screenshots).
 
-**User-visible result.** A report in which every substantive sentence is attributable to a named
-reviewer, factual disputes have been checked against evidence, and every normative disagreement
-is surfaced as an explicit choice rather than silently resolved. The report retains a traceable
-route candidate for every independently actionable problem class. After it renders, the result
-adds either one user-selected, destination-specific handoff capsule or an explicit statement that
-no immediate handoff was selected. Unselected candidates remain in the report.
+**User-visible result.** A versioned Finding Set. In review mode, its report makes every
+substantive judgment attributable to a named reviewer, checks factual disputes against evidence,
+and surfaces every normative disagreement as an explicit choice rather than silently resolving
+it. In diagnose mode, it records the observed failure, competing causal hypotheses, proof
+obligations, and only those causal claims established by evidence. The Finding Set retains a
+traceable route candidate for every independently actionable problem class. After it renders,
+the result adds either one user-selected, destination-specific handoff capsule or an explicit
+statement that no immediate handoff was selected. Unselected candidates remain in the result.
 
 The critique report is the primary result. The handoff is a smaller routing capsule derived from
 that report: it restates the problem and evidence for the owning peer but does not attempt to
 solve it.
 
-**Non-goals.** Making the change. Deciding tradeoffs on the user's behalf. Producing a single
+**Non-goals.** Making the change or adding target-repository instrumentation. Deciding tradeoffs on the user's behalf. Producing a single
 merged verdict that hides disagreement. Prioritizing independent problems on the user's behalf.
 Replacing test execution or security auditing. Invoking, loading, or executing the recommended
 destination skill. Defining the downstream solution, implementation plan, tool choice, or success
@@ -927,6 +937,93 @@ original review and are retained in Appendix C.
   unresolved boundary.
 
 ---
+
+## 11. Six-skill reconciliation amendment
+
+This section records the approved authority change before the remaining relevant skills are
+absorbed. It does not claim that the Debug sources have already been re-inspected by this design,
+that their ledger homes have moved, or that Critique's complete future behavior is now specified.
+Where sections 1–10 or the historical appendices conflict with this section or
+`docs/design-requirements.md` section 7.11, this section governs the surviving public design.
+
+### 11.1 One public interface, three authority-preserving modes
+
+| Mode | Owns | Required result | Forbidden effect |
+|---|---|---|---|
+| `review` | Evidence-backed judgment about an artifact or decision | Review findings with attributable claims, evidence, and unresolved normative choices | Selecting the remedy or changing the artifact |
+| `diagnose` | Evidence-backed causal judgment about an observed failure | Causal findings, competing hypotheses, rejected hypotheses, and proof obligations | Adding probes, tests, configuration, instrumentation, or repairs to the target repository |
+| `consult` | Read-only preservation of Critique authority in a downstream invocation | `pass`, `drift`, or `authority_gap` with Finding IDs and evidence anchors | Rerunning Critique, mutating a downstream artifact, approving it, or expanding an upstream contract |
+
+The coding council remains the design's central novelty in both `review` and `diagnose`. In
+diagnosis, seats independently form and challenge causal hypotheses. The chair may render
+disagreement and the verifier may test factual claims, but a cause becomes established only when
+observed evidence discriminates it from its live alternatives. Register, confidence, consensus,
+or user preference cannot promote a hypothesis into a causal finding.
+
+Critique may inspect the repository, logs, history, captured runtime state, and supplied
+artifacts. It may run already-authorized existing tests and diagnostic commands and retain
+isolated evidence captures that cannot affect target behavior. When establishing a cause needs a
+new probe, test, configuration change, or instrumentation, Critique emits a
+`diagnostic-instrumentation-required` finding containing the hypotheses and proof obligation. It
+does not make the change itself.
+
+### 11.2 Finding Set authority
+
+The Finding Set is Critique's authoritative artifact. Exact runtime serialization remains
+deferred, but every later candidate must preserve this conceptual spine:
+
+| Field | Meaning |
+|---|---|
+| Finding Set identity | Immutable artifact ID, revision, content hash, input artifact identities, and mode |
+| `finding_id` | Stable identity for one independently actionable observed problem or causal claim |
+| Observation | What was reviewed or what failed, separated from interpretation |
+| Evidence | Reproducible anchors, commands, outputs, logs, history, or artifact locations supporting the finding |
+| Judgment or cause | Review judgment, or causal claim with `proven`, `probable`, or `unestablished` certainty |
+| Hypotheses and proof obligations | Live alternatives, rejected alternatives with discriminating evidence, and evidence still required |
+| Affected scope and observed impact | The bounded contract, behavior, path, user, or environment implicated by the evidence |
+| Constraints and authority limits | User-supplied boundaries, unavailable prerequisites, and forbidden effects |
+| Route candidates | Every independently owned downstream problem class, without selecting its solution |
+| Consultant history | Downstream artifact identities, checkpoint, determination, and evidence anchors for each Critique consultation |
+
+The Finding Set contains no chair-selected solution, target behavior, delivery task, commit
+sequence, or Critique-authored acceptance criterion. A source-faithful reviewer may mention a
+possible remedy inside an attributable filing, but that mention is not an approved disposition
+and cannot cross into Spec as selected intent without the user's decision.
+
+### 11.3 Forward-only diagnostic continuation
+
+For an incompletely diagnosed failure, Critique emits the symptom, available evidence, competing
+hypotheses, and proof obligations. Spec may approve conditional outcomes for each supported,
+contradicted, or indeterminate result. Implement maps those outcomes to exact diagnostic and
+repair tasks. During execution, the persistent Critique consultant evaluates causal claims and
+diagnostic evidence; the Spec consultant decides whether that evidence enters an already approved
+branch. Implement proceeds without restarting Critique.
+
+Critique consultation occurs at least before a critique-driven Specification is approved, before
+an Implement roadmap is approved, at a roadmap's causal branch decisions, at Implement's final
+verification checkpoint, and before Test or Ship closes a Finding ID. A determination is bounded
+to the referenced Finding Set and downstream artifact revision. Evidence outside every approved
+branch, evidence that invalidates the Finding Set, or a new user-owned decision returns
+`authority_gap`; it never causes the consultant to invent a branch or rewrite history.
+
+### 11.4 Debug source preservation and deferred absorption
+
+`astra-debug` is now a superseded historical design. Its inspected sources, bundled executables,
+behavioral corpus, diagnosis techniques, causal certainty vocabulary, prerequisite degradation,
+and source-specific retirement gates remain required evidence for Critique's later
+source-expansion pass. Its former repair and instrumentation authority does not migrate into
+Critique: specification belongs to Spec, mutation and atomic commits belong to Implement,
+independent verification belongs to Test, and publication belongs to Ship.
+
+Until that source-expansion pass and coordinator reconciliation occur:
+
+- no Debug source row is represented as absorbed or resolved by this amendment;
+- `staging-debug`'s deployment-effect allocation remains an open source-specific decision;
+- the exact relationship between the coding council and the Debug design's phase machine remains
+  a hypothesis for three-system comparison; and
+- the historical Debug fixtures and source retirement gates remain intact rather than being
+  silently generalized into Critique's existing corpus.
+
 ---
 
 # Appendix A — Panel protocol (historical detail)

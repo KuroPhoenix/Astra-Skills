@@ -1,6 +1,12 @@
 # Astra Debug — phase-0 design
 
-**Date:** 2026-08-04 · **Wave:** 3 · **Public tranche position:** 7 of 8 · **Status:** `proposed`
+**Date:** 2026-08-04 · **Superseded:** 2026-08-11 · **Status:** `superseded historical`
+
+> **Six-skill disposition.** The public `astra-debug` interface is retired from the proposed
+> roster before implementation. Causal finding authority moves to `astra-critique`'s `diagnose`
+> mode; change selection moves to `astra-spec`; mutation and atomic commits move to
+> `astra-implement`; independent verification remains with `astra-test`. This file is retained as
+> source-accounting and preservation evidence. It changes no source claim or retirement state.
 
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns phase
 > scope and the global ledgers; `docs/design-roadmap.md` supplies the provisional roster and the
@@ -8,10 +14,11 @@
 > implemented skill, changes no ledger, installs or removes nothing, and authorizes no source
 > retirement.
 >
-> **Conformance.** Sections 1–10 map one-to-one and in order onto `docs/design-requirements.md`
-> sections 7.1–7.10. Section 9 defines the source oracle, reference convener, self-contained
-> candidate, comparison gates, and per-source retirement gates. This document was self-reviewed
-> against requirements sections 11 and 12.
+> **Conformance.** Sections 1–10 preserve the original proposed design against
+> `docs/design-requirements.md` sections 7.1–7.10. Section 11 records its supersession under
+> requirements section 7.11 and has normative precedence over every active-roster, repair, or
+> mutation claim in the historical body. Section 9's comparison gates and source-specific
+> retirement gates remain evidence obligations.
 >
 > **Peer reconciliation.** Debug is the last member of the initial public tranche to be designed and
 > the only peer that every other completed contract still describes one-sidedly. Seven designs are
@@ -43,11 +50,11 @@
 | Field | Value |
 |---|---|
 | Provisional Astra name | `astra-debug` |
-| Status | `proposed` |
+| Status | `superseded historical` — source-accounting record, not a public roster member |
 | Priority | `now` |
 | Candidate neighborhoods | Debug & incident (primary); Testing and Ship & VCS inspected as evidence, no primary claimed |
 | User job | **When I want an observed failure explained by proven cause and then closed by the smallest change that demonstrably removes it.** |
-| Critique handoff acceptance | **conditional** — see section 7.3 |
+| Critique handoff acceptance | Historical only; causal authority is now internal to `astra-critique` and crosses downstream through `C` consultation |
 
 **The job expresses one outcome.** A closed failure is a single result with an indivisible internal
 dependency: the fix is *of the proven cause*, and the proof that it is gone is the same evidence
@@ -1516,3 +1523,70 @@ Bundled components and consumed machinery, 12-character prefixes:
 4. Carry section 10.5 questions 1–3 into the roster-wide trigger and ownership comparison.
 5. Record that with this document, all eight initial-tranche designs exist, and every provisional
    Debug row in the six earlier designs now has a counterpart to reconcile against.
+
+---
+
+## 11. Supersession and authority migration
+
+This section preserves the value of the original design while preventing it from acting as a
+seventh public skill. Sections 1–10 remain historical evidence of source behavior, proposed
+internal architecture, fixtures, dependencies, and retirement gates. The active six-skill
+contracts live in the surviving designs and `docs/design-requirements.md` section 7.11.
+
+### 11.1 Responsibility transfer
+
+| Historical Debug responsibility | Surviving authority | Preservation rule |
+|---|---|---|
+| Observe a failure, establish finding identity, compare causal hypotheses, and judge causal evidence | `astra-critique diagnose` | Preserve the root-cause discipline, uncertainty labels, rejected-hypothesis evidence, jurisdiction playbooks, and coding-council challenge behavior |
+| Decide the intended repair, constraints, semantic ordering, conditional outcomes, and acceptance criteria | `astra-spec` | A causal finding never selects its own repair or weakens required behavior |
+| Add diagnostic instrumentation, implement a repair, remove residue, run focused checks, and commit each verified atomic change | `astra-implement` | Every mutation must be represented by an approved Specification branch and immutable Delivery Roadmap task |
+| Independently establish red/green behavior and acceptance closure on the delivered revision | `astra-test` | Implement's focused checks are execution evidence, not independent Test authority |
+| Publish the verified repair | `astra-ship` | No publication authority migrates from Debug |
+
+The original design's central claim that diagnosis and repair form one public outcome is
+superseded. Rigor is preserved through artifact traceability and cumulative consultants rather
+than through one mutation-capable Debug invocation. The normal path remains forward-only:
+
+```text
+Critique Finding Set -> Approved Change Specification -> Approved Delivery Roadmap
+                    -> atomic implementation commits -> Test Evidence Packet -> Publication Record
+```
+
+Critique's persistent consultant carries causal authority through approved diagnostic branches.
+Spec's consultant determines whether observed evidence permits a pre-approved branch. Evidence
+inside that decision envelope proceeds without returning to this design or restarting Critique;
+evidence outside it produces `authority_gap`.
+
+### 11.2 Evidence that must survive later absorption
+
+The later Critique source-expansion pass must account source by source for, at minimum:
+
+- the three general root-cause workflows and their no-fix-without-cause discipline;
+- deterministic, intermittent, performance, resource, environment-difference, and
+  cross-boundary diagnosis playbooks;
+- reproduction-rate measurement, discriminating experiments, rejected hypotheses, strike
+  limits, and honest `unestablished` closure;
+- Java leak evidence ordering, bundled analysis programs, and human-only MAT/JMC seams;
+- cross-process log correlation, configuration-oracle behavior, and project-specific runtime
+  prerequisites;
+- the HITL adapter, bundled scripts and references, systematic-debugging behavioral corpus,
+  failure/degradation behavior, and immutable provenance; and
+- every source-specific non-regression, internalization-fidelity, and retirement gate in
+  section 9.
+
+This amendment does not decide whether the historical phase machine becomes a Critique-internal
+module, a coding-council playbook, a retained reference, or a coordinated external component.
+That choice requires the full source-absorption audit and three-system comparison. It also does
+not absorb deployment effects: `staging-debug` remains subject to the existing Deploy-versus-
+retained-independent ownership decision.
+
+### 11.3 Coordinator work intentionally deferred
+
+- Reassigning Debug collision rows and source claims.
+- Updating the roadmap, roster counts, handoff profiles, and canonical peer snapshot.
+- Reconciling the six surviving designs across all 15 peer pairs.
+- Building runtime consultant machinery, a harness, fixtures, or candidate skills.
+- Marking any source `resolved`, uninstalling it, or declaring it retirement-eligible.
+
+Those omissions mean the surviving Critique design is policy-grounded but not yet fully fleshed
+out from the available Debug sources, as intended for this documentation-first step.

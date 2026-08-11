@@ -1,7 +1,7 @@
 # Astra skill design requirements
 
 **Date:** 2026-07-31
-**Status:** Approved structure; three-system evaluation and peer-handoff policy added
+**Status:** Approved structure; six-skill coding-lifecycle authority policy added
 
 ## 1. Purpose
 
@@ -212,7 +212,8 @@ readability, but the information may not be omitted.
 ### 7.1 Identity and status
 
 - provisional Astra name;
-- `proposed` status;
+- `proposed` status for an active roster candidate, or `superseded historical` for a design
+  whose public job the user has explicitly merged into another candidate;
 - `now`, `next`, or `later` priority, justified by personal project-development value and
   usage only as supporting evidence;
 - candidate neighborhood or neighborhoods investigated;
@@ -220,8 +221,12 @@ readability, but the information may not be omitted.
 - a personal-value statement naming why the user wants this job and whether that evidence is
   explicit or inferred.
 
-`proposed` is the only phase-0 design status. Implementation and validation states belong to
-later implementation tracking, not to this design field.
+`proposed` is the only active-candidate phase-0 design status. `superseded historical` is a
+non-roster preservation state: it keeps source evidence, distinctions, dependencies, fixtures,
+and retirement gates available while naming the surviving designs that inherit its authority.
+It is not an implementation, validation, ledger-resolution, source-retirement, or deletion
+state. Implementation and validation states belong to later implementation tracking, not to
+this design field.
 
 The job must express one outcome. If it needs “or” to join independent outcomes, split the
 design or justify why one invocation must coordinate them.
@@ -386,6 +391,197 @@ Record inspected sources, revisions or hashes, evidence gaps, provisional decisi
 questions that materially affect the design. Do not use `TBD` as a substitute for a described
 uncertainty and its consequence.
 
+### 7.11 Six-skill coding-lifecycle reconciliation contract
+
+This subsection governs the minimal coding stack approved on 2026-08-11. It fixes authority,
+artifact, consultation, and incremental-delivery policy before the designs absorb the rest of
+the relevant source inventory. The policy is authoritative; the six surviving skills' complete
+source-derived behavior is still provisional. Nothing here claims that all relevant sources
+have been inspected, internalized, validated, or made retirement-eligible.
+
+The target public roster is exactly:
+
+- `astra-critique`;
+- `astra-understand-code`;
+- `astra-spec`;
+- `astra-implement`;
+- `astra-test`; and
+- `astra-ship`.
+
+`astra-plan` is divided between Spec's change authority and Implement's delivery authority.
+`astra-debug` becomes Critique's diagnostic mode. Their design files remain
+`superseded historical` source-accounting records and do not count as public roster members.
+
+The normal change path is forward-only:
+
+```text
+astra-critique -> astra-spec -> astra-implement -> astra-test -> astra-ship
+```
+
+Greenfield work may begin at Spec. Understand Code is a conditional read-only participant when
+a downstream judgment relies on an Understanding Report. Anticipated diagnostic uncertainty is
+represented by conditional branches and carried forward by consultants; it does not create a
+routine backward loop. Re-entry creates a new immutable change cycle only when evidence falls
+outside every approved branch, invalidates an upstream finding, or introduces a new user-owned
+decision. That condition is an `authority_gap`.
+
+#### 7.11.1 Lifecycle authority
+
+| Public skill | Owns | Primary authoritative output | Must not own |
+|---|---|---|---|
+| `astra-critique` | Observed problems, evidence, finding identity, and causal judgment | Finding Set containing evidence-backed review or diagnostic findings | Solution selection, target-repository mutation, or required behavior |
+| `astra-understand-code` | Read-only current-state explanation within an explicit question | Optional Understanding Report | Findings, change selection, mutation, or approval |
+| `astra-spec` | Intended change, selected solution, and required outcomes | Approved Change Specification | Repository delivery tasks, commit sequencing, or mutation |
+| `astra-implement` | Repository-specific delivery planning and execution inside an approved specification | Approved Delivery Roadmap, Execution Ledger, atomic commits, and focused verification evidence | Reinterpreting findings, changing required behavior, independent acceptance, or publication |
+| `astra-test` | Independent verification against pinned requirements and delivered revision | Test Evidence Packet | Weakening criteria, repairing production code, or publication |
+| `astra-ship` | Publication and integration of a verified revision | Publication Record | Reinterpreting findings, requirements, implementation scope, or test evidence |
+
+Spec accepts either greenfield intent or Critique findings. For critique-driven work, every
+in-scope Finding ID must map to an explicit disposition, requirement, and acceptance criterion.
+The Approved Change Specification owns the selected solution, rejected alternatives, target
+behavior and interfaces, scope, non-goals, constraints, invariants, compatibility and semantic
+migration strategy, required semantic ordering, positive and negative acceptance cases,
+implementation freedoms, and approved conditional branches. A semantic sequence such as
+`expand -> migrate -> contract` belongs to Spec; exact repository tasks and commits do not.
+
+Implement inspects the live repository after receiving an approved Specification. It maps that
+contract to exact files, symbols, tasks, dependency ordering, conditional diagnostic branches,
+verification commands and working directories, evidence obligations, effects, stop conditions,
+recovery and rollback limits, execution mode, bounded agent assignments, atomic commit
+boundaries, and PR partitions. The user approves an immutable roadmap version, mutation scope,
+execution mode, and commit authority before mutation. Progress, evidence, deviations, branch
+selection, and commits are recorded in a separate Execution Ledger; the approved roadmap is
+never rewritten.
+
+Critique has three public modes behind its one interface:
+
+- `review` produces evidence-backed judgment findings;
+- `diagnose` produces evidence-backed causal findings, competing hypotheses, and proof
+  obligations; and
+- `consult` checks a downstream artifact against Critique authority.
+
+The coding council remains available in review and diagnosis. In diagnosis, seats may propose
+and challenge causal hypotheses, but only observed evidence may establish a cause. Critique may
+inspect code, logs, history, and runtime state; run already-authorized existing tests and
+diagnostic commands; and retain isolated evidence captures that cannot affect target behavior.
+It may not add probes, tests, configuration, instrumentation, or fixes to the target repository.
+Required instrumentation becomes a finding and is specified and executed forward through Spec
+and Implement.
+
+#### 7.11.2 `C` consultation relation
+
+`C` is explicit, narrow peer consultation inside the six-skill stack. It is neither a seventh
+public skill nor a harness dependency. It remains distinct from:
+
+- `R`, roster and authority-ownership reconciliation without runtime invocation;
+- `I`, consumption of a peer artifact or capability without invoking its judgment;
+- `H`, Critique's user-mediated handoff capsule without automatically starting a peer; and
+- `P`, provenance or source-history dependency without runtime permission.
+
+An upstream peer exposes a read-only consultant mode under its existing authority. The
+downstream peer decides when to invoke it and owns the active draft or execution. The upstream
+peer owns its judgment policy and result schema. Only immutable, explicitly referenced artifacts
+cross the relation; a peer may not read sideways into another peer's files. Consultation does
+not rerun the upstream workflow and cannot mutate, approve, waive, or expand either contract.
+
+A consultant returns exactly one bounded determination:
+
+- `pass` — the downstream artifact or claim remains within preserved authority;
+- `drift` — the active draft or execution conflicts with preserved authority but can still be
+  repaired inside the downstream skill's current authority; or
+- `authority_gap` — repair requires a new upstream artifact, new approved branch, or new
+  user-owned decision.
+
+One fresh, persistent consultant instance represents each required upstream authority for one
+downstream invocation; checkpoints reuse that instance rather than spawning a new consultant.
+If a required consultant cannot run, the downstream skill fails closed unless the user records
+explicit acceptance of reduced assurance. Mechanical identity and hash checks supplement but
+never replace consultant judgment.
+
+On the primary change path, authority accumulates as follows:
+
+| Active skill | Required upstream consultants when their authority is present |
+|---|---|
+| Spec | Critique |
+| Implement | Critique, Spec |
+| Test | Critique, Spec, Implement |
+| Ship | Critique, Spec, Implement, Test |
+
+Understand Code also supplies a consultant whenever a downstream skill directly relies on an
+Understanding Report's current-state claims. A consultant is omitted when its artifact and
+authority are genuinely absent, not merely to reduce cost.
+
+Spec consults Critique before user approval when Critique findings are present. Implement
+consults Critique and Spec before roadmap approval, at conditional diagnostic branch decisions,
+and at final implementation verification. Test and Ship obtain cumulative determinations before
+issuing their authoritative artifacts.
+
+#### 7.11.3 Versioned artifact chain and failure behavior
+
+| Skill | Authoritative artifact |
+|---|---|
+| Understand Code | Optional Understanding Report |
+| Critique | Finding Set |
+| Spec | Approved Change Specification |
+| Implement | Approved Delivery Roadmap and Execution Ledger |
+| Test | Test Evidence Packet |
+| Ship | Publication Record |
+
+Every artifact carries an immutable identity, revision, content hash, input references,
+approval state where applicable, and consultant determinations. Traceability is complete and
+machine-checkable through:
+
+```text
+finding -> requirement -> acceptance criterion -> roadmap task -> atomic commit
+        -> test evidence -> PR
+```
+
+Conditional branches retain the same mapping; unselected branches remain recorded but
+unexecuted. A stale or mismatched upstream identity stops the active skill. Pre-approval drift
+is repaired in the active downstream draft and checked again. Evidence inside an approved
+branch proceeds forward. Evidence outside the decision envelope returns `authority_gap` and
+starts a new immutable cycle if the user continues.
+
+Test may not weaken acceptance criteria or repair production code. A genuine independent Test
+failure becomes a new Critique finding. Ship may repair publication-only defects within its own
+authority; code, behavior, or evidence defects create a new cycle. Earlier artifacts remain
+immutable and are referenced as superseded or contradicted evidence rather than rewritten.
+
+#### 7.11.4 Atomic commits and narrow PRs
+
+Implement defines commit and PR boundaries in the approved roadmap before mutation. Critique
+and Spec consultants check that partitioning retains every finding and requirement; Ship checks
+the realized history before publication.
+
+Every implementation commit must:
+
+- contain one logically indivisible change;
+- include the tests and durable documentation required to make that change complete;
+- exclude unrelated cleanup and metadata;
+- pass its relevant focused checks;
+- be independently understandable and safely revertible; and
+- be created immediately after that atomic change is verified.
+
+Roadmap approval supplies the bounded commit authority for those named changes. Implement owns
+the resulting atomic implementation commits. Ship may create publication-owned commits such as
+an approved version or changelog update, but it does not silently postpone, squash, reshape, or
+rewrite Implement's verified atomic history.
+
+Every PR must:
+
+- serve exactly one functionality, feature, or bug fix;
+- target no more than 400–500 authored changed lines;
+- stop for repartitioning when it grows beyond that target;
+- require explicit justification and user approval before exceeding 500 authored lines;
+- place changes in different implementation languages into separate, explicitly ordered or
+  stacked PRs;
+- include only tests and durable documentation that directly support its functionality; and
+- report generated output separately so it cannot conceal authored line count.
+
+These are planning and publication constraints, not evidence that a PR is authorized in phase
+0. Phase 0 creates or revises design documents only: no runtime skill, harness, installation,
+source deletion, retirement, push, or PR is implied.
+
 ## 8. Architecture is local to each skill
 
 These requirements standardize evidence and design completeness, not implementation shape.
@@ -540,8 +736,12 @@ account for every source without taking an already claimed primary home.
 - [ ] The user-facing interface is smaller than the behavior it exposes.
 - [ ] Internal seams correspond to demonstrated variation.
 - [ ] The architecture is local to this skill rather than copied from Astra Critique.
+- [ ] A minimal-coding-stack design preserves the authority and output boundary in section
+      7.11.1 and does not reclaim a peer's judgment.
 - [ ] Every peer relation distinguishes output or capability consumption, a user-mediated
       handoff, and workflow invocation.
+- [ ] Every `C` relation names the upstream authority, immutable input artifact, checkpoints,
+      determination handling, and unavailable-consultant behavior from section 7.11.2.
 - [ ] Every design other than Critique declares handoff acceptance as **yes**, **conditional**, or
       **no**; every accepting relation names one owned problem class and compact destination
       payload. Critique revisions reconcile destination coverage instead.
@@ -549,6 +749,10 @@ account for every source without taking an already claimed primary home.
       user-selected immediate handoff, and consumes only coordinator-reconciled destination
       profiles owned by the accepting peers.
 - [ ] Failure, uncertainty, degradation, and user decisions are addressed at design level.
+- [ ] A minimal-coding-stack output carries immutable identity and traceability fields and treats
+      unapproved evidence as `drift` or `authority_gap` rather than silently rewriting history.
+- [ ] Implement and Ship preserve the atomic-commit, one-functionality-per-PR,
+      language-partition, and authored-line policies in section 7.11.4.
 - [ ] A usable manual bridge exists, or its missing prerequisite and consequence are named.
 
 ### Scope discipline
@@ -574,7 +778,9 @@ A per-skill design is ready for review when:
    because only one immediate handoff may be emitted;
 7. implementation details and behavioral validation remain explicitly deferred;
 8. the manual bridge is usable or its missing prerequisite and consequence are named; and
-9. the review checklist passes without placeholders or authority conflicts.
+9. every applicable six-skill lifecycle, consultant, artifact, failure, and delivery invariant
+   in section 7.11 is specialized without contradiction; and
+10. the review checklist passes without placeholders or authority conflicts.
 
 Passing these requirements means the design is grounded. It does not mean the skill is
 implemented, validated, installed, or safe to use as a replacement.

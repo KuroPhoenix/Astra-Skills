@@ -3,6 +3,9 @@
 **Date:** 2026-08-03, revised 2026-08-04 against four completed peer contracts · **Wave:** 3 ·
 **Status:** `proposed`
 
+**Six-skill reconciliation:** 2026-08-11 · owns immutable repository delivery-roadmap approval,
+execution, atomic implementation commits, and the Execution Ledger
+
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns
 > phase scope and the global ledgers; `docs/design-roadmap.md` supplies the provisional roster and
 > relations. The restored drafting handoff narrows the initial public tranche and the authority
@@ -10,9 +13,10 @@
 > ledger, installs or removes nothing, and authorizes no source retirement.
 >
 > **Conformance.** Sections 1–10 map one-to-one and in order onto
-> `docs/design-requirements.md` sections 7.1–7.10. Section 9 defines the source oracle, reference
-> convener, self-contained candidate, and comparison gates. This document was self-reviewed against
-> requirements sections 11 and 12.
+> `docs/design-requirements.md` sections 7.1–7.10. Section 11 applies the six-skill contract in
+> requirements section 7.11 and has normative precedence over conflicting pre-reconciliation
+> Plan intake, checkpoint-commit, final-commit, or eight-peer wording. Section 9's comparison
+> systems and source-specific gates remain evidence obligations.
 >
 > **Peer reconciliation, 2026-08-04.** The 2026-08-03 draft was written before any sibling contract
 > existed, so its peer profiles were one-sided. Four are now complete —
@@ -53,25 +57,26 @@
 | Status | `proposed` |
 | Priority | `now` |
 | Candidate neighborhoods | Plan & spec (primary); mutation-oriented Code review cleanup (secondary) |
-| User job | **When I want to turn an approved implementation plan into verified project changes without expanding its scope or shipping them.** |
+| User job | **When I want an Approved Change Specification mapped onto an exact, approved repository delivery roadmap and then executed as verified atomic commits without changing required behavior or publishing them.** |
 | Critique handoff acceptance | **conditional** — see section 7.4 |
+| Six-skill role | Produces and obtains approval for the immutable Delivery Roadmap, executes it, and records the separate Execution Ledger |
 
-**The job expresses one outcome.** Project changes, their verification evidence, and the final
-implementation handoff are three parts of executing one approved plan. Planning the work, diagnosing
-an unknown cause, inventing a test strategy, reviewing an artifact, and publishing the result are
-different jobs with different owners.
+**The job expresses one outcome.** An approved repository delivery roadmap, atomic project
+changes, focused verification evidence, and the final Test handoff are consecutive parts of
+delivering one Approved Change Specification. Selecting the solution, changing required behavior,
+independent acceptance, and publication remain different jobs with different owners.
 
-**Name and promise.** `astra-implement` is intentionally a verb with a hard prerequisite: an
-approved plan. It does not mean "take any software request to completion." `astra-spec` decides
-*what* is wanted; `astra-plan` turns the accepted specification into executable work;
-`astra-implement` performs the authorized mutations; `astra-test` owns testing methodology;
-`astra-critique` independently judges artifacts; and `astra-ship` owns final commit shaping and
-publication. These are flat peers. Implement does not invoke one as a hidden sub-skill.
+**Name and promise.** `astra-implement` is intentionally a verb with a hard prerequisite: one
+Approved Change Specification. It does not mean "take any software request to completion."
+`astra-spec` decides *what* is required; Implement inspects the repository, plans and obtains
+approval for *how this repository will deliver it*, then performs only those authorized
+mutations; `astra-test` owns independent verification; `astra-critique` preserves finding and
+causal authority; and `astra-ship` owns publication. These are flat peers.
 
-The initial public tranche remains exactly `astra-critique`, `astra-understand-code`, `astra-spec`,
-`astra-plan`, `astra-implement`, `astra-test`, `astra-debug`, and `astra-ship`. Context, Guard,
-Delegate, Automate, Deploy, Incident, and other later roster candidates are not introduced by this
-design.
+The historical drafting tranche contained eight peers. The reconciled public stack contains
+`astra-critique`, `astra-understand-code`, `astra-spec`, `astra-implement`, `astra-test`, and
+`astra-ship`; Plan and Debug remain superseded source evidence. Context, Guard, Delegate,
+Automate, Deploy, Incident, and other later roster candidates are not introduced by this design.
 
 **Personal value: explicit.** The user selected `astra-implement` as one of exactly eight skills in
 the initial public tranche and supplied a dedicated drafting handoff. The immediate value is
@@ -86,12 +91,11 @@ downstream of approved Plan and Test contracts and section 9's comparison gates.
 
 ### 2.1 Requests that should trigger it
 
-- "Implement this approved plan" or "execute these accepted tickets," with an identifiable plan or
-  ticket set and acceptance checks.
-- "Continue the next task in this approved implementation plan," when current task state and the
-  working base are available.
-- "Apply this already-approved remediation plan," including a user-selected Critique finding that
-  has first been converted into a bounded plan.
+- "Plan delivery for and implement this Approved Change Specification."
+- "Continue the next task in this approved Delivery Roadmap," when its immutable identity,
+  Execution Ledger, and working base are available.
+- "Implement this approved remediation specification," including its Finding IDs and conditional
+  diagnostic branches.
 - "Refine the code changed by this task without changing behavior," only when that cleanup is in the
   approved task or is a supported internal-review finding.
 
@@ -101,13 +105,12 @@ The intake can name one task or many. The number of tasks affects execution mode
 
 | Request | Correct owner or prerequisite | Why it is outside Implement |
 |---|---|---|
-| "Build me feature X" with no accepted behavior or plan | `astra-spec`, then `astra-plan` | Discovery and architecture selection precede mutation |
-| "Turn this accepted spec into tasks and commands" | `astra-plan` | This creates the executable plan |
+| "Build me feature X" with no approved change contract | `astra-spec` | Discovery, solution selection, required behavior, and acceptance precede delivery planning |
 | "How does this subsystem work?" | `astra-understand-code` | Explanation and technical mapping are not mutation |
-| "Why is this failing?" when the cause is unknown | `astra-debug` | Root-cause investigation must precede a remediation plan |
+| "Why is this failing?" | `astra-critique diagnose` | Critique owns causal findings; Implement may execute only approved diagnostic branches |
 | "Design the test strategy / bootstrap the suite" | `astra-test` | Test methodology and suite design are distinct authority |
 | "Review this diff" or "simplify whatever I changed" without bounded authorization | `astra-critique` or a new plan | Review is read-only; open-ended cleanup silently expands scope |
-| "Commit, write the changelog, push, open a PR, merge, or clean up" | `astra-ship` | These are finalization and publication effects |
+| "Push, open a PR, merge, release, deploy, or publication cleanup" | `astra-ship` | These are publication or integration effects; Implement owns its approved atomic implementation commits |
 | "Deploy this" or "handle the incident" | manual/external prerequisite; deferred peers | Deploy and Incident are outside the initial tranche |
 | "Delegate this arbitrary job" | manual user coordination; general `astra-delegate` is deferred | Implement may dispatch only its own bounded task roles |
 
@@ -115,21 +118,29 @@ The intake can name one task or many. The number of tasks affects execution mode
 
 An invocation must supply or make resolvable:
 
-1. an **approved plan reference** and the approval state;
-2. the exact tasks, acceptance criteria, and any required order or dependency edges;
-3. the allowed mutation scope and any forbidden files or effects;
-4. the working base: repository, branch or detached state, worktree state, and known pre-existing
-   changes;
-5. the required verification commands or an approved Test artifact that defines them;
-6. the execution decision: sequential, task-dispatch, or an approved mixed segmentation; and
-7. when task dispatch is selected, explicit approval for an isolated branch/worktree and per-task
-   checkpoint commits.
+1. an **Approved Change Specification** identity, revision, content hash, and approval record;
+2. its Finding IDs, requirements, acceptance criteria, semantic ordering, constraints,
+   implementation freedoms, and conditional branches;
+3. the repository and authorization needed to inspect its live baseline, including branch,
+   worktree, dirty state, and protected pre-existing changes;
+4. any user-supplied delivery constraints, including effect limits, language boundaries, PR
+   dependencies, and line-count exceptions already decided;
+5. the required Critique, Spec, and conditional Understand consultant artifacts and availability;
+6. the authority to run read-only discovery and planning commands needed to make exact repository
+   claims; and
+7. an explicit acknowledgment that no mutation or implementation commit occurs before the user
+   approves one immutable Delivery Roadmap version and its effect scope.
 
-If one of items 1–5 is absent and cannot be recovered without making a product, architecture, or
-testing decision, Implement stops before mutation. It reports the missing field and the appropriate
-upstream peer; it does not manufacture approval.
+If items 1–3 are absent or stale, Implement stops before delivery planning. If an exact roadmap
+would require a new solution, requirement, acceptance criterion, semantic branch, or test-policy
+decision, it returns the gap to the owning authority rather than manufacturing it. After planning,
+missing roadmap approval stops before mutation.
 
-#### 2.3.1 Binding to the executable-Plan schema
+#### 2.3.1 Historical binding to the executable-Plan schema
+
+The remainder of this subsection preserves the former eight-peer Plan/Implement mapping as source
+evidence. Section 11 replaces it as the active six-skill intake contract; it is not a second
+runtime entrance.
 
 `astra-plan` section 2.6 now defines that intake field for field as `astra.plan.executable/v0`, and
 its section 10.4 question 2 asks — as a blocking pre-implementation question — whether Implement
@@ -181,39 +192,44 @@ and the user re-approves it; Implement then re-enters intake against that versio
 
 ### 2.4 User-visible result
 
-The result is an **implementation handoff**, not a shipped change. It contains:
+The result is an **Approved Delivery Roadmap**, its separate **Execution Ledger**, verified atomic
+implementation commits, any explicitly reported uncommitted blocked/incomplete residue, focused
+verification evidence, and a revision-bound Test handoff—not a shipped change. Together they
+contain:
 
-- the exact `plan_id`, executed `plan_version`, and `baseline.base_revision`;
+- the exact Specification identity/revision/hash, Roadmap identity/version/hash, and live baseline;
 - completed, skipped, changed, and blocked task states;
 - files changed and a concise behavioral summary;
 - the exact verification commands, outcomes, and relevant failure evidence;
 - deviations from the plan and the user decisions that authorized them;
 - internal-review findings and their disposition;
-- checkpoint commit identifiers, only when the approved execution mode required them;
+- every atomic implementation commit identifier and its task, requirement, and focused-check refs;
 - remaining risks or external prerequisites; and
-- the current branch/worktree state for a possible user-started Ship invocation.
+- the current branch/worktree state for an independent Test invocation.
 
-Working-tree changes are the primary artifact. The handoff must never imply that unrun checks passed,
-that a checkpoint commit is a release-quality commit, or that Ship has started.
+The delivered revision plus its Execution Ledger is the primary implementation result. The
+handoff must never imply that unrun checks passed, that focused implementation checks replace
+independent Test evidence, or that Ship has started.
 
 ### 2.5 Non-goals
 
-- Discovering or specifying a feature.
-- Selecting architecture or revising an approved plan without the user.
+- Discovering or specifying a feature, selecting its solution, or revising an Approved Change
+  Specification.
 - General-purpose delegation or parallel swarming.
 - Owning testing methodology, broad test-suite creation, or a health dashboard.
-- Root-cause investigation where no remediation plan exists.
+- Owning causal judgment; Critique's consultant evaluates diagnostic evidence on approved branches.
 - Acting as the public, independent Critique surface.
-- Final commit shaping, changelog work, push, PR creation, merge, release, deploy, or cleanup.
+- Changelog/version publication work, push, PR creation, merge, release, deploy, or publication
+  cleanup. Implement does own the atomic implementation commits authorized by its Roadmap.
 - Editing global Astra ledgers or retiring an original source during phase 0.
 
 ### 2.6 Decisions that remain with the user
 
-The user approves the plan; resolves conflicts between the plan and reviewer findings; expands or
-narrows mutation scope; selects or authorizes execution mode; authorizes the isolated worktree and
-checkpoint commits required by task dispatch; accepts deviations and parked findings; decides
-whether a failed or unavailable verification is tolerable; and decides whether to start Critique,
-Test, Debug, or Ship afterward. A source workflow's bundled tail never substitutes for those choices.
+The user approves the immutable Delivery Roadmap, mutation and commit scope, execution mode,
+worktree use, any line-count exception, and PR dependency structure; resolves authority gaps;
+accepts or rejects proposed repartitioning; decides whether failed or unavailable evidence permits
+anything further; and decides whether to start Test or Ship afterward. A source workflow's bundled
+tail never substitutes for those choices.
 
 ---
 
@@ -1176,3 +1192,153 @@ is accepted. Five further items arise from the 2026-08-04 peer pass:
 
 This design deliberately leaves `docs/design-roadmap.md` and `docs/phase-0-ledgers.md` untouched. No
 claim here becomes global allocation authority until those coordinator edits occur.
+
+---
+
+## 11. Six-skill reconciliation amendment
+
+This section absorbs repository delivery planning while preserving Spec's change authority,
+Critique's finding and causal authority, Test's independent evidence authority, and Ship's
+publication authority. It replaces the active Plan intake, optional-checkpoint, uncommitted-
+sequential-mode, and Ship-final-shaping rules in sections 1–10. Those sections remain source and
+validation evidence rather than a second runtime contract.
+
+### 11.1 One invocation, two consecutive stages
+
+Implement owns:
+
+1. produce and obtain approval for an immutable repository Delivery Roadmap; and
+2. execute exactly that approved Roadmap while recording a separate Execution Ledger.
+
+Before Roadmap approval, Implement may inspect the live repository and run authorized read-only
+discovery commands. It may not mutate the target, create an implementation commit, or treat a
+draft Roadmap as authority. The user approves the exact Roadmap version and hash, mutation scope,
+execution mode, worktree use, commit authority, and PR partition before execution begins.
+
+The Approved Delivery Roadmap must contain:
+
+- pinned Approved Change Specification revision/hash and every applicable Finding ID;
+- live repository baseline, branch/worktree state, dirty state, and protected pre-existing
+  changes;
+- exact files, symbols, interfaces, generated contracts, tasks, and typed dependency ordering;
+- repository phases implementing Spec's required semantic order;
+- conditional diagnostic branches authorized by the Specification;
+- exact verification commands, working directories, prerequisites, expected evidence, and
+  evidence owners;
+- allowed effects, forbidden effects, stop conditions, recovery procedures, and rollback limits;
+- execution mode and bounded agent assignments;
+- one logically indivisible intent and focused validation gate for every atomic commit;
+- one-functionality PR scope, authored-line estimate, language partition, and any explicit stack
+  dependency; and
+- required Critique, Spec, and conditional Understand consultant checkpoints.
+
+The Roadmap never selects a different solution, changes a requirement, weakens a criterion,
+invents a semantic branch, or resolves a user-owned tradeoff. A repository fact that makes the
+approved solution impossible is an `authority_gap`, not permission to reinterpret the
+Specification.
+
+### 11.2 Consultant gates and forward-only branches
+
+One persistent Critique consultant and one persistent Spec consultant participate whenever their
+authority is present. An Understand Code consultant also participates when the Roadmap directly
+relies on an Understanding Report. They receive immutable artifact references rather than reading
+sideways into peer files.
+
+Before Roadmap approval:
+
+- Critique checks Finding-ID coverage, causal proof obligations, instrumentation needs, and
+  diagnostic branch completeness;
+- Spec checks requirements, acceptance criteria, constraints, semantic ordering,
+  implementation freedoms, and branch authorization; and
+- Understand Code, when applicable, checks that repository claims have not drifted beyond its
+  report.
+
+During execution, the Critique consultant evaluates diagnostic evidence and causal claims. The
+Spec consultant confirms which already approved branch that evidence permits. Evidence inside the
+decision envelope proceeds without an upstream restart or renewed approval. Evidence outside it,
+an invalidated finding, stale artifact identity, or a new user-owned decision returns
+`authority_gap` and stops mutation.
+
+At final implementation verification, the same consultants check the delivered revision and
+Execution Ledger against their preserved authority. `drift` may be repaired only when the repair
+is already a named Roadmap task or approved branch. Consultants never mutate, approve, or widen
+the Roadmap.
+
+Implement exposes its own narrow read-only `consult` mode to Test and Ship. It validates delivered
+scope, task and commit coverage, language partitioning, and Execution Ledger accuracy and returns
+`pass`, `drift`, or `authority_gap`. It cannot declare Test evidence sufficient or authorize
+publication.
+
+### 11.3 Execution Ledger and deviation rules
+
+The Approved Delivery Roadmap is immutable. The Execution Ledger separately records:
+
+- Roadmap identity/version/hash and the observed baseline;
+- task state, dependency releases, mode and assigned executor;
+- exact pre- and post-task revisions and dirty-state deltas;
+- diagnostic evidence, consultant determinations, and selected approved branch;
+- commands, working directories, outputs, failures, and focused verification results;
+- changed files, generated-output accounting, authored-line counts, and protected user changes;
+- atomic commit IDs and their requirement, criterion, task, and evidence references;
+- deviations, whether they remain inside approved implementation freedom, and user decisions;
+- unselected branches, parked work, residual instrumentation, risks, and resume cursor; and
+- final revision identity and Test handoff.
+
+A represented condition selects a branch; it does not rewrite the Roadmap. A mechanical execution
+detail may vary only inside an explicit Specification freedom and Roadmap effect boundary and is
+recorded as a deviation. Any new task, file class, functionality, language partition, semantic
+outcome, required effect, or commit purpose outside the Roadmap stops for a new approved Roadmap or
+an upstream authority cycle as appropriate.
+
+Focused implementation checks prove only that an atomic task is ready to commit. They do not
+replace Test's independent verification against the pinned delivered revision.
+
+### 11.4 Atomic commit policy
+
+Every implementation commit must be:
+
+- one logically indivisible change;
+- complete with the tests and durable documentation necessary for that change;
+- free of unrelated cleanup, metadata, or user-owned work;
+- verified by its named focused checks before creation;
+- independently understandable and safely revertible; and
+- created immediately after that atomic change is verified.
+
+This policy applies in sequential, task-dispatch, and mixed execution. Roadmap approval is the
+bounded commit authority; a separate ad hoc approval is not required for each commit already named
+there. Agent dispatch and worktree creation still require their exact approved effects. Implement
+records and protects pre-existing staged, unstaged, and untracked changes and never folds them into
+an atomic commit merely because they share the checkout.
+
+The historical rule that sequential mode normally leaves work uncommitted is superseded. The
+historical distinction between a checkpoint and a final-quality implementation commit is also
+superseded: every Implement commit must meet the atomic contract when created. Implement never
+pushes, opens a PR, merges, releases, deploys, or rewrites atomic history for cosmetic shaping.
+
+### 11.5 Narrow PR roadmap policy
+
+Each planned PR must serve exactly one functionality, feature, or bug fix. Implement targets no
+more than 400–500 authored changed lines. If the realized work would grow beyond that target, it
+stops and repartitions before adding more scope. Exceeding 500 authored lines requires explicit
+justification and user approval.
+
+Changes in different implementation languages go into separate PRs even when they support the
+same larger feature. The Roadmap names their dependency order or stacking relationship. Tests and
+durable documentation may accompany only the functionality they directly support. Generated
+output is counted and reported separately and cannot conceal the authored line total.
+
+Critique and Spec consultants check that this partition retains complete Finding and requirement
+coverage. Ship later verifies realized scope, language separation, authored-line count, base,
+ancestry, conflicts, and fresh evidence before publication.
+
+### 11.6 Deferred source absorption
+
+The superseded Plan design's inspected sources now require source-by-source allocation between
+Spec, Implement, retained references, adapters, and exclusions. This amendment does not claim that
+allocation, change a ledger row, or resolve the Implement design's existing source gaps. In
+particular, task publication, tuning, general delegation, live adaptation, Health, unavailable
+`simplify`, and source-native Ship tails remain open source-specific decisions.
+
+No runtime skill, consultant process, harness, schema, corpus, reference convener,
+self-contained candidate, push, PR, or source retirement is created here. Implement is
+policy-grounded but deliberately not yet fully fleshed out from every relevant source.

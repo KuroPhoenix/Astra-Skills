@@ -578,6 +578,21 @@ Every PR must:
 - include only tests and durable documentation that directly support its functionality; and
 - report generated output separately so it cannot conceal authored line count.
 
+#### 7.11.5 Durable in-repository prose
+
+Comments, docstrings, module headers, and durable developer documentation describe the shipped
+artifact rather than the delivery sequence that produced it. They state their own subject's
+purpose first, then behavior, invariants, effect or integration boundaries, prerequisites, and
+stable rationale. Caller behavior belongs at the call site or module boundary; cross-file context
+follows the subject's own contract.
+
+Shipped prose must not embed roadmap or PR identifiers, future-commit choreography, temporary
+snapshot claims, or language such as `for now` and `later PR` that becomes false as branches land.
+An inactive path describes its current integration boundary rather than the future event expected
+to activate it. Prose follows the repository's language-specific convention, including PEP 257 for
+Python when applicable. Implement checks the authored diff before the atomic commit, and Ship
+verifies that the recorded check covers the publication revision.
+
 These are planning and publication constraints, not evidence that a PR is authorized in phase
 0. Phase 0 creates or revises design documents only: no runtime skill, harness, installation,
 source deletion, retirement, push, or PR is implied.
@@ -753,6 +768,7 @@ account for every source without taking an already claimed primary home.
       unapproved evidence as `drift` or `authority_gap` rather than silently rewriting history.
 - [ ] Implement and Ship preserve the atomic-commit, one-functionality-per-PR,
       language-partition, and authored-line policies in section 7.11.4.
+- [ ] Implement and Ship preserve the durable in-repository prose policy in section 7.11.5.
 - [ ] A usable manual bridge exists, or its missing prerequisite and consequence are named.
 
 ### Scope discipline

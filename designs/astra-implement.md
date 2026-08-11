@@ -1331,7 +1331,32 @@ Critique and Spec consultants check that this partition retains complete Finding
 coverage. Ship later verifies realized scope, language separation, authored-line count, base,
 ancestry, conflicts, and fresh evidence before publication.
 
-### 11.6 Deferred source absorption
+### 11.6 Durable in-repository prose
+
+Implementation treats comments and docstrings as shipped artifacts, not as delivery notes. Any
+new or changed in-repository prose must:
+
+- state its own file, module, class, or function's purpose first;
+- describe behavior, invariants, effect boundaries, prerequisites, or rationale that remains true
+  after merge;
+- keep caller behavior at the call site or module boundary rather than placing it in a callee's
+  docstring;
+- describe an intentionally inactive path by its present integration boundary, not by the future
+  PR or commit expected to activate it;
+- omit delivery choreography and snapshot language such as `roadmap PR`, `later PR`, `later
+  commit`, `for now`, and claims about what the current tree happens to contain;
+- place cross-file context after the subject's own purpose and only when it improves correct use;
+- remain directly understandable rather than encoding a workaround as if it were the intended
+  design; and
+- follow the repository's language-specific prose convention, including PEP 257 for Python when
+  applicable.
+
+The Roadmap names a durable-prose check for every task that changes comments, docstrings, module
+headers, or user-facing developer documentation. That check examines the authored diff before the
+atomic commit. Delivery chronology belongs in the Roadmap, Execution Ledger, handoff, commit, or PR
+record—not in the shipped source artifact.
+
+### 11.7 Deferred source absorption
 
 The superseded Plan design's inspected sources now require source-by-source allocation between
 Spec, Implement, retained references, adapters, and exclusions. This amendment does not claim that

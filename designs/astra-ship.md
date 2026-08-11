@@ -1297,6 +1297,8 @@ Before any push, PR, merge, or cleanup effect, Ship verifies:
   explicit;
 - generated output is reported separately and does not conceal authored line count;
 - tests and durable documentation in the PR directly support its functionality;
+- Implement's durable-prose check covers every changed comment, docstring, module header, and
+  developer document at the exact publication revision;
 - base, ancestry, conflicts, branch/worktree ownership, protected user changes, and forge state
   are current; and
 - the Test Evidence Packet is fresh for the exact head to publish.

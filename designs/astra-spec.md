@@ -1303,3 +1303,34 @@ remain inputs to a later Spec/Implement source-allocation pass. This amendment d
 
 The surviving Spec is therefore authority-complete for this policy checkpoint but deliberately
 not yet fully fleshed out from all relevant sources.
+
+## 12. 92-component source-expansion amendment
+
+The user-approved census, source hashes, cross-stack equivalence evidence, and retirement gates
+live in `docs/six-skill-source-absorption.md`. This design adopts ten new primary identifiers:
+`feature-dev:feature-dev`, `feature-dev:code-architect`, `sdd`, `design-api`, `design-db`,
+`mcp-builder`, `skill-creator`, `skill-creator:skill-creator`, `writing-great-skills`, and
+`superpowers:writing-skills`.
+
+Their material behavior becomes six internal specification profiles behind the Approved Change
+Specification interface: feature development, lifecycle-state projection, API design, database
+design, MCP design, and skill-artifact design. A profile may add domain fields and a separate
+advisor context, but it must preserve selected and rejected alternatives, user-owned tradeoffs,
+state transitions, interfaces, migrations, acceptance cases, provenance, missing prerequisites,
+and source-specific failure behavior. `sdd` may project repository artifact state and the next
+valid lifecycle entry; it does not create a seventh authority or grant setup/update effects.
+
+`feature-dev:code-architect` remains a separately invocable advisor delivery shape. It may propose
+architecture options but cannot select or approve them. Likewise, skill-scoped analyzers,
+comparators, and graders inform the skill-artifact profile without approving the specification.
+Only the user approves the complete specification revision.
+
+OpenAPI documents, DDL and migration scripts, MCP server code, `SKILL.md` files, fixtures, and
+evaluation programs are durable repository artifacts. Spec states their required behavior and
+acceptance criteria; Implement owns writing them according to an approved Roadmap, and Test owns
+independent evidence. No source-native generator crosses those boundaries merely because it was
+bundled with a design workflow.
+
+This amendment revises the Plan-source allocation proposed in section 11.5 but does not update or
+resolve the coordinator ledger. No runtime profile, generated artifact, corpus, harness,
+installation, publication, or retirement is created here.

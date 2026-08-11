@@ -1018,3 +1018,28 @@ retirement state. Test is policy-grounded but not yet fully fleshed out from eve
 
 This document is phase-0 prose only. It runs no behavioral validation and grants no retirement
 authority.
+
+## 12. 92-component source-expansion amendment
+
+The user-approved census, source hashes, cross-stack equivalence evidence, and retirement gates
+live in `docs/six-skill-source-absorption.md`. This design adopts three new primary identifiers:
+`webapp-testing`, `benchmark`, and `benchmark-models`.
+
+They extend Test's evidence methods without changing its interface or independent authority.
+`webapp-testing` supplies browser reconnaissance, Playwright execution, log capture, screenshots,
+and cleanup against pinned behavior. `benchmark` supplies named baselines, repeated performance
+measurements, budgets, and trends. `benchmark-models` supplies same-prompt cross-model runs with
+explicit model, cost, token, latency, and optional judge records. Each method preserves its exact
+prerequisites, raw output, environment identity, degradation, and source-specific retirement gate
+inside the Test Evidence Packet.
+
+QA, iOS, API, database, MCP, Java, shell, and skill-artifact profiles also create secondary Test
+obligations. Their approved criteria and exact delivered revision select the evidence method;
+Test does not infer an unapproved contract from a source's defaults. Exploratory browser or device
+work without pinned requirements remains Critique. Durable fixtures, scripts, instrumentation, or
+product repairs required by a failed run return through a new approved change cycle rather than
+being written by Test.
+
+This amendment changes no coordinator ledger row and performs no browser, benchmark, model,
+device, or test run. It creates no runtime profile, corpus, harness, repository mutation,
+publication, or source-retirement claim.

@@ -1109,3 +1109,26 @@ The relation table in section 7 remains historical eight-peer evidence until the
 reconciles all 15 pairs in the six-skill roster. No source row, retained-agent disposition,
 runtime mechanism, harness, or retirement claim changes here. The design is policy-grounded but
 not yet expanded with additional related sources.
+
+## 12. 92-component source-expansion amendment
+
+The user-approved source census and allocation live in
+`docs/six-skill-source-absorption.md`. Understand Code receives no new primary source identifier
+among the 41 additions because none introduces another current-state authority beyond the four
+sources already assigned here.
+
+Understand Code instead serves as a conditional read-only consultant when an approved Feature Dev,
+API, database, MCP, QA, iOS, shell, or skill-artifact workflow relies materially on an Understanding
+Report. The active peer must pass the exact report identity and the claims it relies on; Understand
+returns only `pass`, `drift`, or `authority_gap` under section 11.2. A profile label or platform
+prerequisite alone does not trigger consultation.
+
+`feature-dev:code-architect` is primary Spec evidence under the expanded allocation. Its separate
+agent context remains a preserved delivery shape, but its architecture selection is not current-
+state explanation and therefore does not migrate here. Exploratory QA observations remain Critique
+findings, domain decisions remain Spec authority, repository changes remain Implement authority,
+and independent sufficiency remains Test authority.
+
+This amendment adds neither a source claim nor a retirement claim. The coordinator must still
+reconcile all 15 directed consultant pairs, migrate the approved source allocation, and validate
+the full stack before any affected original can retire.

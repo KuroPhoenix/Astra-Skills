@@ -1024,6 +1024,40 @@ Until that source-expansion pass and coordinator reconciliation occur:
 - the historical Debug fixtures and source retirement gates remain intact rather than being
   silently generalized into Critique's existing corpus.
 
+## 12. 92-component source-expansion amendment
+
+The user-approved 92-component target in `docs/six-skill-source-absorption.md` performs the
+source-expansion pass deferred by section 11.4. That coordinator design is the canonical census,
+provenance record, cross-stack equivalence argument, and retirement-gate table. This design adopts
+its following 18 primary source identifiers:
+
+- code review: `code-review`, `review`, `requesting-code-review`,
+  `receiving-code-review`, `superpowers:requesting-code-review`,
+  `superpowers:receiving-code-review`, `feature-dev:code-reviewer`, and
+  `code-review:code-review`;
+- exploratory and health review: `dogfood`, `qa`, `qa-only`, and `health`;
+- independent diagnosis and jurisdictional review: `codex`, `rca`, `cso`, and `java`; and
+- device and visual review: `ios-qa` and `ios-design-review`.
+
+These sources become internal review profiles behind Critique's existing `review`, `diagnose`,
+and read-only consultant interfaces. Each profile preserves its exact input prerequisites,
+separate-agent or tool delivery shape, evidence kind, confidence/severity vocabulary, degradation,
+and source-specific retirement obligations. Every profile normalizes its authoritative output into
+the Finding Set while retaining attributable source evidence; normalization does not erase a
+source-unique field or collapse competing reviewer judgments.
+
+Source-native repair, refactoring, instrumentation, bridge installation, commit, posted-comment,
+or publication steps do not migrate into Critique. They become explicit downstream routes through
+Spec, Implement, Test, and Ship. `rca` supplies causal-investigation method to `diagnose`, while
+live stabilization and incident communication remain the separate `firefighting` job. `health`
+supplies read-only quality judgment and trend facts; a pinned measurement may later be Test
+evidence, but Critique does not certify the delivered revision.
+
+This amendment proposes source allocation only. It changes no coordinator ledger row, runtime
+skill, adapter, corpus, harness, installation, source-retirement state, push, or PR. The 18 rows
+remain unabsorbed and unresolved until the coordinator migration, three-system comparison, and
+their source-specific gates succeed.
+
 ---
 
 # Appendix A — Panel protocol (historical detail)

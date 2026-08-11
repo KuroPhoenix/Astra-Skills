@@ -1367,3 +1367,36 @@ particular, task publication, tuning, general delegation, live adaptation, Healt
 No runtime skill, consultant process, harness, schema, corpus, reference convener,
 self-contained candidate, push, PR, or source retirement is created here. Implement is
 policy-grounded but deliberately not yet fully fleshed out from every relevant source.
+
+## 12. 92-component source-expansion amendment
+
+The user-approved census, source hashes, cross-stack equivalence evidence, and retirement gates
+live in `docs/six-skill-source-absorption.md`. This design adopts ten new primary identifiers:
+`superpowers:using-git-worktrees`, `coding-agent`,
+`superpowers:dispatching-parallel-agents`, `ios-fix`, `ios-sync`, `ios-clean`,
+`shell-scripting:bash-pro`, `shell-scripting:posix-shell-pro`, `skillify`, and
+`document-release`.
+
+Each source becomes an internal execution profile or adapter selected by the Approved Delivery
+Roadmap. The Roadmap records the exact isolation method, bounded executor, platform or language
+profile, files and generated outputs, focused checks, atomic commit boundaries, prerequisites,
+stop conditions, and cleanup owner. The Execution Ledger records every invocation, device/runtime
+fact, external-agent result, failure, residual process or instrumentation, protected user change,
+and realized commit.
+
+Source-native autonomy does not replace approval. Worktree creation, concurrent dispatch, iOS
+instrumentation or cleanup, shell-specialist execution, browser-skill generation, and repository-
+documentation edits occur only as named Roadmap tasks. Generated output is accounted for
+separately, but remains inside the same atomicity, durable-prose, and narrow-PR rules as authored
+work. A missing device, signer, model, shell, browser, tool, credential, or stable source revision
+stops or degrades exactly as the Roadmap permits and remains visible in the Ledger.
+
+`document-release` moves before publication: it supplies durable repository-prose behavior to
+Implement, while Ship verifies that the obligation is complete for the exact head. It does not
+authorize a VERSION bump, changelog overwrite, push, PR, release, or unrelated documentation
+sweep. `skillify` similarly supplies a repository-artifact execution profile; Spec owns the skill
+contract, Test owns evaluations, and Ship owns any publication effect.
+
+This amendment revises the deferred allocations in section 11.7 but changes no coordinator ledger
+row. It creates no worktree, agent process, device bridge, source file, test, commit, push, PR,
+runtime candidate, installation, or retirement state.

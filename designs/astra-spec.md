@@ -3,6 +3,9 @@
 **Date:** 2026-08-03 · **Authoritative drafting-tranche position:** 3 of 8 ·
 **Status:** `proposed`
 
+**Six-skill reconciliation:** 2026-08-11 · surviving public home for solution selection and the
+complete approved change contract; `astra-plan` is superseded historical evidence
+
 > **Authority.** `docs/design-requirements.md` is the sole per-skill design contract;
 > `docs/phase-0.md` owns phase scope and coordinator authority; the current user instruction fixes
 > the public drafting tranche and its order. This document proposes one design. It does not
@@ -14,8 +17,10 @@
 > Proposed Astra behavior is never presented as observed runtime behavior.
 >
 > **Conformance.** Sections 1–10 map one-to-one and in order onto
-> `docs/design-requirements.md` sections 7.1–7.10. Every assigned body and its directly relevant
-> registration or bundle was inspected in full. All originals remain installed.
+> `docs/design-requirements.md` sections 7.1–7.10. Section 11 applies the six-skill contract in
+> requirements section 7.11 and has normative precedence over conflicting pre-reconciliation
+> wording. Every assigned body and its directly relevant registration or bundle was inspected in
+> full. All originals remain installed.
 
 ---
 
@@ -27,13 +32,15 @@
 | Status | `proposed` |
 | Priority | `now` |
 | Candidate neighborhood | Plan & spec: `cm-plan-and-spec-01`, `05`, `06`, and `07` |
-| User job | **When I have vague, partial, or revised intent, I want an explicitly accepted specification of what should be built and how its success will be recognized, without starting planning or implementation.** |
-| Accepts Critique handoff | **yes**, for `specification-gap-or-ambiguity`; section 7.3 owns the compact destination profile |
+| User job | **When I have vague, partial, revised, or finding-backed intent, I want one approved change specification that selects the solution and defines every required outcome, without repository delivery planning or mutation.** |
+| Accepts Critique handoff | **yes** — for `specification-gap-or-ambiguity` and any user-selected in-scope finding requiring a change contract; section 11 governs the reconciled intake |
+| Six-skill role | Absorbs Plan's solution-facing authority; exact repository delivery planning transfers to `astra-implement` |
 
-The outcome is one **Accepted Specification** artifact, or an honestly non-accepted draft with
-fielded blockers. Clarification, evidence grounding, alternatives, staged decisions, acceptance
-criteria, revision, and optional delivery are behaviors that lead to that outcome. They do not turn
-Spec into an executable planner, project mutator, reviewer, tester, debugger, publisher, or
+The reconciled outcome is one **Approved Change Specification**, or an honestly non-approved
+draft with fielded blockers. Clarification, evidence grounding, solution alternatives, selected
+direction, semantic ordering, staged decisions, acceptance criteria, conditional branches,
+revision, and optional artifact delivery are behaviors that lead to that outcome. They do not
+turn Spec into a repository delivery planner, project mutator, reviewer, tester, publisher, or
 workflow dispatcher.
 
 **Personal value is explicit.** The user selected `astra-spec` as the third peer in this exact
@@ -74,10 +81,10 @@ not enter the Spec interface.
 |---|---|---|
 | “Explain what this code currently does” | `astra-understand-code` | Existing behavior is evidence for intent, not intent authority |
 | “Attack this spec or compare independent reviewer judgments” | `astra-critique` | Review and adversarial judgment are separate from authorship |
-| “Turn the accepted spec into ordered executable work” | `astra-plan` | Sequence, task graph, files-to-change, rollout, and implementation approval belong downstream |
+| “Turn the approved change spec into exact repository work” | `astra-implement` | Files, symbols, task graph, commands, rollback procedures, agents, worktrees, and commit/PR boundaries belong downstream |
 | “Change the project” | `astra-implement` | Source, configuration, migration, and production mutation are forbidden here |
 | “Build or run the proof” | `astra-test` | Spec defines accepted behavior; Test creates and executes evidence |
-| “Find the cause of this failure” | `astra-debug` | Diagnosis may inform a revision, but Spec does not run a causal loop |
+| “Find the cause of this failure” | `astra-critique diagnose` | Causal judgment may inform remediation mode, but Spec does not run a causal investigation |
 | “Commit, push, file a PR, merge, release, or deploy” | `astra-ship` for VCS/publication; Deploy stays external | Acceptance conveys no publication or deployment authority |
 | “Tell me the next speckit command” | retained `/sdd` reference | Workflow navigation is a separate user job and may carry source-specific effects |
 | “Dispatch an agent to implement this” | explicit external Delegate bridge | Specification acceptance is not dispatch authority |
@@ -91,7 +98,8 @@ One invocation accepts a bounded **Specification Context** with these caller-vis
    material, existing product behavior, contracts, ADRs, or prior specification revisions;
 3. `authority_context`: who may decide intent, scope, acceptance criteria, and final acceptance;
 4. `artifact_context`: repository, product, API, feature, issue, or other bounded subject;
-5. `requested_mode`: `discover`, `synthesize`, or `revise`, or permission to recommend one;
+5. `requested_mode`: `discover`, `synthesize`, `remediate`, or `revise`, or permission to
+   recommend one;
 6. `effect_authority`: explicit allow/deny values for local-document delivery, issue delivery,
    external review, browser/visual delivery, and any other persistent or remote effect; and
 7. `constraints`: user-supplied time, compatibility, regulatory, policy, language, accessibility,
@@ -1173,3 +1181,125 @@ The coordinator must reconcile:
 
 Until that reconciliation, this design is `proposed`; every ledger row remains unresolved; every
 original remains installed; and no source is eligible for retirement.
+
+---
+
+## 11. Six-skill reconciliation amendment
+
+This section merges Plan's solution-facing authority into Spec while leaving repository delivery
+planning with Implement. It fixes the surviving contract before the remaining relevant source
+inventory is absorbed. Sections 1–10 retain their source evidence and validation obligations;
+where their eight-peer terminology, `Accepted Specification` name, or Spec/Plan boundary
+conflicts with this section, this section governs.
+
+### 11.1 Public operation and modes
+
+The one public operation is reconciled as:
+
+```text
+specify(Change Context) -> Specification Result
+```
+
+It supports four modes:
+
+| Mode | Use | Required authority behavior |
+|---|---|---|
+| `discover` | Develop vague or greenfield intent | Ask one material question at a time and expose solution-significant choices |
+| `synthesize` | Compile already-resolved intent | Avoid redundant questioning while preserving evidence and approval identity |
+| `remediate` | Select and specify fixes for Critique findings | Dispose every in-scope Finding ID and consult Critique before approval |
+| `revise` | Supersede an approved Specification after new evidence | Preserve prior revision identity, explain the change, and obtain fresh whole-revision approval |
+
+The merged workflow is:
+
+1. classify input authority, mode, artifact identities, and effect limits;
+2. ground current state in supplied Critique, Understand Code, Test, repository, and historical
+   Debug evidence without converting evidence into intent;
+3. ask one material question at a time;
+4. develop two or three viable solutions and recommend one;
+5. obtain user decisions on solution-significant tradeoffs;
+6. compile the complete Approved Change Specification draft;
+7. invoke Critique's persistent consultant when Critique authority is present;
+8. repair `drift` inside the active draft or stop on `authority_gap`;
+9. present the complete revision for explicit user approval; and
+10. return an approved, draft, changes-requested, or fielded blocked result.
+
+Spec also exposes a narrow read-only `consult` mode to downstream peers. It checks whether a
+roadmap, executed branch, Test packet, or publication claim remains inside the exact approved
+behavior, constraints, freedoms, and conditional branches. It returns `pass`, `drift`, or
+`authority_gap`; it cannot mutate the downstream artifact, approve it, or create a new branch.
+
+### 11.2 Merged authority boundary
+
+| Retained or absorbed by Spec | Transferred to Implement |
+|---|---|
+| Selected solution and rejected alternatives | Exact files, symbols, and repository baseline |
+| Target behavior and interfaces | Concrete implementation and diagnostic tasks |
+| Scope, non-goals, constraints, and invariants | Task dependency graph and repository delivery phases |
+| Compatibility and semantic migration strategy | Exact commands, working directories, and evidence capture steps |
+| Required semantic ordering | Execution mode, bounded agent assignments, and worktree choice |
+| Positive, negative, and failure acceptance cases | Atomic commit boundaries and PR partitions |
+| Finding-to-requirement traceability and explicit dispositions | Concrete stop, recovery, and rollback procedures |
+| Approved conditional outcomes and implementation freedoms | Mutation progress, branch selection, checkpoint state, and execution evidence |
+
+Spec may require `expand -> migrate -> contract`, but it must not choose which files or commits
+realize those semantics. Repository task order, exact paths, implementation commands, agent
+dispatch, effort estimates, worktree operations, commit sequencing, and rollback commands remain
+forbidden prescriptions in the Approved Change Specification.
+
+### 11.3 Approved Change Specification
+
+The reconciled artifact name is **Approved Change Specification**. The section 2.5 Accepted
+Specification fields remain the starting schema rather than discarded work. A later schema
+revision must make these additions and renamings explicit:
+
+- replace Plan-facing readiness language with Implement-facing delivery readiness;
+- accept immutable Finding Set references instead of treating historical Debug packets as a
+  separate public authority;
+- add a complete list of `{finding_id, disposition, requirement_ids, criterion_ids}` for every
+  in-scope Critique finding;
+- represent required semantic ordering independently from repository task ordering;
+- represent approved conditional branches with their hypothesis state, permitted outcome,
+  constraints, acceptance criteria, and indeterminate behavior;
+- distinguish required implementation freedoms from prohibited behavior; and
+- retain immutable identity, content hash, approval record, evidence conflicts, open questions,
+  rejected alternatives, and non-inference acceptance gates.
+
+For critique-driven work, no in-scope finding may disappear. Each is `resolved-by-change`,
+`accepted-risk`, `rejected-with-evidence`, `duplicate-of`, or `out-of-scope-with-owner`, with the
+user-owned decisions recorded where required. Every `resolved-by-change` finding maps to at least
+one requirement and observable acceptance criterion. The Critique consultant checks finding and
+causal-obligation coverage; it does not select the solution.
+
+Approval binds one exact Specification revision and content hash. A changed selected solution,
+scope, required behavior, semantic order, criterion, constraint, branch, or freedom invalidates
+the prior approval. Delivery metadata cannot silently change meaning-bearing fields.
+
+### 11.4 Forward-only branch authority
+
+Remediation may begin while causal evidence is incomplete only when the Specification contains a
+closed decision envelope. For every live hypothesis it states what outcome is allowed if the
+hypothesis is supported, contradicted, or remains indeterminate. Implement may execute only the
+branch whose evidence is accepted by the Critique consultant and whose outcome is authorized by
+the Spec consultant.
+
+Evidence already represented by that envelope proceeds without returning to Spec. Evidence
+outside every branch, evidence invalidating a Finding Set, or a new user-owned tradeoff returns
+`authority_gap`. The active consultant cannot revise the Specification; a new approved revision
+and immutable change cycle are required if the user continues.
+
+### 11.5 Plan source preservation and deferred absorption
+
+`astra-plan` is a superseded historical design. Its inspected sources, exact artifact reasoning,
+dependency and effect analysis, fixtures, projections, and source-specific retirement gates
+remain inputs to a later Spec/Implement source-allocation pass. This amendment does not yet:
+
+- reassign or resolve any Plan collision row;
+- decide source by source whether behavior becomes Spec-internal, Implement-internal, a retained
+  reference, an adapter, or an excluded duplicate;
+- claim preservation of Plan's complete authoring, execution, ticketing, tuning, or Wayfinder
+  behavior; or
+- build the consultant runtime, artifact schema, corpus, reference convener, or self-contained
+  candidate.
+
+The surviving Spec is therefore authority-complete for this policy checkpoint but deliberately
+not yet fully fleshed out from all relevant sources.

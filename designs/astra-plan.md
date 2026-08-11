@@ -1,12 +1,18 @@
 # Astra Plan — phase-0 design
 
-> Status: **proposed design only**. This document does not install, generate,
+> Status: **superseded historical** as of 2026-08-11. This document does not install, generate,
 > validate, retire, rename, invoke, or modify any skill, agent, hook, tracker,
 > project file, or ledger. Every ledger entry below is a proposal for later
 > coordinator reconciliation.
+>
+> **Six-skill disposition.** Solution selection, target behavior, semantic ordering, and
+> acceptance authority move to `astra-spec`. Repository-specific files, tasks, dependency order,
+> verification commands, rollback procedures, agents, worktrees, commits, and PR partitions move
+> to `astra-implement`. This file remains source-accounting and preservation evidence and changes
+> no source claim or retirement state. Section 11 governs every conflict with the historical body.
 
-This is the phase-0 design for public flat peer **4. `astra-plan`** in the
-fixed public tranche:
+This was the phase-0 design for public flat peer **4. `astra-plan`** in the
+historical eight-peer tranche:
 
 1. `astra-critique`
 2. `astra-understand-code`
@@ -38,7 +44,7 @@ invented software interface.
 | Field | Value |
 |---|---|
 | Provisional Astra name | `astra-plan` |
-| Status | `proposed` |
+| Status | `superseded historical` — source-accounting record, not a public roster member |
 | Priority | `now` for completing this phase-0 design contract; implementation remains later and gated |
 | Candidate neighborhood | Plan & spec: `cm-plan-and-spec-02`, `08`, `09`, `10`, and `11` |
 | User job | **When I want to turn an explicitly accepted Spec into a complete, implementation-ready Plan whose exact work, ordering, interfaces, verification, effects, stops, rollback, and handoff can be reviewed before anyone changes the project.** |
@@ -1528,3 +1534,60 @@ Before any implementation work, the coordinator must reconcile:
 
 Until then, this document is an evidence-backed architectural hypothesis, not a
 replacement instruction.
+
+---
+
+## 11. Supersession and authority migration
+
+Sections 1–10 remain historical evidence for the former Plan proposal. They preserve source
+characterization, a candidate artifact, effect analysis, exactness disciplines, projections,
+fixtures, dependencies, and retirement gates. They no longer define a public peer or a runtime
+handoff. The active boundary is the six-skill contract in `docs/design-requirements.md` section
+7.11 and the surviving Spec and Implement designs.
+
+### 11.1 Responsibility transfer
+
+| Historical Plan responsibility | Surviving authority | Boundary after transfer |
+|---|---|---|
+| Develop alternatives, recommend and record the selected solution | `astra-spec` | Selection is part of intended change, not repository delivery |
+| Define target behavior, interfaces, scope, non-goals, constraints, invariants, compatibility, and migration semantics | `astra-spec` | These meaning-bearing facts are approved before delivery planning |
+| Define semantic ordering, acceptance and negative cases, implementation freedoms, and finding traceability | `astra-spec` | Semantic order may constrain delivery but cannot prescribe files or commits |
+| Inspect the live repository and pin its protected baseline | `astra-implement` | Current repository facts inform exact delivery, not approved behavior |
+| Name exact files, symbols, tasks, task dependencies, commands, working directories, agents, and worktrees | `astra-implement` | All items must remain inside one approved Specification revision |
+| Define diagnostic branches as executable tasks, evidence checkpoints, stops, recovery, and rollback limits | `astra-implement` | Branch outcomes must already be authorized by Spec |
+| Define and execute atomic commit boundaries and narrow PR partitions | `astra-implement` | User approves the immutable roadmap and mutation/commit authority first |
+| Decide whether an artifact is approved | User | Spec records change approval; Implement records separate roadmap and mutation approval |
+
+The former single Plan artifact is therefore split by authority, not by document length. Spec
+owns the complete solution and outcome contract. Implement owns the immutable repository delivery
+roadmap and its separate Execution Ledger. Neither may infer or alter the other's approval.
+
+### 11.2 Source evidence retained for later allocation
+
+The later source-absorption pass must evaluate every inspected Plan occurrence against the new
+boundary rather than moving all sources wholesale. In particular:
+
+- solution exploration, specification completeness, semantic ordering, acceptance mapping, and
+  approval disciplines are Spec candidates;
+- exact repository decomposition, dependency graphs, verification matrices, effect ledgers,
+  stops, rollback, agents, worktrees, and commit roadmaps are Implement candidates;
+- ticket publication, tuning, live task state, workflow navigation, and remote effects require
+  source-specific decisions and may remain separate rather than entering either core; and
+- every bundled component, authority field, degradation path, projection, fixture, provenance
+  anchor, and source-specific retirement gate remains binding evidence until reconciled.
+
+The existing `spec_coverage` clarification in section 7.2.2 remains useful historical boundary
+evidence: Critique observes whether accepted intent governed the reviewed contract; the
+downstream change authority decides what that observation permits. In the six-skill design that
+decision belongs to Spec's remediation intake, not to a public Plan peer.
+
+### 11.3 No absorption or runtime claim
+
+This amendment does not reassign any collision-ledger row, resolve a source claim, validate the
+merged behavior, or settle exact runtime schemas. It does not build consultant machinery, an
+implementation harness, a reference convener, a self-contained candidate, or a public skill. The
+old Plan sources remain installed and the historical comparison corpus and retirement gates stay
+intact.
+
+The surviving Spec and Implement designs are therefore policy-grounded but deliberately not yet
+fully fleshed out from every relevant Plan source.

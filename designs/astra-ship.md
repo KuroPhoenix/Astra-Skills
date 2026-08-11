@@ -1352,3 +1352,29 @@ machinery remain open dispositions rather than silently absorbed behavior.
 This amendment changes no ledger, runtime skill, harness, comparison system, source installation,
 push, PR, or retirement state. Ship is policy-grounded but not yet fully fleshed out from every
 related source.
+
+## 12. 92-component source-expansion amendment
+
+The user-approved census, source hashes, cross-stack equivalence evidence, and retirement gates
+live in `docs/six-skill-source-absorption.md`. Ship receives no new primary source identifier among
+the 41 additions because their publication effects already fit its existing authority.
+
+Ship nevertheless gains four explicit secondary obligations from the expanded allocation:
+
+- post an external code-review comment only when that exact effect is authorized and the Finding
+  Set representation has passed the cumulative consultant gate;
+- verify provenance-scoped worktree teardown without deleting a user-owned workspace or hiding
+  residue recorded by Implement;
+- publish a skill artifact only when its approved contract, implementation commits, evaluations,
+  and source-specific gates identify the exact head; and
+- verify that `document-release` obligations and durable-prose checks cover the exact revision
+  proposed for publication.
+
+These obligations produce or extend the Publication Record. They never authorize Ship to repair
+code or tests, edit repository documentation on Implement's behalf, reinterpret findings or
+requirements, rewrite the Execution Ledger, squash atomic commits, install a skill, or infer
+deployment from publication.
+
+This amendment changes no coordinator ledger row and performs no teardown, comment, publication,
+push, PR, merge, release, or retirement effect. The source-specific gates remain proposed until
+the coordinator migration and behavioral comparisons are complete.

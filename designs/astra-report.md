@@ -2,9 +2,11 @@
 
 **Date:** 2026-08-12
 
-**Status:** Proposed phase-0 design awaiting user review. Records three user decisions of
-2026-08-12 (existence, MVP boundary, delegated voice). Creates prose only: no runtime skill,
-harness, installation, retirement, push, or PR.
+**Status:** Proposed phase-0 design awaiting user re-review. Records three user decisions of
+2026-08-12 (existence, MVP boundary, delegated voice) and the same-day design-review
+resolutions (output-only voice, `I(reporting)` typing, post-MVP adapters); the eight blocking
+review findings are applied. One decision remains open: the slice-approval statement in 4.2.
+Creates prose only: no runtime skill, harness, installation, retirement, push, or PR.
 
 **Proposed public shape:** `astra-report` — the stack's single human-facing reporting surface.
 It is a seventh user-facing entry point but not a seventh lifecycle authority. The roster
@@ -18,6 +20,15 @@ outputs are the ephemeral **Reader Brief** and the durable, append-only **Exposu
 neither is an authoritative chain artifact in the 7.11.3 sense.
 
 ## 1. Identity and status
+
+**Provisional name:** `astra-report`. **Status:** `proposed`. **Priority:** `now` — justified
+by explicit personal value: the user's own 2026-08-12 problem statement (2.1) and three
+same-day decisions drove this design; there is no usage evidence yet because the job is new.
+**Candidate neighborhoods investigated:** Docs & knowledge (`cm-docs-and-knowledge`); Design &
+visual is touched only through the post-MVP `diagram` adapter (`cm-design-and-visual-21`).
+**User job:** When I want to act on my project's current state without re-reading the whole
+record, I invoke `astra-report` for one budgeted brief of what changed and what needs my
+decision. **Personal value:** explicit — quoted user statements, not inference.
 
 ### 1.1 Recorded user decisions (2026-08-12)
 
@@ -40,16 +51,16 @@ skills" statement in `docs/six-skill-source-absorption.md` section 1. Section 12
 coordinator reconciliation this requires. Nothing here claims behavioral absorption or
 retirement of any source.
 
-### 1.2 Interpretation on record
+### 1.2 Interpretation resolved
 
-Decision 3 is interpreted in the **output direction only**: the user still invokes any of the
-six skills directly to start work, and still answers their intake questions directly. What
-moves to Report is the skill-to-user direction — artifact presentation, status, progress,
-approval requests, and failure announcements. The word "downstream" in the user's decision
-supports this reading; an input-mediation reading would make Report an orchestrator, which
-contradicts recorded decision 2 and section 6.8. **If the user intended input mediation as
-well, section 12.3 question 1 names the consequence and this design must be revised before
-any reliance on it.**
+Decision 3 operates in the **output direction only** — resolved by the user's design review of
+2026-08-12 (**Observed**). The six remain directly invocable control surfaces and own their
+intake dialogue and approval records; Report is the sole rich outbound presentation surface.
+The earlier phrase "not user-facing" is recorded as imprecise shorthand for exactly that
+split. What moves to Report is the skill-to-user direction — artifact presentation, status,
+progress, approval requests, and failure announcements. Input mediation was considered and
+rejected: it would make Report an orchestrator, contradicting recorded decision 2 and section
+6.8, and would require a different architecture.
 
 ### 1.3 Phase-0 scope
 
@@ -131,7 +142,8 @@ astra-report [scope] [--mode skim|standard|deep]
 
 Scope is one artifact, a set of artifacts, or a project (meaning: the current artifact chain).
 Default scope is the active project; default mode is `standard`. The same rendering core is
-consumed by the six skills at their reporting moments through the `V` relation (section 8).
+consumed by the six skills at their reporting moments through the typed `I(reporting)`
+relation (section 8).
 
 ### 3.2 Requests that should trigger it
 
@@ -139,7 +151,6 @@ consumed by the six skills at their reporting moments through the `V` relation (
 - "Report on X", "explain this Finding Set / spec / test results to me" — artifact brief.
 - "What do you need from me?", "what's blocking?" — open-decision brief.
 - Any of the six skills reaching a reporting moment (section 8.3) — delegated rendering.
-- "Give me this brief as a PDF / diagram" — adapter delivery of an existing brief.
 
 ### 3.3 Nearby requests that should not trigger it
 
@@ -162,13 +173,13 @@ consumed by the six skills at their reporting moments through the `V` relation (
 | Artifact scope | Immutable references (identity, revision, hash per 7.11.3) to one or more chain artifacts; sideways reads into peer working files are forbidden |
 | Mode | `skim`, `standard` (default), or `deep`; a persisted per-project default may exist in the Exposure Ledger |
 | Exposure Ledger | Read if present; absence degrades to full-state rendering (section 7.6) |
-| Delegated payload | At a `V` reporting moment: the producing skill's typed payload (section 8.4) |
+| Delegated payload | At an `I(reporting)` moment: the producing skill's ReportEvent envelope (sections 8.3–8.4) |
 
 ### 3.5 User-visible result
 
-A Reader Brief (section 7.2), delivered in conversation. On request, the same brief re-issued
-through a format adapter (`make-pdf`, `diagram`) without content change. After every brief, one
-Exposure Ledger append (section 7.3). Nothing else.
+A Reader Brief (section 7.2), delivered in conversation. After every brief, one Exposure
+Ledger append (section 7.3). Nothing else. Format delivery through adapters is post-MVP
+(section 4.3).
 
 ### 3.6 Effect authority and non-goals
 
@@ -178,7 +189,8 @@ judgment; mutates any chain artifact or repository file; hides disagreement betw
 starts, schedules, or interrupts any workflow; ranks anything outside the scope it was invoked
 on; or communicates across projects. Its only durable effect is the Exposure Ledger append,
 which is Report-jurisdiction bookkeeping in the same sense that the Publication Record is
-Ship-jurisdiction bookkeeping — and which is never an approval record (section 8.4).
+Ship-jurisdiction bookkeeping — and which is never an approval record (section 8.4). Format
+and visual delivery is a post-MVP non-goal (section 4.3).
 
 ### 3.7 Decisions that remain with the user
 
@@ -193,19 +205,53 @@ Ship-jurisdiction bookkeeping — and which is never an approval record (section
 ### 4.1 Occurrence inspection record
 
 All rows inspected 2026-08-12 at their live paths; hashes are sha256 over the entry bytes
-(first 12 hex digits, house style). All statements from these sources below are **Observed**
-unless labeled otherwise.
+(first 12 hex digits, house style); the same-day design review independently verified all
+eight entry hashes against live bytes. All statements from these sources below are
+**Observed** unless labeled otherwise. Live paths as in the first column of 4.1.2 conventions:
+`/doc` at `~/.claude/commands/doc.md`; skills at `~/.claude/skills/<name>/SKILL.md`; gstack
+entries under `~/.claude/skills/gstack/`.
 
-| Identifier | Type | Live path | Lines; hash | Availability |
-|---|---|---|---|---|
-| `/doc` | command | `~/.claude/commands/doc.md` | 199; `684db9d1ef2e` | Live |
-| `doc-coauthoring` | skill | `~/.claude/skills/doc-coauthoring/SKILL.md` | 375; `2e47d78846fa` | Live |
-| `internal-comms` | skill | `~/.claude/skills/internal-comms/SKILL.md` | 32; `067b7587a344` | Live; examples directory is the supporting body |
-| `document-generate` | skill | `~/.claude/skills/document-generate/SKILL.md` | 1252; `3d97c417c753` | Live |
-| `teach` | skill | `~/.claude/skills/teach/SKILL.md` | 140; `6d2dbe5e0308` | Live |
-| `rtfm` | skill | `~/.claude/skills/rtfm/SKILL.md` | 360; `909197c58116` | Live |
-| `make-pdf` | skill | `~/.claude/skills/gstack/make-pdf/SKILL.md` | 787; `7c00be6908b4` | Live; gstack release `1.60.1.0` |
-| `diagram` | skill | `~/.claude/skills/gstack/diagram/SKILL.md` | 923; `f57f8722f566` | Live; gstack release `1.60.1.0` |
+| Occurrence | Identifier | Type | Invocation | Declaration | Lines; entry hash | Availability |
+|---|---|---|---|---|---|---|
+| `cm-docs-and-knowledge-03` | `/doc` | command | `/doc [file_path_or_topic]` | frontmatter: description, argument-hint, allowed-tools | 199; `684db9d1ef2e` | Live |
+| `cm-docs-and-knowledge-02` | `doc-coauthoring` | skill | model-invoked on doc/proposal/spec co-writing | frontmatter: name, description | 375; `2e47d78846fa` | Live |
+| `cm-docs-and-knowledge-05` | `internal-comms` | skill | model-invoked on internal-communication requests | frontmatter: name, description | 32; `067b7587a344` | Live; four example files are the supporting body (4.1.2) |
+| `cm-docs-and-knowledge-01` | `document-generate` | skill | `/document-generate` (gstack) | frontmatter: name, preamble-tier, version, description | 1252; `3d97c417c753` | Live; generated gstack file (4.1.2) |
+| `cm-docs-and-knowledge-07` | `teach` | skill | `/teach` only (`disable-model-invocation: true`) | frontmatter: name, description, disable-model-invocation, argument-hint | 140; `6d2dbe5e0308` | Live |
+| `cm-docs-and-knowledge-09` | `rtfm` | skill | model-invoked for OpenAPI documentation from code | frontmatter: name, effort, description | 360; `909197c58116` | Live |
+| `cm-docs-and-knowledge-04` | `make-pdf` | skill | `/make-pdf` (gstack) | gstack generated frontmatter | 787; `7c00be6908b4` | Live; generated gstack file (4.1.2) |
+| `cm-design-and-visual-21` | `diagram` | skill | `/diagram` (gstack) | gstack generated frontmatter | 923; `f57f8722f566` | Live; generated gstack file (4.1.2); row already claimed (4.5) |
+
+#### 4.1.1 Behavior anchors for the claimed slices
+
+Line anchors are valid at the recorded hashes and regenerate on any hash mismatch
+(`docs/design-requirements.md` 4.2).
+
+| Source | Slice basis (line anchors) |
+|---|---|
+| `/doc` | Stripe-register role and anti-slop mandate (9); anti-AI-slop scan — L1 vocabulary (70), L2 burstiness and confidence arcs (100–109), L3 structure (112); fresh-reader test (135); audience context gathering (27) |
+| `doc-coauthoring` | Three-stage protocol (18–26); Stage 1 context gathering (28); Stage 2 section-by-section refinement (104, 154–162); Stage 3 fresh-reader testing (22) |
+| `internal-comms` | When-to-use jurisdiction (7); style guidance and example routing (17); the format shapes live in the four example bodies (4.1.2) |
+| `document-generate` | Diátaxis quadrant split with explanation as understanding-oriented "why" (authored template 7, 44–49); quadrant partitioning table (template 119–125) |
+| `teach` | Working-memory-bounded lessons (53, 97); zone of proximal development (81); fluency versus storage strength (34) |
+| `rtfm` | Consumer perspective (30); when-and-why over how-implemented (32); consumer three-questions gate (183); untested-endpoint uncertainty disclosure (344) |
+
+#### 4.1.2 Supporting and authored bodies
+
+`internal-comms` examples, inspected and hashed 2026-08-12: `3p-updates.md` 46;
+`087e4363c0f3` · `company-newsletter.md` 65; `30f81cfbdb03` · `faq-answers.md` 29;
+`5ecd3356cd66` · `general-comms.md` 15; `4d3a4bb198a7`.
+
+`document-generate`, `make-pdf`, and `diagram` are **generated gstack files**. Per the
+roadmap's generated-source rule, the authored templates are the analytical basis; generated
+bytes remain runtime-fidelity evidence only and cannot be the sole source oracle. Authored
+templates at gstack revision `a3259400a366593e0c909dd9ac3e59752efd2488`, release `1.60.1.0`
+(re-verified live 2026-08-12): `document-generate/SKILL.md.tmpl` 460; `83ce891719d1` ·
+`make-pdf/SKILL.md.tmpl` 247; `bb2f5917607b` · `diagram/SKILL.md.tmpl` 150; `3b77cc15652e`.
+
+**Evidence gap:** the consumed resolver/section templates and the generator registration have
+not been inspected. For `document-generate` that inspection must close before its slice row
+can resolve; for the two post-MVP adapters it is deferred to adapter admission (4.3).
 
 ### 4.2 Slice dispositions and the documentation deferral
 
@@ -219,25 +265,38 @@ jobs are authoring, coaching, or teaching — not rendering immutable lifecycle 
 | `/doc` | Plain-language and anti-slop checks, audience targeting, fresh-reader test | Playbook | Authoring and editing durable documents |
 | `doc-coauthoring` | Section-by-section chunking, reader-question verification | Playbook | Co-authoring proposals and specs with the user |
 | `internal-comms` | Status, leadership-update, and FAQ register shapes | Playbook, reference | Company communications with durable outputs |
-| `document-generate` | Problem → approach → trade-offs → alternatives explanation structure | Playbook | Tutorials, references, how-tos, repository files |
+| `document-generate` | Explanation-quadrant structure: understanding-oriented "why it is this way" | Playbook | Tutorials, references, how-tos, repository files |
 | `teach` | Working-memory-aware chunk sizing, progressive explanation | Playbook, perspective | Curricula, lessons, exercises, learning records |
 | `rtfm` | Consumer perspective, "when and why" framing, uncertainty disclosure | Perspective | Reading implementations and mutating API docs |
 
 **Deferral lock constraint.** `/doc`, `document-generate`, and `rtfm` are three of the five
 standalone repository-documentation candidates whose deferral the user locked on 2026-08-12:
 "no surviving design may claim one as a primary or secondary home without a new recorded user
-decision" (absorption design section 8). This design therefore marks those three rows
-**proposed and blocked**: the slice claims take effect only if the user's review of this
-document records that decision. If the user declines, Report's plain-language playbook cites
-only `doc-coauthoring`, `internal-comms`, `teach`, and the method references in 4.4; the
-design remains viable with reduced source grounding. Report claims no source as a primary
-home in any case.
+decision" (absorption design section 8). Their ledger rows therefore remain **unclaimed** —
+the ledger schema has no blocked state, and this design records a proposal only. The exact
+decision awaiting the user is:
 
-### 4.3 Consumed adapters
+> Approve `astra-report` as a secondary consumer of only the recorded playbook/perspective
+> slices from `/doc`, `document-generate`, and `rtfm`. Their primary jobs and registrations
+> remain independent; they do not join the 92 target, become wholly absorbed, retire, or
+> decide the separate docs-only-cycle question.
 
-`make-pdf` and `diagram` are **prerequisite adapters, not absorbed behavior**: format delivery
-shapes invoked on an already-composed brief. Their absence degrades delivery format only,
-never brief content. They remain independently registered gstack skills.
+Until that statement is approved verbatim, the three rows stay untouched (12.3 question 1).
+If the user declines, Report's plain-language playbook cites only `doc-coauthoring`,
+`internal-comms`, `teach`, and the method references in 4.4; the design remains viable with
+reduced source grounding. Report claims no source as a primary home in any case.
+
+### 4.3 Post-MVP delivery adapters
+
+`make-pdf` and `diagram` are **excluded from the MVP**: recorded decision 2 excludes visual
+reporting, and format delivery defers with it. Neither is absorbed behavior; both remain
+independently registered gstack skills. If later admitted: `make-pdf` may re-issue an existing
+brief without content change; `diagram` is **supplemental only, never an equivalent
+rendering** — the live skill produces editable repository artifacts (Mermaid, Excalidraw,
+SVG, PNG) and cannot preserve a prose brief, so its file-writing effect requires explicit
+authority treatment before admission. Adapter admission also requires the deferred
+resolver/registration inspection (4.1.2) and, for `diagram`, a coordinator amendment to its
+already-claimed row (4.5).
 
 ### 4.4 Method references: the distilled canon
 
@@ -267,11 +326,22 @@ A literature review is deferred unless publication is ever intended.
 
 ### 4.5 Exact proposed ledger changes
 
-This is a **new census tranche**, not a reshuffling of the locked 92. Proposed rows, all
-`claimed`, never `resolved`, for coordinator migration: six slice rows (4.2) with Report as
-slice consumer and their existing homes unchanged; two adapter-prerequisite rows (4.3); and
-one method-reference appendix row (4.4). The three deferred-five rows carry the additional
-`blocked on recorded user decision` flag until section 12.3 question 2 is answered.
+These are changes to **existing collision-ledger rows** under the `docs/phase-0.md` section 5
+schema — not a new census tranche, and none joins the locked 92. Method references (4.4) are
+design-document citations only; the schema has no row type for them and none is proposed. The
+coordinator applies every change below; rows become `claimed`, never `resolved`, citing this
+design's sections 4.1–4.3 as evidence.
+
+| Occurrence | Proposed primary disposition | Primary home | Proposed secondary roles | Claim status change |
+|---|---|---|---|---|
+| `cm-docs-and-knowledge-02` `doc-coauthoring` | independent reference | independent | `astra-report`: chunking and fresh-reader-testing playbook slice | `unclaimed` → `claimed` |
+| `cm-docs-and-knowledge-05` `internal-comms` | independent reference | independent | `astra-report`: status/leadership/FAQ register slice | `unclaimed` → `claimed` |
+| `cm-docs-and-knowledge-07` `teach` | independent reference | independent | `astra-report`: working-memory chunk-sizing slice | `unclaimed` → `claimed` |
+| `cm-docs-and-knowledge-04` `make-pdf` | independent reference | independent | `astra-report`: post-MVP delivery adapter (4.3) | `unclaimed` → `claimed` |
+| `cm-docs-and-knowledge-03` `/doc` | proposed only: independent reference with an `astra-report` slice role | — | — | **no change**: remains `unclaimed` pending the 4.2 decision |
+| `cm-docs-and-knowledge-01` `document-generate` | proposed only: independent reference with an `astra-report` slice role | — | — | **no change**: remains `unclaimed` pending the 4.2 decision; the 4.1.2 resolver gap must also close before resolution |
+| `cm-docs-and-knowledge-09` `rtfm` | proposed only: independent reference with an `astra-report` slice role | — | — | **no change**: remains `unclaimed` pending the 4.2 decision |
+| `cm-design-and-visual-21` `diagram` | already `claimed`: retained independent (roadmap amendment 3 §10) | independent | proposed amendment: add `astra-report` as a post-MVP supplemental-delivery consumer alongside `astra-document` and `astra-interface` | stays `claimed`; amendment reconciles against the amendment-3 record |
 
 ## 5. Collision analysis
 
@@ -378,6 +448,7 @@ Layered, in order, each layer usable without the next (Redish rule):
 | **NOW** | Budgeted surfaces, decisions first, each as claim → consequence → what is asked; ends with the completeness statement ("nothing else requires you") when true | Layer-1 completeness-for-action: a user stopping here is not wrong about anything material. Failure test: if the user must ask "is that everything?", the brief failed |
 | **NEXT** | Items that will need attention but block nothing now | Never contains a blocking decision |
 | **DEFERRED** | Named parked items, one line each | Visible deferral (6.9); never empty-by-omission |
+| **Change Story** | Required whenever the scope covers a change cycle (an Approved Change Specification exists): before → problem → fix → after, why this fix was selected, and the rejected or deferred alternatives | Every element renders only from recorded fields — problem from Finding IDs; why-this-fix and alternatives from the Specification's selected-solution and rejected-alternatives fields; before/after from the Understanding Report, Execution Ledger, and Test Evidence Packet — each trace-linked. A missing element is named as a gap, never invented |
 | **Evidence** | Stable-ID links into artifact fields per 7.11.3 traceability | Every NOW claim carries at least one link; no orphan assertions |
 
 Sentence-level rules from the canon bind all layers: actors as subjects; vocabulary glossed on
@@ -425,8 +496,8 @@ yields to a blocker; it never hides one (6.4).
 |---|---|
 | Exposure Ledger missing or unreadable | Render full-state (no delta), say so in the capsule, append a fresh ledger entry flagged `ledger-reset` |
 | Artifact lacks stable identifiers | Quote verbatim with file-line anchors, flag the reporting-hook gap in DEFERRED, never invent identifiers |
-| Adapter (`make-pdf`, `diagram`) unavailable | Deliver conversation brief; note the unavailable format |
-| Report itself unavailable at a `V` moment | The producing skill emits the degraded minimal notice of 8.5; the lifecycle never blocks on Report |
+| Report unavailable at a non-decision `I(reporting)` moment | The producing skill emits the degraded minimal notice of 8.5; the lifecycle never blocks on Report |
+| Report unavailable at an approval request | The producing skill presents its complete minimal decision envelope (8.5) so the user can still decide informed; work stops only while awaiting the user's answer, never because Report is unavailable |
 | Contradiction detected between artifacts | Surface as a NOW/NEXT item with both references; never adjudicate; routing to Critique is user-mediated |
 
 Report is deliberately **not** a required consultant in the 7.11.2 fail-closed sense;
@@ -435,12 +506,12 @@ rendering unavailability degrades communication, not authority.
 ### 7.7 Architectural hypotheses
 
 Internal seams — scope selector, delta engine, attention allocator, composer, ledger writer —
-are analytical until implementation demonstrates variation. The single demonstrated seam is
-the format adapter (two justified adapters: `make-pdf`, `diagram`). Whether the delta engine
-and allocator are separable modules or one pass remains a hypothesis for the comparison
-systems (11.1).
+are analytical until implementation demonstrates variation. With delivery adapters deferred
+post-MVP (4.3), no seam is demonstrated yet; the adapter seam becomes real only if two
+adapters are admitted. Whether the delta engine and allocator are separable modules or one
+pass remains a hypothesis for the comparison systems (11.1).
 
-## 8. Delegated voice: the `V` relation and reporting hooks
+## 8. Delegated voice: the `I(reporting)` relation and reporting hooks
 
 ### 8.1 Direction rule
 
@@ -450,58 +521,85 @@ approval requests, failure announcements) routes through Report. Intake dialogue
 active skill (one clarifying question at a time) stays direct but obeys the exported contract
 rules: one question per message; no unnecessary branches; no offer phrased as a question.
 
-### 8.2 The `V` relation
+### 8.2 The `I(reporting)` relation
 
-`V` (voice) is a new proposed relation, distinct from the 7.11.2 taxonomy: not `C` (Report
-checks nothing against upstream authority and returns no pass/drift/authority_gap
-determination), not `H` (nothing is handed off), not plain `I` (the six invoke Report's
-rendering capability at defined moments rather than merely reading an artifact). Definition:
-**a lifecycle skill delegates human-facing rendering of its own authoritative content to
-Report; content authority stays with the producer; presentation authority is Report's; no
-determination returns.** Report consumes the producer's artifacts through ordinary `I`
-references. `V` requires coordinator reconciliation into the relation vocabulary (12.4).
+Rendering delegation is a **typed use of the canonical `I` relation** — consumption of a peer
+capability without invoking its lifecycle judgment — not a new relation letter. A first draft
+proposed a distinct `V` relation; the 2026-08-12 review found that inconsistent with `I`'s
+governing definition, and `V` is withdrawn. Definition: **under `I(reporting)`, a lifecycle
+skill consumes Report's rendering capability for its own authoritative content; content
+authority stays with the producer; presentation authority is Report's; no determination
+returns.** It is not `C` (nothing is checked against upstream authority; no
+pass/drift/authority_gap) and not `H` (nothing is handed off). Report consumes the producers'
+artifacts through ordinary `I` references in the opposite direction. The typing convention
+needs only a clarifying note in the relation vocabulary (12.4), not a new entry.
 
-### 8.3 Reporting moments
+### 8.3 Reporting moments and the ReportEvent envelope
 
-The six invoke `V` at: authoritative-artifact completion; any approval request; stage
-boundaries (entry refused, work stopped, cycle closed); explicit user status requests; and
-failure or degradation announcements. Nothing else routes through Report.
+The six invoke `I(reporting)` at exactly five moments: authoritative-artifact completion; any
+approval request; stage boundaries (entry refused, work stopped, cycle closed); explicit user
+status requests; and failure or degradation announcements. Nothing else routes through
+Report.
+
+Every moment crosses the relation as one common **ReportEvent envelope**: event type (one of
+the five); producing skill; artifact identity, revision, and hash per 7.11.3; a one-sentence
+producer-authored outcome; blocking status; surface candidates with their source-assigned
+consequence fields (8.6); open-decision references; and evidence references. Approval
+requests extend the envelope with the decision payload of 8.4. The envelope is a payload
+contract, not an artifact: producer-authored, consumed by Report, and reflected durably only
+through the Exposure Ledger entry of the brief that rendered it.
 
 ### 8.4 Approval-request rendering
 
 The producing skill owns the decision: its identity, options, consequence fields, and the
 authoritative recording of the user's answer in its own artifact (7.11.1 approval machinery is
-unchanged). Report owns wording, ordering, budget placement, and evidence links. The typed
-payload crossing `V` is: decision identity; options with source-assigned consequences;
-evidence references; blocking status. The Exposure Ledger records that the decision was
+unchanged). Report owns wording, ordering, budget placement, and evidence links. The decision
+payload extending the ReportEvent envelope is: decision identity; options with
+source-assigned consequences; evidence references; blocking status. The Exposure Ledger records that the decision was
 presented and answered, pointing at the producer's approval record — it is never itself the
 approval record (7.3).
 
-### 8.5 Degraded minimal notice
+### 8.5 Degraded fallback when Report is unavailable
 
-When Report cannot run at a `V` moment, the producing skill emits exactly: artifact identity
-and path, one sentence of outcome, blocking status, and the Report-unavailable flag. It does
-not compose a rich report; the six never regain direct rich reporting. The gap self-heals:
-the next successful Report invocation sees un-briefed artifact revisions in the ledger delta
-and surfaces them.
+Non-decision moments (completion, stage boundary, status, failure): the producing skill emits
+exactly the artifact identity and path, one sentence of outcome, blocking status, and the
+Report-unavailable flag. It does not compose a rich report; the six never regain direct rich
+reporting.
+
+Approval requests degrade differently, because a one-line notice cannot support informed
+consent: the producing skill presents its **complete minimal decision envelope** — the full
+8.4 decision payload (decision identity, every option with its source-assigned consequences,
+evidence references, blocking status), stated plainly without Report's layering or budget.
+Work stops only while awaiting the user's answer, never because Report is unavailable, and
+the producer records the answer in its own artifact as always.
+
+Both gaps self-heal: the next successful Report invocation sees un-briefed artifact revisions
+in the ledger delta and surfaces them.
 
 ### 8.6 Reporting hooks on the six artifact contracts
 
-Mostly already satisfied by 7.11.3: stable identifiers exist (Finding IDs, requirement and
-acceptance identifiers, the machine-checkable traceability chain) and supersedes references
-exist. **Two additions are required:**
+Partially satisfied by 7.11.3: stable identifiers exist (Finding IDs, requirement and
+acceptance identifiers, the machine-checkable traceability chain), and supersession semantics
+exist in principle — but explicit supersession **fields** are defined only by Critique and
+Spec. **Four additions are required:**
 
 1. **Typed consequence fields** on every user-relevant claim: severity or consequence,
    blocking-or-deferrable, decision-required-or-FYI — assigned by the producing skill (6.3).
 2. **A common open-decision shape** across all six, so open decisions are enumerable without
    six parsers.
+3. **Explicit supersession fields** for Understand Code, Implement, Test, and Ship, matching
+   the Critique and Spec pattern, so delta computation (7.4) is structural across the whole
+   chain.
+4. **ReportEvent envelope adoption** (8.3) at every reporting moment, including the approval
+   extension (8.4).
 
 These are proposed amendments to each sibling design's artifact contract, `claimed` rows for
 coordinator migration (12.4).
 
 ### 8.7 Impact on the six designs
 
-Each sibling's user-visible-result and approval-flow sections gain a `V` delegation clause;
+Each sibling's user-visible-result and approval-flow sections gain an `I(reporting)`
+delegation clause;
 their content authority sections are untouched. This is wording migration, not authority
 change. Rows stay `claimed`, never `resolved`, until the roster-wide review.
 
@@ -509,7 +607,7 @@ change. Rows stay `claimed`, never `resolved`, until the roster-wide review.
 
 ### 9.1 External components that remain separate
 
-`make-pdf` and `diagram` (consumed adapters, 4.3); the six slice sources (4.2, independent
+`make-pdf` and `diagram` (post-MVP delivery adapters, 4.3); the six slice sources (4.2, independent
 registrations retained); the method references (4.4, readable citations, not dependencies);
 the artifact chain storage convention (prerequisite: wherever the six persist artifacts,
 Report must be able to resolve immutable references; its absence is a 7.6 degradation).
@@ -518,7 +616,7 @@ Report must be able to resolve immutable references; its absence is a 7.6 degrad
 
 | Peer | Relation | Direction and content |
 |---|---|---|
-| All six lifecycle skills | `V` | Each delegates human-facing rendering to Report at 8.3 moments |
+| All six lifecycle skills | `I(reporting)` | Each consumes Report's rendering capability at the 8.3 moments via the ReportEvent envelope |
 | All six lifecycle skills | `I` | Report reads their immutable artifacts by reference |
 | `astra-critique` | user-mediated routing | A surfaced contradiction may lead the user to open Critique; Report never starts it |
 | `astra-understand-code` | `R` only | Adjacent explanation jobs: repository state vs artifact state; triggers must not collide (3.3) |
@@ -567,7 +665,8 @@ than trusting it.
 6. Contradiction between two artifacts (surface, never adjudicate).
 7. Missing ledger (degradation to full-state).
 8. Missing identifiers (verbatim-quote degradation).
-9. Report unavailable at a `V` moment (degraded minimal notice, 8.5).
+9. Report unavailable at an `I(reporting)` moment — both 8.5 fallbacks: the non-decision
+   minimal notice, and the approval-request complete minimal decision envelope.
 10. Fidelity-adversarial: a tempting simplification that would drop a caveat (must demote,
     never delete).
 11. Terseness probe: layer-1 completeness — the "is that everything?" test must be answerable
@@ -575,13 +674,31 @@ than trusting it.
 12. Mode variants over the same scope (density changes; addressability does not).
 13. Forbidden-effect probes: attempted re-grade, attempted artifact edit, attempted automatic
     Critique start — all must fail.
+14. One home-jurisdiction case per contributing source: `/doc` register enforcement on a
+    document-shaped brief; `doc-coauthoring` chunk protocol on a long brief; `internal-comms`
+    status shape on a status request; `document-generate` explanation structure on a
+    why-focused brief; `teach` chunk sizing on a dense technical delta; `rtfm` consumer
+    framing on an interface-facing change.
+15. Change Story from a complete chain: every element present and trace-linked.
+16. Change Story with a missing element: the gap is named; nothing is invented.
+17. Expected-divergence controls: the oracle would drop a caveat, re-explain unchanged
+    background, or ask "want to hear more?" — Report must diverge on all three.
+18. Expected-convergence control: pure register quality on one short artifact, where Report
+    and the `/doc` oracle should be indistinguishable.
 
-### 11.3 Measures
+### 11.3 Method and measures
 
-Reply-surface count against budget; fidelity audit (every omitted or demoted item addressable
-by identifier; zero deleted caveats); delta correctness against ledger ground truth; layer-1
-completeness judged against the artifact set; register quality against the source oracle;
-ledger-append integrity.
+Paired runs on identical artifact sets against the applicable source oracle, with repeated
+trials; subjective judgments (register, clarity, layer-1 completeness) use blinded,
+order-randomized evaluation. Measures: reply-surface count against budget; critical-decision
+recall (no blocking decision omitted — required at 100%); supported-claim precision and
+unsupported-claim rate against artifact fields; fidelity audit (every omitted or demoted item
+addressable by identifier; zero deleted caveats); source-unique supported behaviors (each 4.2
+slice observably survives); delta correctness against ledger ground truth; layer-1
+completeness judged against the artifact set; duplicate/noise load (redundancy-rule
+violations); deferral-routing accuracy (items land in the correct NOW/NEXT/DEFERRED tier
+given their source-assigned consequence); actionability of NOW items; register quality
+against the source oracle; ledger-append integrity; cost and latency per brief.
 
 ### 11.4 Gates and consequences
 
@@ -595,19 +712,26 @@ ledger-append integrity.
 ### 11.5 Retirement
 
 **None in this tranche.** No source retires on Report's account; slices leave every original's
-registration untouched, and the deferred five remain deferred unless 12.3 question 2 records
-otherwise.
+registration untouched, and the deferred five remain deferred unless 12.3 question 1 records
+otherwise. Because no retirement is proposed, no source-specific retirement gate is created;
+any future whole-source claim must add one under `docs/design-requirements.md` section 7.9
+before it can be evaluated.
 
 ## 12. Provenance and open questions
 
 ### 12.1 Inspection summary
 
-Eight source entries inspected 2026-08-12 at live paths with sha256 short hashes (4.1); gstack
-entries belong to release `1.60.1.0`. The six lifecycle designs, `docs/design-requirements.md`
-(sections 5, 6, 7.11), and `docs/six-skill-source-absorption.md` (sections 1, 7, 8, 11) were
-read the same day as authority context. The user's problem statement and decisions are
-conversation records of 2026-08-12, quoted in 1.1 and 2.1 — **Observed** as statements, with
-the interpretation in 1.2 labeled **Inferred** until confirmed.
+Eight source entries inspected 2026-08-12 at live paths with sha256 short hashes (4.1);
+supporting bodies and authored gstack templates hashed the same day at revision
+`a3259400a366593e0c909dd9ac3e59752efd2488`, release `1.60.1.0` (4.1.2). The same-day design
+review independently re-verified all eight entry hashes. The named evidence gap — consumed
+resolver/section templates and generator registration for the three generated gstack sources
+— is recorded in 4.1.2 with its consequence. The six lifecycle designs,
+`docs/design-requirements.md` (sections 5, 6, 7.9, 7.11), `docs/phase-0.md` (section 5),
+`docs/phase-0-ledgers.md` (the rows cited in 4.5), and `docs/six-skill-source-absorption.md`
+(sections 1, 7, 8, 11) were read the same day as authority context. The user's problem
+statement and decisions are conversation records of 2026-08-12, quoted in 1.1 and 2.1 —
+**Observed**, including the review resolution recorded in 1.2.
 
 ### 12.2 Provisional decisions
 
@@ -615,21 +739,23 @@ the interpretation in 1.2 labeled **Inferred** until confirmed.
 - Budget defaults in 7.5 are proposed numbers, expected to be tuned by use.
 - Time-decay re-glossing is admitted as a future-safe extension (2.4) but not designed.
 - The ledger file format, storage location, and brief identity scheme are later-phase work.
+- Resolved by the 2026-08-12 review: the output-only interpretation of decision 3 (1.2); the
+  withdrawal of the `V` relation in favor of typed `I(reporting)` (8.2); and the post-MVP
+  deferral of both delivery adapters (4.3).
+- Ordinary intake dialogue stays outside the Exposure Ledger (review-confirmed deferral;
+  12.3 question 2).
 
 ### 12.3 Open questions (each names its consequence)
 
-1. **Does "not user-facing" also cover the input direction?** This design assumes output-only
-   (1.2). If the user intended input mediation, Report becomes an orchestrator: recorded
-   decision 2's no-orchestration boundary, the 7.11 forward path, and section 6.8 all require
-   redesign before any further reliance on this document.
-2. **Do the three deferred-five slice claims get a recorded decision?** Without it, rows in
-   4.2 for `/doc`, `document-generate`, and `rtfm` stay blocked and Report's playbook cites
-   the narrower source base (4.2).
-3. **Should intake dialogue append to the Exposure Ledger?** Currently no: dialogue outcomes
-   land in artifacts, which Report briefs. If dialogue-presented facts must count as exposure,
-   the six gain a ledger-append obligation, weakening "no skill writes the ledger except
-   Report" (7.3).
-4. **Are the 7.5 defaults right for this user?** Wrong defaults either annoy (too tight) or
+1. **Does the user approve the exact slice statement in 4.2?** Until approved verbatim, the
+   `/doc`, `document-generate`, and `rtfm` rows stay `unclaimed` and Report's playbook cites
+   the narrower source base (4.2); `document-generate` additionally needs its resolver
+   inspection gap closed (4.1.2) before its row can resolve.
+2. **Should intake dialogue append to the Exposure Ledger?** Currently no — review-confirmed
+   as deferrable: dialogue outcomes land in artifacts, which Report briefs. If
+   dialogue-presented facts must someday count as exposure, the six gain a ledger-append
+   obligation, weakening "no skill writes the ledger except Report" (7.3).
+3. **Are the 7.5 defaults right for this user?** Wrong defaults either annoy (too tight) or
    re-create overload (too loose); tunable at first use, but the shipped default shapes first
    impressions.
 
@@ -639,12 +765,18 @@ All `claimed`, never `resolved`, citing the 2026-08-12 user decisions in 1.1:
 
 1. Amend the exactly-six roster statements: `docs/design-requirements.md` 7.11 and
    `docs/six-skill-source-absorption.md` section 1 — six lifecycle authorities plus one
-   non-authoritative reporting surface; the six cease direct user-facing reporting.
-2. Add the `V` relation to the relation vocabulary alongside `R`, `I`, `C`, `H`, `P`.
-3. Migrate the section 4.5 tranche rows into the coordinator-owned ledgers.
-4. Add the two reporting hooks (8.6) to each sibling design's artifact contract.
-5. Add the `V` delegation clause to each sibling's user-visible-result and approval sections
-   (8.7).
+   non-authoritative reporting surface that owns all rich outbound presentation; the six
+   remain directly invocable control surfaces.
+2. Record the `I(reporting)` typing convention as a clarifying note in the 7.11.2 relation
+   vocabulary; no new relation letter is added.
+3. Apply the section 4.5 row changes: four `unclaimed` → `claimed` secondary-role claims;
+   the `diagram` secondary-consumer amendment against roadmap amendment 3; the three
+   deferral-locked rows untouched pending 12.3 question 1.
+4. Add the four reporting hooks (8.6) — consequence typing, the common open-decision shape,
+   supersession fields for Understand Code, Implement, Test, and Ship, and ReportEvent
+   adoption — to each sibling design's artifact contract.
+5. Add the `I(reporting)` delegation clause to each sibling's user-visible-result and
+   approval sections (8.7).
 6. Include Report in the trigger-surface reconciliation (absorption design section 11,
    remaining-work item 3), ensuring 3.2/3.3 does not collide with Understand Code or the
    deferred documentation candidates.

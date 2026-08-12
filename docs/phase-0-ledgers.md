@@ -1,10 +1,10 @@
 # Astra phase-0 ledgers
 
-**Snapshot:** 2026-08-03
+**Snapshot:** 2026-08-12
 
 **Inventory baseline:** `README.md` reconciled on 2026-07-31 plus the live registrations named below
 
-**State:** Seeded for coordination; unresolved values are explicit workflow states, not completed dispositions.
+**State:** Coordinator claims include the locked 92-component expansion allocation; no row is resolved.
 
 ## Ownership and authority
 
@@ -26,6 +26,14 @@ Design agents propose changes in `designs/<astra-name>.md`; they do not edit the
   designs and the user's review.
 - `Pending source inspection` is an explicit evidence state for an unclaimed skeleton row.
   It cannot support absorption, preservation, exclusion, or retirement.
+
+The user approved the 92-component target on 2026-08-11 and locked its coordinator allocation on
+2026-08-12. This migration applies only the target's 41-identifier expansion: 35 collision
+occurrences are reserved as `claimed`, and seven reference rows record locked consuming designs.
+The 51-component baseline retains its prior per-design ledger state. Reference rows have no
+`claim_status`; their allocation is locked while their global `keep` / `defer` / `exclude`
+disposition remains `unassigned`. Allocation is not absorption, validation, retirement, or a
+runtime implementation claim.
 
 ## 1. Collision source-claim ledger
 
@@ -51,18 +59,18 @@ occurrence and list every candidate neighborhood.
 | `cm-adversarial-critique-14` | `plan-devex-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-adversarial-critique-15` | `devex-review` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | — | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
 | `cm-adversarial-critique-16` | `autoplan` | skill | live | Adversarial critique | proposed Astra design | `astra-critique` | Plan & spec: plan revision | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-code-review-01` | `code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-02` | `review` | skill | live | Code review | unassigned | unassigned | `astra-critique` (secondary evidence) | unclaimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `cm-code-review-03` | `requesting-code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-04` | `receiving-code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-05` | `superpowers:requesting-code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-06` | `superpowers:receiving-code-review` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-07` | `feature-dev:code-reviewer` | agent | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-08` | `code-review:code-review` | command | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-code-review-01` | `code-review` | skill | live | Code review | proposed Astra design | `astra-critique` | Spec, Implement, and Test own remediation | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-02` | `review` | skill | live | Code review | proposed Astra design | `astra-critique` | Auto-fixes route forward; Ship consumes the final result | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-03` | `requesting-code-review` | skill | live | Code review | proposed Astra design | `astra-critique` | Separate reviewer context retained as an adapter | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-04` | `receiving-code-review` | skill | live | Code review | proposed Astra design | `astra-critique` | Accepted changes proceed through Spec, Implement, and Test | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-05` | `superpowers:requesting-code-review` | skill | live | Code review | proposed Astra design | `astra-critique` | Versioned reviewer-context adapter | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-06` | `superpowers:receiving-code-review` | skill | live | Code review | proposed Astra design | `astra-critique` | Mutation remains forward-stage authority | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-07` | `feature-dev:code-reviewer` | agent | live | Code review | proposed Astra design | `astra-critique` | Separate reviewer context retained as an internal adapter | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
+| `cm-code-review-08` | `code-review:code-review` | command | live | Code review | proposed Astra design | `astra-critique` | GitHub discovery is review machinery; posting is a Ship effect | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.1](six-skill-source-absorption.md#31-code-review). |
 | `cm-code-review-09` | `security-review` | built-in skill | live | Code review | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-code-review-10` | `simplify` | built-in skill | live | Code review | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-code-review-11` | `code-simplifier` | agent | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-code-review-12` | `health` | skill | live | Code review | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-code-review-12` | `health` | skill | live | Code review | proposed Astra design | `astra-critique` | Test may consume pinned health measurements | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
 | `cm-browser-and-qa-01` | `agent-browser` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-02` | `browse` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-03` | `connect-chrome` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | — | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa): invocable registration of the shared artifact. |
@@ -70,16 +78,16 @@ occurrence and list every candidate neighborhood.
 | `cm-browser-and-qa-05` | `agentcore` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: AWS credentials | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-browser-and-qa-06` | `vercel-sandbox` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisites: Vercel Sandbox and snapshot identifier | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-browser-and-qa-07` | `electron` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: CDP port | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
-| `cm-browser-and-qa-08` | `webapp-testing` | skill | live | Browser & QA | proposed Astra design | `astra-qa` | Distinct Python-Playwright runtime; reconcile with the Playwright MCP occurrence | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
+| `cm-browser-and-qa-08` | `webapp-testing` | skill | live | Browser & QA | proposed Astra design | `astra-test` | Python-Playwright runtime produces Test Evidence Packet evidence | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.2](six-skill-source-absorption.md#32-browser-and-qa). |
 | `cm-browser-and-qa-09` | `scrape` | skill | live | Browser & QA | unassigned | unassigned | Extraction outcome; body inspection still required | claimed | Amendment 2 inspected the declaration only; disposition remains open. |
-| `cm-browser-and-qa-10` | `skillify` | skill | live | Browser & QA; Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-browser-and-qa-10` | `skillify` | skill | live | Browser & QA; Skill meta | duplicate occurrence | `astra-implement` | Same source identifier as `cm-skill-meta-05`; browser-flow implementation profile | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
 | `cm-browser-and-qa-11` | `slack` | skill | live | Browser & QA | proposed Astra design | `astra-browser` | Reference-file jurisdiction; prerequisite: authenticated session | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-browser-and-qa-12` | `pair-agent` | skill | live | Browser & QA; Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-browser-and-qa-13` | `setup-browser-cookies` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-14` | `benchmark` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-15` | `dogfood` | skill | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-browser-and-qa-16` | `qa` | skill | live | Browser & QA | proposed Astra design | `astra-qa` | Version 2.0.0; declares mutation-capable tools | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa); amendment 4 withdraws generated-line fork evidence. |
-| `cm-browser-and-qa-17` | `qa-only` | skill | live | Browser & QA | proposed Astra design | `astra-qa` | Version 1.0.0; report-only effect requires semantic verification because Bash/Write remain declared | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa); amendment 4 withdraws generated-line fork evidence. |
+| `cm-browser-and-qa-14` | `benchmark` | skill | live | Browser & QA | proposed Astra design | `astra-test` | Pinned baselines and budgets produce repeatable performance evidence | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.2](six-skill-source-absorption.md#32-browser-and-qa). |
+| `cm-browser-and-qa-15` | `dogfood` | skill | live | Browser & QA | proposed Astra design | `astra-critique` | Screenshots and reproduction video remain finding evidence | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.2](six-skill-source-absorption.md#32-browser-and-qa). |
+| `cm-browser-and-qa-16` | `qa` | skill | live | Browser & QA | proposed Astra design | `astra-critique` | Repair and commit effects route through Spec, Implement, Test, and Ship | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.2](six-skill-source-absorption.md#32-browser-and-qa). |
+| `cm-browser-and-qa-17` | `qa-only` | skill | live | Browser & QA | proposed Astra design | `astra-critique` | Report-only exploration; no mutation authority | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.2](six-skill-source-absorption.md#32-browser-and-qa). |
 | `cm-browser-and-qa-18` | `playwright` | MCP server | live | Browser & QA | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-design-and-visual-01` | `design` | skill | live | Design & visual | proposed Astra design | `astra-brand` | `astra-interface`: tokens, UI styling, slides, and HTML presentations; `astra-product-design`: mockups | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage): coordinating primary over a genuine split; 8 bundled executables. |
 | `cm-design-and-visual-02` | `design-system` | skill | live | Design & visual | proposed Astra design | `astra-interface` | `astra-brand`: primitive constraints; slide subsystem remains Interface-internal | claimed | [Roadmap amendment 3 §10](design-roadmap.md#10-amendment-3--wave-1-design--visual-source-triage): 10 bundled executables. |
@@ -108,15 +116,15 @@ occurrence and list every candidate neighborhood.
 | `cm-plan-and-spec-04` | `superpowers:subagent-driven-development` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-05` | `spec` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-06` | `to-spec` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-plan-and-spec-07` | `sdd` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-plan-and-spec-07` | `sdd` | skill | live | Plan & spec | proposed Astra design | `astra-spec` | Projects repository artifact state without creating a seventh authority | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
 | `cm-plan-and-spec-08` | `planb` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-09` | `plan-tune` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-10` | `wayfinder` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-11` | `to-tickets` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-12` | `implement` | skill | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-plan-and-spec-13` | `prototype` | skill | live | Plan & spec | independent reference | retained independent | `astra-product-design`: consumes throwaway prototype output | claimed | [Astra Product Design §3.1](../designs/astra-product-design.md#31-inspection-record): separate outcome; `agents/openai.yaml` is interface metadata, not an independently invocable agent. |
-| `cm-plan-and-spec-14` | `feature-dev:code-architect` | agent | live | Plan & spec | retained agent, coordinated | `astra-understand-code` | Separate execution context; decision policy conflicts with the user-returning orchestrator | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
-| `cm-plan-and-spec-15` | `feature-dev:feature-dev` | command | live | Plan & spec | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-plan-and-spec-14` | `feature-dev:code-architect` | agent | live | Plan & spec | proposed Astra design | `astra-spec` | Separate context retained as a bounded advisor; only the user approves | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
+| `cm-plan-and-spec-15` | `feature-dev:feature-dev` | command | live | Plan & spec | proposed Astra design | `astra-spec` | Understand, Implement, Critique, and Test own their stages | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
 | `cm-ship-and-vcs-01` | `ship` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-02` | `land-and-deploy` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-03` | `canary` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -129,10 +137,10 @@ occurrence and list every candidate neighborhood.
 | `cm-ship-and-vcs-10` | `commit-commands:commit-push-pr` | command | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-11` | `commit-commands:clean_gone` | command | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-12` | `changelog` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ship-and-vcs-13` | `document-release` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-ship-and-vcs-13` | `document-release` | skill | live | Ship & VCS | proposed Astra design | `astra-implement` | Ship verifies and publishes the exact documented revision | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.7](six-skill-source-absorption.md#37-durable-repository-documentation). |
 | `cm-ship-and-vcs-14` | `resolving-merge-conflicts` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ship-and-vcs-15` | `superpowers:finishing-a-development-branch` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ship-and-vcs-16` | `superpowers:using-git-worktrees` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-ship-and-vcs-16` | `superpowers:using-git-worktrees` | skill | live | Ship & VCS | proposed Astra design | `astra-implement` | Isolation enters the Roadmap and Ledger; Ship owns scoped teardown | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
 | `cm-ship-and-vcs-17` | `github` | skill | live | Ship & VCS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-docs-and-knowledge-01` | `document-generate` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-docs-and-knowledge-02` | `doc-coauthoring` | skill | live | Docs & knowledge | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -151,7 +159,7 @@ occurrence and list every candidate neighborhood.
 | `cm-debug-and-incident-01` | `investigate` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-02` | `diagnosing-bugs` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-03` | `superpowers:systematic-debugging` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-debug-and-incident-04` | `rca` | skill | live | Debug & incident | proposed Astra design | `astra-incident` | Separate concurrent root-cause context | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
+| `cm-debug-and-incident-04` | `rca` | skill | live | Debug & incident | proposed Astra design | `astra-critique` | Root-cause method becomes `diagnose` findings; live stabilization stays separate | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
 | `cm-debug-and-incident-05` | `firefighting` | skill | live | Debug & incident | proposed Astra design | `astra-incident` | Stabilization context; coordinates rather than absorbs `rca` | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-debug-and-incident-06` | `java-leak-resolver` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-debug-and-incident-07` | `staging-debug` | skill | live | Debug & incident | unassigned | unassigned | — | unclaimed | Pending source inspection. |
@@ -162,20 +170,20 @@ occurrence and list every candidate neighborhood.
 | `cm-codebase-comprehension-03` | `codebase-design` | skill | live | Codebase comprehension | independent reference | retained independent | `astra-understand-code`, `astra-implement` | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-codebase-comprehension-04` | `improve-codebase-architecture` | skill | live | Codebase comprehension | proposed Astra design | `astra-understand-code` | `astra-critique`: `grilling` becomes an H candidate | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
 | `cm-codebase-comprehension-05` | `feature-dev:code-explorer` | agent | live | Codebase comprehension | proposed Astra design | `astra-understand-code` | Separate execution context | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates). |
-| `cm-skill-meta-01` | `skill-creator` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-skill-meta-02` | `skill-creator:skill-creator` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-skill-meta-03` | `writing-great-skills` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-skill-meta-04` | `superpowers:writing-skills` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-skill-meta-05` | `skillify` | skill | live | Browser & QA; Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-skill-meta-01` | `skill-creator` | skill | live | Skill meta | proposed Astra design | `astra-spec` | Implement and Test own artifact production and evaluation | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
+| `cm-skill-meta-02` | `skill-creator:skill-creator` | skill | live | Skill meta | proposed Astra design | `astra-spec` | Separate registration retained; bundled agents remain tracked | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
+| `cm-skill-meta-03` | `writing-great-skills` | skill | live | Skill meta | proposed Astra design | `astra-spec` | Rules constrain the Approved Change Specification | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
+| `cm-skill-meta-04` | `superpowers:writing-skills` | skill | live | Skill meta | proposed Astra design | `astra-spec` | RED/GREEN/REFACTOR spans Spec, Implement, and Test | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
+| `cm-skill-meta-05` | `skillify` | skill | live | Browser & QA; Skill meta | proposed Astra design | `astra-implement` | Approved flow becomes code, fixtures, tests, staged write, and atomic commit | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
 | `cm-skill-meta-06` | `ask-matt` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-07` | `gstack` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-08` | `_gstack-command` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-skill-meta-09` | `prompt-lookup` | skill | live | Skill meta | exclude | unassigned | — | claimed | [Roadmap amendment 1 §8](design-roadmap.md#8-amendment-1--source-body-triage-of-the-thin-candidates): configured capability absent and no fallback; exclusion is provisional and authorizes no deletion. |
-| `cm-skill-meta-10` | `benchmark-models` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-skill-meta-10` | `benchmark-models` | skill | live | Skill meta | proposed Astra design | `astra-test` | Approved prompts, models, budget, and judge criteria produce comparative evidence | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.6](six-skill-source-absorption.md#36-skill-artifact-profile). |
 | `cm-skill-meta-11` | `gstack-upgrade` | skill | live | Skill meta | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-delegation-and-autonomy-01` | `coding-agent` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-delegation-and-autonomy-02` | `codex` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-delegation-and-autonomy-03` | `superpowers:dispatching-parallel-agents` | skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-delegation-and-autonomy-01` | `coding-agent` | skill | live | Delegation & autonomy | proposed Astra design | `astra-implement` | Approved task and limits become a bounded executor assignment | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
+| `cm-delegation-and-autonomy-02` | `codex` | skill | live | Delegation & autonomy | proposed Astra design | `astra-critique` | Independent model contexts become Critique seats and adapters | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
+| `cm-delegation-and-autonomy-03` | `superpowers:dispatching-parallel-agents` | skill | live | Delegation & autonomy | proposed Astra design | `astra-implement` | Controller retains integration and final verification | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.3](six-skill-source-absorption.md#33-cross-stack-lifecycle-and-orchestration). |
 | `cm-delegation-and-autonomy-04` | `nightnight` | skill | live | Delegation & autonomy | proposed Astra design | `astra-automate` | `astra-spec`; `astra-critique` or `astra-qa`; `astra-ship`; Jira and `ralph-loop` prerequisites unmet | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
 | `cm-delegation-and-autonomy-05` | `loop` | built-in skill | live | Delegation & autonomy | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-delegation-and-autonomy-06` | `loop-goal` | skill | live | Delegation & autonomy | proposed Astra design | `astra-automate` | Version 1.3.0; six handlers remain separate component records | claimed | [Roadmap amendment 2 §9](design-roadmap.md#9-amendment-2--context-safety-delegation-and-browser--qa). |
@@ -206,11 +214,11 @@ occurrence and list every candidate neighborhood.
 | `cm-setup-and-config-06` | `keybindings-help` | built-in skill | live | Setup & config | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-setup-and-config-07` | `fewer-permission-prompts` | built-in skill | live | Setup & config | unassigned | unassigned | — | unclaimed | Unavailable bytes: harness built-in; host-version provenance rule unresolved. |
 | `cm-setup-and-config-08` | `claude-code-setup:claude-automation-recommender` | skill | live | Setup & config | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ios-01` | `ios-qa` | skill | live | iOS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ios-02` | `ios-fix` | skill | live | iOS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ios-03` | `ios-design-review` | skill | live | iOS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ios-04` | `ios-sync` | skill | live | iOS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
-| `cm-ios-05` | `ios-clean` | skill | live | iOS | unassigned | unassigned | — | unclaimed | Pending source inspection. |
+| `cm-ios-01` | `ios-qa` | skill | live | iOS | proposed Astra design | `astra-critique` | Bridge installation, repair, and verification route forward | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
+| `cm-ios-02` | `ios-fix` | skill | live | iOS | proposed Astra design | `astra-implement` | Approved bug scope governs edit, rebuild, redeploy, and focused verification | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
+| `cm-ios-03` | `ios-design-review` | skill | live | iOS | proposed Astra design | `astra-critique` | Device and HIG evidence produce findings without mutation | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
+| `cm-ios-04` | `ios-sync` | skill | live | iOS | proposed Astra design | `astra-implement` | Approved bridge update produces code and build/device evidence | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
+| `cm-ios-05` | `ios-clean` | skill | live | iOS | proposed Astra design | `astra-implement` | Approved bridge removal produces cleanup commits and release-build evidence | claimed | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
 | `cm-ops-and-routine-01` | `retro` | skill | live | Ops & routine | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ops-and-routine-02` | `meeting` | skill | live | Ops & routine | unassigned | unassigned | — | unclaimed | Pending source inspection. |
 | `cm-ops-and-routine-03` | `office-hours` | skill | live | Adversarial critique; Ops & routine | duplicate occurrence | `astra-critique` | Ops & routine candidate role | claimed | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
@@ -222,22 +230,22 @@ occurrence and list every candidate neighborhood.
 
 | Source ID | Component type | Location or registration | Availability | Disposition | Reason | Consuming designs | Evidence |
 |---|---|---|---|---|---|---|---|
-| `java` | skill | `~/.claude/skills/java/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
+| `java` | skill | `~/.claude/skills/java/SKILL.md` | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-critique` primary; Spec, Implement, Test forward stages | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
 | `python-patterns` | skill | `~/.claude/skills/python-patterns/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `nextjs` | skill | `~/.claude/skills/nextjs/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `claude-api` | skill | `~/.claude/skills/claude-api/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
-| `mcp-builder` | skill | `~/.claude/skills/mcp-builder/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
+| `mcp-builder` | skill | `~/.claude/skills/mcp-builder/SKILL.md` | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-spec` primary; Implement and Test forward stages | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
 | `awssdk` | skill | `~/.claude/skills/awssdk/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `security` | skill | `~/.claude/skills/security/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
-| `cso` | skill | `~/.claude/skills/cso/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | `astra-critique` | [Astra Critique §3](../designs/astra-critique.md#3-source-evidence) |
-| `design-api` | skill | `~/.claude/skills/design-api/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | `astra-critique` | Consumption proposed by [Astra Critique §3.3](../designs/astra-critique.md#33-proposed-ledger-changes); source inspection pending. |
-| `design-db` | skill | `~/.claude/skills/design-db/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
+| `cso` | skill | `~/.claude/skills/cso/SKILL.md` | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-critique` primary | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
+| `design-api` | skill | `~/.claude/skills/design-api/SKILL.md` | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-spec` primary; Implement writes OpenAPI | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
+| `design-db` | skill | `~/.claude/skills/design-db/SKILL.md` | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-spec` primary; Implement writes DDL and rollback artifacts | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.4](six-skill-source-absorption.md#34-diagnostic-and-domain-design-profiles). |
 | `agent-harness-construction` | skill | `~/.claude/skills/agent-harness-construction/SKILL.md` | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `karpathy-guidelines` | skill | andrej-karpathy-skills@karpathy-skills/1.0.0 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `shell-scripting:bash-defensive-patterns` | skill | shell-scripting@claude-code-workflows/1.2.3 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `shell-scripting:shellcheck-configuration` | skill | shell-scripting@claude-code-workflows/1.2.3 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
-| `shell-scripting:bash-pro` | agent | shell-scripting@claude-code-workflows/1.2.3 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
-| `shell-scripting:posix-shell-pro` | agent | shell-scripting@claude-code-workflows/1.2.3 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
+| `shell-scripting:bash-pro` | agent | shell-scripting@claude-code-workflows/1.2.3 | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-implement` primary; Test consumes validation evidence | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
+| `shell-scripting:posix-shell-pro` | agent | shell-scripting@claude-code-workflows/1.2.3 | live | unassigned | Profile allocation locked; global `keep` / `defer` / `exclude` remains open. | `astra-implement` primary; Test consumes multi-shell evidence | Approved 2026-08-11 and locked 2026-08-12: [92-component allocation §3.5](six-skill-source-absorption.md#35-platform-and-language-execution-profiles). |
 | `huggingface-skills:hf-cli` | skill | huggingface-skills@claude-plugins-official/1.0.20 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `huggingface-skills:hf-cloud-aws-context-discovery` | skill | huggingface-skills@claude-plugins-official/1.0.20 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
 | `huggingface-skills:hf-cloud-python-env-setup` | skill | huggingface-skills@claude-plugins-official/1.0.20 | live | unassigned | Awaiting user `keep` / `defer` / `exclude` decision. | — | Pending source inspection. |
@@ -434,23 +442,25 @@ plugin-level deletion from silently removing a capability with a different lifec
 - Live reference rows: **48**.
 - Dangling cleanup rows: **133**.
 - Separate installed-component records: **15**.
-- Collision primary dispositions: **47** proposed Astra design, **7** independent reference,
-  **1** retained agent coordinated, **3** defer, **1** exclude, **2** duplicate occurrence, and
-  **118** unassigned.
-- Collision primary homes: **18** `astra-critique` occurrences (including the duplicate),
+- Collision primary dispositions: **77** proposed Astra design, **7** independent reference,
+  **3** defer, **1** exclude, **3** duplicate occurrence, and **88** unassigned.
+- Collision primary homes: **34** `astra-critique` occurrences (including one existing duplicate),
   **2** `astra-product-design`, **8** `astra-interface`, **4** `astra-brand`,
-  **7** retained independent, **5** `astra-understand-code`,
-  **2** `astra-incident`, **6** `astra-browser`, **3** `astra-qa`, **2** `astra-automate`,
-  and **122** unassigned.
-- The four-row difference between the **118** unassigned disposition count and **122** unassigned
+  **7** retained independent, **4** `astra-understand-code`, **7** `astra-spec`,
+  **9** `astra-implement`, **3** `astra-test`, **1** `astra-incident`, **6** `astra-browser`,
+  **2** `astra-automate`, and **92** unassigned.
+- The four-row difference between the **88** unassigned disposition count and **92** unassigned
   primary-home count is the three deferred built-ins plus provisionally excluded `prompt-lookup`.
-- Every reconciled occurrence remains `claimed`, not `resolved`.
+- Claim status: **93** claimed and **86** unclaimed. Every migrated or previously reconciled
+  occurrence remains `claimed`, not `resolved`.
 - All 21 Design & visual occurrences are `claimed` for one investigation wave. `design-review`
   remains assigned to `astra-critique` with explicit secondary roles; the other 20 follow the
   amendment-3 split across three Wave 1 designs, three independent references, and three deferred
   built-ins. None is `resolved`.
 - The `loop-goal` skill remains a collision source for `astra-automate`; its six lifecycle handlers
   are separate component records and remain installed pending delivery-shape reconciliation.
-- Every collision occurrence not cited by amendments 1–4 remains `unclaimed` and `unassigned`.
-- Reference-ledger recommendations remain `unassigned`; no `keep` or retirement decision is
-  inferred. Collision `defer` and `exclude` states are claimed proposals pending the user's decision.
+- Every collision occurrence not cited by amendments 1–4 or the locked 92-component allocation
+  remains in its prior state.
+- Seven reference rows now carry locked consuming-design allocations, but their dispositions remain
+  `unassigned`; no `keep` or retirement decision is inferred. Collision `defer` and `exclude`
+  states remain claimed proposals pending the user's decision.

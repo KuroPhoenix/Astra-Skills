@@ -2,7 +2,9 @@
 
 **Date:** 2026-08-11
 
-**Status:** Proposed phase-0 coordinator design; 92-component target approved by the user
+**Status:** Locked phase-0 coordinator allocation record; 92-component target approved by the
+user on 2026-08-11; allocations, revised dispositions, and the documentation deferral locked by
+the user on 2026-08-12
 
 **Public roster:** `astra-critique`, `astra-understand-code`, `astra-spec`,
 `astra-implement`, `astra-test`, `astra-ship`
@@ -26,6 +28,14 @@ only its relevant rows. The global roadmap and ledgers remain unchanged in this 
 coordinator migration may copy these proposals into `docs/design-roadmap.md` and
 `docs/phase-0-ledgers.md`, keeping every collision row `claimed`, never `resolved`, until the
 roster-wide review is complete.
+
+**Lock record (2026-08-12).** The user reviewed this record and locked its allocations: the
+51-identifier baseline in section 2; the 41-identifier expansion in section 3 with its primary
+homes and secondary roles; the six revised dispositions in section 7; and the non-absorption
+boundary in section 8, including the five-source documentation deferral. A locked row changes
+only by a new recorded user decision. The lock fixes disposition ownership so the coordinator
+migration can proceed; it does not resolve a ledger row, claim behavioral absorption, satisfy a
+retirement gate, or migrate anything by itself.
 
 Phase 0 still creates prose only. This design does not create runtime skills, consultants,
 adapters, tests, a harness, an installation, a push, a PR, source retirement, or deletion.
@@ -257,8 +267,9 @@ allocations at the design layer:
 | `document-release` deferred to an unwritten `astra-document` | Repository-change documentation moves to Implement, with Ship verification | Standalone non-repository writing remains outside this tranche |
 | Provisional `astra-qa`, `astra-ios`, and `astra-skill-design` peers | Their coding-lifecycle slices become profiles across the six | Browser capability, iOS hardware, and skill-evaluation machinery remain explicit adapters and prerequisites |
 
-These revisions do not silently alter the global ledger. The later migration must cite this user
-decision and preserve the historical rows as superseded evidence.
+The user locked all six revised dispositions on 2026-08-12. These revisions do not silently alter
+the global ledger. The later migration must cite the 2026-08-11 approval and the 2026-08-12 lock
+and preserve the historical rows as superseded evidence.
 
 ## 8. Explicit non-absorption boundary
 
@@ -285,8 +296,12 @@ fails:
 
 The five standalone repository-documentation candidates—`document-generate`, `/doc`, `rtfm`,
 `claude-md-management:revise-claude-md`, and
-`claude-md-management:claude-md-improver`—remain outside this first target. They require a separate
-user decision on whether docs-only change cycles belong to the six-skill coding job.
+`claude-md-management:claude-md-improver`—remain outside this first target. On 2026-08-12 the user
+locked this deferral: none of the five joins the 92 target in this tranche, each keeps its current
+independent registration, and no surviving design may claim one as a primary or secondary home
+without a new recorded user decision. Whether docs-only change cycles belong to the six-skill
+coding job remains that later, separate decision. Deferral is a scope boundary, not inspection
+evidence: it supports no exclusion, absorption, or retirement claim for these five sources.
 
 ## 9. Manual bridge before implementation
 
@@ -381,7 +396,7 @@ agents, Requesting Code Review's reviewer prompt, Skill Creator's analyzer/compa
 gstack authored templates and section files, webapp-testing helpers, MCP Builder references, and
 iOS bridge/runtime assets cannot be discarded as implementation detail.
 
-Remaining work after the user reviews this design:
+Remaining work after the 2026-08-12 lock:
 
 1. migrate the 41 dispositions and seven reference rows into the coordinator-owned ledger;
 2. reconcile the older 24-skill roadmap with the six public skills and these profiles;

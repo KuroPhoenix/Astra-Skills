@@ -1,7 +1,7 @@
 # Astra phase-0 skill design roadmap
 
-**Snapshot:** 2026-08-03
-**Status:** Proposed design-document sequence; runtime implementation remains deferred
+**Snapshot:** 2026-08-12
+**Status:** Locked six-skill public roster and coordinator allocation; source internalization and runtime implementation remain deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
 **Amendment 2 (2026-07-31):** Source-body inspection of Context, Safety, Delegation & autonomy, and
@@ -35,11 +35,20 @@ On the user's further direction, five recorded repairs were then executed the sa
 design files — the D1 class, the stale `astra-presentation` reroute, and three payload fixes;
 section 13.8 records them. **It marks no design as reviewed and changes no ledger row.** See
 section 13.
+**Amendment 7 (2026-08-12):** The user-approved 92-component target is now the active coordinator
+roadmap. The earlier 24-skill proposal is reconciled to six public coding-lifecycle skills and
+profile/adaptor delivery shapes. Thirty-five collision occurrences were migrated as `claimed`,
+and seven reference rows received locked consuming-design allocations without acquiring a global
+disposition. No row is `resolved`. See section 14.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
 > proposes source allocation; it does not replace either document or make the source-claim
 > ledger authoritative by itself.
+
+> **Current-roadmap rule.** Section 14 supersedes sections 2–7 wherever the pre-lock 24-skill
+> proposal conflicts with the locked six-skill coding stack. Sections 2–13 remain historical
+> design and decision evidence; they do not authorize a seventh public coding-lifecycle skill.
 
 ## 1. Purpose and certainty
 
@@ -2005,3 +2014,104 @@ rows of 179**.
 optional follow-up sits in that set — `astra-implement` section 7.4 rule 4 routes
 `remediation_authority: plan-required | unknown` to `astra-plan` without naming a class. It is
 correct as written and would only gain precision from naming `unplanned-code-remediation`.
+
+## 14. Amendment 7 — locked six-skill coordinator migration
+
+The user approved the 92-component target on 2026-08-11 and locked its coordinator allocation on
+2026-08-12 in [`docs/six-skill-source-absorption.md`](six-skill-source-absorption.md). This
+amendment makes that decision the active roadmap and applies its expansion rows to the
+coordinator-owned ledger. It does not claim source internalization, runtime behavior, installation,
+retirement eligibility, or deletion authority.
+
+### 14.1 Active roster, lifecycle, and artifacts
+
+The public coding-lifecycle roster is exactly six skills:
+
+```text
+astra-critique -> astra-spec -> astra-implement -> astra-test -> astra-ship
+```
+
+Greenfield work may begin at Spec. Understand Code is a conditional, read-only participant when a
+downstream judgment depends on an Understanding Report. A return upstream starts a new immutable
+change cycle only for an `authority_gap`: evidence outside every approved branch, evidence that
+invalidates an upstream artifact, or a new user-owned decision.
+
+| Public skill | Primary authority | Authoritative output |
+|---|---|---|
+| `astra-critique` | Review and diagnostic judgment | Finding Set |
+| `astra-understand-code` | Read-only current-state explanation | Optional Understanding Report |
+| `astra-spec` | Intended change, selected solution, and required outcomes | Approved Change Specification |
+| `astra-implement` | Approved repository delivery planning and execution | Approved Delivery Roadmap, separate Execution Ledger, atomic commits, and focused verification evidence |
+| `astra-test` | Independent verification of pinned requirements and the delivered revision | Test Evidence Packet |
+| `astra-ship` | Publication and integration of the verified revision | Publication Record |
+
+The `C` relation remains narrow consultation between these six authorities, not another skill or
+permission to mutate a peer's artifact. Implement owns atomic commit boundaries, one-functionality
+narrow PR partitions, language-specific execution, and durable repository prose required by the
+approved change. Ship verifies and publishes the exact resulting revision.
+
+### 14.2 Reconciliation of the former 24-skill proposal
+
+The older roster remains in sections 2–7 only as historical evidence. All 24 proposed members now
+have an explicit treatment:
+
+| Former roadmap members | Count | Current treatment |
+|---|---:|---|
+| `astra-critique`, `astra-understand-code`, `astra-spec`, `astra-implement`, `astra-test`, `astra-ship` | 6 | Survive as the complete public coding-lifecycle roster. |
+| `astra-plan`, `astra-debug` | 2 | Superseded historical designs. Plan's change authority belongs to Spec and its delivery authority to Implement; Debug becomes Critique's `diagnose` mode. |
+| `astra-qa`, `astra-ios`, `astra-skill-design`, `astra-delegate`, `astra-document` | 5 | Their in-target coding slices become profiles and adapters across the six. Repository-change documentation belongs to Implement with Ship verification; the separate docs-only cycle remains deferred. Source delivery shapes and prerequisites survive. |
+| `astra-browser`, `astra-incident` | 2 | Browser control remains capability infrastructure, not a seventh public job. Live-outage stabilization and incident communication remain outside the coding stack; only RCA moves to Critique. |
+| `astra-product-design`, `astra-brand`, `astra-interface`, `astra-guard`, `astra-context`, `astra-setup`, `astra-deploy`, `astra-knowledge`, `astra-automate` | 9 | Outside the locked coding-lifecycle roster. Their designs, sources, and recorded obligations remain installed historical or independent work; this amendment neither absorbs nor retires them. |
+| **Total reconciled** | **24** | — |
+
+The nearby browser, deployment, safety, context, automation, product, brand, interface, knowledge,
+and live-incident jobs do not become hidden subskills. They remain explicit external capabilities,
+independent work, or later scope decisions unless a new user decision changes the boundary.
+
+### 14.3 Locked source target and applied ledger state
+
+The target contains the existing 51-component baseline plus the locked 41-identifier expansion.
+The expansion adds no public peer.
+
+| Public skill | Baseline identifiers | Expansion identifiers | Target total |
+|---|---:|---:|---:|
+| `astra-critique` | 22 | 18 | 40 |
+| `astra-understand-code` | 4 | 0 | 4 |
+| `astra-spec` | 6 | 10 | 16 |
+| `astra-implement` | 4 | 10 | 14 |
+| `astra-test` | 7 | 3 | 10 |
+| `astra-ship` | 8 | 0 | 8 |
+| **Total** | **51** | **41** | **92** |
+
+The coordinator migration applies only the expansion. Its 34 collision identifiers occupy 35
+ledger occurrences because `skillify` appears in both Browser & QA and Skill meta; the remaining
+seven identifiers are reference rows. All 35 collision occurrences are `claimed`, never
+`resolved`. The seven reference rows retain `unassigned` global disposition while recording their
+locked primary consuming design and stage-specific consumers, because that ledger has no
+claim-status column and allocation does not decide `keep`, `defer`, or `exclude`.
+
+After the migration, the 179-occurrence collision ledger contains 93 `claimed` and 86 `unclaimed`
+rows. Its dispositions are 77 proposed Astra design, 7 independent reference, 3 defer, 1 exclude,
+3 duplicate occurrence, and 88 unassigned. Post-migration primary homes include 34 Critique,
+7 Spec, 9 Implement, and 3 Test occurrences; the expansion migration itself contributes 16, 7,
+9, and 3 of those respectively. Pre-existing homes and the 51-source baseline otherwise keep their
+prior state. The authoritative row-level record is
+[`docs/phase-0-ledgers.md`](phase-0-ledgers.md).
+
+### 14.4 Remaining roadmap
+
+The locked allocation establishes coordinator ownership, not absorption. Work proceeds in this
+order:
+
+1. reconcile all 15 directed `C` consultant pairs and the final trigger surface;
+2. design the fixed source corpus, reference convener, self-contained candidate, and behavioral
+   harness;
+3. implement and dogfood one non-retiring vertical slice;
+4. widen internalization only after the slice preserves authority, artifacts, delivery shapes,
+   prerequisites, and degradation behavior; and
+5. run source-specific non-regression, positive-advantage, internalization-fidelity, and retirement
+   gates before asking the user for any retirement decision.
+
+Runtime skills, consultants, harness code, installation, source deletion, and retirement remain
+deferred. Failed evidence narrows or rejects only the affected profile; it never silently resolves
+a ledger row or broadens another skill's authority.

@@ -2,11 +2,12 @@
 
 **Date:** 2026-08-12
 
-**Status:** Proposed phase-0 design awaiting user re-review. Records three user decisions of
-2026-08-12 (existence, MVP boundary, delegated voice) and the same-day design-review
-resolutions (output-only voice, `I(reporting)` typing, post-MVP adapters); the eight blocking
-review findings are applied. One decision remains open: the slice-approval statement in 4.2.
-Creates prose only: no runtime skill, harness, installation, retirement, push, or PR.
+**Status:** Proposed phase-0 design approved for implementation planning; coordinator
+reconciliation remains pending. Records three user decisions of 2026-08-12 (existence, MVP
+boundary, delegated voice), the same-day design-review resolutions (output-only voice,
+`I(reporting)` typing, post-MVP adapters), and the approved source-slice statement in 4.2; the
+eight blocking review findings and the method-canon audit corrections are applied. Creates prose
+only: no runtime skill, harness, installation, retirement, push, or PR.
 
 **Proposed public shape:** `astra-report` — the stack's single human-facing reporting surface.
 It is a seventh user-facing entry point but not a seventh lifecycle authority. The roster
@@ -104,7 +105,7 @@ human-facing rendering without corrupting its own artifact discipline.
 | **Attention budget** | A per-brief cap on new reply surfaces, set by mode, enforced mechanically. A rendering parameter, not a measured psychological quantity |
 | **Attention escalation** | The single rule deciding when an item must surface regardless of budget: blocking user decisions always render in NOW |
 | **Exposure Ledger** | Report's durable, append-only per-project record of what was shown to the user, when, covering which artifact revisions, presenting which surfaces and decisions |
-| **Reader Brief** | Report's ephemeral layered output: capsule, NOW, NEXT, DEFERRED, evidence links |
+| **Reader Brief** | Report's ephemeral layered output: capsule, NOW, NEXT, DEFERRED, a change story when applicable, and evidence links |
 
 ### 2.3 Reporting model
 
@@ -126,9 +127,11 @@ The boundary is recorded versus inferred state: exposure ("finding F-12 was show
 guess about a mind, and a wrong guess fails silently by omitting exactly what the user forgot
 — the worst failure mode a reporting layer can have. With exposure facts, the safe rule
 "anything changed since last shown gets shown" needs no psychology. Production precedent:
-GitHub's "changed since your last review" tracks exposure, not memory, and is trusted for
-exactly that reason. A later time-decay re-glossing heuristic is admissible because its worst
-case is one redundant sentence (section 12.2).
+GitHub's stable file-view feature maintains per-viewer viewed state and invalidates it when the
+file changes; that is an analogy for change invalidation, not proof of reading, understanding,
+approval, or durable artifact exposure. The more exact "commits since last review" selector is
+public-preview evidence only. A later time-decay re-glossing heuristic is admissible because its
+worst case is one redundant sentence (section 12.2).
 
 ## 3. Interface and scope
 
@@ -173,13 +176,22 @@ relation (section 8).
 | Artifact scope | Immutable references (identity, revision, hash per 7.11.3) to one or more chain artifacts; sideways reads into peer working files are forbidden |
 | Mode | `skim`, `standard` (default), or `deep`; a persisted per-project default may exist in the Exposure Ledger |
 | Exposure Ledger | Read if present; absence degrades to full-state rendering (section 7.6) |
+| Direct request | The user's scope and mode plus the resolved authoritative artifact references; no ReportEvent is required or fabricated |
 | Delegated payload | At an `I(reporting)` moment: the producing skill's ReportEvent envelope (sections 8.3–8.4) |
+
+The two input forms do not create two authority paths. On a direct request, Report may render
+only facts, consequences, and open decisions already recorded in the resolved artifacts and
+their canonical reporting hooks. If a hook is absent, Report names the gap and uses exact
+artifact excerpts or line anchors; it never constructs a producer outcome, consequence, open
+decision, or ReportEvent. A direct approval brief is therefore possible only when the
+authoritative artifact already carries the complete common open-decision shape. Otherwise
+Report explains the artifact and identifies the producer-owned missing decision contract.
 
 ### 3.5 User-visible result
 
-A Reader Brief (section 7.2), delivered in conversation. After every brief, one Exposure
-Ledger append (section 7.3). Nothing else. Format delivery through adapters is post-MVP
-(section 4.3).
+A Reader Brief (section 7.2), delivered in conversation. After every receipt-confirmed brief,
+one Exposure Ledger append (section 7.3); without a receipt, no append. Nothing else. Format
+delivery through adapters is post-MVP (section 4.3).
 
 ### 3.6 Effect authority and non-goals
 
@@ -269,22 +281,21 @@ jobs are authoring, coaching, or teaching — not rendering immutable lifecycle 
 | `teach` | Working-memory-aware chunk sizing, progressive explanation | Playbook, perspective | Curricula, lessons, exercises, learning records |
 | `rtfm` | Consumer perspective, "when and why" framing, uncertainty disclosure | Perspective | Reading implementations and mutating API docs |
 
-**Deferral lock constraint.** `/doc`, `document-generate`, and `rtfm` are three of the five
+**Approved deferral-lock exception.** `/doc`, `document-generate`, and `rtfm` are three of the five
 standalone repository-documentation candidates whose deferral the user locked on 2026-08-12:
 "no surviving design may claim one as a primary or secondary home without a new recorded user
-decision" (absorption design section 8). Their ledger rows therefore remain **unclaimed** —
-the ledger schema has no blocked state, and this design records a proposal only. The exact
-decision awaiting the user is:
+decision" (absorption design section 8). On 2026-08-12 the user approved the following exact,
+narrow exception:
 
 > Approve `astra-report` as a secondary consumer of only the recorded playbook/perspective
 > slices from `/doc`, `document-generate`, and `rtfm`. Their primary jobs and registrations
 > remain independent; they do not join the 92 target, become wholly absorbed, retire, or
 > decide the separate docs-only-cycle question.
 
-Until that statement is approved verbatim, the three rows stay untouched (12.3 question 1).
-If the user declines, Report's plain-language playbook cites only `doc-coauthoring`,
-`internal-comms`, `teach`, and the method references in 4.4; the design remains viable with
-reduced source grounding. Report claims no source as a primary home in any case.
+That decision authorizes the three existing collision rows to move from `unclaimed` to
+`claimed` with Report's exact secondary roles in 4.5. It does not move them into the 92 target,
+resolve a row, transfer a primary job, authorize whole-source absorption or retirement, or
+settle the separate docs-only-cycle question. Report claims no source as a primary home.
 
 ### 4.3 Post-MVP delivery adapters
 
@@ -305,21 +316,25 @@ Books and research enter this design as **method references** — the same class
 sources: they have no invocable identifier, no entry hash in the source inventory sense, no
 I/O contract, and no retirement gate. Distillation records principles with attribution;
 **no source expression is reproduced**. Each reference earns its row only through checkable
-rules bound to a brief obligation; the model already knows the content — the skill's value is
-selection, binding, and precedence, not knowledge transfer.
+rules bound to a brief obligation. The future self-contained skill must carry those distilled
+rules and provenance; hidden model recall is not a reproducible dependency. The complete audit,
+including local-byte hashes, locators, transfer limits, and rejected attributions, is
+[`docs/research/2026-08-12-astra-report-method-canon.md`](../docs/research/2026-08-12-astra-report-method-canon.md).
 
 | Reference | Governs | Distilled into (examples of checkable rules) |
 |---|---|---|
-| Minto, *The Pyramid Principle* | Brief skeleton | Answer first; before → problem → fix → after is SCQA; a reader stopping after NOW still holds a correct after-state |
+| Minto, *The Pyramid Principle* | Brief skeleton | Lead with the governing answer; use recorded context and tension to orient a Change Story. Before → problem → fix → after is an Astra synthesis, not SCQA |
 | Rogers & Lasky-Fink, *Writing for Busy Readers* | Surface economy | Fewer ideas, not merely fewer words; important information findable in one glance; action effort minimized |
-| Redish, *Letting Go of the Words* | Layering | Key message first; scannable chunks; every layer usable without the next |
-| Mayer, *Multimedia Learning* | Chunk discipline | Segmenting (one idea per chunk), signaling (NOW/NEXT/DEFERRED headers), coherence (cut seductive detail), pre-training (gloss vocabulary before use), redundancy (exactly one summary layer; sections never restate each other) |
+| Redish, *Letting Go of the Words* | Layering | Key message first with scannable chunks and optional detail; NOW's action-completeness is Astra's stronger contract |
+| Mayer/Fiorella and Clark/Mayer | Chunk discipline | Multimedia segmenting, signaling, coherence, and pre-training motivate testable prose transfers: meaningful chunks, visible structure, removal of renderer-authored extraneous detail, and necessary first-use glosses. They do not prove one-idea chunks or a one-summary rule |
 | Williams, *Style: Lessons in Clarity and Grace* | Sentence mechanics | Actors as subjects, actions as verbs; old-before-new information flow. (Douglas, *Writing for the Reader's Brain*, folds into this slot as the evidence-based alternate) |
-| Diátaxis (Procida) | Scope refusal | A brief is explanation only: no how-to steps, no reference dumps; those route to their owners |
-| Nygard, ADR practice | Decision framing | Why-this-fix and alternatives render only from recorded Critique/Spec fields, never reconstructed |
-| Sweller, cognitive load theory; Grice, maxims of Quantity and Manner | Foundations | Cited as grounding for the budget and the completeness rule; not cited operationally |
-| Altmann & Trafton, memory for goals; Parnin & DeLine, programmer interruption studies | Resumption | The capsule is a resumption cue; programmer-specific resumption is the closest prior art |
-| SITREP/BLUF genre; GitHub "changed since last review" | System precedents | Mature delta-plus-escalation report shape; production exposure-tracking precedent |
+| Diátaxis (Procida) | Explanation boundary | Apply context, reasons, implications, and alternatives to Change Story and rationale; action-facing NOW and approvals sit outside the explanation quadrant |
+| Nygard, ADR practice | Decision framing | Render recorded context/forces, decision, status/supersession, and consequences; alternatives appear only when the authoritative Specification records them |
+| Sweller/cognitive-load theory; Grice | Foundations | Motivate attention risk, sufficient evidence, relevance, clarity, and order; they do not supply numeric budgets or fixed layer counts |
+| Altmann & Trafton; Parnin & DeLine | Resumption analogy | Stable cues and chronological code changes motivate a Capsule plus delta; whether a prose Capsule helps is a validation hypothesis, not an established result |
+| BLUF doctrine | System precedent | Main point or action first; it does not define Astra's layers or budgets |
+| Inspected SITREP format | System precedent | Domain-specific precedent for highlighting changed state and separately escalating attention items; it is not a universal reporting grammar |
+| GitHub viewed-state behavior | Product analogy | Per-viewer file state invalidated by change; never evidence of reading, understanding, approval, or durable artifact exposure |
 
 Novelty is **not claimed** for any concept in this design; the bar is usefulness to this user.
 A literature review is deferred unless publication is ever intended.
@@ -338,9 +353,9 @@ design's sections 4.1–4.3 as evidence.
 | `cm-docs-and-knowledge-05` `internal-comms` | independent reference | independent | `astra-report`: status/leadership/FAQ register slice | `unclaimed` → `claimed` |
 | `cm-docs-and-knowledge-07` `teach` | independent reference | independent | `astra-report`: working-memory chunk-sizing slice | `unclaimed` → `claimed` |
 | `cm-docs-and-knowledge-04` `make-pdf` | independent reference | independent | `astra-report`: post-MVP delivery adapter (4.3) | `unclaimed` → `claimed` |
-| `cm-docs-and-knowledge-03` `/doc` | proposed only: independent reference with an `astra-report` slice role | — | — | **no change**: remains `unclaimed` pending the 4.2 decision |
-| `cm-docs-and-knowledge-01` `document-generate` | proposed only: independent reference with an `astra-report` slice role | — | — | **no change**: remains `unclaimed` pending the 4.2 decision; the 4.1.2 resolver gap must also close before resolution |
-| `cm-docs-and-knowledge-09` `rtfm` | proposed only: independent reference with an `astra-report` slice role | — | — | **no change**: remains `unclaimed` pending the 4.2 decision |
+| `cm-docs-and-knowledge-03` `/doc` | independent reference | independent | `astra-report`: plain-language, audience-targeting, and fresh-reader-test slice | `unclaimed` → `claimed`; approved lock exception in 4.2 |
+| `cm-docs-and-knowledge-01` `document-generate` | independent reference | independent | `astra-report`: explanation-quadrant structure slice | `unclaimed` → `claimed`; approved lock exception in 4.2; the 4.1.2 resolver gap must still close before resolution |
+| `cm-docs-and-knowledge-09` `rtfm` | independent reference | independent | `astra-report`: consumer-framing and uncertainty-disclosure slice | `unclaimed` → `claimed`; approved lock exception in 4.2 |
 | `cm-design-and-visual-21` `diagram` | already `claimed`: retained independent (roadmap amendment 3 §10) | independent | proposed amendment: add `astra-report` as a post-MVP supplemental-delivery consumer alongside `astra-document` and `astra-interface` | stays `claimed`; amendment reconciles against the amendment-3 record |
 
 ## 5. Collision analysis
@@ -440,7 +455,8 @@ Mode changes rendering density only; it never changes what exists or what is add
 
 ### 7.2 Reader Brief contract
 
-Layered, in order, each layer usable without the next (Redish rule):
+Layered in order: Redish supports key-message-first presentation with optional detail; Astra's
+stronger rule is that NOW alone must remain materially complete for the immediate action:
 
 | Layer | Content | Binding rules |
 |---|---|---|
@@ -448,33 +464,47 @@ Layered, in order, each layer usable without the next (Redish rule):
 | **NOW** | Budgeted surfaces, decisions first, each as claim → consequence → what is asked; ends with the completeness statement ("nothing else requires you") when true | Layer-1 completeness-for-action: a user stopping here is not wrong about anything material. Failure test: if the user must ask "is that everything?", the brief failed |
 | **NEXT** | Items that will need attention but block nothing now | Never contains a blocking decision |
 | **DEFERRED** | Named parked items, one line each | Visible deferral (6.9); never empty-by-omission |
-| **Change Story** | Required whenever the scope covers a change cycle (an Approved Change Specification exists): before → problem → fix → after, why this fix was selected, and the rejected or deferred alternatives | Every element renders only from recorded fields — problem from Finding IDs; why-this-fix and alternatives from the Specification's selected-solution and rejected-alternatives fields; before/after from the Understanding Report, Execution Ledger, and Test Evidence Packet — each trace-linked. A missing element is named as a gap, never invented |
+| **Change Story** | Required whenever the scope covers a change cycle (an Approved Change Specification exists): before → problem → fix → after, why this fix was selected, and the rejected or deferred alternatives | This sequence is an Astra synthesis, not SCQA. Every element renders only from recorded fields — problem from Finding IDs; why-this-fix and alternatives from the Specification's selected-solution and rejected-alternatives fields; before/after from the Understanding Report, Execution Ledger, and Test Evidence Packet — each trace-linked. A missing element is named as a gap, never invented |
 | **Evidence** | Stable-ID links into artifact fields per 7.11.3 traceability | Every NOW claim carries at least one link; no orphan assertions |
 
 Sentence-level rules from the canon bind all layers: actors as subjects; vocabulary glossed on
-first use; every abstract claim paired with a concrete artifact excerpt, diff line, or number;
-exactly one summary layer in the whole brief; explanation only — no how-to steps, no
-reference dumps.
+first necessary use; every abstract claim paired with a concrete artifact excerpt, diff line,
+or number. Apply Diátaxis explanation rules only to the Change Story and rationale: procedural
+detail and reference dumps route to their owners, while NOW and approval requests retain the
+minimum action information required for the user to decide. Purposeful standing-context
+repetition in the Capsule is allowed; Mayer's multimedia redundancy principle does not impose a
+one-summary-layer prose rule.
 
 ### 7.3 Exposure Ledger contract
 
 One append-only record per project, Report-jurisdiction (3.6). Each entry carries, in the
-identity style of 7.11.3: timestamp; brief identity and mode; the artifact identities,
+identity style of 7.11.3: timestamp; brief identity, exact delivered-content hash, and mode; the artifact identities,
 revisions, and hashes covered; the surface identifiers presented, split NOW/NEXT/DEFERRED;
-the decisions presented; the decisions answered, each with a pointer to the authoritative
-approval record inside the producing skill's artifact; and any degradation flags (7.6).
+the decisions presented; and any degradation flags (7.6). It deliberately does not duplicate
+whether or how a decision was answered; that remains solely in the producing skill's
+authoritative approval record.
 
 The ledger is exposure evidence, never approval authority: the producing skill's artifact
 remains the only record of what was approved. Entries are never edited; a wrong entry is
 superseded by a correcting append. Absence of a ledger entry for an existing artifact revision
 is itself the signal "never briefed" — no skill ever writes the ledger except Report (8.5).
 
+**Delivery receipt boundary.** "Presented" means the exact composed brief was accepted by its
+delivery surface, not merely generated in memory. Report appends only after a caller or adapter
+supplies a receipt for that exact brief identity. If a conversational host exposes no post-send
+receipt, Report still renders but does not append; the next invocation treats the revision as
+unbriefed and may repeat it. Safe duplication is preferable to a false exposure record that hides
+material information. The first vertical slice may use a successfully written output file as the
+receipt; a host-level conversation receipt remains a later adapter obligation, not an inferred
+fact.
+
 ### 7.4 Rendering protocol
 
 ```text
 scope selection -> delta computation (chain vs ledger) -> attention allocation
 (source-assigned consequence under budget + escalation) -> composition (7.2 layers,
-canon rules, fidelity precedence) -> delivery (conversation; optional adapter) ->
+canon rules, fidelity precedence) -> delivery (conversation; a post-MVP adapter only after
+separate admission under 4.3) ->
 ledger append
 ```
 
@@ -494,7 +524,8 @@ yields to a blocker; it never hides one (6.4).
 
 | Condition | Behavior |
 |---|---|
-| Exposure Ledger missing or unreadable | Render full-state (no delta), say so in the capsule, append a fresh ledger entry flagged `ledger-reset` |
+| Exposure Ledger missing or unreadable | Render full-state (no delta), say so in the capsule, and append a fresh `ledger-reset` entry only after the delivery receipt required by 7.3 |
+| Delivery surface supplies no receipt for the exact brief | Deliver the brief, do not append exposure, and leave the revision unbriefed for the next invocation |
 | Artifact lacks stable identifiers | Quote verbatim with file-line anchors, flag the reporting-hook gap in DEFERRED, never invent identifiers |
 | Report unavailable at a non-decision `I(reporting)` moment | The producing skill emits the degraded minimal notice of 8.5; the lifecycle never blocks on Report |
 | Report unavailable at an approval request | The producing skill presents its complete minimal decision envelope (8.5) so the user can still decide informed; work stops only while awaiting the user's answer, never because Report is unavailable |
@@ -541,13 +572,21 @@ approval request; stage boundaries (entry refused, work stopped, cycle closed); 
 status requests; and failure or degradation announcements. Nothing else routes through
 Report.
 
+This envelope governs delegated `I(reporting)` input only. A user invoking Report directly
+supplies the direct request of 3.4; Report must not impersonate a lifecycle producer by
+manufacturing a ReportEvent.
+
 Every moment crosses the relation as one common **ReportEvent envelope**: event type (one of
-the five); producing skill; artifact identity, revision, and hash per 7.11.3; a one-sentence
-producer-authored outcome; blocking status; surface candidates with their source-assigned
-consequence fields (8.6); open-decision references; and evidence references. Approval
-requests extend the envelope with the decision payload of 8.4. The envelope is a payload
-contract, not an artifact: producer-authored, consumed by Report, and reflected durably only
-through the Exposure Ledger entry of the brief that rendered it.
+the five); producing skill; `artifact_ref`, either an identity/revision/hash tuple per 7.11.3 or
+`null`; a one-sentence producer-authored outcome; blocking status; surface candidates with
+their source-assigned consequence fields (8.6); open-decision references; and evidence
+references. `artifact_ref` is required for artifact completion and whenever an authoritative
+artifact already exists; it may be `null` only when entry is refused or work fails before any
+artifact can exist. A null reference requires a producer-owned event identity plus evidence or
+failure anchors, so Report never invents an artifact to satisfy the schema. Approval requests
+extend the envelope with the decision payload of 8.4. The envelope is a payload contract, not
+an artifact: producer-authored, consumed by Report, and reflected durably only through the
+Exposure Ledger entry of the brief that rendered it.
 
 ### 8.4 Approval-request rendering
 
@@ -555,9 +594,9 @@ The producing skill owns the decision: its identity, options, consequence fields
 authoritative recording of the user's answer in its own artifact (7.11.1 approval machinery is
 unchanged). Report owns wording, ordering, budget placement, and evidence links. The decision
 payload extending the ReportEvent envelope is: decision identity; options with
-source-assigned consequences; evidence references; blocking status. The Exposure Ledger records that the decision was
-presented and answered, pointing at the producer's approval record — it is never itself the
-approval record (7.3).
+source-assigned consequences; evidence references; blocking status. The Exposure Ledger records
+only that the decision was presented. The producer's artifact alone records the answer; Report
+does not mirror approval state into exposure bookkeeping (7.3).
 
 ### 8.5 Degraded fallback when Report is unavailable
 
@@ -636,8 +675,9 @@ Usable today, before any implementation:
 
 1. At any reporting moment, manually compose the 7.2 layers under the 7.5 defaults and the
    section 6 invariants, linking evidence by the identifiers the artifacts already carry.
-2. Maintain the Exposure Ledger as a hand-edited append-only file with 7.3 fields; if skipped,
-   say "no exposure record — full-state brief" in the capsule and forgo deltas.
+2. After the exact brief is visibly delivered, maintain the Exposure Ledger as a hand-edited
+   append-only file with 7.3 fields; if receipt or append is skipped, say "no exposure record —
+   full-state brief" in the next capsule and forgo deltas.
 3. Use `/doc` (register), `internal-comms` (status shapes), and `doc-coauthoring` (chunking)
    as source oracles for the prose itself, under this design's precedence chain.
 4. Never let manual rendering alter, re-grade, or omit-without-deferral any artifact content.
@@ -685,6 +725,31 @@ than trusting it.
     background, or ask "want to hear more?" — Report must diverge on all three.
 18. Expected-convergence control: pure register quality on one short artifact, where Report
     and the `/doc` oracle should be indistinguishable.
+19. Pre-artifact refusal and failure events: `artifact_ref: null` is accepted only with a stable
+    producer event identity and evidence or failure anchors; completion with a null artifact is
+    rejected.
+20. Approval presentation followed by a user answer: the Exposure Ledger records the presented
+    decision once and never copies answer state from the producer's authoritative artifact.
+21. Attribution control: compare the corrected Astra Change Story description with a rendering
+    that labels before → problem → fix → after as SCQA; the false attribution fails even when
+    the prose is readable.
+22. Diátaxis boundary control: compare bounded rationale plus the complete decision envelope
+    against explanation-only prose; the latter fails when the user cannot act from it.
+23. Resumption mechanism control: expose stable goal, stage, and artifact cues before a
+    simulated interruption, then compare repeated-cue, delta-only, and after-the-fact-only
+    capsule conditions. No condition may be described as proven before the comparison runs.
+24. Expertise and density control: compare `skim`, `standard`, and `deep` with project-familiar
+    and project-new evaluators; authority, caveats, and addressability must remain constant.
+25. Viewed-state control: revise an exposed artifact without changing its approval state; the
+    new revision becomes unexposed, but Report must not call it unapproved.
+26. Missing delivery receipt: the brief may render, but no Exposure Ledger entry is appended and
+    the artifact revision remains unbriefed on the next run.
+27. Redundancy-scoring control: intentional Capsule repetition of standing invariants needed for
+    orientation or action completeness is not scored as a Mayer redundancy violation; the scorer
+    separately flags renderer-authored extraneous duplication.
+28. Preview-precedent guard: neither an evaluation nor runtime behavior may depend on GitHub's
+    public-preview "commits since last review" selector; artifact revision/hash plus Exposure
+    Ledger ground truth is the oracle.
 
 ### 11.3 Method and measures
 
@@ -695,10 +760,14 @@ recall (no blocking decision omitted — required at 100%); supported-claim prec
 unsupported-claim rate against artifact fields; fidelity audit (every omitted or demoted item
 addressable by identifier; zero deleted caveats); source-unique supported behaviors (each 4.2
 slice observably survives); delta correctness against ledger ground truth; layer-1
-completeness judged against the artifact set; duplicate/noise load (redundancy-rule
-violations); deferral-routing accuracy (items land in the correct NOW/NEXT/DEFERRED tier
+completeness judged against the artifact set; duplicate/noise load against Astra's surface-
+economy rules; deferral-routing accuracy (items land in the correct NOW/NEXT/DEFERRED tier
 given their source-assigned consequence); actionability of NOW items; register quality
 against the source oracle; ledger-append integrity; cost and latency per brief.
+
+The numeric surface defaults, prose chunking transfer, Capsule resumption value, and the layer
+scheme are Astra product hypotheses. The cited communication and cognition sources motivate
+their evaluation but do not constitute passing evidence.
 
 ### 11.4 Gates and consequences
 
@@ -712,8 +781,8 @@ against the source oracle; ledger-append integrity; cost and latency per brief.
 ### 11.5 Retirement
 
 **None in this tranche.** No source retires on Report's account; slices leave every original's
-registration untouched, and the deferred five remain deferred unless 12.3 question 1 records
-otherwise. Because no retirement is proposed, no source-specific retirement gate is created;
+registration untouched, and the approved lock exception in 4.2 does not move any of the
+deferred five into the 92 target. Because no retirement is proposed, no source-specific retirement gate is created;
 any future whole-source claim must add one under `docs/design-requirements.md` section 7.9
 before it can be evaluated.
 
@@ -733,29 +802,43 @@ resolver/section templates and generator registration for the three generated gs
 statement and decisions are conversation records of 2026-08-12, quoted in 1.1 and 2.1 —
 **Observed**, including the review resolution recorded in 1.2.
 
+The method canon audit at
+[`docs/research/2026-08-12-astra-report-method-canon.md`](../docs/research/2026-08-12-astra-report-method-canon.md)
+inspected seven supplied local books by full SHA-256 plus primary or official external sources.
+It distinguishes direct support, analogical transfer, Astra synthesis, and rejected attribution.
+The local *Multimedia Learning* file is an incomplete preview; its absent method chapters are not
+used as evidence. The accessible Cambridge handbook and replacement Clark/Mayer PDF ground the
+limited multimedia-learning analogies instead. Books remain research inputs, not runtime files.
+
 ### 12.2 Provisional decisions
 
 - Williams over Douglas for the sentence-mechanics slot; Douglas recorded as the alternate.
 - Budget defaults in 7.5 are proposed numbers, expected to be tuned by use.
 - Time-decay re-glossing is admitted as a future-safe extension (2.4) but not designed.
 - The ledger file format, storage location, and brief identity scheme are later-phase work.
+- The first slice may accept a successfully written exact-output file as a delivery receipt;
+  conversation-host receipt integration remains a post-slice adapter obligation. Composition or
+  an attempted send alone never counts as exposure (7.3).
+- The first implementation slice covers delegated Spec approval only. The public direct-request
+  contract in 3.4 remains part of the approved design, but its runtime path and direct-exposure
+  ledger schema require a later behavioral slice; the first skill must not advertise that path
+  as implemented.
 - Resolved by the 2026-08-12 review: the output-only interpretation of decision 3 (1.2); the
   withdrawal of the `V` relation in favor of typed `I(reporting)` (8.2); and the post-MVP
   deferral of both delivery adapters (4.3).
+- Resolved by the user's 2026-08-12 approval: the exact three-source secondary-slice exception
+  in 4.2. The exception changes claim ownership only and leaves all five documentation sources
+  outside the 92 target.
 - Ordinary intake dialogue stays outside the Exposure Ledger (review-confirmed deferral;
-  12.3 question 2).
+  12.3 question 1).
 
 ### 12.3 Open questions (each names its consequence)
 
-1. **Does the user approve the exact slice statement in 4.2?** Until approved verbatim, the
-   `/doc`, `document-generate`, and `rtfm` rows stay `unclaimed` and Report's playbook cites
-   the narrower source base (4.2); `document-generate` additionally needs its resolver
-   inspection gap closed (4.1.2) before its row can resolve.
-2. **Should intake dialogue append to the Exposure Ledger?** Currently no — review-confirmed
+1. **Should intake dialogue append to the Exposure Ledger?** Currently no — review-confirmed
    as deferrable: dialogue outcomes land in artifacts, which Report briefs. If
    dialogue-presented facts must someday count as exposure, the six gain a ledger-append
    obligation, weakening "no skill writes the ledger except Report" (7.3).
-3. **Are the 7.5 defaults right for this user?** Wrong defaults either annoy (too tight) or
+2. **Are the 7.5 defaults right for this user?** Wrong defaults either annoy (too tight) or
    re-create overload (too loose); tunable at first use, but the shipped default shapes first
    impressions.
 
@@ -769,9 +852,9 @@ All `claimed`, never `resolved`, citing the 2026-08-12 user decisions in 1.1:
    remain directly invocable control surfaces.
 2. Record the `I(reporting)` typing convention as a clarifying note in the 7.11.2 relation
    vocabulary; no new relation letter is added.
-3. Apply the section 4.5 row changes: four `unclaimed` → `claimed` secondary-role claims;
-   the `diagram` secondary-consumer amendment against roadmap amendment 3; the three
-   deferral-locked rows untouched pending 12.3 question 1.
+3. Apply the section 4.5 row changes: seven `unclaimed` → `claimed` secondary-role claims,
+   including the three-source lock exception approved in 4.2; and the `diagram`
+   secondary-consumer amendment against roadmap amendment 3.
 4. Add the four reporting hooks (8.6) — consequence typing, the common open-decision shape,
    supersession fields for Understand Code, Implement, Test, and Ship, and ReportEvent
    adoption — to each sibling design's artifact contract.

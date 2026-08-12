@@ -1,7 +1,7 @@
 # Astra phase-0 skill design roadmap
 
 **Snapshot:** 2026-08-12
-**Status:** Locked six-skill public roster and coordinator allocation; source internalization and runtime implementation remain deferred
+**Status:** Locked six-skill public roster and coordinator allocation; consultant pairs reconciled; final trigger surface, source internalization, and runtime implementation remain deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
 **Amendment 2 (2026-07-31):** Source-body inspection of Context, Safety, Delegation & autonomy, and
@@ -40,13 +40,18 @@ roadmap. The earlier 24-skill proposal is reconciled to six public coding-lifecy
 profile/adaptor delivery shapes. Thirty-five collision occurrences were migrated as `claimed`,
 and seven reference rows received locked consuming-design allocations without acquiring a global
 disposition. No row is `resolved`. See section 14.
+**Amendment 8 (2026-08-12):** All 15 admissible directed consultant pairs are reconciled as one
+complete conditional authority DAG. Thirteen existing bilateral contracts remain unchanged;
+Understand Code -> Critique is admitted conditionally and Understand Code -> Spec gains its
+missing consumer checkpoint. The final shared trigger surface remains separate and open. See
+section 15.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
 > proposes source allocation; it does not replace either document or make the source-claim
 > ledger authoritative by itself.
 
-> **Current-roadmap rule.** Section 14 supersedes sections 2–7 wherever the pre-lock 24-skill
+> **Current-roadmap rule.** Sections 14–15 supersede sections 2–7 wherever the pre-lock 24-skill
 > proposal conflicts with the locked six-skill coding stack. Sections 2–13 remain historical
 > design and decision evidence; they do not authorize a seventh public coding-lifecycle skill.
 
@@ -2115,3 +2120,41 @@ order:
 Runtime skills, consultants, harness code, installation, source deletion, and retirement remain
 deferred. Failed evidence narrows or rejects only the affected profile; it never silently resolves
 a ledger row or broadens another skill's authority.
+
+## 15. Amendment 8 — all 15 consultant pairs reconciled
+
+The pair-first coordinator audit is recorded in
+[`docs/research/2026-08-12-six-skill-consultant-pair-reconciliation.md`](research/2026-08-12-six-skill-consultant-pair-reconciliation.md).
+The governing topology is the complete forward authority order:
+
+```text
+Understand Code -> Critique -> Spec -> Implement -> Test -> Ship
+```
+
+This is not a new chronological lifecycle. It enumerates every admissible upstream-consultant to
+active-downstream relation: `6 choose 2 = 15`. Understand Code remains conditional on direct
+reliance on an Understanding Report, Critique remains conditional on present Finding Set
+authority, and other consultants participate only when their immutable authoritative artifacts
+are part of the active cycle.
+
+The live audit found 13 bilateral pairs already explicit and consistent. The two incomplete rows
+were repaired without changing authority ownership:
+
+- `Understand Code -> Critique` is now admitted after a relied-on Finding Set draft and before
+  issue, with the persistent consultant rechecked when evidence or repository revision changes a
+  relied-on fact;
+- `Understand Code -> Spec` now has its reciprocal gate after the complete Specification draft
+  and before whole-revision approval; and
+- the other 13 pairs already agree, so `designs/astra-implement.md`, `designs/astra-test.md`, and
+  `designs/astra-ship.md` need no pair amendment.
+
+For every pair, the active downstream owner invokes and repairs only its own in-authority
+`drift`; the upstream consultant owns the judgment and returns only `pass`, `drift`, or
+`authority_gap`. A required unavailable consultant fails closed unless the user explicitly
+accepts reduced assurance. Reverse or historical evidence consumption remains `I`, not a backward
+`C` edge, and an `authority_gap` begins a new immutable cycle if the user continues.
+
+This amendment completes only the consultant-pair half of section 14.4 item 1. The final shared
+trigger surface remains the next coordinator task. This amendment changes no source or reference
+ledger row, claim/resolution state, Report delegation, runtime schema, harness, installation,
+retirement, publication, or repository effect.

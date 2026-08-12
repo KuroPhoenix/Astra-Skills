@@ -404,3 +404,10 @@ Remaining work after the 2026-08-12 lock:
 4. design the source corpus and behavioral harness;
 5. implement one non-retiring vertical slice before wider internalization; and
 6. run source-specific gates before requesting any retirement decision.
+
+### 11.1 Coordinator progress after the lock
+
+Roadmap amendment 7 completed items 1 and 2 while keeping every migrated collision row `claimed`,
+not `resolved`. Roadmap amendment 8 and the 2026-08-12 pair-first audit completed the 15-pair half
+of item 3. The final shared trigger surface remains open; items 4–6 retain their locked scope and
+no runtime, harness, installation, deletion, or retirement authority follows from this progress.

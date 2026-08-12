@@ -1098,17 +1098,25 @@ original question, make a change decision, approve the downstream artifact, or r
 another peer's files.
 
 One fresh persistent Understand consultant is used for the downstream invocation and reused at
-its checkpoints. It participates in Spec, Implement, Test, or Ship only when that peer directly
-relies on the report. A casual reference, optional context, or desire for extra confidence does not
-create the relation. When required and unavailable, the downstream skill blocks unless the user
-records reduced assurance.
+its checkpoints. It participates in Critique, Spec, Implement, Test, or Ship only when that peer
+directly relies on the report. A casual reference, optional context, or desire for extra confidence
+does not create the relation. When required and unavailable, the downstream skill blocks unless
+the user records reduced assurance.
 
-### 11.3 Deferred reconciliation
+Critique invokes this consultant after completing a Finding Set draft and before issuing it when
+that draft directly relies on report claims; it reuses the same instance after new evidence or a
+repository revision changes a relied-on fact. Spec invokes it after completing the Specification
+draft and before whole-revision user approval whenever that draft directly relies on report
+claims. Understand judges current-state support only. Critique or Spec owns any in-authority draft
+repair, while a stale, contradicted, or too-narrow report returns `authority_gap`.
 
-The relation table in section 7 remains historical eight-peer evidence until the coordinator
-reconciles all 15 pairs in the six-skill roster. No source row, retained-agent disposition,
-runtime mechanism, harness, or retirement claim changes here. The design is policy-grounded but
-not yet expanded with additional related sources.
+### 11.3 Pair reconciliation result and remaining deferrals
+
+The coordinator reconciled all 15 directed pairs on 2026-08-12 under
+`docs/design-requirements.md` section 7.11.2 and
+`docs/research/2026-08-12-six-skill-consultant-pair-reconciliation.md`. Section 7 remains
+historical eight-peer evidence. No source row, retained-agent disposition, trigger, runtime
+mechanism, harness, or retirement claim changes through this pair reconciliation.
 
 ## 12. 92-component source-expansion amendment
 
@@ -1129,6 +1137,6 @@ state explanation and therefore does not migrate here. Exploratory QA observatio
 findings, domain decisions remain Spec authority, repository changes remain Implement authority,
 and independent sufficiency remains Test authority.
 
-This amendment adds neither a source claim nor a retirement claim. The coordinator must still
-reconcile all 15 directed consultant pairs, migrate the approved source allocation, and validate
-the full stack before any affected original can retire.
+This amendment adds neither a source claim nor a retirement claim. The coordinator migration is
+recorded in `docs/design-roadmap.md` amendment 7 and the pair contract in amendment 8. The final
+trigger surface and full-stack validation remain required before any affected original can retire.

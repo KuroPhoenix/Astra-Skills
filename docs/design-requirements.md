@@ -523,23 +523,46 @@ If a required consultant cannot run, the downstream skill fails closed unless th
 explicit acceptance of reduced assurance. Mechanical identity and hash checks supplement but
 never replace consultant judgment.
 
-On the primary change path, authority accumulates as follows:
+For pair reconciliation, the complete forward authority order is:
 
-| Active skill | Required upstream consultants when their authority is present |
-|---|---|
-| Spec | Critique |
-| Implement | Critique, Spec |
-| Test | Critique, Spec, Implement |
-| Ship | Critique, Spec, Implement, Test |
+```text
+Understand Code -> Critique -> Spec -> Implement -> Test -> Ship
+```
 
-Understand Code also supplies a consultant whenever a downstream skill directly relies on an
-Understanding Report's current-state claims. A consultant is omitted when its artifact and
-authority are genuinely absent, not merely to reduce cost.
+The arrow means `upstream consultant -> active downstream skill`. This is an authority order, not
+a mandatory chronological workflow: the normal public change path still begins at Critique or,
+for greenfield work, at Spec. The order yields exactly 15 admissible directed `C` pairs:
 
-Spec consults Critique before user approval when Critique findings are present. Implement
-consults Critique and Spec before roadmap approval, at conditional diagnostic branch decisions,
-and at final implementation verification. Test and Ship obtain cumulative determinations before
-issuing their authoritative artifacts.
+| # | Pair | Activation |
+|---:|---|---|
+| 1 | Understand Code -> Critique | The Finding Set directly relies on an Understanding Report |
+| 2 | Understand Code -> Spec | The Specification directly relies on an Understanding Report |
+| 3 | Understand Code -> Implement | The Roadmap or delivered revision directly relies on an Understanding Report |
+| 4 | Understand Code -> Test | The Test packet directly relies on an Understanding Report |
+| 5 | Understand Code -> Ship | The publication directly relies on an Understanding Report |
+| 6 | Critique -> Spec | Finding Set authority is present |
+| 7 | Critique -> Implement | Finding Set authority is present |
+| 8 | Critique -> Test | Finding Set authority is present |
+| 9 | Critique -> Ship | Finding Set authority is present |
+| 10 | Spec -> Implement | Approved Change Specification authority is present |
+| 11 | Spec -> Test | Approved Change Specification authority is present |
+| 12 | Spec -> Ship | Approved Change Specification authority is present |
+| 13 | Implement -> Test | Approved Delivery Roadmap and Execution Ledger authority is present |
+| 14 | Implement -> Ship | Approved Delivery Roadmap and Execution Ledger authority is present |
+| 15 | Test -> Ship | Test Evidence Packet authority is present |
+
+Every Understand Code edge is conditional on direct reliance on the report's current-state
+claims. Every Critique edge is conditional on present Finding Set authority. The other upstream
+consultants are required only when their authoritative artifacts genuinely participate in the
+active cycle; a consultant is never omitted merely to reduce cost.
+
+Critique conditionally consults Understand Code after completing a relied-on Finding Set draft
+and before issuing it, and rechecks after new evidence or a repository revision changes a relied-on
+fact. Spec conditionally consults Understand Code and then consults Critique, as applicable, after
+the complete draft and before whole-revision user approval. Implement consults Critique and Spec
+before roadmap approval, at conditional diagnostic branch decisions, and at final implementation
+verification, with Understand Code added when applicable. Test and Ship obtain cumulative
+determinations before issuing their authoritative artifacts.
 
 #### 7.11.3 Versioned artifact chain and failure behavior
 

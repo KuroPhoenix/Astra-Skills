@@ -983,7 +983,7 @@ deferred, but every later candidate must preserve this conceptual spine:
 | Affected scope and observed impact | The bounded contract, behavior, path, user, or environment implicated by the evidence |
 | Constraints and authority limits | User-supplied boundaries, unavailable prerequisites, and forbidden effects |
 | Route candidates | Every independently owned downstream problem class, without selecting its solution |
-| Consultant history | Downstream artifact identities, checkpoint, determination, and evidence anchors for each Critique consultation |
+| Consultant history | Inbound Understand determination and report identity when applicable, plus the Finding Set and downstream artifact identities, checkpoint, determination, and evidence anchors for each consultation |
 
 The Finding Set contains no chair-selected solution, target behavior, delivery task, commit
 sequence, or Critique-authored acceptance criterion. A source-faithful reviewer may mention a
@@ -1005,6 +1005,16 @@ verification checkpoint, and before Test or Ship closes a Finding ID. A determin
 to the referenced Finding Set and downstream artifact revision. Evidence outside every approved
 branch, evidence that invalidates the Finding Set, or a new user-owned decision returns
 `authority_gap`; it never causes the consultant to invent a branch or rewrite history.
+
+When a Finding Set directly relies on an Understanding Report, Critique invokes one persistent
+Understand Code consultant after completing the Finding Set draft and before issuing it, and
+reuses that consultant after new evidence or a repository revision changes a relied-on fact. It
+passes the exact report and draft identities, revisions, and hashes; the exact relied-on claims;
+and the changed evidence. Understand Code judges current-state support only and cannot create,
+waive, or reclassify a finding. Critique owns any `drift` repair inside its active draft. A stale,
+contradicted, or too-narrow report returns `authority_gap` and stops Finding Set issuance. If the
+user continues, a new immutable Critique cycle must use a new report or independently ground the
+affected fact without relying on the report.
 
 ### 11.4 Debug source preservation and deferred absorption
 

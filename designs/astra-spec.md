@@ -1218,10 +1218,22 @@ The merged workflow is:
 4. develop two or three viable solutions and recommend one;
 5. obtain user decisions on solution-significant tradeoffs;
 6. compile the complete Approved Change Specification draft;
-7. invoke Critique's persistent consultant when Critique authority is present;
-8. repair `drift` inside the active draft or stop on `authority_gap`;
-9. present the complete revision for explicit user approval; and
-10. return an approved, draft, changes-requested, or fielded blocked result.
+7. invoke Understand Code's persistent consultant when the draft directly relies on an
+   Understanding Report;
+8. repair Understand Code `drift` inside the active draft or stop on `authority_gap`;
+9. invoke Critique's persistent consultant when Critique authority is present;
+10. repair Critique `drift` inside the active draft or stop on `authority_gap`;
+11. present the complete revision for explicit whole-revision user approval; and
+12. return an approved, draft, changes-requested, or fielded blocked result.
+
+The conditional Understand Code gate receives the exact report and draft identities, revisions,
+and hashes; the exact current-state claims the draft relies on; and any changed repository
+evidence. It occurs after the complete draft and before the Critique gate so both determinations
+bind the same proposed revision. Understand Code judges only whether the current-state
+interpretation remains supported. Spec owns any in-authority draft repair; a stale, contradicted,
+or too-narrow report returns `authority_gap` and stops approval. If the user continues, a new
+immutable Specification cycle must use a new report or remove the reliance and independently
+ground the affected fact.
 
 Spec also exposes a narrow read-only `consult` mode to downstream peers. It checks whether a
 roadmap, executed branch, Test packet, or publication claim remains inside the exact approved
@@ -1261,8 +1273,8 @@ revision must make these additions and renamings explicit:
 - represent approved conditional branches with their hypothesis state, permitted outcome,
   constraints, acceptance criteria, and indeterminate behavior;
 - distinguish required implementation freedoms from prohibited behavior; and
-- retain immutable identity, content hash, approval record, evidence conflicts, open questions,
-  rejected alternatives, and non-inference acceptance gates.
+- retain immutable identity, content hash, approval record, inbound consultant determinations,
+  evidence conflicts, open questions, rejected alternatives, and non-inference acceptance gates.
 
 For critique-driven work, no in-scope finding may disappear. Each is `resolved-by-change`,
 `accepted-risk`, `rejected-with-evidence`, `duplicate-of`, or `out-of-scope-with-owner`, with the

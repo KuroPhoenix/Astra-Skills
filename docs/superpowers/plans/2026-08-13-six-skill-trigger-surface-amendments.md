@@ -456,13 +456,29 @@ Append section 16, “Amendment 9 — final shared trigger surface reconciled.�
 - `research/2026-08-12-six-skill-trigger-surface-reconciliation.md`; and
 - `superpowers/specs/2026-08-12-six-skill-trigger-surface-design.md`.
 
-Record approach B by name—authority-result and artifact-state routing—and cite `docs/design-requirements.md` sections 7.11.6–7.11.7 as normative rather than copying their tables. State that section 14.4 item 1 is now complete and the next governed work is the source corpus/behavioral harness scoped to the selected vertical slice. Reiterate that no runtime, ledger, installation, deletion, retirement, push, or PR follows.
+Record approach B by name—authority-result and artifact-state routing—and cite
+`docs/design-requirements.md` sections 7.11.6–7.11.7 as normative rather than copying their
+tables. State that section 14.4 item 1 is now complete. Record the user-approved slice-first
+resequencing in section 14.4: select one non-retiring vertical slice; write only that slice's
+behavioral acceptance cases and capture drift-risk oracle behavior; implement and dogfood the
+slice while letting the minimum runner mechanics emerge from demonstrated needs; and extract a
+reusable corpus or harness only after repeated needs justify stable seams. The full 92-source
+corpus remains a preservation/retirement obligation, not a prerequisite for the first slice.
+Reiterate that no runtime, corpus runner, reusable harness, ledger, installation, deletion,
+retirement, push, or PR follows from this documentation tranche.
 
 - [ ] **Step 3: Close locked absorption item 3 without changing the 92 denominator**
 
 Change the top roster wording to “six lifecycle authorities” and add one sentence that Report is an additional non-authoritative reporting surface whose approved secondary slices do not join or change the 92-source target.
 
-In section 11.1 record that roadmap Amendment 9 and the trigger audit complete the trigger half, so locked item 3 is complete in full. State that item 4—slice-scoped corpus and behavioral harness design—is next. Preserve items 5–6, every allocation, and all ledger states.
+In section 11.1 record that roadmap Amendment 9 and the trigger audit complete the trigger half,
+so locked item 3 is complete in full. Replace the old item-4-before-item-5 ordering with the same
+user-approved slice-first sequence: select one non-retiring slice and write only its acceptance
+cases plus drift-risk oracle captures; implement and dogfood it while minimum runner mechanics
+emerge; then widen the corpus or extract reusable harness structure only from demonstrated needs.
+Keep source-specific preservation and retirement gates last. State explicitly that this changes
+section 11's open-work ordering, which the allocation lock did not freeze; it changes no locked
+allocation, source denominator, or ledger state.
 
 - [ ] **Step 4: Validate coordinator agreement**
 
@@ -476,6 +492,11 @@ git diff --check -- designs/astra-report.md docs/design-roadmap.md docs/six-skil
 rg -Fq 'final trigger surface are reconciled' docs/design-roadmap.md
 rg -Fq 'item 3 is complete' docs/six-skill-source-absorption.md
 rg -Fq 'older Report implementation plan remains non-executable' designs/astra-report.md
+for file in docs/design-roadmap.md docs/six-skill-source-absorption.md; do
+  rg -Fq 'non-retiring vertical slice' "$file"
+  rg -Fq 'behavioral acceptance cases' "$file"
+  rg -Fq 'reusable harness' "$file"
+done
 test "$(rg -c '51 already-planned source identifiers + 41 newly approved identifiers = 92' docs/six-skill-source-absorption.md)" = 1
 ```
 
@@ -592,6 +613,10 @@ absorption = Path("docs/six-skill-source-absorption.md").read_text(encoding="utf
 assert "Amendment 9" in roadmap
 assert "item 3 is complete" in absorption
 assert "51 already-planned source identifiers + 41 newly approved identifiers = 92" in absorption
+for text in (roadmap, absorption):
+    assert "non-retiring vertical slice" in text
+    assert "behavioral acceptance cases" in text
+    assert "reusable harness" in text
 PY
 ```
 
@@ -660,4 +685,8 @@ docs/design-roadmap.md
 docs/six-skill-source-absorption.md
 ```
 
-The unrelated staged diary, unstaged `designs/astra-plan.md`, and untracked directories remain outside the commit. The next governed work is slice-scoped corpus/harness design; the stale Report runtime plan must be revised before any runtime execution choice.
+The unrelated staged diary, unstaged `designs/astra-plan.md`, and untracked directories remain
+outside the commit. The next governed work is selecting one non-retiring vertical slice and
+writing only its acceptance cases plus drift-risk oracle captures. No reusable harness is designed
+up front; minimum runner mechanics emerge during slice implementation, and the stale Report
+runtime plan must be revised before Report can be selected for execution.

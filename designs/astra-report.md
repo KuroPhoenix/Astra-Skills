@@ -2,16 +2,17 @@
 
 **Date:** 2026-08-12; amended 2026-08-13
 
-**Status:** Proposed phase-0 design approved for implementation planning; trigger-surface and
-producer-contract reconciliation are complete. Source-ledger migration, runtime-plan revision,
-implementation, and retirement gates remain pending. Records three user decisions of 2026-08-12
+**Status:** Proposed phase-0 design approved for implementation planning; trigger-surface,
+producer-contract, source-ledger, and runtime-plan reconciliation are complete. Runtime
+implementation and retirement gates remain pending. Records three user decisions of 2026-08-12
 (existence, MVP boundary, delegated voice), the same-day design-review resolutions (output-only
 voice, `I(reporting)` typing, post-MVP adapters), the approved source-slice statement in 4.2, and
 the 2026-08-13 staged-disclosure and conditional structured-choice decisions. The eight blocking
 review findings and the method-canon audit corrections are applied. The implementation plan at
-`docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` predates the 2026-08-13
-interaction contract and must be revised before execution. Creates prose only: no runtime skill,
-harness, installation, retirement, push, or PR.
+`docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` was reconciled with the
+2026-08-13 interaction contract in commit `318bcaf`; it still requires a separate explicit
+runtime-execution choice. Creates prose only: no runtime skill, harness, installation, retirement,
+push, or PR.
 
 **Proposed public shape:** `astra-report` — the stack's single human-facing reporting surface.
 It is a seventh user-facing entry point but not a seventh lifecycle authority. The roster
@@ -940,9 +941,10 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
   ledger schema require a later behavioral slice; the first skill must not advertise that path
   as implemented.
 - The committed implementation plan
-  `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` predates the 2026-08-13
-  multi-segment, preview/detail exposure, and conditional structured-choice contracts. It is
-  non-executable until revised and re-approved against sections 7.2–7.5 and corpus cases 29–35.
+  `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` was reconciled in
+  `318bcaf` against the 2026-08-13 multi-segment, preview/detail exposure, and conditional
+  structured-choice contracts. It remains non-executable until the user makes the separate
+  runtime-execution choice that the plan requires.
 - Resolved by the 2026-08-12 review: the output-only interpretation of decision 3 (1.2); the
   withdrawal of the `V` relation in favor of typed `I(reporting)` (8.2); and the post-MVP
   deferral of both delivery adapters (4.3).
@@ -973,9 +975,10 @@ All source rows remain `claimed`, never `resolved`, citing the 2026-08-12 user d
    remain directly invocable control surfaces.
 2. **Complete, 2026-08-13.** Record the `I(reporting)` typing convention in the 7.11.2
    relation vocabulary; no new relation letter is added.
-3. **Pending.** Apply the section 4.5 row changes: seven `unclaimed` → `claimed` secondary-role claims,
-   including the three-source lock exception approved in 4.2; and the `diagram`
-   secondary-consumer amendment against roadmap amendment 3.
+3. **Complete, 2026-08-13.** Apply the section 4.5 row changes: seven `unclaimed` → `claimed`
+   secondary-role claims, including the three-source lock exception approved in 4.2; and the
+   `diagram` secondary-consumer amendment against roadmap amendment 3. Every changed row remains
+   `claimed`, never `resolved`.
 4. **Complete, 2026-08-13.** Add the four reporting hooks (8.6) — consequence typing, the common open-decision shape,
    supersession fields for Understand Code, Implement, Test, and Ship, and ReportEvent
    adoption — to each sibling design's artifact contract.
@@ -1003,6 +1006,7 @@ The five `I(reporting)` moments—`artifact_completion`, `approval_request`, `st
 lifecycle designs. Producers retain fact, consequence, option, evidence, blocking, and returned-
 decision authority; Report retains presentation authority only.
 
-The older Report implementation plan remains non-executable until separately revised for staged
-segments and conditional structured choices. This reconciliation creates no runtime, corpus
-runner, reusable harness, installation, publication, or retirement state.
+The Report implementation plan was reconciled for staged segments and conditional structured
+choices in `318bcaf`, but remains non-executable until a separate runtime-execution choice is
+recorded in `docs/phase-0.md`. This reconciliation creates no runtime, corpus runner, reusable
+harness, installation, publication, or retirement state.

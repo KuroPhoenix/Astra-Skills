@@ -120,7 +120,7 @@ git merge-base --is-ancestor 42b3405 HEAD
 sha256sum docs/superpowers/specs/2026-08-12-six-skill-trigger-surface-design.md docs/research/2026-08-12-six-skill-trigger-surface-reconciliation.md designs/astra-report.md docs/phase-0-ledgers.md
 ```
 
-Expected hashes:
+Historical expected hashes at the trigger-surface tranche (`be6249e`):
 
 ```text
 43d372f134b61c48aa36ca93248ca12f95e79fa689f999f36f890d11166070ab  docs/superpowers/specs/2026-08-12-six-skill-trigger-surface-design.md
@@ -129,7 +129,23 @@ d3d042f6d1573b5e00042bf51249ce78f354cb74bd879981b930ff96ef8a239f  docs/research/
 3f2babefc8f178fab9b77c36738e516530a5426abcdb69c261365a167fe9d15a  docs/phase-0-ledgers.md
 ```
 
-Stop and reconcile the changed authority source if any hash differs. Do not mechanically update the expected hash.
+The block above remains immutable evidence of what the trigger-surface tranche verified. On
+2026-08-13, the separately authorized Slice A reconciliation changed the Report design's
+coordinator-status prose and the eight approved ledger rows. For the ledger, this is the
+historical baseline superseded by the authorized Slice A ledger reconciliation; the old digest
+is not retroactively replaced.
+
+Current authorized hashes after that reconciliation:
+
+```text
+43d372f134b61c48aa36ca93248ca12f95e79fa689f999f36f890d11166070ab  docs/superpowers/specs/2026-08-12-six-skill-trigger-surface-design.md
+d3d042f6d1573b5e00042bf51249ce78f354cb74bd879981b930ff96ef8a239f  docs/research/2026-08-12-six-skill-trigger-surface-reconciliation.md
+3e8491a495226b3470a0d5910f817aec39fa5817a9d19102626e762a7945675c  designs/astra-report.md
+2b20e732694d590153b7e385591258b0a3c2a0a0f94939c5d305854283026769  docs/phase-0-ledgers.md
+```
+
+For a current-state rerun, compare against the current block. Stop and reconcile any later
+difference; do not mechanically replace either historical or current evidence.
 
 - [ ] **Step 2: Snapshot the unrelated workspace state visibly**
 
@@ -631,11 +647,16 @@ for file in docs/design-requirements.md designs/astra-critique.md designs/astra-
   awk '/^```/{n++} END{if (n % 2) exit 1}' "$file"
 done
 if rg -n '^(<<<<<<<|=======|>>>>>>>)' docs/design-requirements.md designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md designs/astra-report.md docs/design-roadmap.md docs/six-skill-source-absorption.md; then exit 1; fi
-test "$(sha256sum docs/phase-0-ledgers.md | cut -d' ' -f1)" = "3f2babefc8f178fab9b77c36738e516530a5426abcdb69c261365a167fe9d15a"
+# Historical assertion satisfied by `be6249e`; retained as evidence, not rerun:
+# test "$(sha256sum docs/phase-0-ledgers.md | cut -d' ' -f1)" = "3f2babefc8f178fab9b77c36738e516530a5426abcdb69c261365a167fe9d15a"
+test "$(sha256sum docs/phase-0-ledgers.md | cut -d' ' -f1)" = "2b20e732694d590153b7e385591258b0a3c2a0a0f94939c5d305854283026769"
 git diff --name-only | rg -v '^(docs/design-requirements\.md|designs/astra-(critique|understand-code|spec|implement|test|ship|report)\.md|docs/design-roadmap\.md|docs/six-skill-source-absorption\.md|designs/astra-plan\.md)$' && exit 1 || true
 ```
 
-Expected: balanced fences, no conflict markers, unchanged coordinator ledger, and no newly modified path outside the ten intended files plus the pre-existing `designs/astra-plan.md`.
+Expected for the current authorized baseline: balanced fences, no conflict markers, the exact
+post-Slice-A coordinator-ledger digest above, and no newly modified path outside the ten intended
+files plus the pre-existing `designs/astra-plan.md`. The historical `be6249e` run remains evidenced
+by its frozen block and commit, not by replaying its old ledger assertion against later bytes.
 
 - [ ] **Step 4: Stage exactly the ten canonical files and inspect the index**
 

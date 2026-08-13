@@ -4,9 +4,11 @@
 
 **Goal:** Build one non-retiring vertical slice in which a Spec-owned pending revision and approval `ReportEvent` become a faithful, plain-language Reader Brief, a receipt-confirmed delivery is appended to Report's Exposure Ledger, and the user's answer remains solely in Spec's approval record.
 
-**Architecture:** Reconcile the seventh reporting surface into the coordinator-owned policy before creating runtime files. Implement Report as a prompt-driven skill backed by one small Python standard-library contract tool: the tool validates producer envelopes and appends a whitelisted exposure record, while the skill performs trace-preserving explanation from immutable artifacts. Exercise the Report path, the Report-unavailable producer fallback, and the answer-ownership boundary with fixed Spec fixtures; this slice does not implement the full Spec skill, a general lifecycle runtime, or a full 92-source corpus.
+**Architecture:** The six-authority plus reporting-surface policy and all six producer contracts are already canonical at `be6249e`; this plan consumes that existing seam rather than rebuilding it. Implement Report as a prompt-driven skill backed by one small Python standard-library contract tool: the tool validates producer envelopes, verifies revision exposure, and appends one whitelisted record per receipt-confirmed segment, while the skill performs trace-preserving staged explanation from immutable artifacts. Exercise only the delegated Spec-approval path with the 25 mechanical Slice A cases; this slice does not implement the full Spec skill, public direct-request Report, a general lifecycle runtime, a reusable harness, or the full 92-source corpus.
 
-**Tech Stack:** Markdown, YAML, JSON, Python 3 standard library, `unittest`, Codex skill metadata, `markdown-it` validation.
+**Tech Stack:** Markdown, YAML, JSON, Python 3 standard library, `unittest`, Codex CLI, `jq`, GNU coreutils, Codex skill metadata, `markdown-it` validation.
+
+**Status:** Reconciled on 2026-08-13 against the approved Slice A design at commit `44d1f16`; runtime execution is not authorized. Tasks 3–7 may begin only after the separately authorized coordinator-ledger reconciliation lands and the user makes a new explicit runtime-execution choice recorded in `docs/phase-0.md`.
 
 ## Global Constraints
 
@@ -24,9 +26,13 @@
 - Require a caller-confirmed, non-empty delivered-brief path before appending exposure. Composition alone is not exposure; a chat host without a receipt renders without appending and may repeat the revision later.
 - Text conversation is the only delivery surface. PDF and diagram delivery remain post-MVP and unimplemented.
 - Limit evaluation infrastructure to the Spec approval fixtures in this plan. Do not build a universal runner or the full source-retirement corpus.
-- Treat the six-skill 15-pair consultant and final trigger-surface reconciliation as a hard external gate. The live roadmap still records it as remaining work; Tasks 1–7 may start only after a canonical committed record closes it. Task 0 may land independently.
+- Treat the 15-pair consultant and final trigger-surface gate as satisfied by roadmap amendments 8 and 9, culminating in commit `be6249e`. Verify that commit as an ancestor; do not redo those amendments.
+- Treat the coordinator ledger as a separate documentation prerequisite. Before runtime, the seven Report secondary-role rows must be `claimed`, the `diagram` consumer amendment must be present, `designs/astra-report.md` §12.4 item 3 must be complete, and the trigger-plan ledger hash must carry an explicit historical-supersession record.
 - Runtime work also requires a new explicit choice to execute this plan. That choice authorizes only this slice and must be recorded in `docs/phase-0.md`; it does not waive any retirement or installation gate.
 - This slice implements the delegated Spec approval path only. It does not implement the design's public direct-request path, and its skill metadata must not advertise direct artifact, catch-up, or project-status triggers before that path has its own behavioral case.
+- Use the 25 unique case IDs and 16 selected corpus classes in `docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md` §§3–5. Class 30 is only the named structural proxy. Class 35's producer-preference-positive branch is blocked because `astra.report-event/v0` has no preference field; never invent `recommended` or infer it from option order.
+- Every delivered initial or detail segment receives its own manifest, exact receipt, and Exposure Ledger row. A preview is always `preview` exposure; only a selected, receipt-confirmed body is `detail` exposure.
+- Keep every acceptance check deterministic. A missing fixture or unavailable host branch is `blocked` or a recorded limitation, never `pass`; no prose-quality judge or blinded-evaluation machinery belongs in this slice.
 - Preserve all unrelated dirty and untracked paths. Stage only the exact paths named by each task.
 - Each commit must contain one reviewable functionality and pass a path-scoped `git diff --cached --check` that lists the task's exact paths before creation.
 - The worktree begins with user-owned staged and unstaged changes. Snapshot the pre-existing index, use `git commit --only` with the task's exact paths for every commit, and verify those unrelated entries remain staged afterward.
@@ -42,6 +48,7 @@
 | `docs/design-roadmap.md` | Coordinator roadmap amendment and vertical-slice sequencing |
 | `docs/phase-0.md` | Historical phase-0 boundary plus the explicitly authorized post-phase-0 slice transition |
 | `docs/phase-0-ledgers.md` | Seven secondary claims plus the existing `diagram` row amendment; all remain claimed |
+| `docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md` | Approved 25-case Slice A contract and drift-risk oracle capture |
 | `designs/astra-{critique,understand-code,spec,implement,test,ship}.md` | Producer-side reporting hooks and degraded fallback contracts |
 | `designs/astra-report.md` | Approved Report design and implementation-evidence status |
 | `docs/research/2026-08-12-astra-report-method-canon.md` | Reproducible local-book and primary-source distillation |
@@ -51,171 +58,85 @@
 | `skills/astra-report/references/method-canon.md` | Compact operational rules traced to the research note |
 | `skills/astra-report/scripts/report_contract.py` | Deterministic event validation, artifact-reference consistency checks, and append-only exposure writing |
 | `tests/astra-report/fixtures/spec-pending.json` | Immutable Spec-owned pending revision for the slice |
+| `tests/astra-report/fixtures/spec-pending-revision-2.json` | Same pending approval state on a new, unexposed artifact revision |
 | `tests/astra-report/fixtures/spec-approval-event.json` | Valid approval request referencing the Spec fixture |
+| `tests/astra-report/fixtures/spec-revised-event.json` | Approval request for the unexposed revision-2 fixture |
 | `tests/astra-report/fixtures/preartifact-refusal-event.json` | Valid null-artifact boundary case |
+| `tests/astra-report/fixtures/preartifact-failure-event.json` | Valid null-artifact pre-artifact failure case |
+| `tests/astra-report/fixtures/spec-status-event.json` | Non-decision producer-fallback fixture |
+| `tests/astra-report/fixtures/spec-over-budget-event.json` | Four-blocker attention-budget fixture |
 | `tests/astra-report/test_report_contract.py` | Contract and ledger unit tests |
 | `tests/astra-report/evals/spec-approval-prompt.md` | Fixed dogfood invocation |
+| `tests/astra-report/evals/spec-approval-text-index-prompt.md` | Same initial segment under the text-index host branch |
+| `tests/astra-report/evals/spec-approval-detail-prompt.md` | Structured-host fixed topic selection and selected-only detail segment |
+| `tests/astra-report/evals/spec-approval-text-index-detail-prompt.md` | Text-index fixed topic selection and semantically identical detail segment |
+| `tests/astra-report/evals/spec-over-budget-prompt.md` | Four-blocker render under the standard three-surface cap |
+| `tests/astra-report/evals/spec-revised-prompt.md` | Revision-2 exposure-state render without approval inference |
 | `tests/astra-report/evals/spec-approval-fallback-prompt.md` | Fixed producer fallback case when Report is unavailable |
-| `tests/astra-report/evals/render-result.schema.json` | Structured-output boundary for one slice run |
-| `tests/astra-report/evals/spec-approval-rubric.md` | Slice-specific behavioral acceptance rubric |
+| `tests/astra-report/evals/spec-status-fallback-prompt.md` | Fixed non-decision producer fallback case |
+| `tests/astra-report/evals/render-result.schema.json` | Structured-output contract for an initial or detail segment run |
+| `tests/astra-report/evals/spec-approval-cases.md` | Exact C4–C35 case-to-evidence matrix; no subjective rubric |
+| `tests/astra-report/verify_slice_a.py` | Slice-specific mechanical verifier; not a reusable corpus harness |
 
-### Task 0: Freeze the Approved Planning Baseline
+### Task 0: Verify the Approved Baseline and Runtime Gate
 
 **Files:**
-- Modify: `designs/astra-report.md`
-- Create: `docs/research/2026-08-12-astra-report-method-canon.md`
-- Create: `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md`
+- Read: `docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md`
+- Read: `docs/design-roadmap.md`
+- Read: `docs/phase-0.md`
 
 **Interfaces:**
-- Consumes: the user's 2026-08-12 source-slice approval, the corrected local-book audit, and the two closed contract seams
-- Produces: the immutable design and plan baseline used by Tasks 1–7
+- Consumes: approved Slice A design commit `44d1f16`, canonical trigger commit `be6249e`, and a later explicit runtime-execution record
+- Produces: a fail-closed execution preflight; no repository mutation
 
-- [ ] **Step 1: Snapshot the pre-existing staged state**
+- [ ] **Step 1: Snapshot and preserve the live workspace state**
 
 Run:
 
 ```bash
 git status --short --branch
 git diff --cached --name-only
+git diff --name-only
 ```
 
-Expected in the current workspace: `Internship Diary.md` is already staged, `designs/astra-plan.md` has an unrelated unstaged clarification, and `.gstack/`, `.idea/`, `books/`, and `pitch/` remain outside this task. If the live list differs, record the live list and preserve it; do not clean, stash, or restage it.
+Expected: record the live output. Preserve every pre-existing staged, unstaged, and untracked path. Do not clean, stash, restage, or infer that a path is disposable.
 
-- [ ] **Step 2: Validate the planning artifacts**
+- [ ] **Step 2: Verify the approved design and canonical trigger record**
 
 Run:
 
 ```bash
-markdown-it designs/astra-report.md >/dev/null
-markdown-it docs/research/2026-08-12-astra-report-method-canon.md >/dev/null
-markdown-it docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md >/dev/null
-git diff --check -- designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md
+git merge-base --is-ancestor 44d1f16 HEAD
+git merge-base --is-ancestor be6249e HEAD
+markdown-it docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md >/dev/null
 python - <<'PY'
 from pathlib import Path
 
-for name in (
-    "designs/astra-report.md",
-    "docs/research/2026-08-12-astra-report-method-canon.md",
-    "docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md",
+spec = Path("docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md").read_text()
+for token in (
+    "Selected: 16 classes → 25 cases",
+    "Classes 30 and 35 are bounded partials",
+    "class-35 producer-preference boundary",
+    "authorizes **no** runtime skill",
 ):
-    text = Path(name).read_text(encoding="utf-8")
-    assert text.count("```") % 2 == 0, name
-    lines = text.splitlines()
-    assert not any(
-        line.startswith(("<<<<<<<", ">>>>>>>")) or line == "======="
-        for line in lines
-    ), name
-design = Path("designs/astra-report.md").read_text(encoding="utf-8")
-assert "approved source-slice statement" in design
-assert "claimed`, never `resolved`" in design
-assert "hidden model recall is not a reproducible dependency" in design
+    assert token in spec, token
+roadmap = Path("docs/design-roadmap.md").read_text()
+assert "Section 14.4 item 1 is complete" in roadmap
 PY
 ```
 
-Expected: all commands exit 0.
+Expected: every command exits 0. A missing ancestor or token means the authority source drifted; stop and reconcile the design rather than weakening this check.
 
-- [ ] **Step 3: Commit only the planning baseline**
+- [ ] **Step 3: Enforce the separate runtime-authorization gate**
 
-```bash
-git add designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md
-git diff --cached --check -- designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md
-git commit --only -m "docs: approve astra-report implementation plan" -- designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md
-git diff --cached --name-only
-```
-
-Expected: the commit contains exactly the three named paths; the pre-existing staged `Internship Diary.md` entry remains staged.
-
-### Task 1: Canonical Coordinator Reconciliation
-
-**Files:**
-- Modify: `docs/design-requirements.md` under section 7.11
-- Modify: `docs/six-skill-source-absorption.md` under sections 1, 8, and 11
-- Modify: `docs/design-roadmap.md` by adding `## 15. Amendment 8 — astra-report surface and slice sequencing` after section 14.4
-- Modify: `docs/phase-0.md` under sections 8 and 9
-- Modify: `docs/phase-0-ledgers.md` rows `cm-docs-and-knowledge-01`, `-02`, `-03`, `-04`, `-05`, `-07`, `-09`, and `cm-design-and-visual-21`
-
-**Interfaces:**
-- Consumes: the user-approved source-slice statement and `designs/astra-report.md` sections 4.2, 4.5, 8, and 12.4
-- Produces: the canonical seven-surface roster, typed relation rule, exact source claims, and the policy precondition used by every later task
-
-- [ ] **Step 1: Enforce the consultant and trigger reconciliation gate**
-
-Run:
-
-```bash
-rg -n "reconcile all 15 directed.*consultant pairs|final trigger surface|remaining roadmap" docs/design-roadmap.md docs/six-skill-source-absorption.md
-rg -n "15-pair.*complete|consultant-pair reconciliation.*complete|trigger-surface reconciliation.*complete" docs/design-requirements.md docs/design-roadmap.md
-```
-
-Current expected result: the first command finds unresolved work and the second finds no canonical completion record. Stop here. Resume Task 1 only after the dedicated reconciliation work replaces the remaining-work language with a committed canonical pair matrix and trigger decision record. Do not reinterpret Report's producer hooks as that reconciliation.
-
-- [ ] **Step 2: Capture the pre-migration semantic failure**
-
-Run:
-
-```bash
-rg -n "public interface remains exactly six|target public roster is exactly|cm-docs-and-knowledge-(01|02|03|04|05|07|09)|cm-design-and-visual-21" docs/design-requirements.md docs/six-skill-source-absorption.md docs/phase-0-ledgers.md
-```
-
-Expected: the two canonical roster documents still say exactly six; the seven documentation rows are `unclaimed`; the diagram row has no `astra-report` consumer.
-
-- [ ] **Step 3: Amend the canonical roster and relation vocabulary**
-
-In `docs/design-requirements.md`, preserve the exactly-six **authority** roster and add this separate surface rule:
+Before creating any path under `skills/astra-report/` or `tests/astra-report/`, require a later governance commit in `docs/phase-0.md` containing all of these exact statements:
 
 ```text
-The six entries above are the complete lifecycle-authority roster. `astra-report` is an
-additional directly invocable reporting surface, not a lifecycle authority: under typed
-`I(reporting)`, a producer delegates rich outbound presentation while retaining content,
-decision, approval, and artifact authority. No determination returns, and Report
-unavailability never creates an authority failure.
+Spec-to-Report Slice A runtime execution authorized.
+Scope is only the delegated Spec approval path in the reconciled implementation plan.
+Installation, public direct-request Report, reusable harness extraction, source retirement,
+deletion, push, and PR remain unauthorized.
 ```
-
-Under section 7.11.2, define `I(reporting)` as a typed `I` relation, not a new relation letter. Add the five canonical event identifiers `artifact_completion`, `approval_request`, `stage_boundary`, `status_request`, and `failure`; require `boundary_kind` to be one of `entry_refused`, `work_stopped`, or `cycle_closed` when `event_type` is `stage_boundary`.
-
-- [ ] **Step 4: Amend the locked absorption record without changing its denominator**
-
-Record a dated amendment in `docs/six-skill-source-absorption.md` that quotes the approved exception and says:
-
-```text
-The 92 identifier target and six-authority allocation remain unchanged. Report receives
-secondary playbook or perspective claims only for `/doc`, `document-generate`, and `rtfm`;
-their registrations and primary jobs remain independent, and the five-source documentation
-deferral otherwise remains locked.
-```
-
-Also record the four other secondary references (`doc-coauthoring`, `internal-comms`, `teach`, and post-MVP-only `make-pdf`) and the supplemental post-MVP `diagram` consumer. Do not add any of these to the 92 tables.
-
-- [ ] **Step 5: Migrate the exact ledger rows**
-
-Set the seven documentation rows to:
-
-| Occurrence | Primary disposition/home | Secondary role | Status |
-|---|---|---|---|
-| `cm-docs-and-knowledge-01` | independent reference / independent | `astra-report`: explanation-structure slice; resolver gap remains | `claimed` |
-| `cm-docs-and-knowledge-02` | independent reference / independent | `astra-report`: chunking and fresh-reader-testing slice | `claimed` |
-| `cm-docs-and-knowledge-03` | independent reference / independent | `astra-report`: plain-language, audience, and fresh-reader slice | `claimed` |
-| `cm-docs-and-knowledge-04` | independent reference / independent | `astra-report`: post-MVP delivery adapter only | `claimed` |
-| `cm-docs-and-knowledge-05` | independent reference / independent | `astra-report`: status, leadership, and FAQ register slice | `claimed` |
-| `cm-docs-and-knowledge-07` | independent reference / independent | `astra-report`: working-memory-aware chunking slice | `claimed` |
-| `cm-docs-and-knowledge-09` | independent reference / independent | `astra-report`: consumer framing and uncertainty slice | `claimed` |
-
-Amend `cm-design-and-visual-21` without changing its current primary disposition or `claimed` state: add `astra-report` as a supplemental, post-MVP-only consumer alongside its existing consumers.
-
-- [ ] **Step 6: Record the post-phase-0 slice transition and roadmap amendment**
-
-In `docs/phase-0.md`, preserve the original phase-0 exclusions as historical constraints and add a dated transition that cites the user's later execution choice. Authorize only the Spec→Report approval slice in this plan after the consultant/trigger gate; keep installation, full harness, adapters, source retirement, and deletion excluded.
-
-Amendment 8 must record:
-
-1. six lifecycle authorities plus one non-authoritative reporting surface;
-2. the source-slice approval and ledger migration;
-3. producer-contract reconciliation before runtime;
-4. acceptance cases for only this Spec approval slice before implementation;
-5. runner machinery pulled from the slice's demonstrated needs; and
-6. corpus growth per later source-retirement request, never all 92 up front.
-
-- [ ] **Step 7: Validate the migration**
 
 Run:
 
@@ -223,112 +144,95 @@ Run:
 python - <<'PY'
 from pathlib import Path
 
-ledger = Path("docs/phase-0-ledgers.md").read_text()
-for row in ("01", "02", "03", "04", "05", "07", "09"):
-    line = next(line for line in ledger.splitlines() if f"cm-docs-and-knowledge-{row}`" in line)
-    assert "astra-report" in line and "| claimed |" in line and "| resolved |" not in line, line
-diagram = next(line for line in ledger.splitlines() if "cm-design-and-visual-21`" in line)
-assert "astra-report" in diagram and "| claimed |" in diagram
-absorption = Path("docs/six-skill-source-absorption.md").read_text()
-assert "51 already-planned source identifiers + 41 newly approved identifiers = 92" in absorption
-requirements = Path("docs/design-requirements.md").read_text()
-assert "I(reporting)" in requirements and "not a lifecycle authority" in requirements
-phase_zero = Path("docs/phase-0.md").read_text()
-assert "Spec→Report approval slice" in phase_zero
-assert "installation" in phase_zero and "retirement" in phase_zero
+text = Path("docs/phase-0.md").read_text()
+required = (
+    "Spec-to-Report Slice A runtime execution authorized.",
+    "Scope is only the delegated Spec approval path in the reconciled implementation plan.",
+    "Installation, public direct-request Report, reusable harness extraction, source retirement,",
+    "deletion, push, and PR remain unauthorized.",
+)
+missing = [token for token in required if token not in text]
+assert not missing, "runtime authorization absent; stop before Task 3: " + repr(missing)
 PY
 ```
 
-Expected: exit 0.
+Expected before a new user execution choice: non-zero with `runtime authorization absent`; stop. Design approval and documentation reconciliation are not substitutes.
 
-- [ ] **Step 8: Commit the coordinator migration**
-
-```bash
-git add docs/design-requirements.md docs/six-skill-source-absorption.md docs/design-roadmap.md docs/phase-0.md docs/phase-0-ledgers.md
-git diff --cached --check -- docs/design-requirements.md docs/six-skill-source-absorption.md docs/design-roadmap.md docs/phase-0.md docs/phase-0-ledgers.md
-git commit --only -m "docs: reconcile astra-report coordinator claims" -- docs/design-requirements.md docs/six-skill-source-absorption.md docs/design-roadmap.md docs/phase-0.md docs/phase-0-ledgers.md
-```
-
-### Task 2: Producer Reporting Contracts
+### Task 1: Verify the Coordinator Reconciliation
 
 **Files:**
-- Modify: `designs/astra-critique.md`
-- Modify: `designs/astra-understand-code.md`
-- Modify: `designs/astra-spec.md`
-- Modify: `designs/astra-implement.md`
-- Modify: `designs/astra-test.md`
-- Modify: `designs/astra-ship.md`
+- Read: `docs/phase-0-ledgers.md`
+- Read: `designs/astra-report.md`
+- Read: `docs/superpowers/plans/2026-08-13-six-skill-trigger-surface-amendments.md`
 
 **Interfaces:**
-- Consumes: canonical `I(reporting)` and `ReportEvent` vocabulary from Task 1
-- Produces: six producer contracts; the Spec approval extension is the only one exercised at runtime in this slice
+- Consumes: the separately committed coordinator-ledger reconciliation authorized by the Slice A design
+- Produces: exact source-claim and hash-provenance evidence for Task 3; no repository mutation
 
-- [ ] **Step 1: Record the expected pre-amendment failure**
+- [ ] **Step 1: Verify the eight exact ledger occurrences**
 
 Run:
 
 ```bash
-for file in designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md; do
-  rg -q "ReportEvent" "$file" || printf 'missing ReportEvent: %s\n' "$file"
-done
+python - <<'PY'
+from pathlib import Path
+
+ledger = Path("docs/phase-0-ledgers.md").read_text().splitlines()
+expected = {
+    "cm-docs-and-knowledge-01": "explanation-quadrant structure slice",
+    "cm-docs-and-knowledge-02": "chunking and fresh-reader-testing playbook slice",
+    "cm-docs-and-knowledge-03": "plain-language, audience-targeting, and fresh-reader-test slice",
+    "cm-docs-and-knowledge-04": "post-MVP delivery adapter",
+    "cm-docs-and-knowledge-05": "status/leadership/FAQ register slice",
+    "cm-docs-and-knowledge-07": "working-memory chunk-sizing slice",
+    "cm-docs-and-knowledge-09": "consumer-framing and uncertainty-disclosure slice",
+}
+for occurrence, role in expected.items():
+    line = next(row for row in ledger if f"`{occurrence}`" in row)
+    assert "| independent reference | independent |" in line, line
+    assert f"`astra-report`: {role}" in line, line
+    assert "| claimed |" in line and "| resolved |" not in line, line
+diagram = next(row for row in ledger if "`cm-design-and-visual-21`" in row)
+assert "`astra-report`: post-MVP supplemental-delivery consumer" in diagram, diagram
+assert "| claimed |" in diagram and "| resolved |" not in diagram, diagram
+PY
 ```
 
-Expected: all six paths are reported missing.
+Expected: exit 0; all seven documentation occurrences are claimed independent references and `diagram` retains its prior home while adding only the post-MVP Report consumer.
 
-- [ ] **Step 2: Add the common producer fields to all six designs**
+- [ ] **Step 2: Verify the dependent completion and hash-provenance records**
 
-Each authoritative artifact contract gains these exact field paths:
+Run:
 
-| Field path | Type and invariant |
-|---|---|
-| `reporting.supersedes_ref` | `{artifact_id: string, revision: positive integer, content_hash: sha256 digest}` or `null` |
-| `reporting.surfaces` | list; empty is `[]`, never omitted |
-| `reporting.surfaces[].surface_id` | stable, non-empty, producer-owned string |
-| `reporting.surfaces[].claim` | non-empty artifact-grounded statement |
-| `reporting.surfaces[].consequence` | non-empty impact statement assigned by the producer |
-| `reporting.surfaces[].blocking` | boolean |
-| `reporting.surfaces[].decision_required` | boolean |
-| `reporting.surfaces[].evidence_refs` | non-empty list of stable artifact-field references |
-| `reporting.open_decisions` | list; empty is `[]`, never omitted |
-| `reporting.open_decisions[].decision_id` | stable, non-empty, producer-owned string |
-| `reporting.open_decisions[].question` | non-empty decision question |
-| `reporting.open_decisions[].options` | at least two `{option_id, label, consequence}` objects with unique, non-empty IDs and non-empty text |
-| `reporting.open_decisions[].evidence_refs` | non-empty list of stable artifact-field references |
-| `reporting.open_decisions[].blocking` | boolean |
+```bash
+python - <<'PY'
+from hashlib import sha256
+from pathlib import Path
 
-Critique and Spec may map an existing supersession field instead of duplicating it. Understand Code, Implement, Test, and Ship must add an explicit field. The producer, not Report, assigns every consequence and decision.
+report = Path("designs/astra-report.md").read_text()
+assert "3. **Complete, 2026-08-13.** Apply the section 4.5 row changes" in report
+plan = Path("docs/superpowers/plans/2026-08-13-six-skill-trigger-surface-amendments.md").read_text()
+old = "3f2babefc8f178fab9b77c36738e516530a5426abcdb69c261365a167fe9d15a"
+current = sha256(Path("docs/phase-0-ledgers.md").read_bytes()).hexdigest()
+assert old in plan
+assert "historical baseline superseded by the authorized Slice A ledger reconciliation" in plan
+assert current in plan, current
+PY
+```
 
-- [ ] **Step 3: Add the common event envelope and fallback**
+Expected: exit 0. The old digest remains as evidence for the trigger tranche; the current digest is separately recorded and never retroactively substituted into the old expected-output block.
 
-At the user-visible-result and approval sections of every design, require producer emission of
-the following exact envelope fields. Task 3 supplies the complete concrete Spec instance.
+### Task 2: Verify the Existing Producer Interface
 
-| Field | Type and invariant |
-|---|---|
-| `schema_version` | literal `astra.report-event/v0` |
-| `event_id` | stable, non-empty producer event identifier |
-| `event_type` | one of `artifact_completion`, `approval_request`, `stage_boundary`, `status_request`, `failure` |
-| `boundary_kind` | one of `entry_refused`, `work_stopped`, `cycle_closed` only for `stage_boundary`; otherwise `null` |
-| `producer` | one of the six canonical lifecycle skill identifiers |
-| `artifact_ref` | `{artifact_id, revision, content_hash, path}` or the narrowly permitted `null` case below |
-| `artifact_ref.artifact_id` | stable, non-empty artifact identifier |
-| `artifact_ref.revision` | positive integer |
-| `artifact_ref.content_hash` | `sha256:` followed by exactly 64 lowercase hexadecimal characters |
-| `artifact_ref.path` | repository-relative path with no `..` segment |
-| `outcome` | one non-empty producer-authored sentence |
-| `blocking` | boolean |
-| `surface_candidates` | list using the surface shape in Step 2 |
-| `open_decision_refs` | list of producer decision IDs |
-| `evidence_refs` | list of stable evidence references |
-| `decision` | the Step 2 decision shape for `approval_request`; otherwise `null` |
+**Files:**
+- Read: `docs/design-requirements.md`
+- Read: `designs/astra-{critique,understand-code,spec,implement,test,ship}.md`
 
-State that `artifact_ref` may replace the object with `null` only for pre-artifact `entry_refused` or `failure`. For a non-decision Report outage, emit the minimal notice. For an approval outage, present the full decision envelope directly and wait only for the user's answer.
+**Interfaces:**
+- Consumes: canonical `I(reporting)` and `astra.report-event/v0` already landed at `be6249e`
+- Produces: the immutable producer interface consumed by Task 3; no repository mutation
 
-- [ ] **Step 4: Bind the Spec approval event used by the slice**
-
-In `designs/astra-spec.md`, require `approval_request` immediately before whole-revision approval. Its `decision.decision_id` must equal one entry in `open_decision_refs`; `decision.options` must contain every available choice with consequences; Spec alone records the answer against the exact `spec_id`, revision, and hash.
-
-- [ ] **Step 5: Validate all six contracts**
+- [ ] **Step 1: Verify all six producer contracts without reapplying them**
 
 Run:
 
@@ -346,22 +250,32 @@ files = [
 ]
 for path in files:
     text = path.read_text()
-    for token in ("I(reporting)", "ReportEvent", "surface_id", "consequence", "open_decisions"):
+    for token in (
+        "I(reporting)",
+        "ReportEvent",
+        "reporting.surfaces",
+        "consequence",
+        "reporting.open_decisions",
+    ):
         assert token in text, (path, token)
-    assert "Report owns" in text
-assert "Spec alone records" in Path("designs/astra-spec.md").read_text()
+requirements = Path("docs/design-requirements.md").read_text()
+for token in (
+    "Literal `astra.report-event/v0`",
+    "`{option_id, label, consequence}`",
+    "Only the producer",
+    "records the user's answer",
+):
+    assert token in requirements, token
+spec = Path("designs/astra-spec.md").read_text()
+assert "Spec alone records the answer" in spec
 PY
 ```
 
-Expected: exit 0.
+Expected: exit 0. Do not edit or recommit these seven canonical files in this slice.
 
-- [ ] **Step 6: Commit the producer contracts**
+- [ ] **Step 2: Pin the class-35 schema limit**
 
-```bash
-git add designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md
-git diff --cached --check -- designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md
-git commit --only -m "docs: define lifecycle reporting contracts" -- designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md
-```
+The `v0` approval option is exactly `{option_id, label, consequence}`. Task 3 must reject an added `recommended` key; Task 5 must use text fallback when a host demands an approval recommendation. A future positive producer-preference branch requires a separately approved schema amendment and is `blocked`, never silently passed, in this slice.
 
 ### Task 3: ReportEvent Validator and Spec Fixtures
 
@@ -370,10 +284,11 @@ git commit --only -m "docs: define lifecycle reporting contracts" -- designs/ast
 - Create: `tests/astra-report/fixtures/spec-pending.json`
 - Create: `tests/astra-report/fixtures/spec-approval-event.json`
 - Create: `tests/astra-report/fixtures/preartifact-refusal-event.json`
+- Create: `tests/astra-report/fixtures/preartifact-failure-event.json`
 - Create: `tests/astra-report/test_report_contract.py`
 
 **Interfaces:**
-- Consumes: `astra.report-event/v0` from Task 2
+- Consumes: the already-canonical `astra.report-event/v0` verified by Task 2
 - Produces: `validate_event(event: dict) -> list[str]`, `verify_artifact_ref(event: dict, root: Path) -> list[str]`, and a CLI `validate-event EVENT --root ROOT`
 
 - [ ] **Step 1: Initialize the skill package shell**
@@ -388,7 +303,19 @@ Expected: the skill directory, placeholder `SKILL.md`, and `agents/openai.yaml` 
 
 - [ ] **Step 2: Create the immutable Spec fixture and approval envelope**
 
-Use `ACS-REPORT-001`, revision `1`, and the field names from `designs/astra-spec.md` section 2.5 in `spec-pending.json`: intent; observed before state; problem linked to `F-REPORT-001`; selected solution; reason selected; two rejected alternatives and their consequences; after state explicitly marked `projected`; requirements `REQ-REPORT-001` through `REQ-REPORT-004`; acceptance criteria `AC-REPORT-001` through `AC-REPORT-005`; and pending decision `DEC-SPEC-001`.
+Use `ACS-REPORT-001`, revision `1`, and the field names from `designs/astra-spec.md` section 2.5 in `spec-pending.json`: intent; observed before state; problem linked to evidence item `F-REPORT-001`; selected solution; reason selected; two rejected alternatives and their consequences; after state explicitly marked `projected`; requirements `REQ-REPORT-001` through `REQ-REPORT-004`; acceptance criteria `AC-REPORT-001` through `AC-REPORT-005`; and pending decision `DEC-SPEC-001`.
+
+The fixture is the concrete revision of the approved §6 stimulus profile. It must contain six addressable source sections — `intent`, `current_state`, `decisions`, `behavior`, `evidence_and_uncertainty`, and `readiness` — plus all of these exact drift probes:
+
+| Probe | Exact fixture content |
+|---|---|
+| Graded finding | `evidence.items[]` contains exactly `{evidence_id: F-REPORT-001, source_kind: contract, source_ref: F-REPORT-001, claim: "Grade blocking. Observation: Raw lifecycle artifacts preserve authority but overload the approval surface. Evidence ref: USER-REPORT-001.", certainty: observed, captured_at: 2026-08-13T00:00:00+08:00}`; the grade is producer text, not an invented Spec-schema field |
+| Project-status statement | `Specification revision 1 is reviewing and blocked only on DEC-SPEC-001.` |
+| Unfamiliar term | `I(reporting)` with artifact-grounded definition `output-only use of Report's rendering capability while Spec retains decision authority` |
+| Material caveat | `A written segment file is the only receipt supported by this slice.` |
+| Explicitly unverified claim | `Conversation-host receipt integration is unavailable and remains unverified.` |
+
+Do not add a `recommended` field anywhere. The selected design direction is historical Spec content; it is not a recommendation about how the user should answer `DEC-SPEC-001`.
 
 For this fixture only, calculate the producer-owned hash by removing the root fields `content_hash`, `approval`, `delivery`, and `lifecycle`, then serializing the remaining object with sorted keys, UTF-8, `ensure_ascii=False`, and separators `(',', ':')`. Run this read-only command after creating the fixture with `content_hash: null`:
 
@@ -481,6 +408,8 @@ Use two `surface_candidates`: `SURFACE-DECISION-001` states that revision 1 awai
 
 The refusal fixture is exactly: schema `astra.report-event/v0`; `event_id: RE-SPEC-REFUSED-001`; `event_type: stage_boundary`; `boundary_kind: entry_refused`; `producer: astra-spec`; `artifact_ref: null`; outcome `Spec entry was refused because no intended change was supplied.`; `blocking: true`; empty surface and decision lists; `evidence_refs: ["INPUT-MISSING-001"]`; and `decision: null`.
 
+The failure fixture is exactly: schema `astra.report-event/v0`; `event_id: RE-SPEC-FAILURE-001`; `event_type: failure`; `boundary_kind: null`; `producer: astra-spec`; `artifact_ref: null`; outcome `Spec failed before an authoritative artifact could be created.`; `blocking: true`; empty surface and decision lists; `evidence_refs: ["SPEC-FAILURE-ANCHOR-001"]`; and `decision: null`.
+
 - [ ] **Step 3: Write failing validator tests**
 
 Use this exact initial test module, adding line wrapping without changing assertions if the repository formatter requires it:
@@ -536,6 +465,11 @@ class ReportEventTests(unittest.TestCase):
         self.assertEqual([], report_contract.validate_event(event))
         self.assertEqual([], report_contract.verify_artifact_ref(event, ROOT))
 
+    def test_valid_preartifact_failure(self) -> None:
+        event = self.load("preartifact-failure-event.json")
+        self.assertEqual([], report_contract.validate_event(event))
+        self.assertEqual([], report_contract.verify_artifact_ref(event, ROOT))
+
     def test_completion_cannot_omit_artifact(self) -> None:
         event = copy.deepcopy(self.load("spec-approval-event.json"))
         event["event_type"] = "artifact_completion"
@@ -567,6 +501,14 @@ class ReportEventTests(unittest.TestCase):
         self.assert_has_error(
             report_contract.validate_event(event),
             "decision option_id values must be unique",
+        )
+
+    def test_v0_rejects_unowned_recommendation_field(self) -> None:
+        event = copy.deepcopy(self.load("spec-approval-event.json"))
+        event["decision"]["options"][0]["recommended"] = True
+        self.assert_has_error(
+            report_contract.validate_event(event),
+            "decision.options[0] contains unsupported fields: recommended",
         )
 
     def test_decision_id_must_be_open(self) -> None:
@@ -624,7 +566,7 @@ Validation rules:
 - require non-null `artifact_ref` except `failure` or `stage_boundary` with `boundary_kind: entry_refused`; either null case requires at least one evidence or failure anchor;
 - require the artifact identity, positive integer revision, `sha256:` plus 64 lowercase hex characters, and a repository-relative path with no `..` segment;
 - require one of the three boundary kinds for `stage_boundary`, require `null` for every other event type, and reject `work_stopped` or `cycle_closed` with a null artifact;
-- for `approval_request`, require a decision object, matching open-decision reference, at least two uniquely identified options, non-empty label and consequence for every option, evidence references, and `blocking: true`;
+- for `approval_request`, require a decision object, matching open-decision reference, at least two uniquely identified options, non-empty label and consequence for every option, evidence references, and `blocking: true`; reject every option key outside exact `option_id`, `label`, and `consequence`, including `recommended`;
 - reject a decision payload on other event types;
 - verify that the resolved artifact path remains under `root`, parses as a JSON object, and records `spec_id`, `revision`, and `content_hash` equal to the event's `artifact_id`, `revision`, and `content_hash`. Do not hash the whole file: an artifact cannot contain its own byte hash, and Spec owns canonical meaning-field hashing.
 
@@ -642,178 +584,157 @@ Expected: all tests pass; the CLI exits 0 without output.
 - [ ] **Step 7: Commit the producer-envelope validator**
 
 ```bash
-git add skills/astra-report/scripts/report_contract.py tests/astra-report/fixtures/spec-pending.json tests/astra-report/fixtures/spec-approval-event.json tests/astra-report/fixtures/preartifact-refusal-event.json tests/astra-report/test_report_contract.py
-git diff --cached --check -- skills/astra-report/scripts/report_contract.py tests/astra-report/fixtures/spec-pending.json tests/astra-report/fixtures/spec-approval-event.json tests/astra-report/fixtures/preartifact-refusal-event.json tests/astra-report/test_report_contract.py
-git commit --only -m "feat: validate astra report events" -- skills/astra-report/scripts/report_contract.py tests/astra-report/fixtures/spec-pending.json tests/astra-report/fixtures/spec-approval-event.json tests/astra-report/fixtures/preartifact-refusal-event.json tests/astra-report/test_report_contract.py
+git add skills/astra-report/scripts/report_contract.py tests/astra-report/fixtures/spec-pending.json tests/astra-report/fixtures/spec-approval-event.json tests/astra-report/fixtures/preartifact-refusal-event.json tests/astra-report/fixtures/preartifact-failure-event.json tests/astra-report/test_report_contract.py
+git diff --cached --check -- skills/astra-report/scripts/report_contract.py tests/astra-report/fixtures/spec-pending.json tests/astra-report/fixtures/spec-approval-event.json tests/astra-report/fixtures/preartifact-refusal-event.json tests/astra-report/fixtures/preartifact-failure-event.json tests/astra-report/test_report_contract.py
+git commit --only -m "feat: validate astra report events" -- skills/astra-report/scripts/report_contract.py tests/astra-report/fixtures/spec-pending.json tests/astra-report/fixtures/spec-approval-event.json tests/astra-report/fixtures/preartifact-refusal-event.json tests/astra-report/fixtures/preartifact-failure-event.json tests/astra-report/test_report_contract.py
 ```
 
-### Task 4: Append-Only Exposure Ledger
+### Task 4: Segment Exposure Ledger and Revision State
 
 **Files:**
 - Modify: `skills/astra-report/scripts/report_contract.py`
 - Modify: `tests/astra-report/test_report_contract.py`
 
 **Interfaces:**
-- Consumes: a validated ReportEvent and an `astra.reader-brief-manifest/v0` dictionary
-- Produces: `validate_manifest(event: dict, manifest: dict) -> list[str]`, `build_exposure_entry(event: dict, manifest: dict, timestamp: str, brief_content_hash: str) -> dict`, internal `_append_exposure(path: Path, entry: dict) -> None`, `write_exposure(event: dict, manifest: dict, path: Path, timestamp: str, root: Path, delivered_brief: Path) -> list[str]`, and CLI `append-exposure EVENT MANIFEST --ledger PATH --timestamp ISO8601 --root ROOT --delivered-brief PATH`
+- Consumes: a validated ReportEvent and one `astra.reader-brief-segment/v0` manifest
+- Produces: `validate_segment_manifest(event: dict, manifest: dict) -> list[str]`, `build_exposure_entry(event: dict, manifest: dict, timestamp: str, segment_content_hash: str) -> dict`, `load_exposure_entries(path: Path) -> tuple[list[dict], list[str]]`, `artifact_revision_exposed(artifact_ref: dict, entries: list[dict]) -> bool`, internal `_append_exposure(path: Path, entry: dict) -> None`, `write_exposure(event: dict, manifest: dict, path: Path, timestamp: str, root: Path, delivered_segment: Path) -> list[str]`, and CLI `append-exposure EVENT MANIFEST --ledger PATH --timestamp ISO8601 --root ROOT --delivered-segment PATH`
 
-- [ ] **Step 1: Write failing exposure tests**
+- [ ] **Step 1: Add the initial-segment manifest helper and failing tests**
 
-Add tests that assert:
-
-1. the first append creates one newline-terminated JSON object;
-2. the second append adds a second line without changing the first;
-3. the entry contains only `timestamp`, `brief_id`, `brief_content_hash`, `mode`, `event_id`, `producer`, `artifact_refs`, `surfaces`, `decisions_presented`, and `degradation_flags`;
-4. answer-like input keys (`answer`, `selected_option`, `approval_state`) never appear in output;
-5. an invalid event produces no ledger file; and
-6. surface IDs in the manifest must exist in the event; and
-7. a missing or empty delivered-brief receipt produces no ledger file.
-
-The manifest fixture used inside the test is:
+Add this exact helper to `ReportEventTests`:
 
 ```python
-manifest = {
-    "schema_version": "astra.reader-brief-manifest/v0",
-    "brief_id": "BRIEF-SPEC-001",
-    "mode": "standard",
-    "event_id": "RE-SPEC-001",
-    "surfaces": {
-        "now": ["SURFACE-DECISION-001"],
-        "next": [],
-        "deferred": ["SURFACE-AFTER-PROJECTED-001"],
-    },
-    "decisions_presented": ["DEC-SPEC-001"],
-    "degradation_flags": [],
-}
-```
-
-Add these exact methods before the module's `if __name__ == "__main__"` block:
-
-```python
-    def manifest(self) -> dict:
+    def initial_manifest(self) -> dict:
         return {
-            "schema_version": "astra.reader-brief-manifest/v0",
+            "schema_version": "astra.reader-brief-segment/v0",
             "brief_id": "BRIEF-SPEC-001",
+            "segment_id": "SEGMENT-SPEC-INITIAL-001",
+            "sequence": 1,
+            "kind": "initial",
             "mode": "standard",
             "event_id": "RE-SPEC-001",
-            "surfaces": {
-                "now": ["SURFACE-DECISION-001"],
-                "next": [],
-                "deferred": ["SURFACE-AFTER-PROJECTED-001"],
-            },
+            "surfaces_presented": [
+                "SURFACE-DECISION-001",
+                "SURFACE-AFTER-PROJECTED-001",
+            ],
+            "topic_previews_presented": [
+                "TOPIC-INTENT",
+                "TOPIC-CURRENT-STATE",
+                "TOPIC-CHANGE-STORY",
+                "TOPIC-BEHAVIOR",
+                "TOPIC-EVIDENCE-UNCERTAINTY",
+                "TOPIC-READINESS",
+            ],
+            "topic_details_presented": [],
             "decisions_presented": ["DEC-SPEC-001"],
+            "continuation": {
+                "control_id": "understood_proceed",
+                "consequence": (
+                    "Return to Spec with DEC-SPEC-001 still pending; this does not "
+                    "approve, grant an effect, or start Implement."
+                ),
+            },
             "degradation_flags": [],
         }
+```
 
-    def test_append_is_newline_terminated_and_preserves_prior_entry(self) -> None:
-        event = self.load("spec-approval-event.json")
-        with tempfile.TemporaryDirectory() as directory:
-            ledger = Path(directory) / "exposure.jsonl"
-            delivered = Path(directory) / "brief.md"
-            delivered.write_text("delivered brief", encoding="utf-8")
-            errors = report_contract.write_exposure(
-                event,
-                self.manifest(),
-                ledger,
-                "2026-08-12T12:00:00+08:00",
-                ROOT,
-                delivered,
-            )
-            self.assertEqual([], errors)
-            first_bytes = ledger.read_bytes()
-            self.assertTrue(first_bytes.endswith(b"\n"))
+Add exact tests with these method names and assertions:
 
-            second_manifest = self.manifest()
-            second_manifest["brief_id"] = "BRIEF-SPEC-002"
-            errors = report_contract.write_exposure(
-                event,
-                second_manifest,
-                ledger,
-                "2026-08-12T12:05:00+08:00",
-                ROOT,
-                delivered,
-            )
-            self.assertEqual([], errors)
-            lines = ledger.read_bytes().splitlines(keepends=True)
-            self.assertEqual(2, len(lines))
-            self.assertEqual(first_bytes, lines[0])
+| Method | Required assertion |
+|---|---|
+| `test_initial_segment_rejects_detail_exposure` | adding `TOPIC-CHANGE-STORY` to `topic_details_presented` returns `initial segment cannot record detail exposure` |
+| `test_detail_segment_requires_exactly_one_detail` | `kind: detail` with zero or two detail IDs returns `detail segment must record exactly one selected detail` |
+| `test_preview_and_detail_ids_cannot_overlap` | the same topic in both lists returns `topic exposure cannot be both preview and detail in one segment` |
+| `test_unknown_surface_is_rejected` | `SURFACE-UNKNOWN-001` returns `manifest surface SURFACE-UNKNOWN-001 is absent from the event` |
+| `test_unknown_decision_is_rejected` | `DEC-UNKNOWN-001` returns `manifest decision DEC-UNKNOWN-001 is absent from the event` |
+| `test_sequence_must_be_positive` | sequence `0` returns `segment sequence must be a positive integer` |
+| `test_continuation_is_required_on_every_segment` | `continuation: null` returns `continuation is required` |
 
-    def test_exposure_entry_uses_whitelist_and_omits_answer_state(self) -> None:
-        event = self.load("spec-approval-event.json")
-        event["answer"] = "approve"
-        manifest = self.manifest()
-        manifest["selected_option"] = "approve"
-        manifest["approval_state"] = "accepted"
-        entry = report_contract.build_exposure_entry(
-            event,
-            manifest,
-            "2026-08-12T12:00:00+08:00",
-            "sha256:" + hashlib.sha256(b"delivered brief").hexdigest(),
-        )
-        self.assertEqual(
-            {
-                "timestamp",
-                "brief_id",
-                "brief_content_hash",
-                "mode",
-                "event_id",
-                "producer",
-                "artifact_refs",
-                "surfaces",
-                "decisions_presented",
-                "degradation_flags",
-            },
-            set(entry),
-        )
-        rendered = json.dumps(entry, sort_keys=True)
-        for forbidden in ("answer", "selected_option", "approval_state", '"approve"'):
-            self.assertNotIn(forbidden, rendered)
+- [ ] **Step 2: Add failing receipt, append-only, whitelist, and revision-state tests**
 
-    def test_unknown_manifest_surface_is_rejected(self) -> None:
-        event = self.load("spec-approval-event.json")
-        manifest = self.manifest()
-        manifest["surfaces"]["now"] = ["SURFACE-UNKNOWN-001"]
-        self.assert_has_error(
-            report_contract.validate_manifest(event, manifest),
-            "manifest surface SURFACE-UNKNOWN-001 is absent from the event",
-        )
+Use a non-empty temporary `segment.md` as the only successful receipt. Add these exact tests:
 
-    def test_invalid_event_does_not_create_ledger(self) -> None:
-        event = self.load("spec-approval-event.json")
-        event["artifact_ref"] = None
-        with tempfile.TemporaryDirectory() as directory:
-            ledger = Path(directory) / "exposure.jsonl"
-            delivered = Path(directory) / "brief.md"
-            delivered.write_text("delivered brief", encoding="utf-8")
-            errors = report_contract.write_exposure(
-                event,
-                self.manifest(),
-                ledger,
-                "2026-08-12T12:00:00+08:00",
-                ROOT,
-                delivered,
-            )
-            self.assertTrue(errors)
-            self.assertFalse(ledger.exists())
-
-    def test_missing_delivery_receipt_does_not_create_ledger(self) -> None:
+```python
+    def test_append_is_segment_scoped_and_preserves_prior_bytes(self) -> None:
         event = self.load("spec-approval-event.json")
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             ledger = root / "exposure.jsonl"
-            errors = report_contract.write_exposure(
-                event,
-                self.manifest(),
-                ledger,
-                "2026-08-12T12:00:00+08:00",
-                ROOT,
-                root / "missing-brief.md",
+            delivered = root / "segment.md"
+            delivered.write_text("initial segment", encoding="utf-8")
+            self.assertEqual(
+                [],
+                report_contract.write_exposure(
+                    event,
+                    self.initial_manifest(),
+                    ledger,
+                    "2026-08-13T12:00:00+08:00",
+                    ROOT,
+                    delivered,
+                ),
             )
-            self.assert_has_error(errors, "delivery receipt is missing or empty")
-            self.assertFalse(ledger.exists())
+            first = ledger.read_bytes()
+            self.assertTrue(first.endswith(b"\n"))
+
+            detail = self.initial_manifest()
+            detail.update(
+                segment_id="SEGMENT-SPEC-DETAIL-001",
+                sequence=2,
+                kind="detail",
+                topic_previews_presented=[
+                    "TOPIC-INTENT",
+                    "TOPIC-CURRENT-STATE",
+                    "TOPIC-BEHAVIOR",
+                    "TOPIC-EVIDENCE-UNCERTAINTY",
+                    "TOPIC-READINESS",
+                ],
+                topic_details_presented=["TOPIC-CHANGE-STORY"],
+                decisions_presented=[],
+            )
+            delivered.write_text("selected detail", encoding="utf-8")
+            self.assertEqual(
+                [],
+                report_contract.write_exposure(
+                    event,
+                    detail,
+                    ledger,
+                    "2026-08-13T12:05:00+08:00",
+                    ROOT,
+                    delivered,
+                ),
+            )
+            lines = ledger.read_bytes().splitlines(keepends=True)
+            self.assertEqual(2, len(lines))
+            self.assertEqual(first, lines[0])
+
+    def test_revised_artifact_is_unexposed_without_approval_inference(self) -> None:
+        event = self.load("spec-approval-event.json")
+        entry = report_contract.build_exposure_entry(
+            event,
+            self.initial_manifest(),
+            "2026-08-13T12:00:00+08:00",
+            "sha256:" + hashlib.sha256(b"initial segment").hexdigest(),
+        )
+        self.assertTrue(
+            report_contract.artifact_revision_exposed(event["artifact_ref"], [entry])
+        )
+        revised = copy.deepcopy(event["artifact_ref"])
+        revised["revision"] = 2
+        revised["content_hash"] = "sha256:" + ("1" * 64)
+        self.assertFalse(report_contract.artifact_revision_exposed(revised, [entry]))
 ```
 
-- [ ] **Step 2: Run the focused tests to verify RED**
+Also add tests that establish:
+
+1. one initial presentation followed by a separate producer answer still leaves exactly one ledger row;
+2. the entry key set is exactly `timestamp`, `brief_id`, `segment_id`, `sequence`, `kind`, `segment_content_hash`, `mode`, `event_id`, `producer`, `artifact_refs`, `surfaces_presented`, `topic_previews_presented`, `topic_details_presented`, `decisions_presented`, and `degradation_flags`;
+3. `answer`, `selected_option`, `approval_state`, menu selection, and continuation never enter the entry even if supplied as extra input keys;
+4. a missing or empty segment receipt creates no ledger;
+5. an invalid event or manifest creates no ledger;
+6. malformed JSONL returns errors and never becomes evidence of exposure; and
+7. `artifact_revision_exposed` compares only exact artifact ID, revision, and hash from ledger rows — it accepts no commit, branch, or timestamp selector.
+
+- [ ] **Step 3: Run the focused suite to verify RED**
 
 Run:
 
@@ -821,30 +742,33 @@ Run:
 python -m unittest discover -s tests/astra-report -p 'test_report_contract.py' -v
 ```
 
-Expected: FAIL because `build_exposure_entry`, `write_exposure`, and `_append_exposure` are absent.
+Expected: FAIL because the segment-manifest, exposure-load, revision-state, and append functions are absent.
 
-- [ ] **Step 3: Implement whitelisted construction and durable append**
+- [ ] **Step 4: Implement the minimal segment contract**
 
-`validate_manifest` must require the literal schema version, non-empty brief ID, one of the three modes, matching event ID, exactly the three surface buckets, event-owned surface IDs, event-owned presented decision IDs, and string-valued degradation flags. `build_exposure_entry` must construct a new dictionary from named fields rather than copy the input and must validate the supplied lowercase SHA-256 digest syntax. `_append_exposure` must create parent directories only for the explicit caller-provided path, serialize with sorted keys and compact separators, append exactly one line in UTF-8, flush, and call `os.fsync()` before returning. It must never edit an existing line and must be called only by `write_exposure`.
+Implement the exact public functions in the Interfaces block. `validate_segment_manifest` must require the literal schema, all listed fields, known kind, matching event ID, event-owned surfaces and decisions, unique string lists, positive sequence, required bounded continuation, initial/detail exposure rules, and string-valued degradation flags.
 
-`write_exposure` and the CLI validate the event, verify its artifact reference, validate the manifest/event identity and surfaces, and require `delivered_brief` to be an existing, non-empty regular file. They hash the delivered file bytes with SHA-256, pass that digest to `build_exposure_entry`, and only then append. They return or print every error; any failure exits non-zero before opening the ledger. The receipt proves delivery to this file surface only; it is not evidence that a human read or approved the brief.
+`build_exposure_entry` constructs a new dictionary from the whitelist; it never copies arbitrary input. `load_exposure_entries` reads newline-delimited JSON without repairing, skipping, or rewriting a malformed row. `artifact_revision_exposed` returns true only for an exact `{artifact_id, revision, content_hash}` match in `artifact_refs`; it does not inspect approval state or Git history.
 
-- [ ] **Step 4: Run tests to verify GREEN**
+`_append_exposure` creates parent directories only for the explicit caller-provided path, serializes sorted compact JSON, appends exactly one UTF-8 line, flushes, and calls `os.fsync()` before returning. `write_exposure` validates the event, artifact reference, and segment manifest; requires an existing non-empty regular receipt file; hashes its exact bytes; and opens the ledger only after every check passes. The receipt proves delivery to this file surface only, never reading, understanding, or approval.
+
+- [ ] **Step 5: Run the suite to verify GREEN**
 
 Run:
 
 ```bash
 python -m unittest discover -s tests/astra-report -p 'test_*.py' -v
+python skills/astra-report/scripts/report_contract.py validate-event tests/astra-report/fixtures/spec-approval-event.json --root .
 ```
 
-Expected: all validator and append tests pass.
+Expected: all tests pass and the CLI exits 0.
 
-- [ ] **Step 5: Commit the exposure boundary**
+- [ ] **Step 6: Commit the segment exposure contract**
 
 ```bash
 git add skills/astra-report/scripts/report_contract.py tests/astra-report/test_report_contract.py
 git diff --cached --check -- skills/astra-report/scripts/report_contract.py tests/astra-report/test_report_contract.py
-git commit --only -m "feat: append astra report exposure records" -- skills/astra-report/scripts/report_contract.py tests/astra-report/test_report_contract.py
+git commit --only -m "feat: record astra report segment exposure" -- skills/astra-report/scripts/report_contract.py tests/astra-report/test_report_contract.py
 ```
 
 ### Task 5: Prompt-Driven Astra Report Skill
@@ -857,7 +781,7 @@ git commit --only -m "feat: append astra report exposure records" -- skills/astr
 
 **Interfaces:**
 - Consumes: a valid delegated Spec approval ReportEvent, its exact immutable artifact, optional prior Exposure Ledger, requested mode, and user context
-- Produces: a Reader Brief plus its manifest; a caller with an exact delivery receipt may pass both to `append-exposure`; no authoritative artifact mutation
+- Produces: one Reader Brief segment plus its segment manifest at a time; a caller with an exact delivery receipt may pass both to `append-exposure`; no authoritative artifact mutation
 
 - [ ] **Step 1: Replace the generated skill placeholder and confirm metadata**
 
@@ -871,10 +795,16 @@ Replace the generated `SKILL.md` completely in Step 4. Confirm `agents/openai.ya
 - required and conditional fields from Tasks 1–3;
 - `artifact_ref` hash/path verification;
 - surface and decision ownership;
-- Reader Brief layer order: Capsule, NOW, NEXT, DEFERRED, Change Story when applicable, Evidence;
-- manifest fields from Task 4;
+- explicit refusal with zero effect for any requested finding re-grade, authoritative-artifact edit, or peer-skill start;
+- Reader Brief session order: initial Capsule + materially complete NOW + topic previews, followed only by user-selected detail segments;
+- stable topic shape: `topic_id`, section-name `label`, one- or two-sentence `preview`, linked surface/evidence IDs, and full body;
+- exact equivalence of structured-choice and text-index topic IDs, order, previews, continuation consequence, and selected detail;
+- every field of the `astra.reader-brief-segment/v0` manifest from Task 4;
 - the exposure-only ledger whitelist;
-- failure rules, including full decision fallback belonging to the producer when Report is unavailable.
+- `preview` versus `detail` exposure rules and receipt-gated row-per-segment append;
+- `Understood, proceed` as a bounded return control that cannot approve, grant effects, or start a public peer;
+- required-recommendation handling: navigation may follow producer-owned consequence fields, but approval recommendation uses text fallback because `v0` has no preference field; and
+- failure rules, including both producer-owned fallbacks when Report is unavailable.
 
 Include one valid approval envelope and one invalid null-artifact completion example. Do not duplicate method prose from `method-canon.md`.
 
@@ -908,15 +838,21 @@ Keep `SKILL.md` below 500 lines and use this sequence:
    Exposure Ledger append;
 2. read `references/report-contracts.md`, and read `references/method-canon.md` when composing rich prose;
 3. validate the event and verify its identity/revision/content-hash reference against the artifact with `report_contract.py`;
-4. stop on contract or hash failure and identify the producer-owned correction; never repair the event;
-5. compute delta only from artifact revision/hash versus explicit prior ledger entries; absent ledger means full-state rendering with a `ledger-reset` flag;
-6. allocate producer-owned blockers to NOW before budgeted FYI surfaces;
-7. compose Capsule, NOW, NEXT, DEFERRED, applicable Change Story, and Evidence;
-8. use plain language but retain identifiers, certainty, constraints, consequences, and all approval options;
-9. state every unavailable Change Story element as missing or projected; never convert a projected after-state into an observed result;
-10. show the complete approval envelope and stop for the user's answer without recording it;
-11. build the manifest and request exposure append only when the caller supplies a receipt for the exact delivered brief; without a receipt, render with no ledger append; and
-12. return control to the producer, which alone records the user's answer.
+4. stop on contract or hash failure and identify the producer-owned correction; never repair the event. Explicitly refuse any request to re-grade a producer Finding, edit the authoritative artifact, or start Critique, and produce no such effect;
+5. compute delta only from exact artifact identity/revision/hash versus parsed Exposure Ledger rows; absent or unreadable ledger means full-state rendering with the applicable degradation flag, never a Git or “commits since” selector;
+6. allocate every producer-owned blocker to NOW before budgeted FYI surfaces; four blockers under the standard three-surface cap render all four;
+7. derive a canonical topic catalog from the six fixed fixture sections. Every topic has stable ID, section-name label, linked surface/evidence IDs, preview, and body;
+8. enforce the class-30 proxy on every preview: non-empty, at most two sentences, exact section label present, plus a linked stable ID or a contiguous two-word phrase from the linked producer claim/consequence after removing the label;
+9. compose the initial segment as Capsule + materially complete NOW + the complete topic catalog's labels and previews + `Understood, proceed`; expose zero unopened bodies;
+10. render that one catalog through structured choices when supported or through a text index otherwise. Preserve topic IDs, order, previews, continuation consequence, and returned detail exactly. Under host limits, paginate without dropping a topic or caveat and retain `Understood, proceed` on every page;
+11. preserve artifact identity, revision, hash, decision identity/question, all options/consequences, evidence refs, and blocking state. The complete approval envelope remains in NOW and is never staged behind detail;
+12. if the host requires a navigation recommendation, use only producer-owned `blocking` and `decision_required` consequence fields. If it requires an approval recommendation, use text fallback; never invent `recommended`, infer preference from option order, or convert Spec's selected design direction into an approval answer;
+13. on one topic selection, compose only that body's detail segment followed by remaining labels/previews and the continuation control. Never expose a second unopened body unless the user explicitly requests `expand all`;
+14. use plain language while retaining identifiers, certainty, constraints, consequences, caveats, and alternatives; state unavailable or projected material exactly and never turn projected after-state into observed result;
+15. build one segment manifest and request one Exposure Ledger append only after a receipt for that exact delivered segment. Record previews shown as `preview` and only the selected receipt-confirmed body as `detail`; without a receipt, append nothing; and
+16. return control to Spec. `Understood, proceed` does not answer the pending decision, and only Spec records the user's separately identified answer.
+
+For this slice, the canonical catalog order and labels are fixed: `TOPIC-INTENT` / `Intent`, `TOPIC-CURRENT-STATE` / `Current State`, `TOPIC-CHANGE-STORY` / `Change Story`, `TOPIC-BEHAVIOR` / `Behavior and Acceptance`, `TOPIC-EVIDENCE-UNCERTAINTY` / `Evidence and Uncertainty`, and `TOPIC-READINESS` / `Readiness`. IDs and order are evaluation-fixture values, not a permanent cross-artifact taxonomy.
 
 Use this exact frontmatter:
 
@@ -941,6 +877,15 @@ from pathlib import Path
 skill = Path("skills/astra-report/SKILL.md").read_text()
 assert len(skill.splitlines()) < 500
 assert "$astra-report" in Path("skills/astra-report/agents/openai.yaml").read_text()
+for token in (
+    "astra.reader-brief-segment/v0",
+    "Understood, proceed",
+    "preview",
+    "detail",
+    "text fallback",
+):
+    assert token in skill, token
+assert "recommended:" not in skill
 for forbidden in ("README.md", "CHANGELOG.md", "INSTALLATION_GUIDE.md"):
     assert not (Path("skills/astra-report") / forbidden).exists()
 PY
@@ -956,226 +901,286 @@ git diff --cached --check -- skills/astra-report/SKILL.md skills/astra-report/ag
 git commit --only -m "feat: add astra report approval renderer" -- skills/astra-report/SKILL.md skills/astra-report/agents/openai.yaml skills/astra-report/references/report-contracts.md skills/astra-report/references/method-canon.md
 ```
 
-### Task 6: Spec Approval Behavioral Slice
+### Task 6: Mechanical Slice A Acceptance Run
 
 **Files:**
+- Create: `tests/astra-report/fixtures/spec-status-event.json`
+- Create: `tests/astra-report/fixtures/spec-over-budget-event.json`
+- Create: `tests/astra-report/fixtures/spec-pending-revision-2.json`
+- Create: `tests/astra-report/fixtures/spec-revised-event.json`
 - Create: `tests/astra-report/evals/spec-approval-prompt.md`
+- Create: `tests/astra-report/evals/spec-approval-text-index-prompt.md`
+- Create: `tests/astra-report/evals/spec-approval-detail-prompt.md`
+- Create: `tests/astra-report/evals/spec-approval-text-index-detail-prompt.md`
+- Create: `tests/astra-report/evals/spec-over-budget-prompt.md`
+- Create: `tests/astra-report/evals/spec-revised-prompt.md`
 - Create: `tests/astra-report/evals/spec-approval-fallback-prompt.md`
+- Create: `tests/astra-report/evals/spec-status-fallback-prompt.md`
 - Create: `tests/astra-report/evals/render-result.schema.json`
-- Create: `tests/astra-report/evals/spec-approval-rubric.md`
-- Modify: `tests/astra-report/test_report_contract.py`
+- Create: `tests/astra-report/evals/spec-approval-cases.md`
+- Create: `tests/astra-report/verify_slice_a.py`
 
 **Interfaces:**
-- Consumes: the skill and fixtures from Tasks 3–5
-- Produces: one reproducible dogfood case covering friendly explanation, approval fidelity, absent-data behavior, and exposure bookkeeping
+- Consumes: the skill, exact fixtures, and segment contract from Tasks 3–5
+- Produces: eight fixed run outputs, a 25-case mechanical verdict, and two receipt-confirmed exposure rows; no reusable harness interface
 
-- [ ] **Step 1: Write the fixed dogfood prompt**
+- [ ] **Step 1: Create the four derived artifact/event fixtures**
 
-Write exactly this task prompt; it supplies the contract but does not reveal expected prose or rubric judgments:
+`spec-status-event.json` references the same artifact revision and carries: `event_id: RE-SPEC-STATUS-001`; `event_type: status_request`; `boundary_kind: null`; outcome `Specification revision 1 is reviewing and blocked only on DEC-SPEC-001.`; blocking `true`; the same two surface candidates; `open_decision_refs: ["DEC-SPEC-001"]`; the same event evidence; and `decision: null`.
 
-```markdown
-Exercise the repository's Astra Report skill on one fixed approval event.
+`spec-over-budget-event.json` references the same artifact revision and approval decision but replaces `surface_candidates` with four producer-owned blocking, decision-required surfaces `SURFACE-BLOCKER-001` through `SURFACE-BLOCKER-004`. Each carries a distinct non-empty claim, consequence, and evidence ref. Its decision and all other envelope fields remain byte-for-byte equal to `spec-approval-event.json` except `event_id: RE-SPEC-OVER-BUDGET-001`.
 
-1. Read `skills/astra-report/SKILL.md` and every reference that it requires for a rich approval brief.
-2. Consume `tests/astra-report/fixtures/spec-approval-event.json` in `standard` mode and read only the artifact that its `artifact_ref.path` names.
-3. Follow the skill's validation and fidelity rules. Do not edit any file, do not read `books/`, do not answer the approval question, and do not invoke another lifecycle authority.
-4. Return one Reader Brief and its exposure manifest. The brief is user-facing Markdown. The manifest describes what that brief presented but contains no user answer or approval state.
+Create `spec-pending-revision-2.json` by copying the revision-1 fixture, setting `revision: 2`, `supersedes_revision: 1`, `revision_reason: "Clarify the written-receipt limitation without changing the pending approval state."`, and `lifecycle.updated_at: "2026-08-13T01:00:00+08:00"`, while leaving the complete `approval` object byte-for-byte unchanged. Add one exact sentence to the material-caveat evidence claim: `Revision 2 clarifies that this receipt does not prove reading or approval.` Recompute `content_hash` with Task 3's exact canonical-meaning procedure.
 
-Return only the JSON object required by the supplied output schema. Do not wrap it in a code fence and do not add commentary outside it.
-```
+Create `spec-revised-event.json` from `spec-approval-event.json`: set `event_id: RE-SPEC-REVISED-001`; update the artifact revision, content hash, and path to revision 2; set outcome to `Specification revision 2 is pending the same user-owned approval state and has not yet been exposed.`; update the decision question and `approve` label/consequence to name revision 2; retain decision ID `DEC-SPEC-001`, all other decision semantics, and `blocking: true`. Its surface and evidence refs use the revision-2 artifact anchors.
 
-Use this exact `render-result.schema.json`:
+Add fixture tests that validate all three derived events, recalculate the revision-2 content hash, assert its approval object equals revision 1 byte-for-byte, and assert the over-budget event has exactly four distinct blocking surface IDs.
+
+- [ ] **Step 2: Write the exact case-to-evidence matrix**
+
+`spec-approval-cases.md` contains exactly these 25 rows and no scored prose-quality criterion:
+
+| Case | Mechanical evidence |
+|---|---|
+| C4 | initial result and event/artifact exact-field equality |
+| C5 | over-budget result contains all four blocker IDs in `surfaces_presented` |
+| C9a | status fallback has exactly the five permitted non-empty lines |
+| C9b | approval fallback preserves the complete decision envelope and forbidden-token scan passes |
+| C13a | exact `F-REPORT-001` grade claim remains unchanged, `finding_regraded` is false, and the explicit re-grade refusal is exact |
+| C13b | artifact SHA-256 is unchanged before/after all read-only runs, `artifact_mutated` is false, and the explicit edit refusal is exact |
+| C13c | `critique_started` is false, the explicit start refusal is exact, the schema admits no invocation result, and repository state gains no Critique artifact |
+| C19a | Task 3 refusal and failure tests pass |
+| C19b | Task 3 null-artifact completion test passes |
+| C20 | Task 4 one-row post-answer test passes |
+| C25 | revision 2 is absent from the revision-1 ledger, result classification is `unexposed` with `approval_state_inferred: false`, and the revised brief contains neither `unapproved` nor `not approved` |
+| C26 | Task 4 missing-receipt test passes and next lookup remains unexposed |
+| C28 | Task 4 revision lookup accepts no Git selector |
+| C29a | initial output has Capsule, complete NOW, previews, and no detail-only markers |
+| C29b | detail output contains only selected body marker plus remaining previews |
+| C30 | every topic preview passes the approved four-part structural proxy |
+| C31 | structured/text semantic tuples are exactly equal |
+| C32a | ledger row 1 records previews only; row 2 records one selected detail |
+| C32b | ledger contains no menu selection, answer, option selection, or approval state |
+| C33a | continuation consequence returns to Spec with decision pending |
+| C33b | continuation contains no approval or effect grant and changes no artifact |
+| C33c | continuation produces no next-public-skill invocation |
+| C34 | every topic occurs exactly once across pages and every page retains continuation |
+| C35a | recommended topic is the sole topic linked to the blocking decision-required surface |
+| C35b | approval presentation is text fallback and no option has a recommendation field |
+
+- [ ] **Step 3: Write the eight fixed prompts**
+
+`spec-approval-prompt.md` requests the initial `standard` segment from `spec-approval-event.json`, declares structured topic choices with a three-option panel limit and a required navigation recommendation, and declares that the approval-choice host also requires a recommendation. It makes three explicit forbidden requests — re-grade `F-REPORT-001`, edit the artifact, and start Critique — and requires the exact authority-effect booleans and refusals from Step 4. It instructs the agent to use text fallback for the approval choices, return zero detail bodies, make no edits or peer invocations, and emit only the JSON schema result.
+
+`spec-approval-text-index-prompt.md` requests the same initial segment, forbidden authority probes, and values but declares no structured-choice capability. It requires the same topic IDs, order, previews, continuation consequence, decision envelope, navigation recommendation semantics, and authority refusals through a text index.
+
+`spec-approval-detail-prompt.md` independently reads the canonical fixture and event, declares the structured-choice host branch, reconstructs the same fixed catalog, selects exact topic `TOPIC-CHANGE-STORY`, and requires one detail segment containing only that body plus remaining labels/previews and continuation. It must preserve every catalog tuple from the initial contract and expose the selected body separately in `selected_detail`.
+
+`spec-approval-text-index-detail-prompt.md` is identical except that it declares the text-index host branch. Its `selected_detail.topic_id` and `selected_detail.body` must equal the structured detail result byte-for-byte; it may differ only in host presentation fields permitted by the schema.
+
+`spec-over-budget-prompt.md` reads only `spec-over-budget-event.json`, requests an initial `standard` segment under the same structured host constraints, and requires all four blocking surface IDs in NOW and `manifest.surfaces_presented` even though the ordinary cap is three. It emits only the JSON schema result.
+
+`spec-revised-prompt.md` reads the revision-2 artifact/event and the caller-supplied revision-1 Exposure Ledger path. It requires an initial `standard` segment whose state classification is exactly `unexposed` and `approval_state_inferred: false`. The segment must use exposure language (`not yet briefed` or `unexposed`) and must contain neither case-insensitive `unapproved` nor `not approved`. It emits only the JSON schema result.
+
+`spec-approval-fallback-prompt.md` forbids reading or invoking Report and requires plain Markdown with artifact identity/revision/hash, decision identity/question, every option ID/label/consequence, decision evidence refs, and blocking state. It forbids Capsule, topic layers, recommendation, answer, and approval state.
+
+`spec-status-fallback-prompt.md` forbids Report and requires exactly five non-empty lines in this order: `Artifact: <artifact_id>@<revision> <content_hash>`; `Event: RE-SPEC-STATUS-001`; `Outcome: <one producer sentence>`; `Blocking: true`; `Report: unavailable`. Nothing else is permitted.
+
+The two base initial prompts and two base detail prompts reproduce the six exact topic IDs, order, labels, previews, links, and page partition in Step 4; the host branch may alter presentation only. All six schema-driven prompts carry the same three forbidden authority probes and require the exact `authority_effects` and input-derived `authority_refusals` values below. Each declares the Exposure Ledger absent, and therefore the artifact unexposed, except `spec-revised-prompt.md`, whose first input line supplies the exact revision-1 ledger path created in Step 6.
+
+- [ ] **Step 4: Define the schema-visible semantic record**
+
+Use Draft 2020-12 and `additionalProperties: false` at every object level. Each Report run result has exactly:
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["brief_markdown", "manifest"],
-  "properties": {
-    "brief_markdown": {
-      "type": "string",
-      "minLength": 1
+  "topic_presentation": "structured",
+  "approval_presentation": "text",
+  "artifact_ref": {
+    "artifact_id": "ACS-REPORT-001",
+    "revision": 1,
+    "content_hash": "sha256 plus 64 lowercase hex characters",
+    "path": "tests/astra-report/fixtures/spec-pending.json"
+  },
+  "segment_markdown": "non-empty string",
+  "manifest": {
+    "schema_version": "astra.reader-brief-segment/v0",
+    "brief_id": "non-empty string",
+    "segment_id": "non-empty string",
+    "sequence": 1,
+    "kind": "initial",
+    "mode": "standard",
+    "event_id": "RE-SPEC-001",
+    "surfaces_presented": ["SURFACE-DECISION-001", "SURFACE-AFTER-PROJECTED-001"],
+    "topic_previews_presented": [
+      "TOPIC-INTENT",
+      "TOPIC-CURRENT-STATE",
+      "TOPIC-CHANGE-STORY",
+      "TOPIC-BEHAVIOR",
+      "TOPIC-EVIDENCE-UNCERTAINTY",
+      "TOPIC-READINESS"
+    ],
+    "topic_details_presented": [],
+    "decisions_presented": ["DEC-SPEC-001"],
+    "continuation": {
+      "control_id": "understood_proceed",
+      "consequence": "non-empty exact consequence"
     },
-    "manifest": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "brief_id",
-        "mode",
-        "event_id",
-        "surfaces",
-        "decisions_presented",
-        "degradation_flags"
-      ],
-      "properties": {
-        "schema_version": {
-          "const": "astra.reader-brief-manifest/v0"
-        },
-        "brief_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "mode": {
-          "enum": ["skim", "standard", "deep"]
-        },
-        "event_id": {
-          "const": "RE-SPEC-001"
-        },
-        "surfaces": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["now", "next", "deferred"],
-          "properties": {
-            "now": {
-              "type": "array",
-              "items": {"type": "string"},
-              "uniqueItems": true
-            },
-            "next": {
-              "type": "array",
-              "items": {"type": "string"},
-              "uniqueItems": true
-            },
-            "deferred": {
-              "type": "array",
-              "items": {"type": "string"},
-              "uniqueItems": true
-            }
-          }
-        },
-        "decisions_presented": {
-          "type": "array",
-          "items": {"type": "string"},
-          "uniqueItems": true
-        },
-        "degradation_flags": {
-          "type": "array",
-          "items": {"type": "string"},
-          "uniqueItems": true
-        }
-      }
+    "degradation_flags": []
+  },
+  "topic_index": [
+    {
+      "topic_id": "TOPIC-INTENT",
+      "label": "Intent",
+      "preview": "Intent — REQ-REPORT-002 requires a faithful, scannable approval brief while Spec retains authority.",
+      "surface_ids": ["SURFACE-AFTER-PROJECTED-001"],
+      "evidence_refs": ["ACS-REPORT-001@1#intent"]
+    },
+    {
+      "topic_id": "TOPIC-CURRENT-STATE",
+      "label": "Current State",
+      "preview": "Current State — F-REPORT-001 records that raw lifecycle artifacts overload the approval surface.",
+      "surface_ids": [],
+      "evidence_refs": ["F-REPORT-001"]
+    },
+    {
+      "topic_id": "TOPIC-CHANGE-STORY",
+      "label": "Change Story",
+      "preview": "Change Story — DEC-SPEC-001 keeps the selected output-only Report direction pending a whole-revision decision.",
+      "surface_ids": ["SURFACE-DECISION-001"],
+      "evidence_refs": ["ACS-REPORT-001@1#decisions"]
+    },
+    {
+      "topic_id": "TOPIC-BEHAVIOR",
+      "label": "Behavior and Acceptance",
+      "preview": "Behavior and Acceptance — AC-REPORT-003 requires all three approval options and consequences in NOW.",
+      "surface_ids": [],
+      "evidence_refs": ["ACS-REPORT-001@1#behavior.acceptance_criteria"]
+    },
+    {
+      "topic_id": "TOPIC-EVIDENCE-UNCERTAINTY",
+      "label": "Evidence and Uncertainty",
+      "preview": "Evidence and Uncertainty — F-REPORT-001 anchors the blocking grade while conversation-host receipt integration remains unverified.",
+      "surface_ids": [],
+      "evidence_refs": ["F-REPORT-001", "ACS-REPORT-001@1#uncertainty"]
+    },
+    {
+      "topic_id": "TOPIC-READINESS",
+      "label": "Readiness",
+      "preview": "Readiness — DEC-SPEC-001 is the only blocking question before implementation planning.",
+      "surface_ids": [],
+      "evidence_refs": ["ACS-REPORT-001@1#readiness"]
     }
+  ],
+  "pages": [
+    {
+      "topic_ids": ["TOPIC-INTENT", "TOPIC-CURRENT-STATE", "TOPIC-CHANGE-STORY"],
+      "continuation_id": "understood_proceed"
+    },
+    {
+      "topic_ids": ["TOPIC-BEHAVIOR", "TOPIC-EVIDENCE-UNCERTAINTY", "TOPIC-READINESS"],
+      "continuation_id": "understood_proceed"
+    }
+  ],
+  "selected_topic_id": null,
+  "selected_detail": null,
+  "recommended_topic_id": "TOPIC-CHANGE-STORY",
+  "decision": {
+    "decision_id": "DEC-SPEC-001",
+    "question": "producer-owned question",
+    "options": [
+      {"option_id": "approve", "label": "Approve revision 1", "consequence": "The exact revision may enter implementation planning."},
+      {"option_id": "request_changes", "label": "Request changes", "consequence": "Spec remains active and must issue a superseding revision before implementation planning."},
+      {"option_id": "reject", "label": "Reject this change", "consequence": "This change cycle closes without implementation authority."}
+    ],
+    "evidence_refs": ["producer evidence ref"],
+    "blocking": true
+  },
+  "authority_effects": {
+    "finding_regraded": false,
+    "artifact_mutated": false,
+    "critique_started": false
+  },
+  "authority_refusals": {
+    "regrade": "Refused: Report cannot re-grade F-REPORT-001; the producer grade remains blocking.",
+    "artifact_edit": "Refused: Report cannot edit ACS-REPORT-001 revision 1.",
+    "critique_start": "Refused: Report cannot start Astra Critique; control remains with the user."
+  },
+  "state_classification": {
+    "exposure_state": "unexposed",
+    "approval_state_inferred": false
   }
 }
 ```
 
-Write this exact fallback prompt in `spec-approval-fallback-prompt.md`:
+The schema permits `topic_presentation` values `structured` or `text`; `approval_presentation` values `structured` or `text`; `kind` values `initial` or `detail`; `event_id` as a non-empty string; exact artifact-ref types; `selected_topic_id` and `recommended_topic_id` as string or null; `selected_detail` as null for an initial segment or the exact `{topic_id, body}` object for a detail segment; `exposure_state` as `exposed` or `unexposed`; and at least two exact decision options. `approval_state_inferred` must always be false. `authority_effects` contains only the three false booleans shown. The re-grade and Critique refusal strings are exact constants; the artifact-edit refusal is derived exactly as `Refused: Report cannot edit <artifact_id> revision <revision>.`, with the example showing revision 1. The schema never permits `recommended` on an approval option or any lifecycle-result/invocation field.
 
-```markdown
-Simulate Astra Spec's degraded approval presentation when Astra Report is unavailable.
+- [ ] **Step 5: Implement the one-slice mechanical verifier**
 
-Read `tests/astra-report/fixtures/spec-approval-event.json` and the artifact it references. Do not read or invoke `skills/astra-report`; this case exercises the producer-owned fallback.
+`verify_slice_a.py` accepts exact CLI flags `--structured`, `--text`, `--structured-detail`, `--text-detail`, `--over-budget`, `--revised`, `--approval-fallback`, `--status-fallback`, `--event`, `--over-budget-event`, `--revised-event`, `--artifact`, `--revised-artifact`, `--ledger`, and `--artifact-before-sha256`. It imports `report_contract.py`, loads the JSON outputs, and directly replays every deterministic assertion needed by the 25 rows in Step 2, including the validator and ledger boundary cases from Tasks 3–4; it never treats an earlier test command's exit status as case evidence.
 
-Output only a complete minimal decision envelope in plain Markdown: artifact identity, revision, and content hash; decision identity and question; every option ID, label, and producer-authored consequence; every decision evidence reference; and blocking status. Do not add Capsule, NEXT, DEFERRED, Change Story, recommendations, a user answer, or an approval state.
-```
-
-- [ ] **Step 2: Write the slice rubric**
-
-Score these as hard pass/fail gates:
-
-1. the approval decision appears in NOW;
-2. all three option IDs and their producer-authored consequences survive;
-3. Spec identity, revision, hash, requirements, acceptance, and evidence anchors remain traceable;
-4. before, problem, selected fix, rationale, projected after, and both recorded alternatives are present in readable chunks;
-5. projected after is never stated as observed;
-6. unfamiliar terms are glossed or replaced without weakening meaning;
-7. no unsupported claim, recommendation, or approval answer appears;
-8. NEXT contains no blocker and DEFERRED names omitted surfaces;
-9. the brief says nothing else requires attention only if the event supports that claim;
-10. the resulting Exposure Ledger contains the presented decision but no answer state.
-11. no Exposure Ledger append occurs without the non-empty delivered `brief.md` receipt.
-
-Add a fallback subsection with hard gates: artifact and decision identity survive; all three options and consequences survive; both decision evidence references and blocking state survive; no Report layer, recommendation, answer, or approval state appears.
-
-Also record soft measures: word count, reading time estimate, number of chunks, critical-decision recall, unsupported-claim count, and elapsed render time. Do not establish global thresholds from this single fixture.
-
-- [ ] **Step 3: Add a producer-owned post-answer fixture boundary test**
-
-Add this test method before the module's `if __name__ == "__main__"` block:
+Use this result discipline:
 
 ```python
-    def test_producer_answer_never_enters_exposure_ledger(self) -> None:
-        event = self.load("spec-approval-event.json")
-        manifest = self.manifest()
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            approval_path = root / "spec-approval.json"
-            approval_path.write_text(
-                json.dumps(
-                    {
-                        "decision_id": "DEC-SPEC-001",
-                        "selected_option": "approve",
-                        "artifact_id": "ACS-REPORT-001",
-                        "revision": 1,
-                        "content_hash": event["artifact_ref"]["content_hash"],
-                        "decided_at": "2026-08-12T12:10:00+08:00",
-                        "authority": "user",
-                        "approval_state": "accepted",
-                    },
-                    sort_keys=True,
-                ),
-                encoding="utf-8",
-            )
-            ledger = root / "exposure.jsonl"
-            delivered = root / "brief.md"
-            delivered.write_text("delivered brief", encoding="utf-8")
-            errors = report_contract.write_exposure(
-                event,
-                manifest,
-                ledger,
-                "2026-08-12T12:11:00+08:00",
-                ROOT,
-                delivered,
-            )
-            self.assertEqual([], errors)
-            stored = ledger.read_text(encoding="utf-8")
-            self.assertIn('"decisions_presented":["DEC-SPEC-001"]', stored)
-            for forbidden in ("approve", "selected_option", "answer", "approval_state"):
-                self.assertNotIn(forbidden, stored)
+def record(case_id: str, condition: bool, evidence: str) -> None:
+    if condition:
+        passed.append(case_id)
+    else:
+        failed.append(f"{case_id}: {evidence}")
+
+
+expected_ids = {
+    "C4", "C5", "C9a", "C9b", "C13a", "C13b", "C13c", "C19a",
+    "C19b", "C20", "C25", "C26", "C28", "C29a", "C29b", "C30",
+    "C31", "C32a", "C32b", "C33a", "C33b", "C33c", "C34", "C35a",
+    "C35b",
+}
+assert set(passed) | {item.split(":", 1)[0] for item in failed} == expected_ids
+if failed:
+    raise SystemExit("\n".join(failed))
+print("25/25 Slice A mechanical cases passed")
 ```
 
-- [ ] **Step 4: Run the deterministic suite**
+For C4, compare the result's schema-visible `artifact_ref` and decision object field-for-field with the event and artifact; do not parse prose for identity equality. For C29a, require exact Capsule/NOW section markers, every blocking or decision-required event surface in NOW and `surfaces_presented`, all six topic previews, no `selected_detail`, and an empty `topic_details_presented`. For C29b, require one selected detail object, that ID alone in `topic_details_presented`, and only the other five IDs in the remaining preview list.
 
-Run:
+For C30, split sentences only on `.`, `?`, or `!` followed by whitespace/end; require one or two non-empty sentences, the exact label in the preview, and either one linked stable ID or a case-sensitive contiguous two-word phrase from a linked event claim/consequence after removing the label. For C31, compare ordered tuples `(topic_id, label, preview, surface_ids, evidence_refs)` plus manifest continuation consequence across the two initial results, then compare `selected_detail.topic_id` and a SHA-256 of `selected_detail.body` across the two detail results. For C34, require the page lists to partition the six canonical topic IDs exactly once, constrain each page to at most three topic IDs, retain the exact continuation ID on every page, and keep the material-caveat evidence ref attached to its name-addressable topic. No language-model judgment is allowed.
+
+A missing output, missing fixture, malformed ledger, unavailable structured branch, or missing case ID is a failure or explicit `blocked` result. The verifier has no general fixture discovery, plugin system, score weights, oracle registry, or reusable adapter interface.
+
+- [ ] **Step 6: Run the deterministic suite and eight fresh-agent cases**
+
+Run in one shell so the private temporary path remains available:
 
 ```bash
+set -e
+slice_tmp="$(mktemp -d)"
+artifact_before="$(sha256sum tests/astra-report/fixtures/spec-pending.json | cut -d' ' -f1)"
 python -m unittest discover -s tests/astra-report -p 'test_*.py' -v
+codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o "$slice_tmp/structured.json" - < tests/astra-report/evals/spec-approval-prompt.md
+codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o "$slice_tmp/text.json" - < tests/astra-report/evals/spec-approval-text-index-prompt.md
+codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o "$slice_tmp/structured-detail.json" - < tests/astra-report/evals/spec-approval-detail-prompt.md
+codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o "$slice_tmp/text-detail.json" - < tests/astra-report/evals/spec-approval-text-index-detail-prompt.md
+codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o "$slice_tmp/over-budget.json" - < tests/astra-report/evals/spec-over-budget-prompt.md
+codex exec -s read-only --ephemeral -C . -o "$slice_tmp/approval-fallback.md" - < tests/astra-report/evals/spec-approval-fallback-prompt.md
+codex exec -s read-only --ephemeral -C . -o "$slice_tmp/status-fallback.md" - < tests/astra-report/evals/spec-status-fallback-prompt.md
+jq -r '.segment_markdown' "$slice_tmp/structured.json" > "$slice_tmp/initial.md"
+jq '.manifest' "$slice_tmp/structured.json" > "$slice_tmp/initial-manifest.json"
+jq -r '.segment_markdown' "$slice_tmp/structured-detail.json" > "$slice_tmp/detail.md"
+jq '.manifest' "$slice_tmp/structured-detail.json" > "$slice_tmp/detail-manifest.json"
+python skills/astra-report/scripts/report_contract.py append-exposure tests/astra-report/fixtures/spec-approval-event.json "$slice_tmp/initial-manifest.json" --ledger "$slice_tmp/exposure.jsonl" --timestamp 2026-08-13T12:00:00+08:00 --root . --delivered-segment "$slice_tmp/initial.md"
+python skills/astra-report/scripts/report_contract.py append-exposure tests/astra-report/fixtures/spec-approval-event.json "$slice_tmp/detail-manifest.json" --ledger "$slice_tmp/exposure.jsonl" --timestamp 2026-08-13T12:05:00+08:00 --root . --delivered-segment "$slice_tmp/detail.md"
+{ printf 'Caller-provided Exposure Ledger path: %s\n\n' "$slice_tmp/exposure.jsonl"; sed -n '1,$p' tests/astra-report/evals/spec-revised-prompt.md; } | codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o "$slice_tmp/revised.json" -
+python tests/astra-report/verify_slice_a.py --structured "$slice_tmp/structured.json" --text "$slice_tmp/text.json" --structured-detail "$slice_tmp/structured-detail.json" --text-detail "$slice_tmp/text-detail.json" --over-budget "$slice_tmp/over-budget.json" --revised "$slice_tmp/revised.json" --approval-fallback "$slice_tmp/approval-fallback.md" --status-fallback "$slice_tmp/status-fallback.md" --event tests/astra-report/fixtures/spec-approval-event.json --over-budget-event tests/astra-report/fixtures/spec-over-budget-event.json --revised-event tests/astra-report/fixtures/spec-revised-event.json --artifact tests/astra-report/fixtures/spec-pending.json --revised-artifact tests/astra-report/fixtures/spec-pending-revision-2.json --ledger "$slice_tmp/exposure.jsonl" --artifact-before-sha256 "$artifact_before"
 ```
 
-Expected: all tests pass.
+Expected: unit tests pass, all eight runs exit 0, both appends exit 0, and the verifier prints exactly `25/25 Slice A mechanical cases passed`. If the structured host branch is unavailable, record C31/C34/C35a as blocked and stop; do not count the text half as a pass.
 
-- [ ] **Step 5: Run the fresh-agent dogfood case**
-
-Run:
+- [ ] **Step 7: Commit the slice-specific acceptance evidence**
 
 ```bash
-mkdir -p /tmp/astra-report-spec-slice
-codex exec -s read-only --ephemeral -C . --output-schema tests/astra-report/evals/render-result.schema.json -o /tmp/astra-report-spec-slice/render-result.json - < tests/astra-report/evals/spec-approval-prompt.md
-jq -r '.brief_markdown' /tmp/astra-report-spec-slice/render-result.json > /tmp/astra-report-spec-slice/brief.md
-jq '.manifest' /tmp/astra-report-spec-slice/render-result.json > /tmp/astra-report-spec-slice/brief-manifest.json
-codex exec -s read-only --ephemeral -C . -o /tmp/astra-report-spec-slice/fallback.md - < tests/astra-report/evals/spec-approval-fallback-prompt.md
-```
-
-Expected: all four commands exit 0; the schema-valid render result, extracted Reader Brief, extracted manifest, and producer fallback exist. A non-zero run or schema failure is a failed slice, not a cue to relax the output contract.
-
-- [ ] **Step 6: Apply the rubric and append exposure**
-
-Review `/tmp/astra-report-spec-slice/brief.md` against the Report gates and `fallback.md` against the fallback gates. Then run:
-
-```bash
-python skills/astra-report/scripts/report_contract.py append-exposure tests/astra-report/fixtures/spec-approval-event.json /tmp/astra-report-spec-slice/brief-manifest.json --ledger /tmp/astra-report-spec-slice/exposure.jsonl --timestamp 2026-08-12T00:00:00+08:00 --root . --delivered-brief /tmp/astra-report-spec-slice/brief.md
-```
-
-Expected: exit 0; exactly one ledger line; it contains `DEC-SPEC-001` but no answer or selected option. Any failed hard gate returns the task to Task 5; do not weaken the rubric.
-
-- [ ] **Step 7: Commit the slice cases**
-
-```bash
-git add tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/render-result.schema.json tests/astra-report/evals/spec-approval-rubric.md tests/astra-report/test_report_contract.py
-git diff --cached --check -- tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/render-result.schema.json tests/astra-report/evals/spec-approval-rubric.md tests/astra-report/test_report_contract.py
-git commit --only -m "test: cover astra report spec approval slice" -- tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/render-result.schema.json tests/astra-report/evals/spec-approval-rubric.md tests/astra-report/test_report_contract.py
+git add tests/astra-report/fixtures/spec-status-event.json tests/astra-report/fixtures/spec-over-budget-event.json tests/astra-report/fixtures/spec-pending-revision-2.json tests/astra-report/fixtures/spec-revised-event.json tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-text-index-prompt.md tests/astra-report/evals/spec-approval-detail-prompt.md tests/astra-report/evals/spec-approval-text-index-detail-prompt.md tests/astra-report/evals/spec-over-budget-prompt.md tests/astra-report/evals/spec-revised-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/spec-status-fallback-prompt.md tests/astra-report/evals/render-result.schema.json tests/astra-report/evals/spec-approval-cases.md tests/astra-report/verify_slice_a.py tests/astra-report/test_report_contract.py
+git diff --cached --check -- tests/astra-report
+git commit --only -m "test: prove astra report slice A" -- tests/astra-report/fixtures/spec-status-event.json tests/astra-report/fixtures/spec-over-budget-event.json tests/astra-report/fixtures/spec-pending-revision-2.json tests/astra-report/fixtures/spec-revised-event.json tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-text-index-prompt.md tests/astra-report/evals/spec-approval-detail-prompt.md tests/astra-report/evals/spec-approval-text-index-detail-prompt.md tests/astra-report/evals/spec-over-budget-prompt.md tests/astra-report/evals/spec-revised-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/spec-status-fallback-prompt.md tests/astra-report/evals/render-result.schema.json tests/astra-report/evals/spec-approval-cases.md tests/astra-report/verify_slice_a.py tests/astra-report/test_report_contract.py
 ```
 
 ### Task 7: Final Reconciliation and Evidence
@@ -1189,43 +1194,52 @@ git commit --only -m "test: cover astra report spec approval slice" -- tests/ast
 
 - [ ] **Step 1: Update status from observed evidence only**
 
-In `designs/astra-report.md`, record the exact implemented slice, test command, fixture IDs, dogfood outcome, and known limits. Keep every source row `claimed`; explicitly state that public direct invocation, full corpus, other five producer runtime slices, storage default, conversation-host delivery receipt, adapters, installation, and retirement remain unimplemented.
+In `designs/astra-report.md`, record the exact delegated Spec-approval slice, the unit-test command and result, all event fixture IDs, the two receipt-confirmed segment rows, and the fresh-agent verifier outcome. Record `25/25` only if Task 6 printed that exact result; otherwise record the failed or blocked IDs verbatim. Keep every source row `claimed` and state these limits explicitly:
+
+- class 30 proves only its structural proxy;
+- class 35's producer-preference-positive branch remains blocked on a future event-schema amendment;
+- the 19 excluded corpus classes remain unevaluated;
+- public direct invocation, the other five producer runtime paths, the full corpus, reusable harness extraction, a storage default, conversation-host delivery receipts, adapters, installation, and source retirement remain unimplemented.
 
 - [ ] **Step 2: Run repository-wide documentation validation**
 
 Run these exact validations over the planned paths only:
 
 ```bash
-markdown-it docs/design-requirements.md docs/six-skill-source-absorption.md docs/design-roadmap.md docs/phase-0.md docs/phase-0-ledgers.md designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md skills/astra-report/SKILL.md skills/astra-report/references/report-contracts.md skills/astra-report/references/method-canon.md tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/spec-approval-rubric.md >/dev/null
-git diff --check HEAD~7 -- docs/design-requirements.md docs/six-skill-source-absorption.md docs/design-roadmap.md docs/phase-0.md docs/phase-0-ledgers.md designs/astra-critique.md designs/astra-understand-code.md designs/astra-spec.md designs/astra-implement.md designs/astra-test.md designs/astra-ship.md designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md skills/astra-report tests/astra-report
+markdown-it docs/phase-0.md docs/phase-0-ledgers.md designs/astra-report.md docs/research/2026-08-12-astra-report-method-canon.md docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md docs/superpowers/plans/2026-08-13-six-skill-trigger-surface-amendments.md skills/astra-report/SKILL.md skills/astra-report/references/report-contracts.md skills/astra-report/references/method-canon.md tests/astra-report/evals/spec-approval-prompt.md tests/astra-report/evals/spec-approval-text-index-prompt.md tests/astra-report/evals/spec-approval-detail-prompt.md tests/astra-report/evals/spec-approval-text-index-detail-prompt.md tests/astra-report/evals/spec-over-budget-prompt.md tests/astra-report/evals/spec-revised-prompt.md tests/astra-report/evals/spec-approval-fallback-prompt.md tests/astra-report/evals/spec-status-fallback-prompt.md tests/astra-report/evals/spec-approval-cases.md >/dev/null
+git diff --check 44d1f16 -- docs/phase-0.md docs/phase-0-ledgers.md designs/astra-report.md docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md docs/superpowers/plans/2026-08-13-six-skill-trigger-surface-amendments.md skills/astra-report tests/astra-report
 python -m json.tool tests/astra-report/fixtures/spec-pending.json >/dev/null
 python -m json.tool tests/astra-report/fixtures/spec-approval-event.json >/dev/null
 python -m json.tool tests/astra-report/fixtures/preartifact-refusal-event.json >/dev/null
+python -m json.tool tests/astra-report/fixtures/preartifact-failure-event.json >/dev/null
+python -m json.tool tests/astra-report/fixtures/spec-status-event.json >/dev/null
+python -m json.tool tests/astra-report/fixtures/spec-over-budget-event.json >/dev/null
+python -m json.tool tests/astra-report/fixtures/spec-pending-revision-2.json >/dev/null
+python -m json.tool tests/astra-report/fixtures/spec-revised-event.json >/dev/null
 python -m json.tool tests/astra-report/evals/render-result.schema.json >/dev/null
 python - <<'PY'
 from pathlib import Path
 
 targets = [
-    Path("docs/design-requirements.md"),
-    Path("docs/six-skill-source-absorption.md"),
-    Path("docs/design-roadmap.md"),
     Path("docs/phase-0.md"),
     Path("docs/phase-0-ledgers.md"),
-    Path("designs/astra-critique.md"),
-    Path("designs/astra-understand-code.md"),
-    Path("designs/astra-spec.md"),
-    Path("designs/astra-implement.md"),
-    Path("designs/astra-test.md"),
-    Path("designs/astra-ship.md"),
     Path("designs/astra-report.md"),
     Path("docs/research/2026-08-12-astra-report-method-canon.md"),
+    Path("docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md"),
     Path("docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md"),
+    Path("docs/superpowers/plans/2026-08-13-six-skill-trigger-surface-amendments.md"),
     Path("skills/astra-report/SKILL.md"),
     Path("skills/astra-report/references/report-contracts.md"),
     Path("skills/astra-report/references/method-canon.md"),
     Path("tests/astra-report/evals/spec-approval-prompt.md"),
+    Path("tests/astra-report/evals/spec-approval-text-index-prompt.md"),
+    Path("tests/astra-report/evals/spec-approval-detail-prompt.md"),
+    Path("tests/astra-report/evals/spec-approval-text-index-detail-prompt.md"),
+    Path("tests/astra-report/evals/spec-over-budget-prompt.md"),
+    Path("tests/astra-report/evals/spec-revised-prompt.md"),
     Path("tests/astra-report/evals/spec-approval-fallback-prompt.md"),
-    Path("tests/astra-report/evals/spec-approval-rubric.md"),
+    Path("tests/astra-report/evals/spec-status-fallback-prompt.md"),
+    Path("tests/astra-report/evals/spec-approval-cases.md"),
 ]
 for path in targets:
     text = path.read_text(encoding="utf-8")
@@ -1234,7 +1248,16 @@ for path in targets:
         line.startswith(("<<<<<<<", ">>>>>>>")) or line == "======="
         for line in lines
     ), path
-    assert text.count("```") % 2 == 0, path
+    assert text.count("``" + "`") % 2 == 0, path
+
+plan = Path("docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md").read_text()
+for stale in (
+    "spec-approval-" + "rubric.md",
+    "astra.reader-brief-" + "manifest/v0",
+    "__STRUCTURED" + "_RESULT__",
+    "HEAD" + "~",
+):
+    assert stale not in plan, stale
 PY
 python -m unittest discover -s tests/astra-report -p 'test_*.py' -v
 python /home/kurophoenix/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/astra-report
@@ -1256,12 +1279,12 @@ Run:
 
 ```bash
 git status --short
-git diff --name-only HEAD~8..HEAD
+git diff --name-only 44d1f16..HEAD
 git ls-files books
 rg -n "cm-docs-and-knowledge-(01|02|03|04|05|07|09)|cm-design-and-visual-21" docs/phase-0-ledgers.md
 ```
 
-Expected: no `books/` path is tracked; unrelated pre-existing dirty paths remain untouched; only planned paths appear in the eight planning-and-implementation commits; every migrated row is `claimed`, never `resolved`.
+Expected: no `books/` path is tracked; unrelated pre-existing dirty paths remain untouched; every path since the approved design is one of the separately authorized plan/ledger records, the explicit runtime-authorization record, or a Task 3–7 path; every migrated row is `claimed`, never `resolved`. Compare the live path list to the File Map instead of assuming a commit count.
 
 - [ ] **Step 5: Stop before installation or publication**
 

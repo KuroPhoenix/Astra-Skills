@@ -1068,6 +1068,43 @@ skill, adapter, corpus, harness, installation, source-retirement state, push, or
 remain unabsorbed and unresolved until the coordinator migration, three-system comparison, and
 their source-specific gates succeed.
 
+## 13. Shared trigger and reporting amendment
+
+This section and `docs/design-requirements.md` sections 7.11.6–7.11.7 supersede earlier
+trigger-bearing Plan and Debug destinations without rewriting their historical source evidence.
+Explicit invocation never waives prerequisites. Implicit routing uses the exact rule
+**earliest missing authority**. A compound request stops at this artifact or approval boundary;
+later public workflows are listed but not invoked. `Understood, proceed` returns control only and
+cannot start a public peer.
+
+### 13.1 Public-entry partition
+
+`review` owns artifact and decision quality; `diagnose` owns why an observed failure occurs.
+“Review this failure” therefore enters `diagnose` for a causal question and `review` for an evidence
+or artifact-quality question. Critique asks one focused mode question only when that distinction
+changes evidence or cost.
+
+“Fix this bug” enters Critique only while cause or Finding authority is missing. Critique stops
+with a versioned Finding Set, exposes Spec as a prospective next authority, and never selects or
+applies the fix. Exact Critique invocation grants no mutation, instrumentation, solution
+selection, acceptance authorship, or Spec authority. A compound request completes Critique only;
+the user must start any later Spec workflow.
+
+### 13.2 Finding Set reporting map
+
+The Finding Set adds `reporting.supersedes_ref`; when the existing `supersedes` reference is
+present, its prior artifact ID, revision, and content hash map to that field without inference.
+It also carries `reporting.surfaces` and `reporting.open_decisions` under the shared producer
+contract. Each surface is grounded in Finding Set fields and preserves its producer-owned claim,
+consequence, blocking state, decision requirement, and evidence references. Critique alone owns
+those values and records any returned user decision against the exact Finding Set revision/hash.
+
+Critique emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
+`stage_boundary`, `status_request`, and `failure`. At a non-decision reporting failure it emits
+only the shared minimal unavailable notice. At an approval request it presents the complete
+decision envelope itself if Report is unavailable. `I(reporting)` changes presentation only; it
+does not return a consultant determination, reclassify a finding, or transfer Critique authority.
+
 ---
 
 # Appendix A — Panel protocol (historical detail)

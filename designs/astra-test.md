@@ -1043,3 +1043,35 @@ being written by Test.
 This amendment changes no coordinator ledger row and performs no browser, benchmark, model,
 device, or test run. It creates no runtime profile, corpus, harness, repository mutation,
 publication, or source-retirement claim.
+
+## 13. Shared trigger and reporting amendment
+
+This section and `docs/design-requirements.md` sections 7.11.6–7.11.7 supersede earlier active
+trigger routes while preserving their source evidence. Explicit invocation never waives
+prerequisites. Implicit routing uses the **earliest missing authority**. A compound request stops
+at this artifact or approval boundary; later public workflows are listed but not invoked.
+`Understood, proceed` returns control only and cannot start a public peer.
+
+### 13.1 Public-entry and durable-artifact partition
+
+“Does it fail at this revision?”, accepted-behavior test construction, BDD execution, framework
+setup within authorized evidence scope, and fresh proof enter Test. “Why did it fail?” enters
+Critique `diagnose`; Test preserves the observation and raw evidence without inventing cause.
+
+Evidence-only or explicitly uncommitted test artifacts may be Test-owned. A durable test,
+fixture, configuration, or document intended for publication follows Spec and Implement under
+section 7.11.6. A genuine failed or blocking-inconclusive packet starts no repair workflow; it
+exposes Critique as a prospective stage that only the user may start.
+
+### 13.2 Test Evidence Packet reporting map
+
+The Test Evidence Packet adds `reporting.supersedes_ref`, `reporting.surfaces`, and
+`reporting.open_decisions`. Those fields reference the packet's pinned chain, tested revision,
+commands, raw evidence, gaps, skips, residue, and overall evidence state. Test alone owns its
+evidence claims, consequences, blocking state, and packet completion.
+
+Test emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
+`stage_boundary`, `status_request`, and `failure`. If Report is unavailable, non-decision moments
+use the shared minimal notice and any approval request uses Test's complete decision envelope.
+`I(reporting)` changes presentation only and cannot strengthen evidence, waive a criterion, infer
+cause, or record a lifecycle decision for Test.

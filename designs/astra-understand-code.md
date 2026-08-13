@@ -1140,3 +1140,37 @@ and independent sufficiency remains Test authority.
 This amendment adds neither a source claim nor a retirement claim. The coordinator migration is
 recorded in `docs/design-roadmap.md` amendment 7 and the pair contract in amendment 8. The final
 trigger surface and full-stack validation remain required before any affected original can retire.
+
+## 13. Shared trigger and reporting amendment
+
+This section and `docs/design-requirements.md` sections 7.11.6–7.11.7 supersede earlier active
+trigger routes while retaining sections 1–12 as evidence. Explicit invocation never waives
+prerequisites. Implicit routing uses the **earliest missing authority**. A compound request stops
+at this artifact or approval boundary; later public workflows are listed but not invoked.
+`Understood, proceed` returns control only and cannot start a public peer.
+
+### 13.1 Public-entry partition
+
+Locate, trace, explain, and bounded current-state mapping enter Understand Code. Recorded
+lifecycle-artifact status, decisions, progress, or blockers enter Report. `technical-design`
+remains explicit-only and is never inferred from architecture wording.
+
+“Is this architecture right?” enters Critique when the user asks for judgment, Understand Code
+when the user asks for current structure or read-only alternatives, and Spec when the user asks to
+select a target direction. When the distinction materially changes authority or cost, ask one
+focused question. Understand may expose an eligible next authority but never starts it; direct
+invocation changes none of these gates.
+
+### 13.2 Understanding Report reporting map
+
+Every Understanding Report adds `reporting.supersedes_ref`, `reporting.surfaces`, and
+`reporting.open_decisions`. The supersession reference is explicit or `null`; it is never inferred
+from repository chronology. Surfaces and decisions reference the report's observed claims,
+inferences, unavailable inputs, evidence anchors, and unresolved gaps. Understand owns every
+claim, consequence, blocking state, and returned decision.
+
+Understand emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
+`stage_boundary`, `status_request`, and `failure`. Report unavailability uses the shared minimal
+non-decision notice or, for an approval request, Understand's complete decision envelope.
+`I(reporting)` is output-only presentation and is distinct from Understand Code's conditional
+downstream `C` mode; it returns no `pass`, `drift`, or `authority_gap`.

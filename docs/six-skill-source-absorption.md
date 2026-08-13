@@ -6,8 +6,11 @@
 user on 2026-08-11; allocations, revised dispositions, and the documentation deferral locked by
 the user on 2026-08-12
 
-**Public roster:** `astra-critique`, `astra-understand-code`, `astra-spec`,
+**Lifecycle authorities:** `astra-critique`, `astra-understand-code`, `astra-spec`,
 `astra-implement`, `astra-test`, `astra-ship`
+
+**Reporting surface:** `astra-report` is additional and non-authoritative. Its approved secondary
+source slices do not join or change the 92-component target.
 
 ## 1. Decision and scope
 
@@ -18,9 +21,10 @@ The approved first absorption target is **92 distinct source component identifie
 ```
 
 This count is source accounting, not a public-skill count and not a claim that any source is
-already behaviorally absorbed. The public interface remains exactly six skills. The 92-component
-target records which source behavior those six designs must internalize before any original can
-be considered for retirement.
+already behaviorally absorbed. The lifecycle-authority interface remains exactly six skills;
+Report is an additional directly invocable presentation surface with no lifecycle authority. The
+92-component target records which source behavior the six authority designs must internalize
+before any original can be considered for retirement.
 
 This document is the shared evidence and allocation record allowed by
 `docs/design-requirements.md` section 6. Each surviving design keeps its own authority and adopts
@@ -396,18 +400,28 @@ agents, Requesting Code Review's reviewer prompt, Skill Creator's analyzer/compa
 gstack authored templates and section files, webapp-testing helpers, MCP Builder references, and
 iOS bridge/runtime assets cannot be discarded as implementation detail.
 
-Remaining work after the 2026-08-12 lock:
+Coordinator sequence after the 2026-08-12 lock and 2026-08-13 trigger reconciliation:
 
-1. migrate the 41 dispositions and seven reference rows into the coordinator-owned ledger;
-2. reconcile the older 24-skill roadmap with the six public skills and these profiles;
-3. reconcile all 15 directed consultant pairs and the final trigger surface;
-4. design the source corpus and behavioral harness;
-5. implement one non-retiring vertical slice before wider internalization; and
-6. run source-specific gates before requesting any retirement decision.
+1. migrate the 41 dispositions and seven reference rows into the coordinator-owned ledger —
+   complete in roadmap amendment 7;
+2. reconcile the older 24-skill roadmap with the six lifecycle authorities and these profiles —
+   complete in roadmap amendment 7;
+3. reconcile all 15 directed consultant pairs and the final trigger surface — complete in
+   roadmap amendments 8 and 9;
+4. select one non-retiring vertical slice, write only its behavioral acceptance cases, and
+   capture drift-risk oracle behavior; no reusable harness is designed up front;
+5. implement and dogfood the slice while allowing minimum runner mechanics to emerge from
+   demonstrated needs; and
+6. widen the corpus or extract a reusable harness only after repeated needs justify stable seams,
+   then run source-specific gates before requesting any preservation or retirement decision.
 
 ### 11.1 Coordinator progress after the lock
 
 Roadmap amendment 7 completed items 1 and 2 while keeping every migrated collision row `claimed`,
 not `resolved`. Roadmap amendment 8 and the 2026-08-12 pair-first audit completed the 15-pair half
-of item 3. The final shared trigger surface remains open; items 4–6 retain their locked scope and
-no runtime, harness, installation, deletion, or retirement authority follows from this progress.
+of item 3. Roadmap amendment 9 and the trigger-surface audit complete the remaining half, so
+**item 3 is complete**. The approved slice-first resequencing changes section 11's open-work
+ordering, which the allocation lock did not freeze; it changes no locked allocation, source
+denominator, or ledger state. Items 4–6 now separate acceptance evidence, slice implementation,
+and only then reusable harness extraction or corpus growth. No runtime, corpus runner, reusable
+harness, installation, deletion, or retirement authority follows from this progress.

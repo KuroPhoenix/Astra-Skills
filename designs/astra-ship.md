@@ -1378,3 +1378,37 @@ deployment from publication.
 This amendment changes no coordinator ledger row and performs no teardown, comment, publication,
 push, PR, merge, release, or retirement effect. The source-specific gates remain proposed until
 the coordinator migration and behavioral comparisons are complete.
+
+## 13. Shared trigger and reporting amendment
+
+This section and `docs/design-requirements.md` sections 7.11.6–7.11.7 supersede earlier active
+Plan and Debug destinations while preserving their source evidence. Explicit invocation never
+waives prerequisites. Implicit routing uses the **earliest missing authority**. A compound request
+stops at this artifact or approval boundary; later public workflows are listed but not invoked.
+`Understood, proceed` returns control only and cannot start a public peer.
+
+### 13.1 Public-entry and publication partition
+
+Direct Ship entry may report status when prerequisites are missing, but it cannot publish without
+the complete current artifact chain, fresh Test evidence, and exact effect authority. Merge-
+conflict work belongs to Ship during landing preparation. Implement owns conflict work only when
+an approved Roadmap names base synchronization. Otherwise Ship stops for scope or authority.
+
+Implementation commits remain Implement-owned. Ship owns only separately authorized publication
+metadata commits and publication effects. “Review and ship this” begins at Critique when the user
+requests a new judgment; review evidence later grants no publication authority. Any code,
+behavior, evidence, or unknown-cause defect exposes the eligible earlier authority without
+invoking it.
+
+### 13.2 Publication Record reporting map
+
+The Publication Record adds `reporting.supersedes_ref`, `reporting.surfaces`, and
+`reporting.open_decisions`, grounded in the exact chain, effect authorizations, attempts, observed
+results, integration state, residue, and follow-ups. Ship alone owns publication consequences,
+records effect authorization, and records the publication result.
+
+Ship emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
+`stage_boundary`, `status_request`, and `failure`. If Report is unavailable, non-decision moments
+use the shared minimal notice and approval requests use Ship's complete effect-decision envelope.
+`I(reporting)` changes presentation only and cannot authorize, perform, or reinterpret a
+publication effect.

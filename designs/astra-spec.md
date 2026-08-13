@@ -1346,3 +1346,39 @@ bundled with a design workflow.
 This amendment revises the Plan-source allocation proposed in section 11.5 but does not update or
 resolve the coordinator ledger. No runtime profile, generated artifact, corpus, harness,
 installation, publication, or retirement is created here.
+
+## 13. Shared trigger and reporting amendment
+
+This section and `docs/design-requirements.md` sections 7.11.6–7.11.7 supersede earlier
+trigger-bearing Plan and Debug destinations without rewriting their historical evidence.
+Explicit invocation never waives prerequisites. Implicit routing uses the exact rule
+**earliest missing authority**. A compound request stops at this artifact or approval boundary;
+later public workflows are listed but not invoked. `Understood, proceed` returns control only and
+cannot start a public peer.
+
+### 13.1 Public-entry partition
+
+Greenfield intent may begin directly at Spec; Critique participates only when Finding or causal
+authority genuinely belongs to the active cycle. A known Finding without an Approved Change
+Specification enters Spec. Exact repository tasks, delivery ordering, and mutation remain
+Implement authority.
+
+“Turn this into an issue” enters Spec only when “this” is intent or specification content and the
+separate issue-writing effect is authorized. The generic roadmap-to-ticket projection remains unowned.
+A compound request stops after explicit whole-revision Specification approval;
+Implement remains a non-invoked prospective stage until the user starts it.
+
+### 13.2 Specification reporting map and approval
+
+The Approved Change Specification maps its existing `supersedes_revision` plus the explicitly
+referenced prior `spec_id` and `content_hash` to `reporting.supersedes_ref`; a missing prior hash
+cannot be inferred. It adds `reporting.surfaces` and `reporting.open_decisions`, grounded in exact
+requirements, criteria, decisions, alternatives, evidence, gaps, and approval state.
+
+Spec emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
+`stage_boundary`, `status_request`, and `failure`. The `approval_request` occurs immediately before
+whole-revision approval and carries every option ID, label, Spec-authored consequence, evidence
+reference, and blocking state. The complete envelope is never hidden behind optional detail. If
+Report is unavailable, Spec presents that envelope itself; other moments use the shared minimal
+unavailable notice. `I(reporting)` changes presentation only. Spec alone records the answer
+against the exact Specification revision and content hash.

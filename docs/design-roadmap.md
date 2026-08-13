@@ -1,7 +1,9 @@
 # Astra phase-0 skill design roadmap
 
-**Snapshot:** 2026-08-12
-**Status:** Locked six-skill public roster and coordinator allocation; consultant pairs reconciled; final trigger surface, source internalization, and runtime implementation remain deferred
+**Snapshot:** 2026-08-13
+**Status:** Locked six-skill authority roster and coordinator allocation;
+consultant pairs and the final trigger surface are reconciled; source internalization and runtime
+implementation remain deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
 **Amendment 2 (2026-07-31):** Source-body inspection of Context, Safety, Delegation & autonomy, and
@@ -45,13 +47,18 @@ complete conditional authority DAG. Thirteen existing bilateral contracts remain
 Understand Code -> Critique is admitted conditionally and Understand Code -> Spec gains its
 missing consumer checkpoint. The final shared trigger surface remains separate and open. See
 section 15.
+**Amendment 9 (2026-08-13):** Authority-result and artifact-state routing now reconciles the six
+directly invocable lifecycle authorities with non-authoritative Report, replaces active Plan and
+Debug destinations, and makes producer-owned reporting contracts reciprocal across all six
+designs. The user-approved work order is slice-first: acceptance cases and drift-risk captures
+precede one non-retiring implementation slice; reusable harness structure does not. See section 16.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
 > proposes source allocation; it does not replace either document or make the source-claim
 > ledger authoritative by itself.
 
-> **Current-roadmap rule.** Sections 14–15 supersede sections 2–7 wherever the pre-lock 24-skill
+> **Current-roadmap rule.** Sections 14–16 supersede sections 2–7 wherever the pre-lock 24-skill
 > proposal conflicts with the locked six-skill coding stack. Sections 2–13 remain historical
 > design and decision evidence; they do not authorize a seventh public coding-lifecycle skill.
 
@@ -2109,13 +2116,16 @@ The locked allocation establishes coordinator ownership, not absorption. Work pr
 order:
 
 1. reconcile all 15 directed `C` consultant pairs and the final trigger surface;
-2. design the fixed source corpus, reference convener, self-contained candidate, and behavioral
-   harness;
-3. implement and dogfood one non-retiring vertical slice;
-4. widen internalization only after the slice preserves authority, artifacts, delivery shapes,
-   prerequisites, and degradation behavior; and
-5. run source-specific non-regression, positive-advantage, internalization-fidelity, and retirement
-   gates before asking the user for any retirement decision.
+2. select one non-retiring vertical slice, write only its behavioral acceptance cases, and
+   capture drift-risk oracle behavior;
+3. implement and dogfood that slice while allowing only the minimum runner mechanics required by
+   demonstrated behavior to emerge;
+4. widen internalization or extract a reusable harness only after repeated needs justify stable
+   seams and the slice preserves authority, artifacts, delivery shapes, prerequisites, and
+   degradation behavior; and
+5. expand toward the full source corpus and run source-specific non-regression,
+   positive-advantage, internalization-fidelity, and retirement gates only before requesting a
+   preservation or retirement decision.
 
 Runtime skills, consultants, harness code, installation, source deletion, and retirement remain
 deferred. Failed evidence narrows or rejects only the affected profile; it never silently resolves
@@ -2158,3 +2168,28 @@ This amendment completes only the consultant-pair half of section 14.4 item 1. T
 trigger surface remains the next coordinator task. This amendment changes no source or reference
 ledger row, claim/resolution state, Report delegation, runtime schema, harness, installation,
 retirement, publication, or repository effect.
+
+## 16. Amendment 9 — final shared trigger surface reconciled
+
+The evidence record is
+[`docs/research/2026-08-12-six-skill-trigger-surface-reconciliation.md`](research/2026-08-12-six-skill-trigger-surface-reconciliation.md),
+and the approved design is
+[`docs/superpowers/specs/2026-08-12-six-skill-trigger-surface-design.md`](superpowers/specs/2026-08-12-six-skill-trigger-surface-design.md).
+The chosen approach is **B: authority-result and artifact-state routing**. Normative routing,
+relation boundaries, collision partitions, producer reporting fields, and the `ReportEvent`
+envelope live only in `docs/design-requirements.md` sections 7.11.6–7.11.7; this roadmap does not
+duplicate those tables.
+
+The result is six directly invocable lifecycle authorities plus one directly invocable,
+non-authoritative reporting surface. Explicit invocation never waives prerequisites, implicit
+routing chooses the earliest missing authority, ambiguous authority-affecting requests receive
+one focused question, and compound requests stop at artifact and approval boundaries. No internal
+mode, artifact presence, `C`, `I`, `H`, `I(reporting)`, detail selection, or continuation control
+automatically starts another public workflow.
+
+Section 14.4 item 1 is complete. The next governed work is selecting one non-retiring vertical
+slice and writing only its behavioral acceptance cases plus drift-risk oracle captures. Minimum
+runner mechanics may emerge during implementation; a reusable harness requires repeated,
+demonstrated needs, and the full 92-source corpus remains a preservation or retirement
+obligation. This amendment authorizes no runtime, corpus runner, reusable harness, ledger change,
+installation, deletion, retirement, push, PR, or other repository effect.

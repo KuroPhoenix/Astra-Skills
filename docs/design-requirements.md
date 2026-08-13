@@ -424,7 +424,7 @@ the relevant source inventory. The policy is authoritative; the six surviving sk
 source-derived behavior is still provisional. Nothing here claims that all relevant sources
 have been inspected, internalized, validated, or made retirement-eligible.
 
-The target public roster is exactly:
+The lifecycle-authority roster is exactly:
 
 - `astra-critique`;
 - `astra-understand-code`;
@@ -432,6 +432,11 @@ The target public roster is exactly:
 - `astra-implement`;
 - `astra-test`; and
 - `astra-ship`.
+
+`astra-report` is an additional directly invocable reporting surface, not a seventh lifecycle
+authority. The six retain user-to-skill intake and approval authority. Under typed
+`I(reporting)`, they delegate rich outbound presentation to Report, which returns no lifecycle
+determination and starts no peer workflow.
 
 `astra-plan` is divided between Spec's change authority and Implement's delivery authority.
 `astra-debug` becomes Critique's diagnostic mode. Their design files remain
@@ -500,6 +505,10 @@ public skill nor a harness dependency. It remains distinct from:
 
 - `R`, roster and authority-ownership reconciliation without runtime invocation;
 - `I`, consumption of a peer artifact or capability without invoking its judgment;
+- `I(reporting)`, output-only presentation consumption: the producer owns facts, consequences,
+  options, evidence, blocking state, and the returned user decision, while Report owns
+  organization, density, language, staged disclosure, and evidence links; it returns no `pass`,
+  `drift`, or `authority_gap` and is neither a public peer invocation nor an `H` handoff;
 - `H`, Critique's user-mediated handoff capsule without automatically starting a peer; and
 - `P`, provenance or source-history dependency without runtime permission.
 
@@ -644,6 +653,108 @@ verifies that the recorded check covers the publication revision.
 These are planning and publication constraints, not evidence that a PR is authorized in phase
 0. Phase 0 creates or revises design documents only: no runtime skill, harness, installation,
 source deletion, retirement, push, or PR is implied.
+
+#### 7.11.6 Shared public trigger surface
+
+Public routing follows the authoritative result requested and the recorded artifact state needed
+to produce it. A bare keyword, historical source name, or final verb in a compound request is not
+sufficient routing evidence.
+
+| Requested result | Owner | Required state | Result |
+|---|---|---|---|
+| Explain current repository behavior or structure without changing it | `astra-understand-code` | Bounded code or repository scope; explicit `technical-design` request when applicable | Current-state Code Report |
+| Judge an artifact or establish why an observed failure occurs | `astra-critique` | Reviewable artifact or observed failure evidence | Finding Set or causal finding |
+| Decide intended behavior, selected solution, and acceptance | `astra-spec` | User intent, or accepted findings for remediation; Critique is not mandatory for greenfield intent | Approved Change Specification |
+| Plan and execute exact repository delivery | `astra-implement` | Current Approved Change Specification and effect authority | Approved Delivery Roadmap, Execution Ledger, and atomic implementation commits |
+| Construct or run independent proof at a pinned revision | `astra-test` | Accepted behavior, target snapshot, and effect boundary | Test Evidence Packet |
+| Prepare and perform publication effects | `astra-ship` | Complete current artifact chain, passing evidence, and explicit effect authority | Publication Record |
+| Explain recorded lifecycle artifacts, progress, decisions, or blockers | `astra-report` | Recorded producer artifacts or a producer-owned `ReportEvent` | Human-readable rendering with no lifecycle determination |
+
+Selection obeys these rules:
+
+1. Explicit invocation enters the named surface but enforces every artifact, authority, evidence,
+   approval, and effect prerequisite.
+2. Implicit routing chooses the **earliest missing authority** required for the requested outcome.
+3. Ask one focused question when two plausible routes materially change authority, writable scope,
+   external effects, evidence, or cost.
+4. Run one public workflow. Required `C` checks occur inside it; `I`, `H`, and `I(reporting)` do
+   not start public peers.
+5. A compound request retains later outcomes as prospective stages and stops at every artifact or
+   approval boundary.
+6. The user starts each later public workflow. Report detail selection and
+   `Understood, proceed` return control only and cannot start it.
+
+There is **no automatic public peer invocation**. Internal modes, artifact presence, `C`, `I`,
+`H`, `I(reporting)`, Report detail selection, and continuation controls may establish eligibility
+or expose a next workflow, but cannot start it.
+
+| Request | Canonical partition |
+|---|---|
+| “Explain this” | Repository or code state -> Understand Code; lifecycle artifact or change state -> Report |
+| “Is this architecture right?” | Judge a choice -> Critique; explain current structure or read-only options -> Understand Code; select desired direction -> Spec |
+| “Why did this test fail?” / “does it fail?” | Establish cause -> Critique `diagnose`; reproduce or check a pinned revision -> Test |
+| “Review this failure” | Cause question -> Critique `diagnose`; evidence or artifact-quality question -> Critique `review`; ask once if the choice changes evidence or cost |
+| “Fix this bug” | Cause or finding absent -> Critique; finding present but approved change absent -> Spec; exact Specification approved -> Implement |
+| “Write tests” | Evidence-only or uncommitted artifact -> Test; shippable durable test -> Spec if not required, then an Implement Roadmap task; Test independently verifies |
+| “Review and ship this” | Critique first for a new judgment; a clean review later crosses only as evidence and grants no publication authority |
+| “Commit this” | Approved implementation commit -> Implement; authorized version or changelog publication commit, push, or PR -> Ship |
+| “Resolve merge conflicts” | Ship during landing; Implement only for approved Roadmap base synchronization; otherwise stop for scope or authority |
+| “Root cause analysis” | Critique `diagnose`; live-outage stabilization remains external `firefighting` |
+| “Where are we?” | Artifact or project state -> Report; publication authorization or queue state -> Ship Status |
+| “Turn this into an issue” | Spec only for intent or specification projection with separately authorized issue effects; generic roadmap-to-ticket projection remains unowned |
+| “Explain, fix, test, and ship” | Earliest missing authority; later outcomes remain non-invoked, user-started stages |
+
+This table supersedes active routes to the historical Plan and Debug peers while preserving their
+design files as source and decision evidence.
+
+#### 7.11.7 Producer reporting contract
+
+Each lifecycle authority remains the content owner at every reporting moment. Its authoritative
+artifact exposes the following producer-owned fields; an empty collection is `[]`, never an
+omitted field.
+
+| Field path | Type and invariant |
+|---|---|
+| `reporting.supersedes_ref` | `{artifact_id, revision, content_hash}` or `null`; Critique and Spec may map an existing supersession field |
+| `reporting.surfaces` | List, empty as `[]`, never omitted |
+| `reporting.surfaces[].surface_id` | Stable non-empty producer-owned ID |
+| `reporting.surfaces[].claim` | Non-empty artifact-grounded statement |
+| `reporting.surfaces[].consequence` | Non-empty producer-assigned impact statement |
+| `reporting.surfaces[].blocking` | Boolean |
+| `reporting.surfaces[].decision_required` | Boolean |
+| `reporting.surfaces[].evidence_refs` | Non-empty stable artifact-field references |
+| `reporting.open_decisions` | List, empty as `[]`, never omitted |
+| `reporting.open_decisions[].decision_id` | Stable non-empty producer-owned ID |
+| `reporting.open_decisions[].question` | Non-empty producer-owned question |
+| `reporting.open_decisions[].options` | At least two unique `{option_id, label, consequence}` objects |
+| `reporting.open_decisions[].evidence_refs` | Non-empty stable artifact-field references |
+| `reporting.open_decisions[].blocking` | Boolean |
+
+At artifact completion, an approval request, a stage boundary, an explicit status request, and a
+failure or degradation announcement, the producer emits a `ReportEvent` with this envelope:
+
+| Field | Type and invariant |
+|---|---|
+| `schema_version` | Literal `astra.report-event/v0` |
+| `event_id` | Stable non-empty producer event ID |
+| `event_type` | `artifact_completion`, `approval_request`, `stage_boundary`, `status_request`, or `failure` |
+| `boundary_kind` | `entry_refused`, `work_stopped`, or `cycle_closed` for `stage_boundary`; otherwise `null` |
+| `producer` | One of the six lifecycle identifiers |
+| `artifact_ref` | `{artifact_id, revision, content_hash, path}`; `null` only for a pre-artifact `entry_refused` or `failure` with stable event and evidence or failure anchors |
+| `outcome` | One non-empty producer-authored sentence |
+| `blocking` | Boolean |
+| `surface_candidates` | Producer-owned surfaces using the artifact shape above |
+| `open_decision_refs` | Producer decision IDs |
+| `evidence_refs` | Stable evidence references |
+| `decision` | Complete matching open-decision object for `approval_request`; otherwise `null` |
+
+The full approval decision envelope is never staged behind optional detail. Only the producer
+records the user's answer against the exact authoritative artifact revision and hash.
+
+If Report is unavailable at a non-decision moment, the producer emits only artifact and event
+identity, a one-sentence outcome, blocking state, and an unavailable flag. At an approval request,
+the producer presents its complete decision envelope itself. Report failure never changes
+lifecycle authority or blocks progress solely because rich rendering is unavailable.
 
 ## 8. Architecture is local to each skill
 

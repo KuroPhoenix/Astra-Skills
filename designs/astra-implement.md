@@ -1400,3 +1400,42 @@ contract, Test owns evaluations, and Ship owns any publication effect.
 This amendment revises the deferred allocations in section 11.7 but changes no coordinator ledger
 row. It creates no worktree, agent process, device bridge, source file, test, commit, push, PR,
 runtime candidate, installation, or retirement state.
+
+## 13. Shared trigger and reporting amendment
+
+This section and `docs/design-requirements.md` sections 7.11.6–7.11.7 supersede earlier active
+Plan and Debug destinations while preserving their source evidence. Explicit invocation never
+waives prerequisites. Implicit routing uses the **earliest missing authority**. A compound request
+stops at this artifact or approval boundary; later public workflows are listed but not invoked.
+`Understood, proceed` returns control only and cannot start a public peer.
+
+### 13.1 Public-entry and delivery partition
+
+A missing Approved Change Specification exposes Spec without starting it. A missing or stale
+Delivery Roadmap approval stops before mutation. An unknown cause exposes Critique `diagnose`,
+replacing active Debug destinations. A delivery-roadmap defect still inside the approved
+Specification is repaired only through a newly approved Roadmap revision owned by Implement; a
+changed outcome, requirement, or user tradeoff returns to the earlier authority.
+
+Durable tests, fixtures, configuration, and test documentation intended to ship with the active
+functionality are Implement Roadmap tasks.
+Separately authorized Test artifacts remain uncommitted evidence. A later approved cycle may
+incorporate them. Implement owns approved atomic
+implementation commits; it does not own push, PR, merge, or publication metadata effects. A
+compound request stops after approved delivery, leaving Test and Ship as prospective user-started
+workflows.
+
+### 13.2 Delivery reporting map and approval
+
+The Approved Delivery Roadmap and Execution Ledger each carry their own
+`reporting.supersedes_ref`, `reporting.surfaces`, and `reporting.open_decisions`, tied to that
+artifact's identity, revision, and content hash. Roadmap surfaces describe approved delivery
+choices and consequences; Ledger surfaces describe observed execution, deviations, evidence,
+residue, and commit state. Neither artifact may silently reuse the other's supersession identity.
+
+Implement emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
+`stage_boundary`, `status_request`, and `failure`, identifying the relevant Roadmap or Ledger
+revision. Roadmap approval uses the complete producer-owned decision envelope. If Report is
+unavailable, Implement presents that envelope itself; other moments use the shared minimal
+unavailable notice. `I(reporting)` changes presentation only. Implement alone records Roadmap
+approval and execution state.

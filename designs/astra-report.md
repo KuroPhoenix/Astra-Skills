@@ -2,11 +2,12 @@
 
 **Date:** 2026-08-12; amended 2026-08-13
 
-**Status:** Proposed phase-0 design approved for implementation planning; coordinator
-reconciliation remains pending. Records three user decisions of 2026-08-12 (existence, MVP
-boundary, delegated voice), the same-day design-review resolutions (output-only voice,
-`I(reporting)` typing, post-MVP adapters), the approved source-slice statement in 4.2, and the
-2026-08-13 staged-disclosure and conditional structured-choice decisions. The eight blocking
+**Status:** Proposed phase-0 design approved for implementation planning; trigger-surface and
+producer-contract reconciliation are complete. Source-ledger migration, runtime-plan revision,
+implementation, and retirement gates remain pending. Records three user decisions of 2026-08-12
+(existence, MVP boundary, delegated voice), the same-day design-review resolutions (output-only
+voice, `I(reporting)` typing, post-MVP adapters), the approved source-slice statement in 4.2, and
+the 2026-08-13 staged-disclosure and conditional structured-choice decisions. The eight blocking
 review findings and the method-canon audit corrections are applied. The implementation plan at
 `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` predates the 2026-08-13
 interaction contract and must be revised before execution. Creates prose only: no runtime skill,
@@ -539,8 +540,8 @@ identity style of 7.11.3: timestamp; brief identity; segment identity and sequen
 delivered-segment hash and mode; the artifact identities, revisions, and hashes covered; the
 surface identifiers presented in NOW; topic IDs whose previews were shown; topic IDs whose full
 details were delivered; the decisions presented; and any degradation flags (7.6). A visible topic
-summary is `preview` exposure whether or not selected; only a receipt-confirmed body is `detail`
-exposure. It deliberately does not duplicate which menu control the user selected, whether or how
+summary is `preview` exposure whether or not selected; only a receipt-confirmed body is a
+`detail` exposure. It deliberately does not duplicate which menu control the user selected, whether or how
 a decision was answered, or approval state; those are navigation or producer authority, not
 Report exposure authority.
 
@@ -961,24 +962,47 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
    re-create overload (too loose); tunable at first use, but the shipped default shapes first
    impressions.
 
-### 12.4 Coordinator reconciliation required
+### 12.4 Coordinator reconciliation state
 
-All `claimed`, never `resolved`, citing the 2026-08-12 user decisions in 1.1:
+All source rows remain `claimed`, never `resolved`, citing the 2026-08-12 user decisions in 1.1:
 
-1. Amend the exactly-six roster statements: `docs/design-requirements.md` 7.11 and
+1. **Complete, 2026-08-13.** Amend the exactly-six roster statements:
+   `docs/design-requirements.md` 7.11 and
    `docs/six-skill-source-absorption.md` section 1 — six lifecycle authorities plus one
    non-authoritative reporting surface that owns all rich outbound presentation; the six
    remain directly invocable control surfaces.
-2. Record the `I(reporting)` typing convention as a clarifying note in the 7.11.2 relation
-   vocabulary; no new relation letter is added.
-3. Apply the section 4.5 row changes: seven `unclaimed` → `claimed` secondary-role claims,
+2. **Complete, 2026-08-13.** Record the `I(reporting)` typing convention in the 7.11.2
+   relation vocabulary; no new relation letter is added.
+3. **Pending.** Apply the section 4.5 row changes: seven `unclaimed` → `claimed` secondary-role claims,
    including the three-source lock exception approved in 4.2; and the `diagram`
    secondary-consumer amendment against roadmap amendment 3.
-4. Add the four reporting hooks (8.6) — consequence typing, the common open-decision shape,
+4. **Complete, 2026-08-13.** Add the four reporting hooks (8.6) — consequence typing, the common open-decision shape,
    supersession fields for Understand Code, Implement, Test, and Ship, and ReportEvent
    adoption — to each sibling design's artifact contract.
-5. Add the `I(reporting)` delegation clause to each sibling's user-visible-result and
+5. **Complete, 2026-08-13.** Add the `I(reporting)` delegation clause to each sibling's user-visible-result and
    approval sections (8.7).
-6. Include Report in the trigger-surface reconciliation (absorption design section 11,
+6. **Complete, 2026-08-13.** Include Report in the trigger-surface reconciliation (absorption design section 11,
    remaining-work item 3), ensuring 3.2/3.3 does not collide with Understand Code or the
    deferred documentation candidates.
+
+## 13. Shared trigger-surface reconciliation result
+
+`docs/design-requirements.md` sections 7.11.6–7.11.7 are now canonical. Direct Report requests
+own only explanation of recorded lifecycle artifacts and project state. Repository behavior,
+structure, and bounded code-state explanation remain Understand Code authority. Report remains
+outside the six-authority classifier: it mediates no input, returns no lifecycle determination,
+and orchestrates no stage.
+
+Standard delivery keeps Capsule and complete NOW content visible while exposing detail through
+topic labels and one- or two-sentence previews. Selecting a detail or
+`Understood, proceed` follows sections 7.2–7.5 and cannot approve a decision, grant an effect, or
+start the next public skill.
+
+The five `I(reporting)` moments—`artifact_completion`, `approval_request`, `stage_boundary`,
+`status_request`, and `failure`—and both producer fallbacks are canonical across the six
+lifecycle designs. Producers retain fact, consequence, option, evidence, blocking, and returned-
+decision authority; Report retains presentation authority only.
+
+The older Report implementation plan remains non-executable until separately revised for staged
+segments and conditional structured choices. This reconciliation creates no runtime, corpus
+runner, reusable harness, installation, publication, or retirement state.

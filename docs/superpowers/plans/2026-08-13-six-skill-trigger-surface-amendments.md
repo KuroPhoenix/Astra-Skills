@@ -497,7 +497,7 @@ for file in docs/design-roadmap.md docs/six-skill-source-absorption.md; do
   rg -Fq 'behavioral acceptance cases' "$file"
   rg -Fq 'reusable harness' "$file"
 done
-test "$(rg -c '51 already-planned source identifiers + 41 newly approved identifiers = 92' docs/six-skill-source-absorption.md)" = 1
+test "$(rg -Fxc '51 already-planned source identifiers + 41 newly approved identifiers = 92' docs/six-skill-source-absorption.md)" = 1
 ```
 
 Expected: exit 0. Do not edit `docs/phase-0-ledgers.md` to make the completion claim.

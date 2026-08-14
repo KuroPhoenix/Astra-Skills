@@ -1,0 +1,98 @@
+schema_version: 1
+
+id: example-concept
+title: Example concept
+status: draft
+
+authorship:
+  authored_by: null
+  authored_at: null
+
+concept_boundary:
+  summary: >
+    One-sentence definition of the transferable engineering concept.
+  why_separate: >
+    Why this should be one card rather than merged with a neighboring concept.
+
+source_claims:
+  - claim_id: claim-1
+    source_id: philosophy-software-design-2e
+    # Allowed roles: primary, supporting, counterpoint.
+    role: primary
+    locator:
+      chapter: null
+      section: null
+      printed_pages: null
+      pdf_pages: null
+    paraphrase: >
+      Conservative original paraphrase of what the source supports.
+    qualifications: []
+    source_character:
+      kind: principle
+      context: null
+
+cross_source_relationships: []
+# Example item:
+# - from_claim_id: claim-2
+#   relationship: limits
+#   to_claim_id: claim-1
+#   explanation: >
+#     How the from claim changes interpretation of the to claim.
+
+mentor_synthesis:
+  statement: >
+    Derived teaching rule or proof obligation.
+  nature: derived_interpretation
+  supported_by:
+    - claim-1
+  reopen_when: []
+
+astra_application:
+  component: null
+  decision: null
+  interpretation: >
+    Astra-specific application. This is not a source claim.
+
+scope:
+  applies_when: []
+  does_not_establish: []
+
+limitations: []
+
+failure_pattern:
+  description: >
+    A plausible way the system can look acceptable while violating the concept.
+  consequence: null
+
+questions:
+  cold: []
+  artefact_grounded: []
+  adversarial: null
+  transfer:
+    scenario: null
+    asks: []
+
+mastery_evidence:
+  # These are assessment criteria; session observations belong in pilot-001.md.
+  restated: []
+  applied: []
+  defended: []
+  operational: []
+  transferred: []
+
+review:
+  source_check:
+    reviewer: null
+    reviewed_at: null
+    method: null
+    relationship_to_author: null
+    independence_limitations: []
+    notes: []
+  user_approval:
+    approved_by: null
+    approved_at: null
+    notes: []
+  retirement:
+    retired_by: null
+    retired_at: null
+    reason: null

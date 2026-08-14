@@ -1,5 +1,17 @@
 schema_version: 1
 
+task_workflow:
+  authority: >-
+    This file alone owns task dependency and completion state. Source metadata, card lifecycle
+    status, and pilot evidence do not change task status.
+  status_values:
+    not_started: prerequisites are satisfied but work has not begun
+    in_progress: work or required review is underway
+    blocked: a dependency or stop condition prevents useful progress
+    completed: outputs, verification, required reviews, and approvals are recorded
+  stop_condition_semantics: >-
+    A stop condition requires pausing the task and reporting the unmet gate rather than proceeding.
+
 tasks:
   - id: MENTOR-001
     title: Create pilot scaffold
@@ -8,35 +20,169 @@ tasks:
 
   - id: MENTOR-002
     title: Define semantic and pedagogical standard
-    owner: assistant
-    status: not_started
+    owner:
+      semantic: assistant
+      repository_execution: codex
+      approval: user
+    status: in_progress
     depends_on:
       - MENTOR-001
+    inputs:
+      - existing Mentor scaffold
+      - five canonical pilot sources
+      - assistant-authored MENTOR-002 handoff
+      - current Astra authority documents
+    outputs:
+      - docs/mentor/README.md
+      - docs/mentor/drafts/card-template.yaml
+      - docs/mentor/workplan.yaml
+    verification:
+      - semantic layers are explicitly separated
+      - assessment labels are operationally defined
+      - cold-answer rule exists
+      - diagnostic, adversarial, and transfer standards exist
+      - mastery is evidence-based
+      - anti-circularity rule exists
+      - card statuses are defined
+      - card template conforms to the semantic standard
+      - YAML parses and Markdown structural sanity passes
+    completion_evidence:
+      repository_execution_commit: pending
+      validation_summary: pending
+      assistant_semantic_review: pending
+      user_approval: pending
+    stop_condition:
+      - pause before completion while assistant semantic review is pending
+      - pause before completion while explicit user approval is pending
 
   - id: MENTOR-003
     title: Produce five gold cards
-    owner: assistant
+    owner:
+      card_authoring: assistant
+      repository_execution: codex
+      source_fidelity_review: independent-source-reviewer
     status: blocked
     depends_on:
       - MENTOR-002
+    inputs:
+      - approved semantic standard
+      - approved card template
+      - selected canonical source sections
+    outputs:
+      - target of five source-checked candidate gold cards under docs/mentor/drafts/
+    verification:
+      - every claim has source ID, chapter, section, printed pages, and PDF pages
+      - every source paraphrase and nearby material caveat is independently checked
+      - card author and source-fidelity reviewer are distinct
+      - caveats and counterpoints are retained
+      - cards remain source_checked and hidden from the user until the cold answer
+      - no card claims complete source coverage
+    completion_evidence:
+      card_files: []
+      independent_source_reviews: []
+      concealment_check: pending
+    constraints:
+      maximum_card_count: 5
+      one_card_per_source_required: false
+      coverage_claim: calibration only
+    stop_condition:
+      - pause while MENTOR-002 is not completed
+      - pause if a locator, paraphrase, material caveat, or independent review cannot be verified
+      - pause and report rather than pad the set if five distinct consequential concepts are not justified
+      - stop before creating a sixth card or bulk-generating a corpus
 
   - id: MENTOR-004
     title: Run manual Astra Critique pilot
-    owner: user-and-assistant
+    owner:
+      cold_answer: user
+      grounded_assessment: assistant
+      card_approval: user
+      architecture_decision: user
+      repository_execution: codex
+      post_implementation_review: user-and-assistant
     status: blocked
     depends_on:
       - MENTOR-003
+    inputs:
+      - independently source-checked calibration cards concealed until the cold answer is persisted
+      - current Astra Critique artefacts
+      - for implementation only, phase-zero runtime authorization and an Approved Change Specification
+      - for implementation only, an Approved Delivery Roadmap and explicit mutation, execution, and commit approval
+      - for trace diagnosis only, a canonical Observability Engineering source and source-checked claims
+    outputs:
+      - docs/mentor/pilot-001.md created only when the pilot begins
+    verification:
+      - cold answer is persisted before cards are revealed or targeted teaching begins
+      - relevant cards are explicitly user-approved after the cold answer and before teaching
+      - user-owned decision is recorded as non-authorizing evidence
+      - any implementation follows the separately approved Spec and Implement authority chain
+      - implementation is bounded to the externally approved mechanism
+      - seeded-failure provenance and rubric are sufficiently independent of the evaluating chain
+      - seeded failure is diagnosed from execution evidence
+    completion_evidence:
+      pilot_record: pending
+      post_cold_card_approvals: pending
+      user_owned_decision: pending
+      external_delivery_authority: pending
+      implementation_evidence: pending
+      post_implementation_review: pending
+    stop_condition:
+      - pause while MENTOR-003 is not completed
+      - stop before teaching if a relevant card is not user_approved after the cold answer
+      - stop before mutation if phase-zero runtime authorization is absent
+      - stop before mutation if the Approved Change Specification is absent or stale
+      - stop before mutation if the Approved Delivery Roadmap or explicit mutation, execution, or commit approval is absent
+      - stop before trace-diagnosis assessment if the canonical observability source or source-checked claims are absent
 
   - id: MENTOR-005
     title: Review pilot evidence
-    owner: user
+    owner:
+      evidence_review: user
+      assessment_support: assistant
+      repository_execution: codex
     status: blocked
     depends_on:
       - MENTOR-004
+    inputs:
+      - completed docs/mentor/pilot-001.md
+      - implementation and seeded-failure evidence
+    outputs:
+      - evidence review appended to docs/mentor/pilot-001.md
+    verification:
+      - success criteria are evaluated against recorded evidence
+      - ceremony cost is explicitly assessed
+      - failures and uncertainty remain visible
+    completion_evidence:
+      evidence_review: pending
+      ceremony_cost_assessment: pending
+      user_signoff: pending
+    stop_condition:
+      - pause while MENTOR-004 is not completed
+      - pause if implementation evidence or seeded-failure provenance is incomplete
+      - stop rather than treat missing evidence as a successful result
 
   - id: MENTOR-006
     title: Decide whether to promote Mentor into an Astra skill
-    owner: user
+    owner:
+      decision: user
+      recommendation: assistant
+      repository_execution: codex
     status: blocked
     depends_on:
       - MENTOR-005
+    inputs:
+      - evidence review in docs/mentor/pilot-001.md
+    outputs:
+      - promotion decision appended to docs/mentor/pilot-001.md
+    verification:
+      - promotion decision is explicitly user-owned
+      - rejection creates no Mentor design or runtime files
+      - promotion itself changes no roster, ledger, design, or runtime state
+      - any promotion effect requires separately approved follow-up work and governing authority
+    completion_evidence:
+      user_decision: pending
+      decision_record: pending
+    stop_condition:
+      - pause while MENTOR-005 is not completed
+      - stop after recording the decision without creating roster, ledger, design, runtime, or skill files
+      - require separately approved follow-up work before any promotion effect

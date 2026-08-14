@@ -24,7 +24,7 @@ conditions for escalation or abandonment.
 |---|---|---|
 | User | Cold answers, consequential architecture choices, card approval after the cold answer, the final decision record, evidence review, and the promotion decision | Source paraphrases, source-check certification, or Codex's execution claims |
 | Assistant | The semantic and pedagogical standard, source-grounded cards, grounded assessment, targeted teaching, and transfer challenge | Source-checking its own claims, the user's architecture decision, implementation effects, or Mentor's promotion |
-| Independent source reviewer | Claim locators, paraphrase fidelity, material caveats, and the recorded independence limit of the check | Card pedagogy, Astra decisions, or user approval |
+| Source-fidelity reviewer | Claim locators, paraphrase fidelity, material caveats, and the recorded independence limit of the check | Card pedagogy, Astra decisions, or user approval |
 | Codex | Private-source hashing, repository scaffolding, and—only after every external lifecycle gate is met—implementation and execution evidence for one approved narrow mechanism | Book-derived pedagogy, mastery declarations, change approval, roster changes, or phase-zero ledger changes |
 
 The five PDFs remain outside Git. `ASTRA_MENTOR_SOURCE_ROOT` must point to their private directory;
@@ -116,7 +116,8 @@ A source claim's `role` is `primary`, `supporting`, or `counterpoint` within tha
 `source_character` describes the passage (for example, a principle, heuristic, empirical finding,
 example, author opinion, or competing view). Neither field silently changes evidentiary strength.
 The source-fidelity reviewer must differ from the author and record the degree and limits of their
-independence; otherwise the card remains `draft`.
+independence; otherwise the card remains `draft`. For the pilot, a fresh Codex context that did not
+author the card is a practical second pass, not a claim of full independence.
 
 ### Scope, limitations, and counterpoints
 
@@ -258,8 +259,9 @@ manually invoked.
 `status` is the sole authoritative card-lifecycle field:
 
 - `draft`: candidate content; not teaching authority;
-- `source_checked`: source fidelity has been independently reviewed; it may be used only as a
-  concealed assessment reference before the cold answer, not as teaching authority;
+- `source_checked`: source fidelity has been independently reviewed; before user approval, only
+  the card's checked `source_claims` and their qualifications may be used as concealed assessment
+  evidence, while its synthesis and pedagogy remain non-authoritative;
 - `user_approved`: explicitly approved by the user for pilot sessions; and
 - `retired`: historically traceable, but unavailable for new sessions.
 
@@ -278,14 +280,23 @@ the transfer challenge materially changes context; mastery evidence is observabl
 non-duplicative within the five-card set; and the user explicitly approves it after the cold answer
 but before the card is used for teaching.
 
+User approval authorizes the card as a teaching unit; it does not establish that its checked source
+claims are true. If the user rejects a card, relevant checked source claims may still be cited
+directly, but the rejected card's `mentor_synthesis`, `astra_application`, question design, and
+mastery criteria are not used.
+
 ## Pilot protocol
 
 The first session is manual and has no `SKILL.md` runtime:
 
 1. Independently `source_checked` cards are kept hidden while the user gives and persists a cold
    answer.
-2. The assistant compares it with current Astra Critique artefacts, the hidden cards, and concrete
-   design contradictions or ambiguities.
+2. The assistant compares it only with independently checked `source_claims` and their
+   qualifications from the hidden cards, independently authoritative Astra artefacts, and concrete
+   design contradictions or ambiguities. Unapproved `mentor_synthesis`, `astra_application`,
+   question design, and mastery criteria may be inspected as candidate pedagogy, but may not
+   support any assessment classification or mastery determination, including `supported` or
+   `contradicted`.
 3. The relevant cards are revealed. The user explicitly approves each card before it becomes
    teaching authority; an unapproved card is not used.
 4. The assistant teaches only concepts missing from the cold answer.
@@ -306,18 +317,36 @@ remain part of MENTOR-002.
 
 ## Success criteria
 
-Promotion may be considered only if the pilot yields evidence that:
+Promotion may be considered only when every mandatory hygiene condition holds and at least one
+positive advantage is supported.
 
-- cited before-and-after evidence demonstrates a genuine misunderstanding or unjustified
-  assumption and a resulting mental-model revision;
-- the user materially validates, corrects, rejects, or adds to the proposed architecture—such as
-  stating an invariant absent from the AI proposal;
-- the architecture or test strategy materially changes;
-- the user can explain the final mechanism without reopening the generated specification;
-- the user can diagnose an unfamiliar failure from a trace whose seed and rubric have enough
-  independent provenance to avoid answer-by-construction;
-- Mentor reduces epistemic outsourcing rather than producing more prose; and
-- the ceremony cost is acceptable.
+### Mandatory hygiene conditions
+
+All must hold:
+
+- the cold answer is captured before targeted teaching;
+- consequential assessment is grounded in evidence appropriate to the claim;
+- the user remains owner of the consequential decision;
+- exposure or agreement with AI is not treated as mastery;
+- the user can explain the final mechanism without relying on generated prose;
+- the pilot does not increase epistemic outsourcing;
+- ceremony cost is acceptable; and
+- no authority or mutation boundary is bypassed.
+
+### Positive-advantage evidence
+
+At least one must be supported:
+
+- Mentor exposes and repairs a genuine misunderstanding or unsupported assumption;
+- Mentor causes the user to add, sharpen, or reject a consequential invariant, evidence
+  obligation, failure model, or authority boundary;
+- Mentor provides defensible evidence that the user's existing mental model survives an
+  adversarial challenge rather than changing it merely for the sake of change;
+- Mentor enables diagnosis of an unfamiliar or seeded failure from execution evidence; or
+- Mentor enables transfer of a concept to a materially different component or failure mode.
+
+A changed architecture or test strategy is useful positive evidence when it occurs, but it is not
+mandatory.
 
 Meeting individual criteria does not promote Mentor. The user owns the final decision after
 `MENTOR-005` evidence review.

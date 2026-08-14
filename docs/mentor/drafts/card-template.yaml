@@ -85,7 +85,7 @@ review:
     reviewer: null
     reviewed_at: null
     method: null
-    relationship_to_author: null
+    relationship_to_card_author: null
     independence_limitations: []
     notes: []
   user_approval:

@@ -1,0 +1,69 @@
+schema_version: 1
+
+sources:
+  - id: philosophy-software-design-2e
+    title: A Philosophy of Software Design
+    authors:
+      - John K. Ousterhout
+    edition: 2
+    publication_year: 2021
+    private_path: "${ASTRA_MENTOR_SOURCE_ROOT}/philosophy-of-software-design-2e.pdf"
+    sha256: ebf4cd7e7164ccd1d79f8aac55cbbaef50a181ac04538506c8caa89ba435c35c
+    status: canonical
+    selected_pilot_chapters:
+      - 2
+      - 3
+      - 4
+      - 5
+
+  - id: fundamentals-software-architecture-2e
+    title: Fundamentals of Software Architecture
+    authors:
+      - Mark Richards
+      - Neal Ford
+    edition: 2
+    publication_year: 2025
+    private_path: "${ASTRA_MENTOR_SOURCE_ROOT}/fundamentals-software-architecture-2e.pdf"
+    sha256: 98b922fa3ff836086023bf559c229a52b7bd8272987c2ba5f4beee1ac735f31f
+    status: canonical
+    selected_pilot_chapters:
+      - 2
+
+  - id: effective-software-testing
+    title: Effective Software Testing
+    authors:
+      - Maurício Aniche
+    edition: 1
+    publication_year: 2022
+    private_path: "${ASTRA_MENTOR_SOURCE_ROOT}/effective-software-testing.pdf"
+    sha256: b65be789fcb458d3bc89752539ebdbda569812485810a12f70d39b9d31f75b5c
+    status: canonical
+    selected_pilot_chapters:
+      - 1
+      - 4
+
+  - id: ai-engineering
+    title: AI Engineering
+    authors:
+      - Chip Huyen
+    edition: 1
+    publication_year: 2025
+    private_path: "${ASTRA_MENTOR_SOURCE_ROOT}/ai-engineering.pdf"
+    sha256: ea3c436e88ded6f38aebfde4416bf85c21805c710d9a6aa61313c038d5ca5ed9
+    status: canonical
+    selected_pilot_chapters:
+      - 3
+      - 4
+
+  - id: ddia-2e
+    title: Designing Data-Intensive Applications
+    authors:
+      - Martin Kleppmann
+      - Chris Riccomini
+    edition: 2
+    publication_year: 2026
+    private_path: "${ASTRA_MENTOR_SOURCE_ROOT}/ddia-2e.pdf"
+    sha256: fc1f068c3a8eeb6344a37c3406df64ef46013f474a45fcfc66dbdc919e0d9a35
+    status: canonical
+    selected_pilot_chapters:
+      - 1

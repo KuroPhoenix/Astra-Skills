@@ -1,0 +1,42 @@
+schema_version: 1
+
+tasks:
+  - id: MENTOR-001
+    title: Create pilot scaffold
+    owner: codex
+    status: completed
+
+  - id: MENTOR-002
+    title: Define semantic and pedagogical standard
+    owner: assistant
+    status: not_started
+    depends_on:
+      - MENTOR-001
+
+  - id: MENTOR-003
+    title: Produce five gold cards
+    owner: assistant
+    status: blocked
+    depends_on:
+      - MENTOR-002
+
+  - id: MENTOR-004
+    title: Run manual Astra Critique pilot
+    owner: user-and-assistant
+    status: blocked
+    depends_on:
+      - MENTOR-003
+
+  - id: MENTOR-005
+    title: Review pilot evidence
+    owner: user
+    status: blocked
+    depends_on:
+      - MENTOR-004
+
+  - id: MENTOR-006
+    title: Decide whether to promote Mentor into an Astra skill
+    owner: user
+    status: blocked
+    depends_on:
+      - MENTOR-005

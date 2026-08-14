@@ -24,7 +24,7 @@ tasks:
       semantic: assistant
       repository_execution: codex
       approval: user
-    status: in_progress
+    status: completed
     depends_on:
       - MENTOR-001
     inputs:
@@ -47,7 +47,7 @@ tasks:
       - card template conforms to the semantic standard
       - YAML parses and Markdown structural sanity passes
     completion_evidence:
-      repository_execution_commit: 566275e9417bcd96f30820ea5e119b07d4916961
+      repository_execution_commit: 46ef6363a1d813051ab9592d83303b22f347d667
       validation_summary:
         status: passed
         yaml_documents_parsed: 3
@@ -55,8 +55,13 @@ tasks:
         canonical_source_hashes_matched: 5
         changed_paths_limited_to_docs_mentor: true
         independent_codex_review: no_remaining_blockers
-      assistant_semantic_review: pending
-      user_approval: pending
+      assistant_semantic_review:
+        status: passed
+        reviewed_commit: 46ef6363a1d813051ab9592d83303b22f347d667
+      user_approval:
+        status: approved
+        approved_at: "2026-08-14"
+        approved_commit: 46ef6363a1d813051ab9592d83303b22f347d667
     stop_condition:
       - pause before completion while assistant semantic review is pending
       - pause before completion while explicit user approval is pending
@@ -67,16 +72,20 @@ tasks:
       card_authoring: assistant
       repository_execution: codex
       source_fidelity_review: fresh-codex-review-context
-    status: blocked
+    status: not_started
     depends_on:
       - MENTOR-002
     inputs:
       - approved semantic standard
       - approved card template
+      - approved concept-first learning emphasis
       - selected canonical source sections
     outputs:
       - target of five source-checked candidate gold cards under docs/mentor/drafts/
     verification:
+      - every card centers one transferable AI-engineering or supporting software-systems concept
+      - concept boundary and Mentor synthesis do not depend on Astra-specific names
+      - Astra application is a concrete case rather than the card's learning boundary
       - every claim has source ID, chapter, section, printed pages, and PDF pages
       - every source paraphrase and nearby material caveat is checked in a fresh review context
       - source-fidelity reviewer is a fresh Codex context that did not author the card
@@ -92,6 +101,7 @@ tasks:
       maximum_card_count: 5
       one_card_per_source_required: false
       coverage_claim: calibration only
+      organization: transferable-concept-not-skill
     stop_condition:
       - pause while MENTOR-002 is not completed
       - pause if a locator, paraphrase, material caveat, or independent review cannot be verified
@@ -121,12 +131,15 @@ tasks:
       - docs/mentor/pilot-001.md created only when the pilot begins
     verification:
       - cold answer is persisted before cards are revealed or targeted teaching begins
+      - checkpoint tests a transferable concept before evaluating its Critique application
+      - targeted teaching leads with the general model and limits Critique-specific instruction
       - relevant cards are explicitly user-approved after the cold answer and before teaching
       - user-owned decision is recorded as non-authorizing evidence
       - any implementation follows the separately approved Spec and Implement authority chain
       - implementation is bounded to the externally approved mechanism
       - seeded-failure provenance and rubric are sufficiently independent of the evaluating chain
       - seeded failure is diagnosed from execution evidence
+      - transfer evidence changes the component, state owner, or failure mode beyond Critique naming
     completion_evidence:
       pilot_record: pending
       post_cold_card_approvals: pending
@@ -159,6 +172,7 @@ tasks:
     verification:
       - every mandatory hygiene condition is evaluated and satisfied against recorded evidence
       - at least one positive-advantage outcome is supported by recorded evidence
+      - learning evidence distinguishes a general transferable model from skill-specific recall
       - architecture or test-strategy change is treated as evidence when present, not as required
       - ceremony cost is explicitly assessed
       - failures and uncertainty remain visible

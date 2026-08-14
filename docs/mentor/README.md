@@ -4,9 +4,10 @@
 
 ## Experiment objective
 
-Test whether a manually invoked, source-grounded apprenticeship protocol can expose a real gap in
-the user's understanding, improve one Astra architectural decision, and help the user interpret
-the resulting implementation.
+Test whether a manually invoked, source-grounded apprenticeship protocol can help the user learn
+and transfer one consequential AI-engineering or supporting software-systems concept while
+developing Astra, improve one Astra architectural decision, and interpret the resulting
+implementation.
 
 Mentor v0 tests whether the user understands and owns one consequential technical decision before
 AI executes it. The pilot is limited to this question:
@@ -14,9 +15,35 @@ AI executes it. The pilot is limited to this question:
 > How should Astra Critique represent and reconcile dependency-aware decision units without
 > creating a bloated, opaque convener?
 
+Critique is the first application context, not the boundary of what the user should learn. Each
+checkpoint is concept-first: it names one transferable AI-engineering or software-systems learning
+objective, tests the user's general causal model, applies that model to the active Astra decision,
+and ends with transfer beyond the same skill-specific framing. Astra supplies real consequences
+and evidence; its vocabulary is not the learning objective.
+
 The pilot must make the user state the system boundary, authoritative and derived state, module
 responsibilities, invariants, dependency semantics, failure modes, evidence, observability, and
 conditions for escalation or abandonment.
+
+## Lean development roadmap
+
+Mentor remains a sidecar to six-skill development rather than a parallel product:
+
+1. `MENTOR-002` approves the semantic standard and concept-first emphasis.
+2. `MENTOR-003` creates only the five general calibration cards and checks their source fidelity;
+   this does not block unrelated roster design or reconciliation.
+3. `MENTOR-004` attaches the first complete learning loop to a real, separately authorized
+   Critique implementation slice. It does not create a Mentor runtime or synthetic implementation
+   merely to exercise the protocol.
+4. `MENTOR-005` reviews learning and execution evidence, including transfer beyond Critique.
+5. `MENTOR-006` decides whether to keep the protocol manual, automate only clerical mechanics,
+   promote it through separately authorized work, or abandon it.
+
+After a successful pilot, a checkpoint may be manually selected for a consequential decision in
+any of the six skills. It is not required for routine work or every skill. The target user ceremony
+is no more than 40 minutes around a development slice, excluding the development work itself. If
+the protocol repeatedly exceeds that budget without positive-advantage evidence, pause it rather
+than slowing the roster.
 
 ## Roles and authority
 
@@ -36,10 +63,10 @@ completion state.
 
 ## Card semantics
 
-> **Status — MENTOR-002:** implemented for review, not approved. This standard and the companion
-> [card template](drafts/card-template.yaml) remain non-authoritative teaching material until an
-> assistant source-and-semantics review and explicit user approval are recorded in
-> [`workplan.yaml`](workplan.yaml).
+> **Status — MENTOR-002:** approved on 2026-08-14. This standard and the companion
+> [card template](drafts/card-template.yaml) may be used to produce source-checked candidate cards.
+> Individual cards remain non-authoritative teaching material until their own lifecycle gates are
+> satisfied and recorded in [`workplan.yaml`](workplan.yaml).
 
 The five sources ground engineering concepts, not the pedagogy. Unless a future card ties a
 statement to a checked claim and locator, the cold-answer sequence, question design, assessment,
@@ -51,6 +78,11 @@ learning-science findings or claims attributed to the five sources.
 A Mentor card is a source-grounded teaching unit for one transferable engineering concept. It is
 justified only when the concept can change how the user reasons about a consequential technical
 decision, failure, or evidence claim.
+
+Cards are organized by general concepts, not by Astra skills. The concept boundary and Mentor
+synthesis must make sense without Astra-specific names; `astra_application` then turns the active
+skill into a concrete case. Skill-specific facts may establish the case's constraints, but cannot
+substitute for a general learning objective or transfer evidence.
 
 A card is not a chapter summary, a compressed replacement for the source, an Astra design
 decision, a universal rule, proof of understanding, or proof that a source has been fully covered.
@@ -204,7 +236,8 @@ user to identify authoritative state, state an invariant, predict a failure, dis
 mechanisms, name falsifying evidence, explain what passing tests do not establish, reason about
 partial recovery, place authority, or predict the result of changing a constraint. Weak questions
 test definitions, memorised lists, recognition, or agreement. Every pilot card includes at least
-one question grounded in the current artefact.
+one general diagnostic question and one question grounded in the current artefact. A correct answer
+that depends only on Astra-specific vocabulary is insufficient evidence of understanding.
 
 An adversarial question searches for a plausible case where the architecture appears to work and
 ordinary generated tests pass while a critical claim or invariant is violated. It exposes a proof
@@ -290,7 +323,7 @@ mastery criteria are not used.
 The first session is manual and has no `SKILL.md` runtime:
 
 1. Independently `source_checked` cards are kept hidden while the user gives and persists a cold
-   answer.
+   answer that separates the transferable concept from its Critique application.
 2. The assistant compares it only with independently checked `source_claims` and their
    qualifications from the hidden cards, independently authoritative Astra artefacts, and concrete
    design contradictions or ambiguities. Unapproved `mentor_synthesis`, `astra_application`,
@@ -299,9 +332,10 @@ The first session is manual and has no `SKILL.md` runtime:
    `contradicted`.
 3. The relevant cards are revealed. The user explicitly approves each card before it becomes
    teaching authority; an unapproved card is not used.
-4. The assistant teaches only concepts missing from the cold answer.
-5. The user answers a transfer challenge involving a dependency violation between individually
-   valid decision units.
+4. The assistant teaches only concepts missing from the cold answer, leading with the general
+   AI-engineering or software-systems model and using Critique details as its application.
+5. The user answers a transfer challenge involving a materially different component, state owner,
+   or failure mode; renaming Critique-specific entities does not demonstrate transfer.
 6. The user owns a short architecture decision record: selected model, rejected alternatives,
    authoritative state, invariants, evidence contract, unresolved risk, and reopen condition. This
    record does not authorize repository mutation.

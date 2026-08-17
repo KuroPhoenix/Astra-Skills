@@ -1,14 +1,25 @@
-# Astra Report Spec-Approval Vertical Slice Implementation Plan
+# Astra Report Spec-Approval Conformance Tranche — Superseded Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Historical plan — do not execute.** The 2026-08-17 interface-complete v1 direction
+> supersedes this plan's approval-only public skill. Its 25 cases and task details may be copied
+> into the replacement v1 plan as one conformance tranche, but this file grants no runnable task.
+> Current proposed plan: [`2026-08-17-astra-report-v1.md`](2026-08-17-astra-report-v1.md).
 
-**Goal:** Build one non-retiring vertical slice in which a Spec-owned pending revision and approval `ReportEvent` become a faithful, plain-language Reader Brief, a receipt-confirmed delivery is appended to Report's Exposure Ledger, and the user's answer remains solely in Spec's approval record.
+**Historical goal:** Build one non-retiring vertical slice in which a Spec-owned pending revision and approval `ReportEvent` become a faithful, plain-language Reader Brief, a receipt-confirmed delivery is appended to Report's Exposure Ledger, and the user's answer remains solely in Spec's approval record.
 
-**Architecture:** The six-authority plus reporting-surface policy and all six producer contracts are already canonical at `be6249e`; this plan consumes that existing seam rather than rebuilding it. Implement Report as a prompt-driven skill backed by one small Python standard-library contract tool: the tool validates producer envelopes, verifies revision exposure, and appends one whitelisted record per receipt-confirmed segment, while the skill performs trace-preserving staged explanation from immutable artifacts. Exercise only the delegated Spec-approval path with the 25 mechanical Slice A cases; this slice does not implement the full Spec skill, public direct-request Report, a general lifecycle runtime, a reusable harness, or the full 92-source corpus.
+**Historical architecture:** The six-authority plus reporting-surface policy and all six producer contracts were canonical at `be6249e`; this plan consumed that seam for delegated Spec approval only. The replacement plan must preserve these cases while implementing the common Report interface across the families required by `designs/astra-report.md` section 14.
 
 **Tech Stack:** Markdown, YAML, JSON, Python 3 standard library, `unittest`, Codex CLI, `jq`, GNU coreutils, Codex skill metadata, `markdown-it` validation.
 
-**Status:** Reconciled on 2026-08-13 against the approved Slice A design at commit `44d1f16`; runtime execution is not authorized. Tasks 3–7 may begin only after the separately authorized coordinator-ledger reconciliation lands and the user makes a new explicit runtime-execution choice recorded in `docs/phase-0.md`.
+**Status:** Reconciled on 2026-08-13 against the approved Slice A design at commit `44d1f16`;
+superseded for execution on 2026-08-17. Tasks 0–7 must not begin from this file. No runtime
+execution is authorized.
+
+**Current disposition:**
+[`docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`](../../research/2026-08-17-astra-report-research-to-design-reconciliation.md)
+reclassifies Slice A as a Spec-approval conformance tranche. The first public Report milestone
+must also cover progress, results, blockers/failures, decisions, lifecycle artifacts, text
+deliverables, code/diffs, resumption, degradation, and host fallback through one interface.
 
 ## Global Constraints
 
@@ -28,8 +39,11 @@
 - Limit evaluation infrastructure to the Spec approval fixtures in this plan. Do not build a universal runner or the full source-retirement corpus.
 - Treat the 15-pair consultant and final trigger-surface gate as satisfied by roadmap amendments 8 and 9, culminating in commit `be6249e`. Verify that commit as an ancestor; do not redo those amendments.
 - Treat the coordinator ledger as a separate documentation prerequisite. Before runtime, the seven Report secondary-role rows must be `claimed`, the `diagram` consumer amendment must be present, `designs/astra-report.md` §12.4 item 3 must be complete, and the trigger-plan ledger hash must carry an explicit historical-supersession record.
-- Runtime work also requires a new explicit choice to execute this plan. That choice authorizes only this slice and must be recorded in `docs/phase-0.md`; it does not waive any retirement or installation gate.
-- This slice implements the delegated Spec approval path only. It does not implement the design's public direct-request path, and its skill metadata must not advertise direct artifact, catch-up, or project-status triggers before that path has its own behavioral case.
+- No new choice may revive this approval-only plan as the public milestone. Runtime requires a
+  reviewed replacement v1 plan plus a separately scoped authorization recorded in
+  `docs/phase-0.md`; neither waives a retirement or installation gate.
+- This historical tranche covers delegated Spec approval only. Its approval-only skill metadata
+  is intentionally retained below as superseded evidence and must not be created or shipped.
 - Use the 25 unique case IDs and 16 selected corpus classes in `docs/superpowers/specs/2026-08-13-astra-report-slice-a-design.md` §§3–5. Class 30 is only the named structural proxy. Class 35's producer-preference-positive branch is blocked because `astra.report-event/v0` has no preference field; never invent `recommended` or infer it from option order.
 - Every delivered initial or detail segment receives its own manifest, exact receipt, and Exposure Ledger row. A preview is always `preview` exposure; only a selected, receipt-confirmed body is `detail` exposure.
 - Keep every acceptance check deterministic. A missing fixture or unavailable host branch is `blocked` or a recorded limitation, never `pass`; no prose-quality judge or blinded-evaluation machinery belongs in this slice.

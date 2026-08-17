@@ -1,17 +1,17 @@
-# Astra Report slice A — acceptance-case design
+# Astra Report Spec-approval conformance tranche — acceptance-case design
 
 | Field | Value |
 |---|---|
 | Date | 2026-08-13 |
-| Status | Approved acceptance-case design; plan and ledger reconciliations not yet applied |
+| Status | Approved conformance tranche; 2026-08-13 reconciliations applied; reclassified 2026-08-17 and not independently executable |
 | Decision owner | User |
-| Scope | Absorption item 4 (roadmap 14.4 item 2) for one non-retiring vertical slice |
+| Scope | Retained delegated Spec-approval conformance evidence inside the interface-complete Report v1 milestone |
 | Evidence | [`designs/astra-report.md`](../../../designs/astra-report.md) §§4.1.1, 4.5, 7.2–7.5, 11.2–11.5, 12.4 |
 | Governing policy | [`docs/design-requirements.md`](../../design-requirements.md) §§7.11.6–7.11.7 |
 
 ## 1. Decision
 
-Slice A is the **delegated Spec-approval path**: a Spec-owned pending revision and its approval
+Conformance tranche A is the **delegated Spec-approval path**: a Spec-owned pending revision and its approval
 `ReportEvent` become a staged Reader Brief; a receipt-confirmed delivery appends to Report's
 Exposure Ledger; and the user's answer remains solely in Spec's approval record.
 
@@ -25,9 +25,14 @@ The user selected item-4-only scope, mechanical-only pass criteria, and contract
 structure on 2026-08-13, then directed that the superseded plan and the coordinator ledger also be
 reconciled so the slice's statements and claims cohere.
 
+On 2026-08-17 the user approved an interface-complete first public milestone. This document's
+cases remain valid, but the tranche no longer defines the public `astra-report` identity, its
+metadata, or an independently promotable runtime. The governing reconciliation is
+[`docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`](../../research/2026-08-17-astra-report-research-to-design-reconciliation.md).
+
 ### 1.1 Authorization
 
-This design authorizes exactly three independently committed work products:
+The original 2026-08-13 decision authorized exactly three independently committed work products:
 
 1. this acceptance-case specification and the source-anchored oracle capture in §3–§6;
 2. a coherence reconciliation of
@@ -40,6 +45,11 @@ This design authorizes exactly three independently committed work products:
 It authorizes **no** runtime skill, evaluation harness, corpus runner, installation, source
 retirement, push, PR, or item-5 implementation. Every source keeps its current registration and
 every migrated collision row remains `claimed`, never `resolved`.
+
+The 2026-08-17 reclassification grants no new execution authority. Runtime use of these fixtures
+must occur under the replacement
+[`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](../plans/2026-08-17-astra-report-v1.md)
+and a separate explicit `docs/phase-0.md` authorization.
 
 **Ledger editing authority.** [`docs/phase-0.md`](../../phase-0.md) §1 names the Codex primary
 agent the current phase-0 coordinator and **the sole editor of `docs/phase-0-ledgers.md`**; §5
@@ -218,9 +228,10 @@ it does not invent a recommendation flag. Task 4's ledger schema gains `preview`
 exposure levels; Task 5 gains staged segments and structured-choice/text-index convergence; Task 6
 adopts the 25 cases of §4, including the bounded class-30 and class-35 partials.
 
-The revised plan's status becomes **reconciled; awaiting explicit execution authorization**. This
-preserves the plan's own rule that runtime work requires a separate recorded choice. Reconciliation
-establishes coherence, never permission.
+The revised plan's 2026-08-13 status became **reconciled; awaiting explicit execution
+authorization**. On 2026-08-17 it was superseded for execution because its approval-only public
+identity conflicts with the interface-complete v1 milestone. Its task details remain historical
+and reusable conformance evidence; reconciliation never established permission.
 
 ## 8. Ledger reconciliation
 
@@ -237,7 +248,7 @@ then flip §12.4 item 3 from `Pending` to `Complete`.
 | `cm-docs-and-knowledge-03` `/doc` | `unclaimed` → `claimed`; lock exception approved in §4.2 |
 | `cm-docs-and-knowledge-01` `document-generate` | `unclaimed` → `claimed`; lock exception approved in §4.2; the §4.1.2 resolver gap must still close before resolution |
 | `cm-docs-and-knowledge-09` `rtfm` | `unclaimed` → `claimed`; lock exception approved in §4.2 |
-| `cm-design-and-visual-21` `diagram` | stays `claimed`; add `astra-report` as post-MVP supplemental-delivery consumer |
+| `cm-design-and-visual-21` `diagram` | stays `claimed`; add `astra-report` as deferred post-v1 supplemental-delivery consumer |
 
 Rows become `claimed`, never `resolved`. None joins the locked 92. The three lock exceptions
 change claim ownership only and leave all five deferred documentation sources outside the 92
@@ -274,12 +285,13 @@ Governing rule: **any case that cannot fail is not a case.** It is removed or re
 | Exposure Ledger file format, storage location, brief identity scheme | `designs/astra-report.md` §12.2 |
 | Whether the §7.5 budget defaults suit this user | `designs/astra-report.md` §12.3 question 2 |
 | Whether intake dialogue appends to the ledger — currently no | `designs/astra-report.md` §12.3 question 1 |
-| The public direct-request runtime path and its direct-exposure ledger schema | `designs/astra-report.md` §12.2; needs its own behavioral slice |
+| Public direct requests, general producer packets, progress, deliverables, and host adapters | Required companion tranches under `designs/astra-report.md` §14; none may be omitted from the first public milestone |
 | The 19 excluded cross-path and judged classes | §3 of this design |
 
 ## 11. Delivery
 
-Three separate commits, each independently reviewable and matching §1.1:
+The original delivery used three separate commits, each independently reviewable and matching
+§1.1:
 
 1. this acceptance-case design and oracle-capture record;
 2. the existing implementation-plan reconciliation; and
@@ -289,3 +301,6 @@ Three separate commits, each independently reviewable and matching §1.1:
 The user's staged `Internship Diary.md` and unstaged `designs/astra-plan.md` are preserved
 untouched. Each commit uses path-scoped staging and verifies those unrelated entries afterward.
 No push and no PR.
+
+Current disposition: retain this document and its 25 cases as the Spec-approval conformance
+tranche. Do not execute its old standalone plan or publish an approval-only `astra-report` skill.

@@ -1,9 +1,9 @@
 # Astra phase-0 skill design roadmap
 
-**Snapshot:** 2026-08-13
-**Status:** Locked six-skill authority roster and coordinator allocation;
-consultant pairs and the final trigger surface are reconciled; source internalization and runtime
-implementation remain deferred
+**Snapshot:** 2026-08-17
+**Status:** Locked six-skill authority roster and coordinator allocation; consultant pairs, the
+final trigger surface, and the interface-complete Astra Report v1 direction are reconciled; source
+internalization and runtime implementation remain deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
 **Amendment 2 (2026-07-31):** Source-body inspection of Context, Safety, Delegation & autonomy, and
@@ -52,13 +52,18 @@ directly invocable lifecycle authorities with non-authoritative Report, replaces
 Debug destinations, and makes producer-owned reporting contracts reciprocal across all six
 designs. The user-approved work order is slice-first: acceptance cases and drift-risk captures
 precede one non-retiring implementation slice; reusable harness structure does not. See section 16.
+**Amendment 10 (2026-08-17):** The complete Report research handoff and later user decisions retain
+Report's authority boundary while widening its presentation ingress to reportable agent output,
+adding producer-owned progress and existing-deliverable presentation, and replacing an
+approval-only public slice with an interface-complete v1 milestone. Slice A remains an internal
+Spec-approval conformance tranche. No runtime is authorized. See section 17.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
 > proposes source allocation; it does not replace either document or make the source-claim
 > ledger authoritative by itself.
 
-> **Current-roadmap rule.** Sections 14–16 supersede sections 2–7 wherever the pre-lock 24-skill
+> **Current-roadmap rule.** Sections 14–17 supersede sections 2–7 wherever the pre-lock 24-skill
 > proposal conflicts with the locked six-skill coding stack. Sections 2–13 remain historical
 > design and decision evidence; they do not authorize a seventh public coding-lifecycle skill.
 
@@ -2193,3 +2198,70 @@ runner mechanics may emerge during implementation; a reusable harness requires r
 demonstrated needs, and the full 92-source corpus remains a preservation or retirement
 obligation. This amendment authorizes no runtime, corpus runner, reusable harness, ledger change,
 installation, deletion, retirement, push, PR, or other repository effect.
+
+## 17. Amendment 10 — Astra Report interface-complete v1 direction
+
+The evidence and decision record is
+[`docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`](research/2026-08-17-astra-report-research-to-design-reconciliation.md).
+The complete research handoff mostly confirms the existing Report architecture: reply-surface
+budgeting, a fresh Context Capsule, structural state delta, an exposure-not-recall ledger, staged
+disclosure, visible deferral, blocker escalation, and read-only lifecycle authority remain intact.
+
+### 17.1 Later user decisions
+
+The user subsequently fixed three additions:
+
+1. Report applies implicitly whenever a cooperating agent emits reportable outbound progress,
+   result, blocker/failure, decision, deliverable, or status output. Ordinary dialogue remains
+   direct; Report does not become a conversation summarizer or orchestrator.
+2. Host-native step indicators should show producer-owned progress and direct attention, with a
+   content-equivalent textual fallback. Work state remains independent from Report disclosure
+   state.
+3. The first public milestone is the whole Report interface across representative reporting jobs,
+   not a skill advertised around one approval fixture. Internal increments remain bounded and
+   reviewable.
+
+These decisions widen presentation ingress and delivery mechanics only. The six skills remain the
+only lifecycle authorities and retain their existing `astra.report-event/v0` obligations.
+
+### 17.2 Report-specific exception to the earlier slice order
+
+Section 14.4 and amendment 9 remain the general internalization policy. For Report alone, their
+instruction to implement and dogfood one public vertical slice before widening is superseded at
+the **promotion boundary**:
+
+- Slice A's 25 delegated Spec-approval cases remain a conformance tranche.
+- Additional internal tranches cover progress, results, blockers/failures, decisions, lifecycle
+  artifacts, text deliverables, code/diffs, resumption, degradation, and host fallback.
+- Each tranche may be implemented and reviewed separately on one Report v1 integration branch.
+- No tranche receives approval-only or content-specific public `astra-report` metadata.
+- Promotion occurs only when the common interface and representative diversity pass together.
+
+This preserves small implementation changes without allowing the first fixture to specialize the
+public skill.
+
+### 17.3 Contract and adapter direction
+
+`docs/design-requirements.md` section 7.11.7 retains the six-skill `ReportEvent` as the lifecycle
+profile and adds a producer-neutral ReportPacket semantic envelope. Report normalizes both behind
+one rendering interface. Non-lifecycle producer provenance remains non-authoritative.
+
+Native progress UI, structured choices, links/attachments, and text fallback are host adapters
+over identical semantic content. Presenting an existing report, Markdown file, code change, or
+diff is in v1; creating, editing, explaining beyond recorded producer claims, judging, converting,
+or generating visual artifacts is not.
+
+### 17.4 Governed next work
+
+1. Amend the canonical Report design and shared requirements — completed by this amendment set.
+2. Reclassify Slice A as a conformance tranche and mark its approval-only plan superseded for
+   execution.
+3. Write and review a replacement interface-complete v1 implementation plan that incorporates the
+   retained Slice A cases without prematurely building a research platform — written at
+   [`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](superpowers/plans/2026-08-17-astra-report-v1.md);
+   user review remains pending.
+4. Only then ask for a separately scoped runtime-execution amendment to `docs/phase-0.md`.
+
+This amendment authorizes documentation and implementation planning only. It creates no
+`SKILL.md`, schema, script, test, Exposure Ledger storage, runtime, harness, installation, source
+resolution, deletion, retirement, push, PR, or publication state.

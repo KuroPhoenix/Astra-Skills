@@ -1,7 +1,8 @@
 # Astra skill design requirements
 
-**Date:** 2026-07-31
-**Status:** Approved structure; six-skill coding-lifecycle authority policy added
+**Date:** 2026-07-31; amended 2026-08-17
+**Status:** Approved structure; six-skill coding-lifecycle authority and interface-complete Report
+presentation policy added
 
 ## 1. Purpose
 
@@ -668,7 +669,7 @@ sufficient routing evidence.
 | Plan and execute exact repository delivery | `astra-implement` | Current Approved Change Specification and effect authority | Approved Delivery Roadmap, Execution Ledger, and atomic implementation commits |
 | Construct or run independent proof at a pinned revision | `astra-test` | Accepted behavior, target snapshot, and effect boundary | Test Evidence Packet |
 | Prepare and perform publication effects | `astra-ship` | Complete current artifact chain, passing evidence, and explicit effect authority | Publication Record |
-| Explain recorded lifecycle artifacts, progress, decisions, or blockers | `astra-report` | Recorded producer artifacts or a producer-owned `ReportEvent` | Human-readable rendering with no lifecycle determination |
+| Present recorded lifecycle artifacts or typed producer-owned progress, results, blockers, decisions, and deliverables | `astra-report` | Recorded producer artifacts, stable deliverable descriptors, a lifecycle `ReportEvent`, or a producer-owned ReportPacket | Attention-managed rendering with no lifecycle determination or authority upgrade |
 
 Selection obeys these rules:
 
@@ -683,6 +684,9 @@ Selection obeys these rules:
    approval boundary.
 6. The user starts each later public workflow. Report detail selection and
    `Understood, proceed` return control only and cannot start it.
+7. A cooperating agent emitting a reportable outbound event delegates presentation implicitly to
+   Report. This is not implicit lifecycle routing: the producer remains active and retains its
+   facts, work state, deliverables, decisions, and effects.
 
 There is **no automatic public peer invocation**. Internal modes, artifact presence, `C`, `I`,
 `H`, `I(reporting)`, Report detail selection, and continuation controls may establish eligibility
@@ -701,13 +705,14 @@ or expose a next workflow, but cannot start it.
 | “Resolve merge conflicts” | Ship during landing; Implement only for approved Roadmap base synchronization; otherwise stop for scope or authority |
 | “Root cause analysis” | Critique `diagnose`; live-outage stabilization remains external `firefighting` |
 | “Where are we?” | Artifact or project state -> Report; publication authorization or queue state -> Ship Status |
+| “Deliver/show me the report, Markdown, code change, or diff” | Present an already-created stable output -> Report; create or edit it -> the effect-owning producer; explain repository behavior -> Understand Code; judge correctness -> Critique or Test |
 | “Turn this into an issue” | Spec only for intent or specification projection with separately authorized issue effects; generic roadmap-to-ticket projection remains unowned |
 | “Explain, fix, test, and ship” | Earliest missing authority; later outcomes remain non-invoked, user-started stages |
 
 This table supersedes active routes to the historical Plan and Debug peers while preserving their
 design files as source and decision evidence.
 
-#### 7.11.7 Producer reporting contract
+#### 7.11.7 Producer reporting contracts
 
 Each lifecycle authority remains the content owner at every reporting moment. Its authoritative
 artifact exposes the following producer-owned fields; an empty collection is `[]`, never an
@@ -755,6 +760,75 @@ If Report is unavailable at a non-decision moment, the producer emits only artif
 identity, a one-sentence outcome, blocking state, and an unavailable flag. At an approval request,
 the producer presents its complete decision envelope itself. Report failure never changes
 lifecycle authority or blocks progress solely because rich rendering is unavailable.
+
+The lifecycle envelope above remains the six authorities' canonical reporting profile. Report
+normalizes it into the producer-neutral semantic contract below; the six do not switch profiles to
+bypass artifact, decision, consequence, evidence, or approval requirements.
+
+Other cooperating agents may emit an `astra.report-packet/v1` at a reportable outbound event. The
+packet delegates presentation only. It is not a lifecycle artifact, does not enter the 7.11.3
+chain, and cannot grant the producer any authority it did not already hold.
+
+| Field | Type and invariant |
+|---|---|
+| `schema_version` | Literal `astra.report-packet/v1` |
+| `packet_id` | Stable non-empty producer-owned ID |
+| `producer` | `{producer_id, provenance_class}` where `provenance_class` is `lifecycle_authoritative` or `producer_owned`; only the six may use the first value |
+| `event_type` | `progress`, `result`, `approval_request`, `stage_boundary`, `status_request`, `failure`, or `deliverable` |
+| `boundary_kind` | `entry_refused`, `work_stopped`, or `cycle_closed` for `stage_boundary`; otherwise `null` |
+| `source_refs` | Stable artifact, event, or deliverable references; empty only for a labelled pre-artifact refusal/failure with evidence or failure anchors |
+| `outcome` | One non-empty producer-authored sentence |
+| `blocking` | Boolean supplied by the producer |
+| `surface_candidates` | Producer-owned surfaces using the shared shape above; empty as `[]`, never omitted |
+| `open_decisions` | Complete producer-owned decision objects using the shared shape above; empty as `[]`, never omitted |
+| `evidence_refs` | Stable producer-owned evidence references; empty only when the event explicitly records that no evidence exists |
+| `progress_steps` | Ordered producer-owned step objects using the shape below; empty as `[]`, never omitted |
+| `deliverables` | Producer-owned existing-output descriptors using the shape below; empty as `[]`, never omitted |
+| `supersedes_refs` | Stable source or packet references sufficient for structural delta; empty as `[]` forces full-current rendering rather than inferred prose diffing |
+
+Each progress step has this shape:
+
+| Field | Type and invariant |
+|---|---|
+| `step_id` | Stable non-empty producer-owned ID |
+| `label` | Non-empty user-facing step label |
+| `state` | `pending`, `active`, `completed`, `blocked`, or `failed`; Report never supplies or mutates it |
+| `blocking_reason` | Non-empty producer-authored reason for `blocked`; otherwise `null` |
+| `evidence_refs` | Stable evidence references, empty as `[]` when none exists |
+
+Each deliverable has this shape:
+
+| Field | Type and invariant |
+|---|---|
+| `deliverable_id` | Stable non-empty producer-owned ID |
+| `kind` | `report`, `markdown`, `code`, `diff`, or `other` |
+| `label` | Non-empty user-facing label |
+| `location` | Stable path, link, or host attachment reference |
+| `revision` / `content_hash` | Stable values when available; `null` requires labelled full-current/no-delta degradation |
+| `surface_ids` | Stable IDs linking significance and consequence; empty as `[]` only when the packet outcome is the complete description |
+| `evidence_refs` | Stable evidence references, empty as `[]` only when the producer records that none exists |
+| `caveats` | Producer-authored material qualifications, empty as `[]`, never omitted |
+
+Lifecycle normalization preserves every `astra.report-event/v0` artifact, boundary, outcome,
+blocking, surface, decision, and evidence field. It maps `artifact_completion` to `result` and
+retains the other event types; lifecycle authority and artifact identity remain explicit. No
+normalizer may infer progress state, fabricate a deliverable, or convert a decision reference
+without resolving its complete producer-owned object.
+
+The normalizer's internal representation retains the source profile, original event identity, and
+all `open_decision_refs` as adapter trace fields; these are not additional public ReportPacket
+inputs. If a referenced decision has no complete producer-owned object, the reference remains
+addressable and a `missing_open_decision_envelope` contract gap is surfaced. It must never become
+an actionable choice until the producer supplies the common open-decision shape.
+
+Work state and disclosure state are independent. The producer alone owns each progress step's
+state. Report alone records whether a receipt-confirmed segment did not show, previewed, or opened
+that step or topic. Neither axis mutates or proves the other.
+
+Native progress indicators, structured choices, and deliverable links/attachments are host
+adapters. A host without one receives the same ordered states, topic previews, decision meanings,
+and deliverable references as text. Adapter availability may change mechanics, never content,
+authority, addressability, or Exposure Ledger receipt rules.
 
 ## 8. Architecture is local to each skill
 

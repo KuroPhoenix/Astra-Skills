@@ -1,29 +1,37 @@
 # Astra Report — phase-0 design
 
-**Date:** 2026-08-12; amended 2026-08-13
+**Date:** 2026-08-12; amended 2026-08-13 and 2026-08-17
 
 **Status:** Proposed phase-0 design approved for implementation planning; trigger-surface,
-producer-contract, source-ledger, and runtime-plan reconciliation are complete. Runtime
+producer-contract, source-ledger, and research-to-design reconciliation are complete. Runtime
 implementation and retirement gates remain pending. Records three user decisions of 2026-08-12
 (existence, MVP boundary, delegated voice), the same-day design-review resolutions (output-only
-voice, `I(reporting)` typing, post-MVP adapters), the approved source-slice statement in 4.2, and
-the 2026-08-13 staged-disclosure and conditional structured-choice decisions. The eight blocking
-review findings and the method-canon audit corrections are applied. The implementation plan at
-`docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` was reconciled with the
-2026-08-13 interaction contract in commit `318bcaf`; it still requires a separate explicit
-runtime-execution choice. Creates prose only: no runtime skill, harness, installation, retirement,
-push, or PR.
+voice, `I(reporting)` typing, deferred generated-format adapters), the approved source-slice
+statement in 4.2, the 2026-08-13 staged-disclosure and conditional structured-choice decisions,
+and the 2026-08-17 decisions that Report applies implicitly to reportable agent output, exposes
+producer-owned progress through host-native indicators when available, organizes read-only
+delivery of producer-created text/code artifacts, and reaches interface-complete v1 before public
+promotion. The eight blocking review findings and the method-canon audit corrections are applied.
+The research reconciliation is
+`docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`. The earlier
+Spec-approval implementation plan remains useful only as a conformance tranche and is
+non-executable as the public milestone. The proposed replacement plan is
+`docs/superpowers/plans/2026-08-17-astra-report-v1.md`; it grants no runtime authority. Creates
+prose only: no runtime skill, harness,
+installation, retirement, push, or PR.
 
-**Proposed public shape:** `astra-report` — the stack's single human-facing reporting surface.
+**Proposed public shape:** `astra-report` — the stack's single rich outbound reporting surface.
 It is a seventh user-facing entry point but not a seventh lifecycle authority. The roster
 formula this design proposes is **six authorities, one voice**.
 
 Astra Report renders the six authoritative artifacts — Finding Set, Understanding Report,
 Approved Change Specification, Approved Delivery Roadmap and Execution Ledger, Test Evidence
-Packet, Publication Record — into attention-managed communication for the user. It owns how
-things are said; it never owns what is true, what is required, or what is approved. Its two
-outputs are the ephemeral **Reader Brief** and the durable, append-only **Exposure Ledger**;
-neither is an authoritative chain artifact in the 7.11.3 sense.
+Packet, Publication Record — and typed producer-owned progress, results, blockers, decisions, and
+deliverables into attention-managed communication for the user. A non-lifecycle producer gains no
+lifecycle authority by using Report. Report owns how things are said; it never owns what is true,
+what is required, what work state exists, or what is approved. Its two outputs are the ephemeral
+**Reader Brief** and the durable, append-only **Exposure Ledger**; neither is an authoritative
+chain artifact in the 7.11.3 sense.
 
 ## 1. Identity and status
 
@@ -31,20 +39,24 @@ neither is an authoritative chain artifact in the 7.11.3 sense.
 by explicit personal value: the user's own 2026-08-12 problem statement (2.1) and three
 same-day decisions drove this design; there is no usage evidence yet because the job is new.
 **Candidate neighborhoods investigated:** Docs & knowledge (`cm-docs-and-knowledge`); Design &
-visual is touched only through the post-MVP `diagram` adapter (`cm-design-and-visual-21`).
-**User job:** When I want to act on my project's current state without re-reading the whole
-record, I invoke `astra-report` for one budgeted brief of what changed and what needs my
-decision. **Personal value:** explicit — quoted user statements, not inference.
+visual is touched only through the deferred post-v1 `diagram` adapter
+(`cm-design-and-visual-21`).
+**User job:** When an agent has progress, a result, a blocker, a decision, or a deliverable to
+report—or when I need to resume a project—I receive one budgeted, inspectable brief that shows
+what matters now and keeps every consequential detail reachable. **Personal value:** explicit —
+quoted user statements, not inference.
 
-### 1.1 Recorded user decisions (2026-08-12 and 2026-08-13)
+### 1.1 Recorded user decisions (2026-08-12, 2026-08-13, and 2026-08-17)
 
 1. **Existence.** `astra-report` is approved as a user-facing reporting skill alongside the
    six-skill coding lifecycle. It holds no lifecycle authority.
-2. **MVP boundary.** The approved scope is: a stateless Reader Brief renderer; one durable
+2. **Original MVP boundary.** The approved 2026-08-12 scope was: a stateless Reader Brief renderer; one durable
    per-project Exposure Ledger; and reporting hooks on the six artifact contracts. Explicitly
    excluded: recall modeling, cross-project attention scheduling, proactive or self-triggered
    reporting, visual reporting, personalization beyond a verbosity mode, and summarization of
-   conversation rather than artifacts.
+   conversation rather than artifacts. Decisions 7–9 later widen producer ingress, host-native
+   rendering, and existing-deliverable presentation without admitting the rejected cognition,
+   scheduling, notification, orchestration, or generated-visual jobs.
 3. **Delegated voice.** The six skills cease direct user-facing reporting. All human-facing
    reporting output of the six is delegated downstream to `astra-report`. The user's words:
    "the six skills should not be user-facing; all reports should be delegated to astra report.
@@ -64,6 +76,19 @@ decision. **Personal value:** explicit — quoted user statements, not inference
    already-authorized workflow; it never approves a decision, grants a new effect, or starts the
    next public lifecycle skill. At an approval boundary, producer-owned options keep their exact
    labels and consequences.
+7. **Implicit outbound reporting.** Report is invoked implicitly whenever a cooperating agent
+   emits a reportable outbound event: progress, result, blocker/failure, decision request,
+   deliverable presentation, or status/resumption. Ordinary intake, clarification, brainstorming,
+   teaching, and conversational explanation remain direct unless they produce such an event.
+   Report is the reporting layer, not the entire conversational interface.
+8. **Progress indicators.** When the host exposes native step/progress indicators, Report uses
+   them to direct attention. Work state remains producer-owned and is distinct from Report's
+   disclosure state. Hosts without the affordance receive the same ordered steps and states as
+   text.
+9. **Interface-complete first milestone.** The first publicly promoted Report runtime must cover
+   representative progress, result, blocker/failure, decision, artifact/deliverable, code/diff,
+   resumption, degradation, and host-fallback cases through one interface. Content-specific
+   slices remain internal conformance tranches and cannot define the public skill's identity.
 
 These are recorded decisions in the sense of the 2026-08-12 lock convention: they fix design
 direction, and they revise two locked claims — the exactly-six public roster in
@@ -74,9 +99,10 @@ retirement of any source.
 
 ### 1.2 Interpretation resolved
 
-Decision 3 operates in the **output direction only** — resolved by the user's design review of
-2026-08-12 (**Observed**). The six remain directly invocable control surfaces and own their
-intake dialogue and approval records; Report is the sole rich outbound presentation surface.
+Decisions 3 and 7 operate in the **output direction only** — resolved by the user's design reviews
+of 2026-08-12 and 2026-08-17 (**Observed**). The six remain directly invocable control surfaces
+and own their intake dialogue and approval records; other producers retain ownership of their
+work state and deliverables; Report is the sole rich outbound presentation surface.
 The earlier phrase "not user-facing" is recorded as imprecise shorthand for exactly that
 split. What moves to Report is the skill-to-user direction — artifact presentation, status,
 progress, approval requests, and failure announcements. Input mediation was considered and
@@ -127,8 +153,14 @@ human-facing rendering without corrupting its own artifact discipline.
 | **Detail topic** | One addressable section of optional detail: stable topic ID, section-name label, one- or two-sentence content preview, linked surface/evidence IDs, and the full body revealed only on selection |
 | **Detail menu** | One bounded navigation surface containing detail topics plus a safe continuation control; rendered as structured choices when supported and as the same compact text index otherwise |
 | **Brief segment** | One receipt-bearing delivery within a Reader Brief session: the initial Capsule/NOW/menu segment or one selected detail expansion |
-| **Exposure Ledger** | Report's durable, append-only per-project record of what was shown to the user, when, covering which artifact revisions, which topic previews and details were exposed, and which decisions were presented |
+| **Exposure Ledger** | Report's durable, append-only per-project record of what was shown to the user, when, covering which artifact or deliverable revisions, which topic previews and details were exposed, and which decisions were presented |
 | **Reader Brief** | Report's ephemeral, potentially multi-segment session: an initial Capsule and NOW, a detail menu when detail exists, and zero or more selected NEXT, DEFERRED, Change Story, alternative, or evidence expansions |
+| **Reportable outbound event** | A producer-owned progress, result, blocker/failure, decision-request, deliverable, or status event that should cross Report before rich presentation to the user |
+| **ReportPacket** | The producer-neutral semantic envelope for a reportable outbound event. It preserves producer identity, provenance class, stable source references, surfaces, decisions, progress, deliverables, and evidence; it is not an authoritative artifact |
+| **Progress spine** | An ordered view of producer-owned work steps and their states, rendered through native host indicators when available and equivalent text otherwise |
+| **Work state** | Producer-owned task state: `pending`, `active`, `completed`, `blocked`, or `failed`; Report may render but never infer or mutate it |
+| **Disclosure state** | Report-owned exposure level: content is not shown, previewed, or opened in a receipt-confirmed segment; it never implies work completion or comprehension |
+| **Deliverable descriptor** | A stable producer-owned reference to an already-created report, Markdown file, code change, diff, or other output, with provenance, location, outcome, caveats, and evidence links sufficient for faithful delivery |
 
 ### 2.3 Reporting model
 
@@ -167,9 +199,10 @@ astra-report [scope] [--mode skim|standard|deep]
 ```
 
 Scope is one artifact, a set of artifacts, or a project (meaning: the current artifact chain).
-Default scope is the active project; default mode is `standard`. The same rendering core is
-consumed by the six skills at their reporting moments through the typed `I(reporting)`
-relation (section 8).
+It may also be one or more stable producer deliverables. Default scope is the active project;
+default mode is `standard`. The same rendering core is consumed by the six skills at their
+reporting moments through the typed `I(reporting)` relation and by other cooperating producers
+through the ReportPacket profile in section 8.8.
 
 Within the resulting brief session, `expand <topic-id>` reveals one topic, `expand all` enters
 Deep, and `Understood, proceed` applies the bounded continuation in 1.1 decision 6. Structured
@@ -182,6 +215,10 @@ new lifecycle invocation.
 - "Report on X", "explain this Finding Set / spec / test results to me" — artifact brief.
 - "What do you need from me?", "what's blocking?" — open-decision brief.
 - Any of the six skills reaching a reporting moment (section 8.3) — delegated rendering.
+- Any cooperating agent emitting typed progress, result, blocker/failure, decision-request,
+  deliverable, or status output (section 8.8) — implicit outbound rendering.
+- Delivery of an already-created report, Markdown file, code change, diff, or comparable stable
+  output — deliverable brief. The producer, not Report, owns the output and its claims.
 
 ### 3.3 Nearby requests that should not trigger it
 
@@ -191,7 +228,7 @@ new lifecycle invocation.
   (`document-release` disposition); standalone documentation remains the locked five-source
   deferral.
 - "Summarize our conversation" — out of scope by recorded decision 2; Report reads artifacts,
-  not chat history.
+  deliverables, and typed producer packets, not arbitrary chat history.
 - "Is this finding correct?", "which artifact is right?" — judgment belongs to Critique;
   Report surfaces contradictions and never adjudicates them.
 - Deployment changelogs, retros, meeting notes, internal communications with their own durable
@@ -202,38 +239,47 @@ new lifecycle invocation.
 | Input | Requirement |
 |---|---|
 | Artifact scope | Immutable references (identity, revision, hash per 7.11.3) to one or more chain artifacts; sideways reads into peer working files are forbidden |
+| Deliverable scope | Stable producer-owned descriptor for an already-created output; revision/hash may be absent only with explicit full-current/no-delta degradation |
 | Mode | `skim`, `standard` (default), or `deep`; a persisted per-project default may exist in the Exposure Ledger |
 | Exposure Ledger | Read if present; absence degrades to full-state rendering (section 7.6) |
-| Interaction capability | Optional host declaration for structured-choice support and its option/description limits; absence selects the text-index fallback and changes no content or authority |
-| Direct request | The user's scope and mode plus the resolved authoritative artifact references; no ReportEvent is required or fabricated |
-| Delegated payload | At an `I(reporting)` moment: the producing skill's ReportEvent envelope (sections 8.3–8.4) |
+| Interaction capability | Optional host declaration for structured-choice and native progress support plus relevant limits; absence selects content-equivalent text fallbacks and changes no content or authority |
+| Direct request | The user's scope and mode plus resolved authoritative artifact or stable deliverable references; no producer event is required or fabricated |
+| Lifecycle payload | At an `I(reporting)` moment: the producing skill's `astra.report-event/v0` envelope (sections 8.3–8.4), normalized without authority loss |
+| General delegated payload | At another reportable outbound event: the producer-owned ReportPacket semantic fields in 8.8 |
+| Progress | Ordered producer-owned step IDs, labels, and work states; Report supplies no missing state and keeps disclosure state separate |
+| Deliverables | Zero or more producer-owned descriptors; Report may present, preview, excerpt, and link them but cannot author or mutate them |
 
-The two input forms do not create two authority paths. On a direct request, Report may render
-only facts, consequences, and open decisions already recorded in the resolved artifacts and
-their canonical reporting hooks. If a hook is absent, Report names the gap and uses exact
-artifact excerpts or line anchors; it never constructs a producer outcome, consequence, open
-decision, or ReportEvent. A direct approval brief is therefore possible only when the
-authoritative artifact already carries the complete common open-decision shape. Otherwise
-Report explains the artifact and identifies the producer-owned missing decision contract.
+The input profiles do not create additional authority paths. On a direct request, Report may
+render only facts, consequences, and open decisions already recorded in the resolved artifacts or
+stable producer deliverables and their canonical reporting hooks. If a hook is absent, Report
+names the gap and uses exact artifact excerpts or line anchors; it never constructs a producer
+outcome, consequence, open decision, work state, or event. A direct approval brief is therefore
+possible only when the authoritative artifact already carries the complete common open-decision
+shape. Otherwise Report explains the artifact and identifies the producer-owned missing decision
+contract. A non-lifecycle packet remains producer-owned evidence and never becomes a lifecycle
+artifact merely because Report rendered it.
 
 ### 3.5 User-visible result
 
-A Reader Brief session (section 7.2), delivered in conversation as an initial segment and only
-the detail segments the user selects. After every receipt-confirmed segment, one Exposure Ledger
-append (section 7.3); without a receipt, no append. Structured choices are a conditional
-conversation affordance with a text-equivalent fallback, not the visual or file-format adapters
-deferred in 4.3. Nothing else.
+A Reader Brief session (section 7.2), delivered as an initial segment and only the detail segments
+the user selects. A host may render progress through native indicators, navigation through
+structured choices, and deliverables through links or attachments; each has a content-equivalent
+text fallback. After every receipt-confirmed segment, one Exposure Ledger append (section 7.3);
+without a receipt, no append. Report creates no deliverable or lifecycle effect. Nothing else.
 
 ### 3.6 Effect authority and non-goals
 
 Report is **read-only over the lifecycle**. It never: approves, rejects, or waives anything;
 reinterprets, re-grades, repairs, or re-prioritizes a source skill's severity or consequence
-judgment; mutates any chain artifact or repository file; hides disagreement between artifacts;
-starts, schedules, or interrupts any workflow; ranks anything outside the scope it was invoked
-on; or communicates across projects. Its only durable effect is the Exposure Ledger append,
+judgment; invents or changes a producer's work state; mutates any chain artifact, deliverable, or
+repository file; hides disagreement between sources; starts, schedules, or interrupts any
+workflow; ranks anything outside the scope it was invoked on; or communicates across projects.
+Its only durable effect is the Exposure Ledger append,
 which is Report-jurisdiction bookkeeping in the same sense that the Publication Record is
 Ship-jurisdiction bookkeeping — and which is never an approval record (section 8.4). Format
-and visual delivery is a post-MVP non-goal (section 4.3).
+conversion, generated visual reporting, and dashboard authorship are post-v1 non-goals (section
+4.3). Presenting an existing text/code deliverable or using host-native controls is in v1 and
+creates no file-writing authority.
 
 ### 3.7 Decisions that remain with the user
 
@@ -294,7 +340,8 @@ templates at gstack revision `a3259400a366593e0c909dd9ac3e59752efd2488`, release
 
 **Evidence gap:** the consumed resolver/section templates and the generator registration have
 not been inspected. For `document-generate` that inspection must close before its slice row
-can resolve; for the two post-MVP adapters it is deferred to adapter admission (4.3).
+can resolve; for the two post-v1 generated-format adapters it is deferred to adapter admission
+(4.3).
 
 ### 4.2 Slice dispositions and the documentation deferral
 
@@ -328,17 +375,21 @@ That decision authorizes the three existing collision rows to move from `unclaim
 resolve a row, transfer a primary job, authorize whole-source absorption or retirement, or
 settle the separate docs-only-cycle question. Report claims no source as a primary home.
 
-### 4.3 Post-MVP delivery adapters
+### 4.3 Host delivery and deferred generated-format adapters
 
-`make-pdf` and `diagram` are **excluded from the MVP**: recorded decision 2 excludes visual
-reporting, and format delivery defers with it. Neither is absorbed behavior; both remain
+Conversation-host adapters for structured choices, progress indicators, links/attachments, and
+their text fallbacks are part of v1 because they render the same Reader Brief semantics without
+creating files. An already-created report, Markdown file, code change, or diff may be presented
+through a stable deliverable descriptor; this is output organization, not format conversion or
+artifact authorship.
+
+`make-pdf` and `diagram` remain **excluded from v1**. Neither is absorbed behavior; both remain
 independently registered gstack skills. If later admitted: `make-pdf` may re-issue an existing
-brief without content change; `diagram` is **supplemental only, never an equivalent
-rendering** — the live skill produces editable repository artifacts (Mermaid, Excalidraw,
-SVG, PNG) and cannot preserve a prose brief, so its file-writing effect requires explicit
-authority treatment before admission. Adapter admission also requires the deferred
-resolver/registration inspection (4.1.2) and, for `diagram`, a coordinator amendment to its
-already-claimed row (4.5).
+brief without content change; `diagram` is **supplemental only, never an equivalent rendering** —
+the live skill produces editable repository artifacts (Mermaid, Excalidraw, SVG, PNG) and cannot
+preserve a prose brief, so its file-writing effect requires explicit authority treatment before
+admission. Admission also requires the deferred resolver/registration inspection (4.1.2) and, for
+`diagram`, a coordinator amendment to its already-claimed row (4.5).
 
 ### 4.4 Method references: the distilled canon
 
@@ -383,11 +434,11 @@ design's sections 4.1–4.3 as evidence.
 | `cm-docs-and-knowledge-02` `doc-coauthoring` | independent reference | independent | `astra-report`: chunking and fresh-reader-testing playbook slice | `unclaimed` → `claimed` |
 | `cm-docs-and-knowledge-05` `internal-comms` | independent reference | independent | `astra-report`: status/leadership/FAQ register slice | `unclaimed` → `claimed` |
 | `cm-docs-and-knowledge-07` `teach` | independent reference | independent | `astra-report`: working-memory chunk-sizing slice | `unclaimed` → `claimed` |
-| `cm-docs-and-knowledge-04` `make-pdf` | independent reference | independent | `astra-report`: post-MVP delivery adapter (4.3) | `unclaimed` → `claimed` |
+| `cm-docs-and-knowledge-04` `make-pdf` | independent reference | independent | `astra-report`: deferred post-v1 generated-format adapter (4.3) | `unclaimed` → `claimed` |
 | `cm-docs-and-knowledge-03` `/doc` | independent reference | independent | `astra-report`: plain-language, audience-targeting, and fresh-reader-test slice | `unclaimed` → `claimed`; approved lock exception in 4.2 |
 | `cm-docs-and-knowledge-01` `document-generate` | independent reference | independent | `astra-report`: explanation-quadrant structure slice | `unclaimed` → `claimed`; approved lock exception in 4.2; the 4.1.2 resolver gap must still close before resolution |
 | `cm-docs-and-knowledge-09` `rtfm` | independent reference | independent | `astra-report`: consumer-framing and uncertainty-disclosure slice | `unclaimed` → `claimed`; approved lock exception in 4.2 |
-| `cm-design-and-visual-21` `diagram` | already `claimed`: retained independent (roadmap amendment 3 §10) | independent | proposed amendment: add `astra-report` as a post-MVP supplemental-delivery consumer alongside `astra-document` and `astra-interface` | stays `claimed`; amendment reconciles against the amendment-3 record |
+| `cm-design-and-visual-21` `diagram` | already `claimed`: retained independent (roadmap amendment 3 §10) | independent | proposed amendment: add `astra-report` as a deferred post-v1 supplemental-delivery consumer alongside `astra-document` and `astra-interface` | stays `claimed`; amendment reconciles against the amendment-3 record |
 
 ## 5. Collision analysis
 
@@ -604,15 +655,15 @@ rendering unavailability degrades communication, not authority.
 
 ### 7.7 Architectural hypotheses
 
-Internal seams — scope selector, delta engine, attention allocator, composer, ledger writer —
-are analytical until implementation demonstrates variation. Structured choice versus text index
-is one conditional branch inside conversational composition, not a universal adapter framework;
-the semantic topic IDs, previews, and controls are identical. File and visual delivery adapters
-remain deferred post-MVP (4.3), and an adapter seam becomes real only if two such adapters are
-admitted. Whether the delta engine and allocator are separable modules or one pass remains a
-hypothesis for the comparison systems (11.1).
+Internal seams — scope selector, packet normalizer, delta engine, attention allocator, composer,
+and ledger writer — are analytical until implementation demonstrates variation. Host rendering is
+a real seam because v1 requires at least native-interaction and text-fallback adapters; semantic
+step states, topic IDs, previews, controls, deliverables, and consequences remain identical across
+them. Generated file and visual adapters remain deferred (4.3). Whether the delta engine and
+allocator are separable modules or one pass remains a hypothesis for the comparison systems
+(11.1).
 
-The renderer remains stateless in the approved MVP sense. Every expansion request carries the
+The renderer remains stateless in the approved v1 sense. Every expansion request carries the
 brief ID, current immutable artifact references, topic ID or control, and prior receipt/exposure
 facts needed to regenerate the next segment. Report holds no hidden session store; the Exposure
 Ledger remains its only durable state.
@@ -622,10 +673,12 @@ Ledger remains its only durable state.
 ### 8.1 Direction rule
 
 Information flowing **user → skill** (invocation, intake answers, approvals being given)
-remains direct. Information flowing **skill → user** (artifact presentation, status, progress,
-approval requests, failure announcements) routes through Report. Intake dialogue inside an
-active skill (one clarifying question at a time) stays direct but obeys the exported contract
-rules: one question per message; no unnecessary branches; no offer phrased as a question.
+remains direct. Rich reportable information flowing **producer → user** (artifact or deliverable
+presentation, status, progress, results, approval requests, blocker/failure announcements) routes
+through Report. This includes the six lifecycle skills and cooperating non-lifecycle agents, but
+does not confer lifecycle authority on the latter. Intake dialogue inside an active skill (one
+clarifying question at a time) stays direct but obeys the exported contract rules: one question
+per message; no unnecessary branches; no offer phrased as a question.
 Detail-topic selection is navigation inside an active Report session, not intake mediation or a
 peer invocation. `Understood, proceed` returns control according to its exact description; it
 does not answer a producer-owned approval unless the producer presents a separately identified,
@@ -644,12 +697,13 @@ pass/drift/authority_gap) and not `H` (nothing is handed off). Report consumes t
 artifacts through ordinary `I` references in the opposite direction. The typing convention
 needs only a clarifying note in the relation vocabulary (12.4), not a new entry.
 
-### 8.3 Reporting moments and the ReportEvent envelope
+### 8.3 Lifecycle reporting moments and the ReportEvent envelope
 
 The six invoke `I(reporting)` at exactly five moments: authoritative-artifact completion; any
 approval request; stage boundaries (entry refused, work stopped, cycle closed); explicit user
 status requests; and failure or degradation announcements. Nothing else routes through
-Report.
+Report **from the lifecycle profile**. Section 8.8 adds producer-neutral progress and deliverable
+events without changing these five lifecycle obligations.
 
 This envelope governs delegated `I(reporting)` input only. A user invoking Report directly
 supplies the direct request of 3.4; Report must not impersonate a lifecycle producer by
@@ -728,11 +782,48 @@ delegation clause;
 their content authority sections are untouched. This is wording migration, not authority
 change. Rows stay `claimed`, never `resolved`, until the roster-wide review.
 
+### 8.8 Producer-neutral ReportPacket profile
+
+Cooperating agents outside the six lifecycle authorities delegate only **presentation** through a
+producer-owned ReportPacket. The packet is a semantic contract, not a lifecycle artifact and not a
+new public workflow. It carries:
+
+| Field | Invariant |
+|---|---|
+| Packet identity | Stable producer-owned ID and schema/profile version |
+| Producer and provenance | Stable producer ID plus `lifecycle_authoritative` or `producer_owned`; Report never upgrades the latter |
+| Event type | `progress`, `result`, `approval_request`, `stage_boundary`, `status_request`, `failure`, or `deliverable` |
+| Source references | Stable artifact, event, or deliverable references; absent only for a labelled pre-artifact refusal/failure degradation |
+| Outcome and blocking state | Producer-authored; Report may order but never infer or re-grade |
+| Surface candidates | The same stable claim, consequence, blocking, decision-required, and evidence shape as 8.6 |
+| Open decisions | Complete producer-owned decision objects; an incomplete decision is reported as a contract gap, never repaired |
+| Progress steps | Ordered stable step IDs, labels, producer work states, and evidence/blocker references; empty as `[]` |
+| Deliverables | Stable descriptors for existing outputs: ID, kind, label, location, optional revision/hash, linked surfaces/evidence, and caveats; empty as `[]` |
+| Supersession | Stable references sufficient for structural delta when available; absence forces full-current rendering rather than prose-diff inference |
+
+The Report core normalizes `astra.report-event/v0` into this semantic profile without discarding
+its lifecycle producer, artifact, boundary, decision, or evidence fields. The six continue to emit
+their existing envelope and must not use a generic packet to bypass their authoritative artifact
+contracts. Direct Report invocation resolves its scope under 3.4 and fabricates neither profile.
+
+The normalized internal form retains adapter-only trace fields for `source_profile`, the original
+event identity, and every `open_decision_ref`; these do not widen the public ReportPacket contract.
+When a v0 event names an open decision but supplies no complete producer-owned decision object,
+normalization preserves the reference and emits a `missing_open_decision_envelope` contract gap.
+Report may expose that gap, but it must not turn the unresolved reference into an option or approval
+surface. This is the lossless degradation required by Scenario G, not a license to repair the
+producer contract.
+
+A cooperating agent invokes Report implicitly only when it is about to emit a reportable outbound
+event. Ordinary dialogue remains direct. If the host cannot invoke Report, the producer emits a
+minimal faithful result or complete decision envelope using the same degradation principle as
+8.5; failure of presentation cannot change producer state or authority.
+
 ## 9. Dependencies and delivery shape
 
 ### 9.1 External components that remain separate
 
-`make-pdf` and `diagram` (post-MVP delivery adapters, 4.3); the six slice sources (4.2, independent
+`make-pdf` and `diagram` (deferred post-v1 generated-format adapters, 4.3); the six slice sources (4.2, independent
 registrations retained); the method references (4.4, readable citations, not dependencies);
 the artifact chain storage convention (prerequisite: wherever the six persist artifacts,
 Report must be able to resolve immutable references; its absence is a 7.6 degradation).
@@ -743,6 +834,7 @@ Report must be able to resolve immutable references; its absence is a 7.6 degrad
 |---|---|---|
 | All six lifecycle skills | `I(reporting)` | Each consumes Report's rendering capability at the 8.3 moments via the ReportEvent envelope |
 | All six lifecycle skills | `I` | Report reads their immutable artifacts by reference |
+| Cooperating non-lifecycle producers | presentation seam only | Each may supply a producer-owned ReportPacket at a reportable outbound event; no lifecycle determination, relation, or authority is created |
 | `astra-critique` | user-mediated routing | A surfaced contradiction may lead the user to open Critique; Report never starts it |
 | `astra-understand-code` | `R` only | Adjacent explanation jobs: repository state vs artifact state; triggers must not collide (3.3) |
 | `astra-product-design` | `R` only | Shares the method-reference pattern, no runtime relation |
@@ -764,12 +856,17 @@ Usable today, before any implementation:
 2. Present at most the initial Capsule/NOW plus topic labels and one- or two-sentence previews.
    On selection, deliver only that topic; use the same compact text index when no structured
    choice surface exists.
-3. After each exact segment is visibly delivered, maintain the Exposure Ledger as a hand-edited
+3. When progress exists, render the producer's ordered steps and exact work states with native
+   indicators when available or equivalent text. Never derive work state from conversation.
+4. When delivering an existing report, Markdown file, code change, or diff, show its stable
+   descriptor and producer-authored significance, caveats, and evidence; do not edit or
+   independently judge it.
+5. After each exact segment is visibly delivered, maintain the Exposure Ledger as a hand-edited
    append-only file with 7.3 fields; if receipt or append is skipped, say "no exposure record —
    full-state brief" in the next capsule and forgo deltas.
-4. Use `/doc` (register), `internal-comms` (status shapes), and `doc-coauthoring` (chunking)
+6. Use `/doc` (register), `internal-comms` (status shapes), and `doc-coauthoring` (chunking)
    as source oracles for the prose itself, under this design's precedence chain.
-5. Never let manual rendering alter, re-grade, or omit-without-deferral any artifact content.
+7. Never let manual rendering alter, re-grade, or omit-without-deferral any producer content.
 
 The bridge is the reference convener for section 11. Its known loss versus the future skill:
 manual delta computation is error-prone without structural comparison; record that loss rather
@@ -856,6 +953,25 @@ than trusting it.
 35. Required-recommendation control: a navigation recommendation follows producer-assigned
     consequence; an approval option is marked recommended only when the producer recorded that
     preference. A host-mandated but unsupported approval recommendation forces text fallback.
+36. Live progress: at least four ordered steps span completed, active, pending, and blocked states;
+    native and textual renderings preserve IDs, order, state, blocker, and the current attention
+    point.
+37. Work/disclosure separation: opening a pending step's detail does not complete it, and receipt
+    of a completed step's preview does not claim comprehension or change work state.
+38. Producer-neutral packet: a non-lifecycle agent reports a result with stable producer-owned
+    provenance; Report presents it without calling it a lifecycle artifact or authority.
+39. Text deliverable: an existing report and Markdown file are delivered with identity, location,
+    outcome, caveats, and evidence; Report writes neither file.
+40. Code/diff deliverable: changed paths and producer-owned outcome/evidence are presented, while
+    a request to explain repository behavior stays with Understand Code and a correctness judgment
+    stays with Critique or Test.
+41. Lifecycle normalization: each of the five `astra.report-event/v0` types maps into the common
+    semantic profile without dropping artifact, boundary, decision, consequence, or evidence data.
+42. Ordinary-dialogue non-trigger: intake, one clarifying question, brainstorming, and teaching do
+    not create a ReportPacket merely because the producer speaks to the user.
+43. Interface-complete release gate: the same candidate and public identity pass progress, result,
+    blocker/failure, decision, lifecycle artifact, text deliverable, code/diff, resumption,
+    degradation, and host-fallback families before promotion.
 
 ### 11.3 Method and measures
 
@@ -872,6 +988,11 @@ given their source-assigned consequence); actionability of NOW items; register q
 against the source oracle; topic-preview supported-claim precision; selected-only expansion
 accuracy; structured-choice/text-index convergence; preview-versus-detail ledger integrity;
 cost and latency per segment and complete brief session.
+
+The v1 gate additionally measures work-state preservation, work/disclosure independence,
+ReportEvent-to-packet field preservation, deliverable provenance/addressability, correct
+dialogue/report trigger classification, and semantic convergence between native progress UI and
+text fallback.
 
 The numeric surface defaults, prose chunking transfer, Capsule resumption value, and the layer
 scheme are Astra product hypotheses. The cited communication and cognition sources motivate
@@ -910,7 +1031,10 @@ resolver/section templates and generator registration for the three generated gs
 statement and initial decisions are conversation records of 2026-08-12, quoted in 1.1 and 2.1 —
 **Observed**, including the review resolution recorded in 1.2. The staged-disclosure,
 structured-choice, one- or two-sentence preview, and safe-continuation decisions are conversation
-records of 2026-08-13, also recorded in 1.1.
+records of 2026-08-13, also recorded in 1.1. The implicit outbound-reporting, progress-indicator,
+read-only deliverable, and interface-complete-milestone decisions are conversation records of
+2026-08-17 and are reconciled in
+[`docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`](../docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md).
 
 The current Codex host contract was inspected on 2026-08-13 (**Observed**): structured user input
 is available only where the active collaboration mode exposes it; one panel accepts one to three
@@ -918,6 +1042,16 @@ questions, each with two or three authored options and one short option descript
 client may add a free-form alternative. The contract does not guarantee right-side placement or
 portable availability. Those limits justify capability detection, one-sentence compression, and
 the text-index fallback; they are not universal Report semantics.
+
+Official OpenAI documentation was inspected on 2026-08-17 (**Observed**). Skills may activate
+implicitly when a task matches the `description`, and `agents/openai.yaml` exposes
+`policy.allow_implicit_invocation`, defaulting to true
+([Build skills](https://learn.chatgpt.com/docs/build-skills)). The documented Goal mode exposes a
+host progress row, but the documentation does not establish a portable skill-controlled step API
+([Long-running work](https://learn.chatgpt.com/docs/long-running-work)). Therefore v1 must
+front-load reportable-output triggers in metadata, keep implicit invocation enabled, probe actual
+host progress capability, and preserve text fallback; it must not claim that every host can render
+native squares.
 
 The method canon audit at
 [`docs/research/2026-08-12-astra-report-method-canon.md`](../docs/research/2026-08-12-astra-report-method-canon.md)
@@ -933,21 +1067,18 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
 - Budget defaults in 7.5 are proposed numbers, expected to be tuned by use.
 - Time-decay re-glossing is admitted as a future-safe extension (2.4) but not designed.
 - The ledger file format, storage location, and brief identity scheme are later-phase work.
-- The first slice may accept a successfully written exact-output file as a delivery receipt;
-  conversation-host receipt integration remains a post-slice adapter obligation. Composition or
-  an attempted send alone never counts as exposure (7.3).
-- The first implementation slice covers delegated Spec approval only. The public direct-request
-  contract in 3.4 remains part of the approved design, but its runtime path and direct-exposure
-  ledger schema require a later behavioral slice; the first skill must not advertise that path
-  as implemented.
-- The committed implementation plan
-  `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md` was reconciled in
-  `318bcaf` against the 2026-08-13 multi-segment, preview/detail exposure, and conditional
-  structured-choice contracts. It remains non-executable until the user makes the separate
-  runtime-execution choice that the plan requires.
+- A successfully written exact-output file may serve as a delivery receipt in a conformance
+  tranche; native conversation-host receipts remain a v1 adapter obligation. Composition or an
+  attempted send alone never counts as exposure (7.3).
+- The 2026-08-13 delegated Spec-approval Slice A remains a mechanically checkable conformance
+  tranche. It no longer defines the first public runtime or permits approval-only skill metadata.
+- The committed plan
+  `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md`, reconciled in `318bcaf`,
+  is superseded for execution by the 2026-08-17 interface-complete v1 direction. Its fixtures and
+  cases may be incorporated into the v1 plan; its approval-only `SKILL.md` must not be shipped.
 - Resolved by the 2026-08-12 review: the output-only interpretation of decision 3 (1.2); the
-  withdrawal of the `V` relation in favor of typed `I(reporting)` (8.2); and the post-MVP
-  deferral of both delivery adapters (4.3).
+  withdrawal of the `V` relation in favor of typed `I(reporting)` (8.2); and the post-v1
+  deferral of the `make-pdf` and `diagram` generated-format adapters (4.3).
 - Resolved by the user's 2026-08-12 approval: the exact three-source secondary-slice exception
   in 4.2. The exception changes claim ownership only and leaves all five documentation sources
   outside the 92 target.
@@ -990,11 +1121,11 @@ All source rows remain `claimed`, never `resolved`, citing the 2026-08-12 user d
 
 ## 13. Shared trigger-surface reconciliation result
 
-`docs/design-requirements.md` sections 7.11.6–7.11.7 are now canonical. Direct Report requests
-own only explanation of recorded lifecycle artifacts and project state. Repository behavior,
-structure, and bounded code-state explanation remain Understand Code authority. Report remains
-outside the six-authority classifier: it mediates no input, returns no lifecycle determination,
-and orchestrates no stage.
+`docs/design-requirements.md` sections 7.11.6–7.11.7 are canonical. Direct Report requests own
+explanation of recorded lifecycle artifacts and project state plus read-only presentation of
+stable producer deliverables. Repository behavior, structure, and bounded code-state explanation
+remain Understand Code authority. Report remains outside the six-authority classifier: it
+mediates no input, returns no lifecycle determination, and orchestrates no stage.
 
 Standard delivery keeps Capsule and complete NOW content visible while exposing detail through
 topic labels and one- or two-sentence previews. Selecting a detail or
@@ -1006,7 +1137,59 @@ The five `I(reporting)` moments—`artifact_completion`, `approval_request`, `st
 lifecycle designs. Producers retain fact, consequence, option, evidence, blocking, and returned-
 decision authority; Report retains presentation authority only.
 
-The Report implementation plan was reconciled for staged segments and conditional structured
-choices in `318bcaf`, but remains non-executable until a separate runtime-execution choice is
-recorded in `docs/phase-0.md`. This reconciliation creates no runtime, corpus runner, reusable
-harness, installation, publication, or retirement state.
+Other cooperating producers may use the section 8.8 ReportPacket profile at a reportable outbound
+event. This widens presentation ingress only; it creates no seventh lifecycle authority and does
+not change the six lifecycle event obligations.
+
+The earlier Report implementation plan was reconciled for staged segments and conditional
+structured choices in `318bcaf`, then superseded for execution on 2026-08-17 because its
+approval-only public identity conflicts with decision 9. The proposed replacement is
+[`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](../docs/superpowers/plans/2026-08-17-astra-report-v1.md).
+No runtime begins until that plan is reviewed and a separate runtime-execution choice is recorded
+in `docs/phase-0.md`. This reconciliation creates no runtime, corpus runner, installation,
+publication, or retirement state.
+
+## 14. Interface-complete v1 amendment (2026-08-17)
+
+This amendment applies the later user decisions recorded in 1.1 items 7–9 and the approved
+research reconciliation. Where earlier prose conflicts, this section governs.
+
+### 14.1 Preserved core
+
+Reply-surface budgeting, Context Capsule, structural state delta, Exposure Ledger, staged modes,
+blocking escalation, visible deferral, fidelity precedence, safe continuation, and read-only
+lifecycle authority remain unchanged. Report's only durable state remains factual exposure.
+
+### 14.2 Widened presentation ingress
+
+The six lifecycle skills continue to emit `astra.report-event/v0` at their five canonical moments.
+Other cooperating agents may supply section 8.8's producer-owned packet when they emit progress,
+results, blockers/failures, decisions, deliverables, or status. Report normalizes both through one
+deep rendering module. Ordinary conversation is not an event source, and a non-lifecycle producer
+never acquires lifecycle authority.
+
+### 14.3 Progress and delivery
+
+The host rendering seam supports native progress indicators, structured choices, and
+links/attachments when available, with semantically equivalent text fallbacks. Work state belongs
+to the producer; disclosure state belongs to Report. Report may organize delivery of already-made
+reports, Markdown files, code changes, and diffs, but cannot author, edit, explain beyond recorded
+claims, or judge them.
+
+### 14.4 First public milestone
+
+The first promoted `astra-report` must pass the 11.2 interface-complete cases across progress,
+results, blockers/failures, decisions, lifecycle artifacts, text deliverables, code/diffs,
+resumption, degradation, and host fallback. Internal tranches may be implemented and reviewed
+separately, but the skill metadata and public claim remain withheld until the common contract and
+representative diversity pass together. The Spec-approval Slice A is one retained conformance
+tranche, not the product milestone.
+
+### 14.5 Authority and execution stop
+
+This amendment authorizes design and implementation planning only. It does not authorize a
+`SKILL.md`, schema, script, test harness, Exposure Ledger storage, installation, or runtime
+execution. The proposed plan is
+[`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](../docs/superpowers/plans/2026-08-17-astra-report-v1.md).
+Execution requires an explicit, separately scoped amendment to `docs/phase-0.md` after plan
+review.

@@ -1,17 +1,20 @@
 # Astra Report — phase-0 design
 
-**Date:** 2026-08-12; amended 2026-08-13 and 2026-08-17
+**Date:** 2026-08-12; amended 2026-08-13, 2026-08-17, and 2026-08-19
 
 **Status:** Proposed phase-0 design approved for implementation planning; trigger-surface,
 producer-contract, source-ledger, and research-to-design reconciliation are complete. Runtime
 implementation and retirement gates remain pending. Records three user decisions of 2026-08-12
 (existence, MVP boundary, delegated voice), the same-day design-review resolutions (output-only
 voice, `I(reporting)` typing, deferred generated-format adapters), the approved source-slice
-statement in 4.2, the 2026-08-13 staged-disclosure and conditional structured-choice decisions,
+statement in 4.2, the later-corrected 2026-08-13 disclosure and interaction decisions,
 and the 2026-08-17 decisions that Report applies implicitly to reportable agent output, exposes
 producer-owned progress through host-native indicators when available, organizes read-only
 delivery of producer-created text/code artifacts, and reaches interface-complete v1 before public
 promotion. The eight blocking review findings and the method-canon audit corrections are applied.
+The 2026-08-19 stance-bearing mediation amendment in section 15 records only the constitutional
+choices the user has approved so far; it governs those choices while the remaining reconciliation
+is discussed one decision at a time.
 The research reconciliation is
 `docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`. The earlier
 Spec-approval implementation plan remains useful only as a conformance tranche and is
@@ -30,7 +33,7 @@ Packet, Publication Record — and typed producer-owned progress, results, block
 deliverables into attention-managed communication for the user. A non-lifecycle producer gains no
 lifecycle authority by using Report. Report owns how things are said; it never owns what is true,
 what is required, what work state exists, or what is approved. Its two outputs are the ephemeral
-**Reader Brief** and the durable, append-only **Exposure Ledger**; neither is an authoritative
+**Reader Brief** and the bounded, append-only **Report Artifact**; neither is an authoritative
 chain artifact in the 7.11.3 sense.
 
 ## 1. Identity and status
@@ -46,7 +49,7 @@ report—or when I need to resume a project—I receive one budgeted, inspectabl
 what matters now and keeps every consequential detail reachable. **Personal value:** explicit —
 quoted user statements, not inference.
 
-### 1.1 Recorded user decisions (2026-08-12, 2026-08-13, and 2026-08-17)
+### 1.1 Recorded user decisions (2026-08-12 through 2026-08-19)
 
 1. **Existence.** `astra-report` is approved as a user-facing reporting skill alongside the
    six-skill coding lifecycle. It holds no lifecycle authority.
@@ -61,21 +64,24 @@ quoted user statements, not inference.
    reporting output of the six is delegated downstream to `astra-report`. The user's words:
    "the six skills should not be user-facing; all reports should be delegated to astra report.
    So astra report should be the downstream of all the six skills."
-4. **Staged standard delivery.** A Standard brief does not expose every section at once. Its
-   first segment contains the Capsule, materially complete NOW content, and a bounded detail
-   menu; one selected topic expands into one later segment. `expand all` is an explicit move to
-   Deep rather than Standard's default behavior.
-5. **Content-preview choices.** When the host supports structured choices, available details
-   live in that panel. A topic names the section; its description gives a one- or two-sentence
-   factual preview of that section's actual conclusion and significance, not instructions about
-   clicking it. Selecting a topic reveals only that section. A host restricted to one sentence
-   receives a faithful compressed preview; a host without structured choices receives the same
-   topics and previews as a compact text index. Exact panel placement is not normative.
-6. **Safe continuation.** A detail menu includes `Understood, proceed`. Its description states
-   the exact continuation it authorizes. It may close reporting and return control inside an
+4. **Consolidated Standard delivery.** Standard normally presents the governing outcome and all
+   top-level report topics in one structured textual response. It does not require one
+   topic-selection turn per section. Evidence and audit depth remain addressable by stable
+   references; Deep exposes that depth deliberately. This corrects the earlier staged
+   Capsule/NOW/detail-menu model, which was not a user-specified report model.
+5. **Conditional five-function topic route.** When one report contains several comparable
+   explanatory or decision topics, each topic normally covers `TOPIC`, `MOTIVATION`, `WHAT IS
+   IT?`, `IMPACT`, and `ACTION`. These are semantic functions, not five mandatory printed
+   headings: Report may merge redundant functions, omit an explicitly inapplicable one, and move
+   `ACTION` first for a producer-marked blocker or live decision. Different report jobs use
+   structures that fit their material. A topic heading identifies the represented principal and
+   communicates the producer's governing point rather than only a category name.
+6. **Safe continuation and commitment.** Ordinary reporting needs no generic `Understood,
+   proceed` choice. A continuation control appears only when it has a concrete, bounded
+   consequence, which its description states exactly. It may return control inside an
    already-authorized workflow; it never approves a decision, grants a new effect, or starts the
-   next public lifecycle skill. At an approval boundary, producer-owned options keep their exact
-   labels and consequences.
+   next public lifecycle skill. Genuine producer decisions and feedback confirmation use a
+   decision panel with exact labels and consequences.
 7. **Implicit outbound reporting.** Report is invoked implicitly whenever a cooperating agent
    emits a reportable outbound event: progress, result, blocker/failure, decision request,
    deliverable presentation, or status/resumption. Ordinary intake, clarification, brainstorming,
@@ -89,6 +95,35 @@ quoted user statements, not inference.
    representative progress, result, blocker/failure, decision, artifact/deliverable, code/diff,
    resumption, degradation, and host-fallback cases through one interface. Content-specific
    slices remain internal conformance tranches and cannot define the public skill's identity.
+10. **Attributed stance-bearing guidance.** Non-authoritative does not mean neutral. When Report
+    presents a producer's case, it represents that producer's recorded position and may guide the
+    user through its conclusion, reasons, impact, and requested action. It may not invent or
+    strengthen the producer's recommendation, suppress material contrary content, or optimize for
+    agreement at the expense of an informed decision.
+11. **Explicit principal alternation.** A stance-bearing block has one top-level represented
+    principal: the producer while presenting its case, the user while recording confirmed
+    feedback, or Report only for procedural reporting facts. A response may contain several such
+    blocks, but a principal change must start a separately labelled block. Quoted and referenced
+    positions may remain nested inside it.
+12. **Bounded feedback return.** Report may capture, package, and pass confirmed user feedback to
+    a mechanically identified owner through passive transport. Capture, send, receipt, producer
+    disposition, and lifecycle effect remain separate. Report never invokes a producer, starts
+    work, reopens an artifact, or advances the lifecycle merely to deliver feedback; absent passive
+    delivery, the feedback remains visibly pending.
+13. **Confirmation-gated feedback polish.** Typed feedback is an ephemeral draft. Report may
+    propose clearer wording, but one decision panel lets the user confirm the polish, send the
+    original, edit, or cancel. Only the final confirmed wording becomes one durable feedback
+    record. Interpretive changes to approval, policy, requirement, waiver, scope, or effect are
+    never adopted without confirmation.
+14. **Bounded stance-bearing Report Artifact.** One internal Report Artifact represents one
+    reviewable subject or review cycle across its report sessions and source revisions. It holds
+    the attributed producer case, confirmed user positions, Report-owned review/delivery facts,
+    and links to producer dispositions. Exposure bookkeeping is one component of this exchange,
+    not a per-project cognition or conversation ledger.
+15. **Low-dialogue review.** Report tracks revelation and confirmed feedback without asking the
+    user to certify every section. Optional unreviewed material may remain visibly deferred. One
+    consolidated panel appears only when an actual decision or feedback wording must be
+    committed; per-section review prompts and acknowledgements are forbidden by default.
 
 These are recorded decisions in the sense of the 2026-08-12 lock convention: they fix design
 direction, and they revise two locked claims — the exactly-six public roster in
@@ -98,6 +133,11 @@ coordinator reconciliation this requires. Nothing here claims behavioral absorpt
 retirement of any source.
 
 ### 1.2 Interpretation resolved
+
+**2026-08-19 amendment.** The output-only resolution below is retained as historical context but
+is superseded, for feedback about a bounded Report Artifact, by decisions 10–14 and section 15.
+Ordinary skill intake and unrelated conversation remain direct; the amendment does not make
+Report a general input mediator.
 
 Decisions 3 and 7 operate in the **output direction only** — resolved by the user's design reviews
 of 2026-08-12 and 2026-08-17 (**Observed**). The six remain directly invocable control surfaces
@@ -146,15 +186,16 @@ human-facing rendering without corrupting its own artifact discipline.
 | Term | Definition |
 |---|---|
 | **Reply surface** | An independent claim, recommendation, concern, question, or decision that reasonably invites its own user response. The unit of interaction cost; the budgeted quantity |
-| **State delta** | The difference between the artifact-chain state at the user's last recorded exposure and the chain state now, expressed as change → consequence → next decision |
-| **Context capsule** | The minimal opening block that restores the user's mental context: project identity, current stage, standing invariants, last exposure. Always generated fresh; never stored |
-| **Attention budget** | A per-brief cap on new reply surfaces, set by mode, enforced mechanically. A rendering parameter, not a measured psychological quantity |
-| **Attention escalation** | The single rule deciding when an item must surface regardless of budget: blocking user decisions always render in NOW |
-| **Detail topic** | One addressable section of optional detail: stable topic ID, section-name label, one- or two-sentence content preview, linked surface/evidence IDs, and the full body revealed only on selection |
-| **Detail menu** | One bounded navigation surface containing detail topics plus a safe continuation control; rendered as structured choices when supported and as the same compact text index otherwise |
-| **Brief segment** | One receipt-bearing delivery within a Reader Brief session: the initial Capsule/NOW/menu segment or one selected detail expansion |
-| **Exposure Ledger** | Report's durable, append-only per-project record of what was shown to the user, when, covering which artifact or deliverable revisions, which topic previews and details were exposed, and which decisions were presented |
-| **Reader Brief** | Report's ephemeral, potentially multi-segment session: an initial Capsule and NOW, a detail menu when detail exists, and zero or more selected NEXT, DEFERRED, Change Story, alternative, or evidence expansions |
+| **State delta** | Within one active Report Artifact, the difference between the source revision previously revealed for that reported subject and its current source revision, expressed as change → consequence → next decision; it is not a session-wide or project-wide memory model |
+| **Context orientation** | The minimal fresh opening needed to identify the reported subject, its governing goal or stage, and the source revision under review; used when resumption or interpretation requires it, not as a mandatory miniature project summary |
+| **Attention budget** | Report's explicit allocation of simultaneous reply surfaces and explanatory detail. It prioritizes producer-marked blockers and consequential decisions, but no exact numeric limit is treated as a cognitive law |
+| **Attention escalation** | The rule deciding when an item must surface regardless of brevity preference: blocking user decisions and their complete decision semantics always appear in the initial report or decision panel |
+| **Topic section** | One addressable top-level matter in a report, with a stable ID, an attributed informative heading, producer-supported semantics, and linked evidence; comparable multi-topic reports normally use the five-function route in decision 5 |
+| **Evidence expansion** | Evidence-grade material requested after or alongside a consolidated report. It is addressable by stable references and does not require a structured-choice outline or one conversational turn per topic |
+| **Brief segment** | One receipt-bearing Report delivery: normally one consolidated Skim, Standard, or Deep response, or a later evidence expansion, decision panel, or confirmed-feedback result |
+| **Exposure record** | The disclosure-history component of one bounded Report Artifact: what exact rendered material was receipt-confirmed as shown, against which subject and source revision; it is not a per-project cognition ledger |
+| **Reader Brief** | Report's ephemeral, attributed presentation of one bounded subject. Standard normally contains one governing outcome plus its top-level topic sections in a consolidated response; evidence depth remains separately addressable |
+| **Report Artifact** | Report's durable, append-only communication record for one reviewable subject or review cycle: source and render identities, attributed producer case, disclosure/review facts, confirmed user feedback, delivery facts, and links to producer dispositions |
 | **Reportable outbound event** | A producer-owned progress, result, blocker/failure, decision-request, deliverable, or status event that should cross Report before rich presentation to the user |
 | **ReportPacket** | The producer-neutral semantic envelope for a reportable outbound event. It preserves producer identity, provenance class, stable source references, surfaces, decisions, progress, deliverables, and evidence; it is not an authoritative artifact |
 | **Progress spine** | An ordered view of producer-owned work steps and their states, rendered through native host indicators when available and equivalent text otherwise |
@@ -204,10 +245,10 @@ default mode is `standard`. The same rendering core is consumed by the six skill
 reporting moments through the typed `I(reporting)` relation and by other cooperating producers
 through the ReportPacket profile in section 8.8.
 
-Within the resulting brief session, `expand <topic-id>` reveals one topic, `expand all` enters
-Deep, and `Understood, proceed` applies the bounded continuation in 1.1 decision 6. Structured
-choice selection and the equivalent text command are the same Report interaction; neither is a
-new lifecycle invocation.
+Standard presents the report's top-level topics together. A later evidence request may identify a
+stable topic, claim, or evidence reference; `deep` requests full audit depth. Structured controls
+are reserved for genuine producer decisions and confirmation of polished user feedback, with a
+content-equivalent text fallback. None of these interactions is a new lifecycle invocation.
 
 ### 3.2 Requests that should trigger it
 
@@ -240,9 +281,9 @@ new lifecycle invocation.
 |---|---|
 | Artifact scope | Immutable references (identity, revision, hash per 7.11.3) to one or more chain artifacts; sideways reads into peer working files are forbidden |
 | Deliverable scope | Stable producer-owned descriptor for an already-created output; revision/hash may be absent only with explicit full-current/no-delta degradation |
-| Mode | `skim`, `standard` (default), or `deep`; a persisted per-project default may exist in the Exposure Ledger |
-| Exposure Ledger | Read if present; absence degrades to full-state rendering (section 7.6) |
-| Interaction capability | Optional host declaration for structured-choice and native progress support plus relevant limits; absence selects content-equivalent text fallbacks and changes no content or authority |
+| Mode | `skim`, `standard` (default), or `deep` |
+| Report Artifact | Read when the request resumes a bounded reported subject; absence degrades to full-current rendering without fabricating prior revelation or review |
+| Interaction capability | Optional host declaration for decision-panel and native progress support plus relevant limits; absence selects content-equivalent text fallbacks and changes no content or authority |
 | Direct request | The user's scope and mode plus resolved authoritative artifact or stable deliverable references; no producer event is required or fabricated |
 | Lifecycle payload | At an `I(reporting)` moment: the producing skill's `astra.report-event/v0` envelope (sections 8.3–8.4), normalized without authority loss |
 | General delegated payload | At another reportable outbound event: the producer-owned ReportPacket semantic fields in 8.8 |
@@ -261,11 +302,12 @@ artifact merely because Report rendered it.
 
 ### 3.5 User-visible result
 
-A Reader Brief session (section 7.2), delivered as an initial segment and only the detail segments
-the user selects. A host may render progress through native indicators, navigation through
-structured choices, and deliverables through links or attachments; each has a content-equivalent
-text fallback. After every receipt-confirmed segment, one Exposure Ledger append (section 7.3);
-without a receipt, no append. Report creates no deliverable or lifecycle effect. Nothing else.
+A Reader Brief (section 7.2), normally delivered as one consolidated Standard response. A host may
+render producer-owned progress through native indicators, actual decisions and feedback
+confirmation through a decision panel, and deliverables through links or attachments; each has a
+content-equivalent text fallback. Receipt-confirmed presentation facts and final confirmed user
+feedback may be appended to the bounded Report Artifact (section 15.4); drafts are not logged.
+Report creates no producer deliverable or lifecycle effect.
 
 ### 3.6 Effect authority and non-goals
 
@@ -274,9 +316,10 @@ reinterprets, re-grades, repairs, or re-prioritizes a source skill's severity or
 judgment; invents or changes a producer's work state; mutates any chain artifact, deliverable, or
 repository file; hides disagreement between sources; starts, schedules, or interrupts any
 workflow; ranks anything outside the scope it was invoked on; or communicates across projects.
-Its only durable effect is the Exposure Ledger append,
-which is Report-jurisdiction bookkeeping in the same sense that the Publication Record is
-Ship-jurisdiction bookkeeping — and which is never an approval record (section 8.4). Format
+Its only durable effects are append-only Report-jurisdiction communication records: exact
+presentation/delivery facts and final user-confirmed feedback bound to one Report Artifact. It
+cannot autonomously alter a user response, and these records are never approval or lifecycle
+state (sections 15.3–15.4). Format
 conversion, generated visual reporting, and dashboard authorship are post-v1 non-goals (section
 4.3). Presenting an existing text/code deliverable or using host-native controls is in v1 and
 creates no file-writing authority.
@@ -284,7 +327,7 @@ creates no file-writing authority.
 ### 3.7 Decisions that remain with the user
 
 - Answering every decision a brief presents; Report only presents.
-- Mode selection and the persisted default.
+- Mode selection.
 - Vetoing any deferral ("show me what you parked").
 - Opening a Critique cycle on a surfaced contradiction (user-mediated; never automatic).
 - Changing the surface-budget defaults, the method-reference canon, or this design's boundary.
@@ -377,7 +420,7 @@ settle the separate docs-only-cycle question. Report claims no source as a prima
 
 ### 4.3 Host delivery and deferred generated-format adapters
 
-Conversation-host adapters for structured choices, progress indicators, links/attachments, and
+Conversation-host adapters for decision/confirmation panels, progress indicators, links/attachments, and
 their text fallbacks are part of v1 because they render the same Reader Brief semantics without
 creating files. An already-created report, Markdown file, code change, or diff may be presented
 through a stable deliverable descriptor; this is output organization, not format conversion or
@@ -407,13 +450,13 @@ including local-byte hashes, locators, transfer limits, and rejected attribution
 |---|---|---|
 | Minto, *The Pyramid Principle* | Brief skeleton | Lead with the governing answer; use recorded context and tension to orient a Change Story. Before → problem → fix → after is an Astra synthesis, not SCQA |
 | Rogers & Lasky-Fink, *Writing for Busy Readers* | Surface economy | Fewer ideas, not merely fewer words; important information findable in one glance; action effort minimized |
-| Redish, *Letting Go of the Words* | Layering | Key message first with scannable chunks and optional detail; NOW's action-completeness is Astra's stronger contract |
+| Redish, *Letting Go of the Words* | Layering | Key message first with meaningful, scannable topics and optional evidence depth; consolidated action-completeness is Astra's stronger contract |
 | Mayer/Fiorella and Clark/Mayer | Chunk discipline | Multimedia segmenting, signaling, coherence, and pre-training motivate testable prose transfers: meaningful chunks, visible structure, removal of renderer-authored extraneous detail, and necessary first-use glosses. They do not prove one-idea chunks or a one-summary rule |
 | Williams, *Style: Lessons in Clarity and Grace* | Sentence mechanics | Actors as subjects, actions as verbs; old-before-new information flow. (Douglas, *Writing for the Reader's Brain*, folds into this slot as the evidence-based alternate) |
-| Diátaxis (Procida) | Explanation boundary | Apply context, reasons, implications, and alternatives to Change Story and rationale; action-facing NOW and approvals sit outside the explanation quadrant |
+| Diátaxis (Procida) | Explanation boundary | Apply context, reasons, implications, and alternatives where explanation is needed; action-facing decisions and approvals are not long explanatory essays |
 | Nygard, ADR practice | Decision framing | Render recorded context/forces, decision, status/supersession, and consequences; alternatives appear only when the authoritative Specification records them |
 | Sweller/cognitive-load theory; Grice | Foundations | Motivate attention risk, sufficient evidence, relevance, clarity, and order; they do not supply numeric budgets or fixed layer counts |
-| Altmann & Trafton; Parnin & DeLine | Resumption analogy | Stable cues and chronological code changes motivate a Capsule plus delta; whether a prose Capsule helps is a validation hypothesis, not an established result |
+| Altmann & Trafton; Parnin & DeLine | Resumption analogy | Stable subject/revision cues and chronological code changes motivate minimal orientation plus a bounded source delta; whether Astra's prose form helps is a validation hypothesis, not an established result |
 | BLUF doctrine | System precedent | Main point or action first; it does not define Astra's layers or budgets |
 | Inspected SITREP format | System precedent | Domain-specific precedent for highlighting changed state and separately escalating attention items; it is not a universal reporting grammar |
 | GitHub viewed-state behavior | Product analogy | Per-viewer file state invalidated by change; never evidence of reading, understanding, approval, or durable artifact exposure |
@@ -447,10 +490,11 @@ design's sections 4.1–4.3 as evidence.
 Report resembles the presentation layers scattered through the inventory: `/doc`'s clarity
 rules, `internal-comms`' status formats, `landing-report`'s dashboards, each skill's final
 summary. The three-part test still fails against every surviving skill: the **problem**
-(explaining the artifact chain to a human under an attention budget) is owned by no lifecycle
-authority; the **methodology** (trace-preserving simplification, exposure-based deltas,
-surface budgeting) exists in no source; the **I/O** (immutable chain plus Exposure Ledger in,
-non-authoritative layered brief plus ledger append out) matches no source's contract.
+(explaining the artifact chain to a human under limited attention) is owned by no lifecycle
+authority; the **methodology** (trace-preserving simplification, bounded source deltas,
+reply-surface-aware structure) exists in no source; the **I/O** (immutable producer sources plus a
+bounded Report Artifact in, non-authoritative consolidated brief plus communication-event append
+out) matches no source's contract.
 `landing-report` inspects version queues and stays with Ship; `context-save`/`context-restore`
 serialize the *agent's* context and remain excluded — the model-context/human-context
 distinction in 2.1 is exactly why they are not this job.
@@ -503,22 +547,23 @@ regardless of output quality.
    skill's judgment; Report schedules attention under a budget and never re-grades. A grading
    conflict between artifacts is a contradiction to surface, not to resolve. Matters when: two
    skills disagree about the same fact.
-4. **Decisions are never paced.** Progressive delivery applies to supporting detail, never to
-   the complete decision envelope; a blocking item and all producer-owned options and
-   consequences are present in NOW even if rationale expands later. Matters when: escalation
-   exceeds the budget (7.5).
-5. **Briefs are ephemeral; the ledger is durable.** A brief is a view; storing views creates a
-   stale quasi-authority that competes with the chain. The only durable Report record is the
-   Exposure Ledger. Matters when: someone asks "where is the report?" — the answer is the
-   chain plus a regenerated brief.
-6. **Delta-first, never delta-only.** The capsule always restates the standing invariants
-   (goal, stage, standing decisions) even when unchanged, because deltas over facts cannot see
-   drift in the user's model — a fact that changed meaning without changing bytes. Matters
-   when: resumption after long absence.
-7. **Bounded navigation, not open-ended prompting.** More detail is offered through the 7.2
-   detail menu, never through a generic "want to hear more?" question. The menu is one bounded
-   navigation surface; its topic previews expose real content and are ledger-recorded even when
-   the bodies remain closed. Matters when: composing every layer boundary.
+4. **Decisions are never paced.** A blocking item and its complete producer-owned options,
+   consequences, recommendation state, and material caveats appear in the consolidated report or
+   decision panel. Supporting evidence may remain addressable, but required decision semantics
+   never wait behind another reveal turn. Matters when: explanatory depth competes with a live
+   decision (7.5).
+5. **The brief is derived; the communication record is bounded.** A Reader Brief is a view over
+   producer authority. Its bounded Report Artifact preserves exactly what Report presented and
+   what the user confirmed, without becoming a second source of technical truth or a project-wide
+   memory store. Matters when: a review resumes or the producer source changes.
+6. **Delta-first, never delta-only.** A resumed Report Artifact identifies the standing subject,
+   governing context, and reviewed source revision before presenting its structural delta. This
+   restores the minimum frame without reconstructing the whole project or inferring recall.
+   Matters when: a bounded artifact review resumes after a source revision.
+7. **Addressable depth, not conversational scheduling.** Standard delivers all top-level report
+   topics together. Evidence and audit depth stay reachable by stable reference without generic
+   "want to hear more?" questions or one reveal turn per topic. Matters when: supporting detail
+   exists but no additional commitment is required.
 8. **No orchestration.** Report never decides whether or when to interrupt the user, never
    ranks across projects, and never starts a peer workflow. Matters when: a surfaced
    contradiction tempts an automatic Critique invocation — routing is user-mediated (3.7).
@@ -531,158 +576,174 @@ regardless of output quality.
 
 One entry point (3.1), three modes:
 
-- `skim` — one initial segment: Capsule plus the single most consequential surface and a compact
-  indication that additional detail remains addressable.
-- `standard` — staged delivery: Capsule, budgeted NOW, and one bounded detail menu initially;
-  each selection reveals only one detail topic.
-- `deep` — explicit unbudgeted expansion of all topics, still layered, ordered, and
-  fidelity-ruled; for audit sessions or `expand all`.
+- `skim` — the shortest reliable orientation: subject, governing outcome or live decision, and a
+  compact indication of additional addressable material.
+- `standard` — one consolidated response containing the governing outcome and all top-level
+  topics needed to understand the reported subject, with stable evidence references.
+- `deep` — the same coherent report with evidence-grade rationale, alternatives, excerpts, and
+  trace detail expanded for deliberate audit.
 
-Mode changes rendering density and staging only; it never changes what exists, what is
-authoritative, or what remains addressable.
+Mode changes rendering depth only; it never changes what exists, what is authoritative, which
+material caveats or live decisions must be visible, or what remains addressable.
 
 ### 7.2 Reader Brief contract
 
-Layered in order across a brief session: Redish supports key-message-first presentation with
-optional detail; Astra's stronger rule is that the initial segment's NOW alone must remain
-materially complete for the immediate action:
+A Reader Brief is ordered by communicative purpose rather than one universal layer stack:
 
-| Layer | Content | Binding rules |
+| Part | Content | Binding rules |
 |---|---|---|
-| **Capsule** | 2–3 lines: project identity, current stage, standing invariants, last-exposure timestamp | Always present; always fresh-generated; delta-first-never-delta-only (6.6) |
-| **NOW** | Budgeted surfaces, decisions first, each as claim → consequence → what is asked; ends with the completeness statement ("nothing else requires you") when true | Layer-1 completeness-for-action: a user stopping here is not wrong about anything material. Failure test: if the user must ask "is that everything?", the brief failed |
-| **Detail menu** | Available topic labels and one- or two-sentence previews, plus `Understood, proceed` with its exact bounded consequence | Initial segment only when detail exists. The label names the section; the preview summarizes its recorded conclusion and significance rather than the click action. Host limits may paginate topics but may not silently omit them |
-| **NEXT topic** | Items that will need attention but block nothing now | Never contains a blocking decision; preview appears before its body is selected |
-| **DEFERRED topic** | Named parked items | Visible deferral (6.9); never empty-by-omission; parked topic IDs remain reachable through pagination or text request |
-| **Change Story topic** | Required whenever the scope covers a change cycle (an Approved Change Specification exists): before → problem → fix → after, why this fix was selected, and the rejected or deferred alternatives | This sequence is an Astra synthesis, not SCQA. Every element renders only from recorded fields — problem from Finding IDs; why-this-fix and alternatives from the Specification's selected-solution and rejected-alternatives fields; before/after from the Understanding Report, Execution Ledger, and Test Evidence Packet — each trace-linked. A missing element is named as a gap, never invented |
-| **Evidence topic** | Stable-ID links and supporting excerpts per 7.11.3 traceability | Every NOW claim carries at least one link initially; expansion supplies evidence-grade depth with no orphan assertions |
+| **Governing line** | The producer-supported outcome, live decision, or reason for this report | Comes first unless a tiny resumption orientation is necessary to understand it; never invents significance or urgency |
+| **Orientation** | Subject, producer/principal, source revision, goal or stage, and prior review point when resuming | Fresh and minimal; included only to the extent needed to interpret the report; never claims recall |
+| **Top-level topics** | The matters needed to understand the reported subject | Presented together in Standard. Comparable multi-topic decision/review reports normally use the conditional five-function route below; other report jobs use their own grammar |
+| **Decision panel** | A producer-owned ask, complete options and consequences, recorded recommendation state, and material caveats—or polished user feedback awaiting confirmation | Used only for a real commitment; never for outline navigation or optional detail |
+| **Evidence references** | Stable claim, artifact, diff, test, or excerpt addresses | Consequential assertions remain traceable. Deep expands them; Standard need not dump every supporting record |
+| **Named deferral** | Supporting material not expanded at the current depth | Its existence and stable address remain visible; no live decision, blocker, material caveat, or action-changing fact may be parked here |
 
-Sentence-level rules from the canon bind all layers: actors as subjects; vocabulary glossed on
-first necessary use; every abstract claim paired with a concrete artifact excerpt, diff line,
-or number. Apply Diátaxis explanation rules only to the Change Story and rationale: procedural
-detail and reference dumps route to their owners, while NOW and approval requests retain the
-minimum action information required for the user to decide. Purposeful standing-context
-repetition in the Capsule is allowed; Mayer's multimedia redundancy principle does not impose a
-one-summary-layer prose rule.
+For several comparable explanatory or decision topics, Report checks these semantic functions:
 
-Every detail topic has a stable `topic_id`, section-name label, one- or two-sentence preview,
-linked surface and evidence identifiers, and its full body. A preview must let the user understand
-what the section concludes and why it may matter before choosing depth. It must not merely say
-"see examples" or describe the UI action. If the host accepts only one short description
-sentence, Report compresses the preview without deleting a caveat. Selecting a topic emits only
-that topic's detail segment, followed by the remaining menu. `expand all` is the sole shortcut to
-all bodies.
+```text
+2/5  [PRODUCER] Informative topic headline carrying the governing point
+     MOTIVATION  Why this topic is live, when distinct
+     WHAT IS IT? Plain explanation and exact technical term, when needed
+     IMPACT      Recorded consequence, uncertainty, and caveat
+     ACTION      Exact ask, decision, or producer-recorded no-action state
+     Evidence    Stable source references attached compactly
+```
 
-`Understood, proceed` is a control, not a detail topic. Its description names the exact result:
-return to the active producer, return to a still-pending decision, or close the report with the
-next public skill uninvoked. The label never substitutes for `Approve`, `Request changes`,
-`Start Implement`, or any other producer-owned authority choice.
+The five named functions are not five mandatory visible headings. Report may combine adjacent
+functions when they duplicate one another, omit only an explicitly inapplicable function, and
+explain a necessary unfamiliar concept before a motivation that depends on it. For a
+producer-marked blocker, urgent failure, or live decision, `ACTION` and its complete consequence
+move first. If the producer supplies no motivation, consequence, action, or recommendation,
+Report names the gap or omits the inapplicable field; it never fills the template by inference.
 
-When a host requires one choice to be marked recommended, Report may recommend the highest-ranked
-detail topic using only producer-assigned consequence, or `Understood, proceed` when no remaining
-detail can change the current action. It may not recommend a producer-owned approval option unless
-the authoritative decision payload already records that recommendation. If the host requires one
-and the producer records none, the approval choices use the text fallback rather than an invented
-preference.
+The topic headline must carry information scent rather than only a category: `2/5 [TEST] Retry
+path remains unverified`, not merely `2/5 Testing`. Principal, source, material caveats, and
+cross-topic dependencies remain visible even though they are not five additional repeated
+headings. Conflicting principals receive separate attributed blocks.
 
-### 7.3 Exposure Ledger contract
+Choose a job-specific grammar when the repeated route would distort the report:
 
-One append-only record per project, Report-jurisdiction (3.6). Each entry carries, in the
-identity style of 7.11.3: timestamp; brief identity; segment identity and sequence; exact
-delivered-segment hash and mode; the artifact identities, revisions, and hashes covered; the
-surface identifiers presented in NOW; topic IDs whose previews were shown; topic IDs whose full
-details were delivered; the decisions presented; and any degradation flags (7.6). A visible topic
-summary is `preview` exposure whether or not selected; only a receipt-confirmed body is a
-`detail` exposure. It deliberately does not duplicate which menu control the user selected, whether or how
-a decision was answered, or approval state; those are navigation or producer authority, not
-Report exposure authority.
+- progress — ordered producer-owned state spine, stated briefly at the beginning;
+- decision — ask, complete options, consequences, recommendation state, and evidence;
+- blocker or failure — failed operation, boundary, consequence, and permitted next action;
+- incident — current condition plus chronology and escalation;
+- evidence audit — claim-to-evidence trace and gaps;
+- single-answer explanation — governing point followed by only the support needed; and
+- multi-topic review or decision report — the conditional five-function route.
 
-The ledger is exposure evidence, never approval authority: the producing skill's artifact
-remains the only record of what was approved. Entries are never edited; a wrong entry is
-superseded by a correcting append. Absence of a ledger entry for an existing artifact revision
-is itself the signal "never briefed" — no skill ever writes the ledger except Report (8.5).
+Sentence-level rules from the canon bind every shape: actors as subjects; necessary vocabulary
+explained in plain language at first use; abstract claims grounded in concrete artifacts, diffs,
+tests, or numbers. All top-level topics appear in one Standard response. Later evidence requests
+may address a topic or source directly, without a reveal menu or one conversational turn per
+topic. This rule is the evidence-classified Astra synthesis recorded in the
+[book distillation](../docs/research/2026-08-18-astra-report-book-distillation.md) and the
+[five-field template audit](../docs/research/2026-08-19-astra-report-five-field-template-evidence-audit.md);
+the exact labels, order, and field count are product defaults to evaluate, not research-proven
+attention constants.
+
+### 7.3 Bounded Report Artifact disclosure contract
+
+Section 15.4 defines the broader stance-bearing Report Artifact. Its disclosure component replaces
+the earlier per-project Exposure Ledger: one append-only record is bounded to one reported subject
+or review cycle, not to a project, session history, or inferred user memory. A presentation event
+carries, in the identity style of 7.11.3: timestamp; Report Artifact and rendered-segment identity;
+exact delivered-segment hash and mode; source artifact/deliverable identities, revisions, and
+hashes; top-level topic and claim IDs shown; decisions presented; and degradation flags. It may
+record disclosure as `shown` or evidence depth as `expanded`; neither implies reading,
+comprehension, review, agreement, or approval.
+
+The Report Artifact is communication evidence, never lifecycle authority. The producing skill's
+artifact remains the only record of technical facts, decision disposition, approval state, and
+resulting lifecycle effect. Entries are never edited: an incorrect presentation, normalisation,
+or delivery record is corrected through an explicit append-only correction or supersession. Only
+final user-confirmed feedback is durable; typed drafts and intermediate polishing are not logged.
 
 **Delivery receipt boundary.** "Presented" means the exact composed segment was accepted by its
-delivery surface, not merely generated in memory. Report appends only after a caller or adapter
-supplies a receipt for that exact brief and segment identity. If a conversational host exposes no
-post-send receipt, Report still renders but does not append; the next invocation treats that
-preview or detail as unbriefed and may repeat it. Safe duplication is preferable to a false
-exposure record that hides material information. The first vertical slice may use a successfully
-written exact segment file as the receipt; a host-level conversation receipt remains a later
-adapter obligation, not an inferred fact.
+delivery surface, not merely generated in memory. Report appends a presentation event only after a
+caller or adapter supplies a receipt for that exact Report Artifact and segment identity. Without
+such a receipt, Report still renders but does not claim exposure; the source revision remains
+eligible to surface again. Safe duplication is preferable to a false disclosure record that hides
+material information.
 
 ### 7.4 Rendering protocol
 
 ```text
-scope selection -> delta computation (chain vs ledger) -> attention allocation
-(source-assigned consequence under budget + escalation) -> compose initial segment
-(Capsule + NOW + detail menu) -> deliver -> receipt-gated segment append ->
-optional topic selection -> compose only that detail -> deliver -> receipt-gated segment append
--> repeat, expand all, or Understood/proceed
+scope and source revision -> identify producer and report job -> derive bounded prior-review delta
+when applicable -> select producer-supported governing line -> group related top-level topics ->
+apply the report-job grammar and attention rules -> compose one consolidated response -> deliver ->
+receipt-gated Report Artifact append -> optional evidence request or real decision/feedback panel
 ```
 
-Delta computation is structural: artifact revisions and supersedes references against ledger
-entries — never prose diffing. Attention allocation orders by the producing skills' own
-consequence fields; Report contributes ordering and deferral only.
+Delta computation, when used, is structural and bounded to the active Report Artifact: source
+revisions and supersession references against its prior disclosure/review events, never prose
+diffing or whole-conversation memory. Attention allocation orders by producer-owned consequence,
+blocking, dependency, and recommendation fields; Report contributes faithful wording, grouping,
+ordering, and evidence depth only.
 
-### 7.5 Surface budget and escalation defaults
+### 7.5 Attention and interaction defaults
 
-Proposed defaults, user-adjustable (3.7): `standard` NOW carries at most three surfaces, at
-most one of them a decision. A structured menu always reserves one choice for `Understood,
-proceed`; under a three-option host limit, it shows two detail topics when all remaining topics
-fit, or one detail topic plus `More topics` when pagination is required. Each later page keeps the
-same continuation escape. Additional topics are named and paginated, never silently dropped.
-`skim`: one surface. `deep`: unbudgeted.
-**Escalation:** blocking decisions and their complete options and consequences always render in
-NOW even when that exceeds the budget; when blockers alone exceed it, NOW contains only blockers.
-The budget yields to a blocker; it never hides one (6.4).
+No exact number of simultaneous topics or reply surfaces is treated as a research-established
+human limit. `skim` selects the producer-marked governing outcome or most consequential live
+decision and names the remaining addressable material. `standard` presents every top-level topic
+needed to understand the bounded reported subject, grouping only relationships supported by the
+producer. `deep` additionally expands evidence-grade detail.
+
+Report minimizes *required interaction*, not merely words: it does not turn each topic into a
+question, add optional offers, or require a reveal turn per section. Several genuine commitments
+may share one decision panel only when each remains independently clear and the panel preserves
+their exact consequences. Blocking decisions always bypass any brevity preference; all their
+producer-owned options, consequences, recommendation state, and material caveats remain visible.
+Supporting material may be compact or deferred only when it stays named and addressable.
 
 ### 7.6 Failure and degradation
 
 | Condition | Behavior |
 |---|---|
-| Exposure Ledger missing or unreadable | Render full-state (no delta), say so in the capsule, and append a fresh `ledger-reset` entry only after the delivery receipt required by 7.3 |
-| Delivery surface supplies no receipt for the exact brief | Deliver the brief, do not append exposure, and leave the revision unbriefed for the next invocation |
-| Structured-choice capability is unavailable or rejects the menu shape | Render the same topic labels and previews as a compact text index; accept the exact topic label or ID, `expand all`, or `Understood, proceed` |
-| User selects an unknown, stale, or already-superseded topic | Do not guess; regenerate the menu from the current brief/artifact identities and name the stale selection |
+| Report Artifact missing or unreadable | Render the full current subject without a delta, state that no bounded prior-review record is available, and never fabricate previous revelation or review |
+| Delivery surface supplies no receipt for the exact brief | Deliver the brief, do not append a presentation fact, and leave that source revision eligible to be presented again |
+| Structured decision controls are unavailable or reject the panel shape | Render the same decision or feedback-confirmation semantics as explicit textual options with stable IDs and exact consequences |
+| User requests an unknown, stale, or superseded topic/evidence reference | Do not guess; identify the current subject/source revision and regenerate the addressable topic/evidence outline |
 | Artifact lacks stable identifiers | Quote verbatim with file-line anchors, flag the reporting-hook gap in DEFERRED, never invent identifiers |
 | Report unavailable at a non-decision `I(reporting)` moment | The producing skill emits the degraded minimal notice of 8.5; the lifecycle never blocks on Report |
 | Report unavailable at an approval request | The producing skill presents its complete minimal decision envelope (8.5) so the user can still decide informed; work stops only while awaiting the user's answer, never because Report is unavailable |
-| Contradiction detected between artifacts | Surface as a NOW/NEXT item with both references; never adjudicate; routing to Critique is user-mediated |
+| Contradiction detected between artifacts | Surface both attributed positions and references in the consolidated report; never adjudicate; routing to Critique is user-mediated |
 
 Report is deliberately **not** a required consultant in the 7.11.2 fail-closed sense;
 rendering unavailability degrades communication, not authority.
 
 ### 7.7 Architectural hypotheses
 
-Internal seams — scope selector, packet normalizer, delta engine, attention allocator, composer,
-and ledger writer — are analytical until implementation demonstrates variation. Host rendering is
+Internal seams — scope selector, packet normalizer, bounded-delta engine, attention allocator,
+composer, and Report Artifact writer — are analytical until implementation demonstrates variation. Host rendering is
 a real seam because v1 requires at least native-interaction and text-fallback adapters; semantic
-step states, topic IDs, previews, controls, deliverables, and consequences remain identical across
+step states, topic IDs, decision controls, deliverables, and consequences remain identical across
 them. Generated file and visual adapters remain deferred (4.3). Whether the delta engine and
 allocator are separable modules or one pass remains a hypothesis for the comparison systems
 (11.1).
 
-The renderer remains stateless in the approved v1 sense. Every expansion request carries the
-brief ID, current immutable artifact references, topic ID or control, and prior receipt/exposure
-facts needed to regenerate the next segment. Report holds no hidden session store; the Exposure
-Ledger remains its only durable state.
+The renderer remains a pure derivation over producer inputs plus the bounded Report Artifact. A
+later evidence request or resumed review carries the current immutable source references and
+relevant prior presentation/review events needed to regenerate the view. Report holds no hidden
+conversation or project-wide cognition store; the Report Artifact is its only durable subject
+state.
 
 ## 8. Delegated voice: the `I(reporting)` relation and reporting hooks
 
 ### 8.1 Direction rule
 
-Information flowing **user → skill** (invocation, intake answers, approvals being given)
-remains direct. Rich reportable information flowing **producer → user** (artifact or deliverable
-presentation, status, progress, results, approval requests, blocker/failure announcements) routes
-through Report. This includes the six lifecycle skills and cooperating non-lifecycle agents, but
-does not confer lifecycle authority on the latter. Intake dialogue inside an active skill (one
-clarifying question at a time) stays direct but obeys the exported contract rules: one question
-per message; no unnecessary branches; no offer phrased as a question.
-Detail-topic selection is navigation inside an active Report session, not intake mediation or a
-peer invocation. `Understood, proceed` returns control according to its exact description; it
-does not answer a producer-owned approval unless the producer presents a separately identified,
-explicit approval option.
+Ordinary **user → skill** invocation, intake, and clarification remain direct. Rich reportable
+information flowing **producer → user** (artifact or deliverable presentation, status, progress,
+results, approval requests, blocker/failure announcements) routes through Report. Within one
+bounded Report Artifact, Report may also carry final user-confirmed feedback back to a
+mechanically identified producer under section 15.2. That return path preserves the user as
+principal and gives Report no interpretation, disposition, invocation, or lifecycle authority.
+
+Intake dialogue inside an active skill stays direct and obeys the exported contract rules: one
+question per message; no unnecessary branches; no optional offer phrased as a question. Evidence
+requests are navigation inside an active Report Artifact. Actual producer decisions and feedback
+wording use separately identified decision controls; neither an evidence request nor a generic
+continuation phrase can grant approval or an effect.
 
 ### 8.2 The `I(reporting)` relation
 
@@ -718,25 +779,26 @@ artifact already exists; it may be `null` only when entry is refused or work fai
 artifact can exist. A null reference requires a producer-owned event identity plus evidence or
 failure anchors, so Report never invents an artifact to satisfy the schema. Approval requests
 extend the envelope with the decision payload of 8.4. The envelope is a payload contract, not
-an artifact: producer-authored, consumed by Report, and reflected durably only through the
-Exposure Ledger entry of the brief that rendered it.
+an artifact: producer-authored, consumed by Report, and reflected in Report jurisdiction only
+through the bounded Report Artifact's source and rendering events.
 
 ### 8.4 Approval-request rendering
 
 The producing skill owns the decision: its identity, options, consequence fields, and the
 authoritative recording of the user's answer in its own artifact (7.11.1 approval machinery is
 unchanged). Report owns wording, ordering, budget placement, and evidence links. The decision
-payload extending the ReportEvent envelope is: decision identity; options with
-source-assigned consequences; evidence references; blocking status. The Exposure Ledger records
-only that the decision was presented. The producer's artifact alone records the answer; Report
-does not mirror approval state into exposure bookkeeping (7.3).
+payload extending the ReportEvent envelope is: decision identity; options with source-assigned
+consequences; evidence references; blocking status; and an explicit recorded recommendation or
+`none`. The Report Artifact records that the decision was presented and may preserve the user's
+final confirmed response as a user-principal communication event. The producer's artifact alone
+interprets and records its authoritative disposition and lifecycle effect.
 
-The complete decision envelope appears in the initial NOW segment and is never hidden behind a
-detail topic. Supporting rationale, alternatives, and evidence may be topics. A structured detail
-menu may let the user inspect one before answering; `Understood, proceed` then returns to the
-still-pending producer decision and selects no option. When the host renders the producer's
-decision options as structured choices, their labels and consequence summaries come unchanged
-from the decision payload rather than from Report's navigation controls.
+The complete decision envelope appears in the consolidated report or its decision panel and is
+never hidden behind an evidence request. Supporting rationale, alternatives, and evidence remain
+addressable before the user answers. When the host renders the producer's options as structured
+choices, their labels and consequence summaries come unchanged from the decision payload. Report
+may faithfully foreground a producer-recorded recommendation; when the producer records none,
+Report cannot invent or strengthen one to satisfy the host.
 
 ### 8.5 Degraded fallback when Report is unavailable
 
@@ -851,19 +913,19 @@ Critique.
 
 Usable today, before any implementation:
 
-1. At any reporting moment, manually compose the initial 7.2 segment under the 7.5 defaults and
-   section 6 invariants, linking evidence by the identifiers the artifacts already carry.
-2. Present at most the initial Capsule/NOW plus topic labels and one- or two-sentence previews.
-   On selection, deliver only that topic; use the same compact text index when no structured
-   choice surface exists.
+1. At any reporting moment, manually compose one consolidated Reader Brief under sections
+   6–7, linking consequential claims by the identifiers the producer artifacts already carry.
+2. Lead with the producer-supported governing outcome or live decision. When several comparable
+   topics exist, use the conditional five-function route; use the report-job-specific structures
+   in 7.2 when that route would distort the material.
 3. When progress exists, render the producer's ordered steps and exact work states with native
    indicators when available or equivalent text. Never derive work state from conversation.
 4. When delivering an existing report, Markdown file, code change, or diff, show its stable
    descriptor and producer-authored significance, caveats, and evidence; do not edit or
    independently judge it.
-5. After each exact segment is visibly delivered, maintain the Exposure Ledger as a hand-edited
-   append-only file with 7.3 fields; if receipt or append is skipped, say "no exposure record —
-   full-state brief" in the next capsule and forgo deltas.
+5. If a bounded Report Artifact is maintained manually, append only receipt-backed presentation
+   facts and final user-confirmed feedback under 7.3 and 15.3–15.4. Without a receipt, do not claim
+   exposure; without confirmation, do not log a feedback draft.
 6. Use `/doc` (register), `internal-comms` (status shapes), and `doc-coauthoring` (chunking)
    as source oracles for the prose itself, under this design's precedence chain.
 7. Never let manual rendering alter, re-grade, or omit-without-deferral any producer content.
@@ -884,19 +946,21 @@ than trusting it.
 ### 11.2 Fixed corpus classes
 
 1. One single-artifact brief per artifact type (six cases).
-2. Full-chain resumption after simulated absence (capsule + delta).
+2. Bounded Report Artifact resumption after a source revision (minimal orientation + structural
+   delta for that subject).
 3. Multi-skill overload: an aggregated run producing 30+ findings across artifacts.
 4. Approval-request rendering from a typed payload.
-5. Blockers exceed budget (escalation must override, 7.5).
+5. Several topics plus multiple blockers (all blocker/decision semantics remain visible, 7.5).
 6. Contradiction between two artifacts (surface, never adjudicate).
-7. Missing ledger (degradation to full-state).
+7. Missing Report Artifact (degradation to full-current subject state without fabricated review
+   history).
 8. Missing identifiers (verbatim-quote degradation).
 9. Report unavailable at an `I(reporting)` moment — both 8.5 fallbacks: the non-decision
    minimal notice, and the approval-request complete minimal decision envelope.
 10. Fidelity-adversarial: a tempting simplification that would drop a caveat (must demote,
     never delete).
-11. Terseness probe: layer-1 completeness — the "is that everything?" test must be answerable
-    without asking.
+11. Consolidated-completeness probe: the user can identify every material top-level topic and all
+    required action without asking whether another hidden section changes the decision.
 12. Mode variants over the same scope (density changes; addressability does not).
 13. Forbidden-effect probes: attempted re-grade, attempted artifact edit, attempted automatic
     Critique start — all must fail.
@@ -914,45 +978,46 @@ than trusting it.
 19. Pre-artifact refusal and failure events: `artifact_ref: null` is accepted only with a stable
     producer event identity and evidence or failure anchors; completion with a null artifact is
     rejected.
-20. Approval presentation followed by a user answer: the Exposure Ledger records the presented
-    decision once and never copies answer state from the producer's authoritative artifact.
+20. Approval presentation followed by a user answer: the Report Artifact records the presented
+    decision and only the final user-confirmed response; it never converts that response into
+    producer disposition or approval state.
 21. Attribution control: compare the corrected Astra Change Story description with a rendering
     that labels before → problem → fix → after as SCQA; the false attribution fails even when
     the prose is readable.
 22. Diátaxis boundary control: compare bounded rationale plus the complete decision envelope
     against explanation-only prose; the latter fails when the user cannot act from it.
-23. Resumption mechanism control: expose stable goal, stage, and artifact cues before a
-    simulated interruption, then compare repeated-cue, delta-only, and after-the-fact-only
-    capsule conditions. No condition may be described as proven before the comparison runs.
+23. Resumption mechanism control: expose stable subject, governing context, and source-revision
+    cues before a simulated interruption, then compare minimal-orientation-plus-delta, delta-only,
+    and full-current conditions. No condition may be described as proven before comparison runs.
 24. Expertise and density control: compare `skim`, `standard`, and `deep` with project-familiar
     and project-new evaluators; authority, caveats, and addressability must remain constant.
-25. Viewed-state control: revise an exposed artifact without changing its approval state; the
-    new revision becomes unexposed, but Report must not call it unapproved.
-26. Missing delivery receipt: the brief may render, but no Exposure Ledger entry is appended and
-    the artifact revision remains unbriefed on the next run.
-27. Redundancy-scoring control: intentional Capsule repetition of standing invariants needed for
-    orientation or action completeness is not scored as a Mayer redundancy violation; the scorer
-    separately flags renderer-authored extraneous duplication.
-28. Preview-precedent guard: neither an evaluation nor runtime behavior may depend on GitHub's
-    public-preview "commits since last review" selector; artifact revision/hash plus Exposure
-    Ledger ground truth is the oracle.
-29. Standard staged-disclosure control: the initial segment contains Capsule, complete NOW, and
-    topic previews but no unopened topic body; selecting one topic reveals only that body.
-30. Topic-preview quality: every label names its section and every one- or two-sentence preview
-    states the section's recorded conclusion and significance; action-only descriptions fail.
-31. Structured-choice/text-index convergence: topic IDs, order, previews, continuation meaning,
-    and returned detail are identical; host-specific visual placement is never required.
-32. Exposure-level control: all delivered previews record `preview`; only the selected,
-    receipt-confirmed body records `detail`; menu selection and approval state never enter the
-    Exposure Ledger.
-33. Continuation safety: `Understood, proceed` may return to an active authorized workflow or a
-    pending decision, but cannot approve, grant effects, or start the next public skill.
-34. Host-limit pagination: every topic remains name-addressable when a structured panel cannot
-    display all choices at once; every page retains `Understood, proceed`, and no topic or caveat
-    disappears between pages.
-35. Required-recommendation control: a navigation recommendation follows producer-assigned
-    consequence; an approval option is marked recommended only when the producer recorded that
-    preference. A host-mandated but unsupported approval recommendation forces text fallback.
+25. Viewed-state control: revise a shown subject without changing its approval state; the affected
+    sections become eligible for renewed review, but Report must not call them unapproved.
+26. Missing delivery receipt: the brief may render, but no presentation event is appended and the
+    source revision remains eligible to surface again.
+27. Redundancy-scoring control: minimal repeated orientation needed for comprehension or action
+    completeness is not scored as a Mayer redundancy violation; the scorer separately flags
+    renderer-authored extraneous duplication.
+28. Viewed-state precedent guard: neither evaluation nor runtime behavior may depend on GitHub's
+    public-preview "commits since last review" selector; source revision/hash plus bounded Report
+    Artifact events are the oracle.
+29. Consolidated Standard control: every material top-level topic appears in one response; no
+    topic requires an outline-selection round trip before its section is available.
+30. Five-function conditionality: a comparable multi-topic review preserves topic, motivation,
+    plain explanation, impact, and action semantics while merging redundant visible fields; a
+    progress or incident report uses its job-specific grammar instead.
+31. Informative-heading control: each topic heading names its principal and carries the recorded
+    governing point; category-only headings such as `Testing` fail when they hide the conclusion.
+32. Action-order control: a producer-marked blocker or live decision moves complete action and
+    consequence semantics first; a normal deliberate-review topic may retain the five-function
+    comparison order.
+33. No-inference template control: missing motivation, consequence, action, or recommendation is
+    exposed or omitted as inapplicable, never plausibly completed by Report.
+34. Decision-panel/text-fallback convergence: option IDs, labels, consequences, recommendation
+    state, and confirmation effect are identical; host-specific placement is not required.
+35. Required-recommendation control: an approval option is marked recommended only when the
+    producer recorded that preference. A host-mandated but unsupported recommendation forces a
+    faithful text fallback rather than invention.
 36. Live progress: at least four ordered steps span completed, active, pending, and blocked states;
     native and textual renderings preserve IDs, order, state, blocker, and the current attention
     point.
@@ -976,27 +1041,28 @@ than trusting it.
 ### 11.3 Method and measures
 
 Paired runs on identical artifact sets against the applicable source oracle, with repeated
-trials; subjective judgments (register, clarity, layer-1 completeness) use blinded,
-order-randomized evaluation. Measures: reply-surface count against budget; critical-decision
+trials; subjective judgments (register, clarity, action completeness) use blinded,
+order-randomized evaluation. Measures: reply-surface count and consequence distribution;
+critical-decision
 recall (no blocking decision omitted — required at 100%); supported-claim precision and
 unsupported-claim rate against artifact fields; fidelity audit (every omitted or demoted item
 addressable by identifier; zero deleted caveats); source-unique supported behaviors (each 4.2
-slice observably survives); delta correctness against ledger ground truth; layer-1
-completeness judged against the artifact set; duplicate/noise load against Astra's surface-
-economy rules; deferral-routing accuracy (items land in the correct NOW/NEXT/DEFERRED tier
-given their source-assigned consequence); actionability of NOW items; register quality
-against the source oracle; topic-preview supported-claim precision; selected-only expansion
-accuracy; structured-choice/text-index convergence; preview-versus-detail ledger integrity;
-cost and latency per segment and complete brief session.
+slice observably survives); bounded-delta correctness against Report Artifact ground truth;
+consolidated action completeness judged against the artifact set; duplicate/noise load against
+Astra's surface-economy rules; correct choice of report-job grammar; five-function semantic
+coverage without forced repetition or unauthorized inference; informative-heading quality;
+action ordering for producer-marked blockers; decision-panel/text-fallback convergence;
+communication-event integrity; and cost, latency, and required user turns per complete report.
 
 The v1 gate additionally measures work-state preservation, work/disclosure independence,
 ReportEvent-to-packet field preservation, deliverable provenance/addressability, correct
 dialogue/report trigger classification, and semantic convergence between native progress UI and
 text fallback.
 
-The numeric surface defaults, prose chunking transfer, Capsule resumption value, and the layer
-scheme are Astra product hypotheses. The cited communication and cognition sources motivate
-their evaluation but do not constitute passing evidence.
+The conditional five-function route, its order, consolidated Standard density, reply-surface
+allocation, and minimal-orientation resumption value are Astra product hypotheses. The cited
+communication and cognition sources motivate their evaluation but do not constitute passing
+evidence.
 
 ### 11.4 Gates and consequences
 
@@ -1029,9 +1095,10 @@ resolver/section templates and generator registration for the three generated gs
 `docs/phase-0-ledgers.md` (the rows cited in 4.5), and `docs/six-skill-source-absorption.md`
 (sections 1, 7, 8, 11) were read the same day as authority context. The user's problem
 statement and initial decisions are conversation records of 2026-08-12, quoted in 1.1 and 2.1 —
-**Observed**, including the review resolution recorded in 1.2. The staged-disclosure,
-structured-choice, one- or two-sentence preview, and safe-continuation decisions are conversation
-records of 2026-08-13, also recorded in 1.1. The implicit outbound-reporting, progress-indicator,
+**Observed**, including the review resolution recorded in 1.2. The earlier staged-disclosure,
+detail-choice, and safe-continuation model was recorded in the design on 2026-08-13 but was not the
+user-specified report model; the user corrected it on 2026-08-19 through decisions 4–6 and section
+15.6. The implicit outbound-reporting, progress-indicator,
 read-only deliverable, and interface-complete-milestone decisions are conversation records of
 2026-08-17 and are reconciled in
 [`docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`](../docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md).
@@ -1040,8 +1107,9 @@ The current Codex host contract was inspected on 2026-08-13 (**Observed**): stru
 is available only where the active collaboration mode exposes it; one panel accepts one to three
 questions, each with two or three authored options and one short option description, while the
 client may add a free-form alternative. The contract does not guarantee right-side placement or
-portable availability. Those limits justify capability detection, one-sentence compression, and
-the text-index fallback; they are not universal Report semantics.
+portable availability. Those limits justify capability detection and faithful textual fallback
+for real decisions and feedback confirmation; they do not make structured choices a report
+outline or universal Report semantic.
 
 Official OpenAI documentation was inspected on 2026-08-17 (**Observed**). Skills may activate
 implicitly when a task matches the `description`, and `agents/openai.yaml` exposes
@@ -1064,9 +1132,11 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
 ### 12.2 Provisional decisions
 
 - Williams over Douglas for the sentence-mechanics slot; Douglas recorded as the alternate.
-- Budget defaults in 7.5 are proposed numbers, expected to be tuned by use.
+- No exact numeric attention budget is adopted as a human constant; grouping and density remain
+  testable product defaults under 7.5.
 - Time-decay re-glossing is admitted as a future-safe extension (2.4) but not designed.
-- The ledger file format, storage location, and brief identity scheme are later-phase work.
+- The Report Artifact format, storage location, identity scheme, retention, and concurrency
+  mechanism are later-phase work.
 - A successfully written exact-output file may serve as a delivery receipt in a conformance
   tranche; native conversation-host receipts remain a v1 adapter obligation. Composition or an
   attempted send alone never counts as exposure (7.3).
@@ -1082,18 +1152,18 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
 - Resolved by the user's 2026-08-12 approval: the exact three-source secondary-slice exception
   in 4.2. The exception changes claim ownership only and leaves all five documentation sources
   outside the 92 target.
-- Ordinary intake dialogue stays outside the Exposure Ledger (review-confirmed deferral;
-  12.3 question 1).
+- Ordinary intake dialogue stays outside the Report Artifact. Only final user-confirmed feedback
+  tied to its bounded reported subject may be appended (decision 13).
 
 ### 12.3 Open questions (each names its consequence)
 
-1. **Should intake dialogue append to the Exposure Ledger?** Currently no — review-confirmed
-   as deferrable: dialogue outcomes land in artifacts, which Report briefs. If
-   dialogue-presented facts must someday count as exposure, the six gain a ledger-append
-   obligation, weakening "no skill writes the ledger except Report" (7.3).
-2. **Are the 7.5 defaults right for this user?** Wrong defaults either annoy (too tight) or
-   re-create overload (too loose); tunable at first use, but the shipped default shapes first
-   impressions.
+1. **What grouping and density work best within consolidated Standard?** The approved direction
+   avoids a reveal turn per section, but an unbounded flat response can still recreate overload.
+   Evaluation must compare decision quality, severe-item recall, required user turns, and noise
+   before fixing product defaults.
+2. **Which visible field labels should the conditional five-function route print by default?**
+   Semantic coverage is approved; exact labels, merging thresholds, and ordinary-versus-action-
+   first order remain testable product choices rather than claims derived from the books.
 
 ### 12.4 Coordinator reconciliation state
 
@@ -1124,13 +1194,14 @@ All source rows remain `claimed`, never `resolved`, citing the 2026-08-12 user d
 `docs/design-requirements.md` sections 7.11.6–7.11.7 are canonical. Direct Report requests own
 explanation of recorded lifecycle artifacts and project state plus read-only presentation of
 stable producer deliverables. Repository behavior, structure, and bounded code-state explanation
-remain Understand Code authority. Report remains outside the six-authority classifier: it
-mediates no input, returns no lifecycle determination, and orchestrates no stage.
+remain Understand Code authority. Report remains outside the six-authority classifier: it may
+preserve and pass final user-confirmed feedback within a bounded Report Artifact, but it returns
+no Report-authored lifecycle determination and orchestrates no stage.
 
-Standard delivery keeps Capsule and complete NOW content visible while exposing detail through
-topic labels and one- or two-sentence previews. Selecting a detail or
-`Understood, proceed` follows sections 7.2–7.5 and cannot approve a decision, grant an effect, or
-start the next public skill.
+Standard delivery presents the producer-supported governing outcome and all material top-level
+topics in one consolidated response. Evidence remains addressable without a topic-selection turn.
+Only a real producer decision or feedback confirmation uses a decision panel, and that panel
+cannot grant any effect beyond its exact producer- or user-owned semantics.
 
 The five `I(reporting)` moments—`artifact_completion`, `approval_request`, `stage_boundary`,
 `status_request`, and `failure`—and both producer fallbacks are canonical across the six
@@ -1143,7 +1214,8 @@ not change the six lifecycle event obligations.
 
 The earlier Report implementation plan was reconciled for staged segments and conditional
 structured choices in `318bcaf`, then superseded for execution on 2026-08-17 because its
-approval-only public identity conflicts with decision 9. The proposed replacement is
+approval-only public identity conflicts with decision 9. The proposed replacement below also
+predates decisions 4–6 as corrected on 2026-08-19 and must be reconciled before any execution:
 [`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](../docs/superpowers/plans/2026-08-17-astra-report-v1.md).
 No runtime begins until that plan is reviewed and a separate runtime-execution choice is recorded
 in `docs/phase-0.md`. This reconciliation creates no runtime, corpus runner, installation,
@@ -1156,9 +1228,11 @@ research reconciliation. Where earlier prose conflicts, this section governs.
 
 ### 14.1 Preserved core
 
-Reply-surface budgeting, Context Capsule, structural state delta, Exposure Ledger, staged modes,
-blocking escalation, visible deferral, fidelity precedence, safe continuation, and read-only
-lifecycle authority remain unchanged. Report's only durable state remains factual exposure.
+Reply-surface awareness, structural source delta, blocking escalation, visible deferral, fidelity
+precedence, safe continuation, and read-only lifecycle authority remain. Decisions 4–6 and section
+15 supersede the mandatory Capsule/NOW/detail-menu staging, per-project Exposure Ledger, and
+factual-exposure-only durable-state claims. The replacement is consolidated Standard delivery plus
+one bounded stance-bearing Report Artifact per reported subject or review cycle.
 
 ### 14.2 Widened presentation ingress
 
@@ -1170,7 +1244,7 @@ never acquires lifecycle authority.
 
 ### 14.3 Progress and delivery
 
-The host rendering seam supports native progress indicators, structured choices, and
+The host rendering seam supports native progress indicators, decision/confirmation panels, and
 links/attachments when available, with semantically equivalent text fallbacks. Work state belongs
 to the producer; disclosure state belongs to Report. Report may organize delivery of already-made
 reports, Markdown files, code changes, and diffs, but cannot author, edit, explain beyond recorded
@@ -1188,8 +1262,164 @@ tranche, not the product milestone.
 ### 14.5 Authority and execution stop
 
 This amendment authorizes design and implementation planning only. It does not authorize a
-`SKILL.md`, schema, script, test harness, Exposure Ledger storage, installation, or runtime
+`SKILL.md`, schema, script, test harness, Report Artifact storage, installation, or runtime
 execution. The proposed plan is
 [`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](../docs/superpowers/plans/2026-08-17-astra-report-v1.md).
 Execution requires an explicit, separately scoped amendment to `docs/phase-0.md` after plan
 review.
+
+## 15. Stance-bearing mediation amendment (2026-08-19, in progress)
+
+This amendment records the later user decisions in 1.1 items 10–15 and the evidence-grounded
+correction of items 4–6. Where those decisions conflict with the output-only,
+per-project-Exposure-Ledger, or one-topic-per-turn design, this section governs. The amendment
+remains phase-0 design: it authorizes neither a runtime nor an automatic delivery mechanism.
+Undecided contract syntax and downstream reconciliation remain open rather than being inferred
+from the deep-research proposal.
+
+### 15.1 Represented stance and principal switching
+
+Report is a delegated author and guide, not a stance-free formatter. It actively presents the
+current producer's recorded case while preserving that producer as the represented principal.
+Its rhetoric may make the producer's conclusion and recommendation clear and compelling, but may
+not exceed the source's commitment, certainty, scope, or material evidence.
+
+Each stance-bearing block has one top-level represented principal:
+
+- **producer position** — facts, conclusions, recommendations, objections, and requested actions
+  supplied by the relevant authority;
+- **user position** — a confirmed decision, policy, preference, correction, substantive comment,
+  or requested change; or
+- **Report status** — only facts inside Report's own jurisdiction, such as what it revealed,
+  recorded, sent, received, or could not deliver.
+
+A principal change starts a separately labelled block; repeated labels inside an unchanged block
+are unnecessary. Nested attribution remains valid: for example, "the user accepted Test's
+conclusion" is a user-position act that references Test's position. Questions such as "why?" and
+navigation such as "show the evidence" remain ephemeral interaction requests rather than durable
+user-position events. A mixed response is split into the smallest blocks needed to preserve those
+different functions.
+
+### 15.2 Bounded feedback return without orchestration
+
+For feedback attached to the active Report Artifact, Report may preserve the confirmed response,
+bind it to stable section/claim/option and source-revision references, and pass it to an owner that
+is mechanically determined by those references or explicitly named by the user. Ambiguous or
+genuinely cross-authority routing remains unresolved until the user clarifies it; Report does not
+choose substantive jurisdiction.
+
+The return path distinguishes at least:
+
+```text
+confirmed -> sent -> received -> producer disposition -> producer-owned lifecycle effect
+```
+
+These are independent claims. A send attempt is not receipt; receipt is not acceptance; a
+producer disposition is not a lifecycle effect; and none is evidence of cognition. Passive
+transport and a durable receipt may support the first three states. If the host offers no such
+path, Report records the confirmed feedback as pending and states that delivery is unconfirmed.
+It must not invoke a skill, start or schedule work, reopen an authoritative artifact, or advance a
+lifecycle stage to manufacture delivery or closure.
+
+### 15.3 Polishing and confirming user feedback
+
+Typed feedback remains session-local draft material until the user confirms the wording. Report
+may improve grammar, tone, organization, terminology, and explicit target or scope, but may not
+silently change polarity, commitment, conditions, priority, requested effect, or policy breadth.
+
+When polishing is useful, Report presents one bounded decision panel containing the proposed
+final wording, destination, and exact consequence of confirmation. The controls are conceptually:
+`Confirm and send`, `Send original`, `Edit`, and `Cancel`; a host may render equivalent controls
+without changing their semantics. Only the selected final wording is appended as the single user
+feedback event. Draft text and intermediate rewrites are not durable Report Artifact entries.
+Changes made after confirmation use an explicit amendment or supersession event. An exact
+structured decision that requires no rewriting needs no redundant polishing confirmation.
+When feedback accompanies a producer decision, its wording confirmation and that decision share
+one panel where the host can preserve both semantics; Report must not create two consecutive
+confirmation rounds for one intended action.
+
+### 15.4 The stance-bearing Report Artifact
+
+The Report Artifact is the reviewable communication object, not a neutral ledger. One artifact is
+bounded to one specification, plan, code change, test report, release decision, deliverable, or
+other named subject and its review cycle. It may survive multiple Report sessions and source
+revisions, then closes when that review cycle is completed, abandoned, or superseded.
+
+Its durable content is limited to:
+
+- stable subject, source, revision, and rendered-segment identities;
+- the rendered, attributed producer case and its source trace;
+- the report outline and section revelation/review facts;
+- one confirmed user-feedback event per completed confirmation flow;
+- send/receipt facts and failure state; and
+- references to producer acknowledgements, dispositions, and resulting authoritative revisions.
+
+The rendered producer case is a stable snapshot of what Report presented, not a second source of
+technical truth. Producer artifacts continue to own facts, severity, requirements, work state,
+approval semantics, and lifecycle effects. Report owns only its presentation, review, and
+communication records. When a source revision changes, affected sections are marked changed since
+review and become eligible for renewed review; unchanged project history is not reconstructed.
+
+The earlier Exposure Ledger semantics survive as the Report Artifact's disclosure component under
+7.3. Its historical per-project scope and the old claim that factual exposure is Report's only
+durable state are superseded. Exact storage format, status vocabulary, retention, and concurrency
+mechanisms remain later decisions.
+
+### 15.5 Low-dialogue review behavior
+
+Revelation and review state support resumption; they do not create a compulsory review ceremony.
+Opening, skipping, or returning to a section produces no confirmation question. Report does not
+ask the user to mark each section reviewed, narrate every state transition, or acknowledge every
+optional deferral.
+
+The normal visible progress cue stays compact, for example `2/5 Testing`. Additional state appears
+only when it changes the next safe action. Optional sections that the user does not open remain
+unreviewed or deferred; Report never relabels them reviewed merely because the user proceeds.
+Their existence may be stated inside the one final decision panel without requiring a separate
+acknowledgement. Any material fact required for a safe immediate decision must already be visible
+in the producer case and cannot be hidden behind an unreviewed-section gate.
+
+The default interaction budget is therefore one required user turn per real producer decision or
+confirmed feedback submission, not one turn per report section. Evidence expansion, review,
+and additional comments remain user-initiated. Where several feedback items belong to the same
+decision, Report may propose them together for one confirmation rather than forcing a sequence of
+near-identical panels.
+
+### 15.6 Evidence-grounded report grammar
+
+The exact five-field sequence is not established by research as a universal law. The inspected
+books support its functions—governing topic, relevance/context, plain explanation, consequence,
+and response—but also support adapting order and visible structure to the reader's purpose. The
+Deep Research work supplies authority and stance constraints rather than evidence for one prose
+template. The approved transfer is therefore the conditional contract in 7.2:
+
+- one consolidated Standard response rather than one topic-reveal turn at a time;
+- one producer-supported governing outcome or live decision first;
+- the `TOPIC / MOTIVATION / WHAT IS IT? / IMPACT / ACTION` route for several comparable topics;
+- informative, attributed topic headings such as `2/5 [TEST] Retry path remains unverified`;
+- merged or omitted visible fields when redundant or explicitly inapplicable;
+- `ACTION` first when the producer marks a blocker, urgent failure, or live decision;
+- stable evidence references, material caveats, and cross-topic dependencies despite their
+  absence from the five repeated labels; and
+- job-specific structures for progress, failure, incident, evidence-audit, and single-answer
+  reports.
+
+This is an Astra synthesis and product default. Its exact labels, order, and effects on decision
+quality remain testable hypotheses. The source-level advice and transfer limits are preserved in
+the [book distillation](../docs/research/2026-08-18-astra-report-book-distillation.md); the focused
+risk analysis is in the
+[five-field template audit](../docs/research/2026-08-19-astra-report-five-field-template-evidence-audit.md).
+
+### 15.7 Preserved boundary and deferred reconciliation
+
+`I(reporting)` remains the outbound presentation relation unless a later approved decision changes
+its typing. This amendment establishes a bounded semantic return path but does not yet name a new
+relation or approve the deep-research proposal's C1-C6 schemas. Sections 8.2, 8.6–8.8, 9, 11,
+12.2, and the sibling designs require final wording reconciliation once the remaining
+constitutional questions are settled. Until then, section 15 has precedence for decisions 10–15
+and the corrected report structure in decisions 4–6.
+
+Report remains read-only over lifecycle authority. It cannot approve, reject, waive, mutate a
+producer artifact, reinterpret technical evidence, create cross-skill consensus, or cause a
+lifecycle transition. Runtime transport, persistent storage, host adapters, schema files, tests,
+installation, and lifecycle integration still require separate authorization.

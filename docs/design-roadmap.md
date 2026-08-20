@@ -1,9 +1,9 @@
 # Astra phase-0 skill design roadmap
 
-**Snapshot:** 2026-08-17
+**Snapshot:** 2026-08-20
 **Status:** Locked six-skill authority roster and coordinator allocation; consultant pairs, the
-final trigger surface, and the interface-complete Astra Report v1 direction are reconciled; source
-internalization and runtime implementation remain deferred
+final trigger surface, and Astra Report's interface-complete stance-bearing mediation direction
+are reconciled; source internalization and runtime implementation remain deferred
 **Amendment 1 (2026-07-31):** Source-body inspection of six thin candidates dissolved two proposed
 designs, relocated one misfiled source, and excluded one broken source. See section 8.
 **Amendment 2 (2026-07-31):** Source-body inspection of Context, Safety, Delegation & autonomy, and
@@ -57,13 +57,20 @@ Report's authority boundary while widening its presentation ingress to reportabl
 adding producer-owned progress and existing-deliverable presentation, and replacing an
 approval-only public slice with an interface-complete v1 milestone. Slice A remains an internal
 Spec-approval conformance tranche. No runtime is authorized. See section 17.
+**Amendment 11 (2026-08-20):** User review, the book distillation, and the stance-handoff research
+replace neutral output-only Report with bounded, attributed stance-bearing mediation: outbound
+`I(reporting)` remains presentation, while confirmed feedback about one pinned Report Artifact may
+return through review-only `F(feedback)`. Consolidated Standard, the conditional five-function
+topic route, actor-local review markers, one canonical six-skill annotation pass, and strict
+response-only authority are reconciled across all six designs. No runtime is authorized, and the
+2026-08-17 implementation plan now requires amendment before execution. See section 18.
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership.
 > `docs/design-requirements.md` governs every per-skill design. This roadmap schedules and
 > proposes source allocation; it does not replace either document or make the source-claim
 > ledger authoritative by itself.
 
-> **Current-roadmap rule.** Sections 14–17 supersede sections 2–7 wherever the pre-lock 24-skill
+> **Current-roadmap rule.** Sections 14–18 supersede sections 2–7 wherever the pre-lock 24-skill
 > proposal conflicts with the locked six-skill coding stack. Sections 2–13 remain historical
 > design and decision evidence; they do not authorize a seventh public coding-lifecycle skill.
 
@@ -2265,3 +2272,90 @@ or generating visual artifacts is not.
 This amendment authorizes documentation and implementation planning only. It creates no
 `SKILL.md`, schema, script, test, Exposure Ledger storage, runtime, harness, installation, source
 resolution, deletion, retirement, push, PR, or publication state.
+
+## 18. Amendment 11 — stance-bearing Report and bounded feedback mediation
+
+The evidence inputs are the
+[`book distillation`](research/2026-08-18-astra-report-book-distillation.md), the
+[`five-field template audit`](research/2026-08-19-astra-report-five-field-template-evidence-audit.md),
+and the
+[`stance-handoff deep-research resolution`](research/2026-08-19-astra-report-stance-deep-research-resolution.md).
+The user reviewed their transfer into Astra incrementally. The resulting design is recorded in
+`designs/astra-report.md` decisions 10–28 and the shared contract in
+`docs/design-requirements.md` sections 7.11.2 and 7.11.6–7.11.7.
+
+### 18.1 Constitutional change
+
+Report is no longer specified as a neutral one-way renderer. It is a bounded delegated mediator
+whose represented principal changes by attributed act:
+
+- while reporting, it presents and may faithfully advocate the producing skill's recorded case;
+- while recording confirmed feedback, it represents the user's exact position and keeps any
+  polished normalization visibly derivative; and
+- while stating delivery, conflict, or missing-contract facts, it speaks only for its own
+  procedural record and creates no substantive recommendation.
+
+Every stance-bearing block has one explicit principal. Report may transform language and order,
+but may not change proposition, scope, polarity, certainty, recommendation strength, evidence, or
+material caveats. It never creates a common cross-skill verdict.
+
+`I(reporting)` remains the outbound producer-to-user presentation relation. A separate
+`F(feedback)` relation returns one user-confirmed feedback event through a review-only annotation
+round over a pinned Report Artifact. `F(feedback)` is not consultation, handoff, public workflow
+invocation, approval recording, or lifecycle progression.
+
+### 18.2 Report structure and bounded state
+
+Amendment 10's staged Capsule/NOW/detail-menu default and per-project Exposure Ledger are
+superseded where they conflict with the later user-reviewed design:
+
+- Standard normally delivers the governing result and every material top-level topic in one
+  structured response rather than requiring one reveal turn per topic.
+- Comparable multi-topic material follows the conditional `TOPIC / MOTIVATION / WHAT IS IT? /
+  IMPACT / ACTION` route. Fields may merge when redundant, and urgent or blocking `ACTION` may lead;
+  progress, failure, incident, evidence-audit, and single-answer reports retain job-specific forms.
+- The durable state is one bounded, append-only Report Artifact for a reported subject or review
+  cycle. Its disclosure history is the narrower successor to the Exposure Ledger; it is not a
+  project-wide cognition or conversation-memory model.
+- User feedback remains an ephemeral draft until one decision panel or faithful textual fallback
+  confirms, edits, or cancels the polished wording. Only the final confirmed event is appended.
+- Visible `UR`, `RV`, `CM`, `RJ`, `AP`, and `DF` markers are actor-local projections on clearly
+  attributed user- or skill-facing sections. Opening or receiving content never implies review.
+
+### 18.3 One bounded six-skill review round
+
+One confirmed feedback event may address several stable targets. Report preserves it as one user
+event, resolves recipients only from stable ownership metadata, and passes the pinned artifact in
+canonical order: Understand Code, Critique, Spec, Implement, Test, then Ship.
+
+Each represented skill receives at most one response opportunity. It may annotate only its own
+unresolved targets with an attributed acceptance, partial acceptance, rejection, clarification,
+deferral, out-of-authority response, rationale, evidence, and required-follow-on notice. If all of
+its current-revision sections are user-approved, it skips annotation work; the approval event
+remains available for the skill's later authoritative recording path. Report is the sole physical
+writer and appends each immutable skill-authored response without semantic transformation.
+
+The pass never mutates an authoritative artifact or performs the follow-on work. A newer producer
+revision is marked newly unreviewed while the pass finishes against its pinned snapshot. Conflicts
+remain attributed rather than voted or merged. If a skill is unavailable, only that named
+skill-facing annotation or recording section remains `UR`; user-facing states do not change, the
+pass continues without automatic retry, and silence is never approval or lack of objection.
+
+A confirmed user `AP` is immediately authoritative evidence of the user's decision for its target
+and revision, but it is not producer-owned approval state. Only a later, separately invoked public
+skill workflow may record the lifecycle consequence, revise its source artifact, or do substantive
+work. Report may present that required invocation as one attributed `ACTION`, then stops.
+
+### 18.4 Governed next work
+
+The 2026-08-17 interface-complete v1 plan predates this constitutional amendment. It remains useful
+as case and adapter inventory, but it is not execution-ready until revised to cover principal
+attribution, confirmation-gated feedback polish, the bounded Report Artifact, `F(feedback)`,
+actor-local review markers, one-pass termination, conflict preservation, and the direct producer
+fallback. The revised plan must preserve experiment separability and must not prematurely adopt the
+deep-research C1–C6 field names as runtime schemas.
+
+This amendment completes documentation-level reconciliation only. It changes no source-allocation
+or ledger row and authorizes no `SKILL.md`, schema, script, test, persistent store, transport,
+adapter, concurrency mechanism, runtime invocation, installation, deletion, retirement, push, PR,
+or publication effect. A separately scoped phase and runtime authorization remains mandatory.

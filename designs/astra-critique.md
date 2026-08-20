@@ -2,8 +2,9 @@
 
 **Normalized:** 2026-07-31 · **Original design:** 2026-07-29 (`f264c20`, reviewed at `ff889a4`)
 
-**Six-skill reconciliation:** 2026-08-11 · surviving public home for review, diagnosis, and
-Critique-authority consultation; `astra-debug` is superseded historical evidence
+**Six-skill reconciliation:** 2026-08-11 · **Report feedback reconciliation:** 2026-08-20 ·
+surviving public home for review, diagnosis, and Critique-authority consultation; `astra-debug` is
+superseded historical evidence
 
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns
 > phase scope and the global ledgers. This is one per-skill design, not a universal condensation
@@ -1097,13 +1098,30 @@ present, its prior artifact ID, revision, and content hash map to that field wit
 It also carries `reporting.surfaces` and `reporting.open_decisions` under the shared producer
 contract. Each surface is grounded in Finding Set fields and preserves its producer-owned claim,
 consequence, blocking state, decision requirement, and evidence references. Critique alone owns
-those values and records any returned user decision against the exact Finding Set revision/hash.
+those values, its communicative purpose, governing point, recommendation state and strength,
+requested action, uncertainty, and material caveats or counterpositions. Missing stance semantics
+remain explicit gaps; Report cannot infer them. Critique records any returned user decision against
+the exact Finding Set revision/hash as producer-owned lifecycle state; Report may retain the exact
+confirmed user event only as communication evidence.
 
 Critique emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
 `stage_boundary`, `status_request`, and `failure`. At a non-decision reporting failure it emits
 only the shared minimal unavailable notice. At an approval request it presents the complete
 decision envelope itself if Report is unavailable. `I(reporting)` changes presentation only; it
 does not return a consultant determination, reclassify a finding, or transfer Critique authority.
+
+Under `F(feedback)`, Critique may receive one pinned, user-confirmed Report Artifact during the
+canonical review round. It may respond at most once and only to unresolved sections grounded in
+Finding Set claims it owns, using an attributed acceptance, partial acceptance, rejection,
+clarification request, deferral, or out-of-authority response with rationale, evidence, and any
+required follow-on work. If all of its current-revision sections are user-approved, it skips
+annotation work; the approval event remains available for its normal authoritative recording path.
+This response-only operation cannot re-grade or revise a finding, gather new evidence, diagnose,
+review, or start a peer workflow. Report alone appends the immutable response. Failed or
+unavailable delivery leaves only the Critique-facing annotation or recording section `UR`,
+preserves every user-facing marker, and does not stop the remaining pass; silence is never
+approval or absence of objection. Any new Finding Set judgment or revision requires a separately
+invoked Critique workflow.
 
 ---
 

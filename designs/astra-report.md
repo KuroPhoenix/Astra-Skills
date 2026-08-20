@@ -1,6 +1,6 @@
 # Astra Report — phase-0 design
 
-**Date:** 2026-08-12; amended 2026-08-13, 2026-08-17, and 2026-08-19
+**Date:** 2026-08-12; amended 2026-08-13, 2026-08-17, 2026-08-19, and 2026-08-20
 
 **Status:** Proposed phase-0 design approved for implementation planning; trigger-surface,
 producer-contract, source-ledger, and research-to-design reconciliation are complete. Runtime
@@ -12,9 +12,9 @@ and the 2026-08-17 decisions that Report applies implicitly to reportable agent 
 producer-owned progress through host-native indicators when available, organizes read-only
 delivery of producer-created text/code artifacts, and reaches interface-complete v1 before public
 promotion. The eight blocking review findings and the method-canon audit corrections are applied.
-The 2026-08-19 stance-bearing mediation amendment in section 15 records only the constitutional
-choices the user has approved so far; it governs those choices while the remaining reconciliation
-is discussed one decision at a time.
+The 2026-08-19 through 2026-08-20 stance-bearing mediation amendment in section 15 records the
+approved constitutional choices and their reconciled peer contracts; exact runtime schemas,
+storage mechanics, and implementation remain deferred.
 The research reconciliation is
 `docs/research/2026-08-17-astra-report-research-to-design-reconciliation.md`. The earlier
 Spec-approval implementation plan remains useful only as a conformance tranche and is
@@ -23,16 +23,19 @@ non-executable as the public milestone. The proposed replacement plan is
 prose only: no runtime skill, harness,
 installation, retirement, push, or PR.
 
-**Proposed public shape:** `astra-report` — the stack's single rich outbound reporting surface.
+**Proposed public shape:** `astra-report` — the stack's single rich reporting and bounded-feedback
+surface.
 It is a seventh user-facing entry point but not a seventh lifecycle authority. The roster
 formula this design proposes is **six authorities, one voice**.
 
 Astra Report renders the six authoritative artifacts — Finding Set, Understanding Report,
 Approved Change Specification, Approved Delivery Roadmap and Execution Ledger, Test Evidence
 Packet, Publication Record — and typed producer-owned progress, results, blockers, decisions, and
-deliverables into attention-managed communication for the user. A non-lifecycle producer gains no
-lifecycle authority by using Report. Report owns how things are said; it never owns what is true,
-what is required, what work state exists, or what is approved. Its two outputs are the ephemeral
+deliverables into attention-managed communication for the user and returns only confirmed,
+attributed user feedback through the review-only path defined here. A non-lifecycle producer gains
+no lifecycle authority by using Report. Report owns presentation and its bounded communication
+record; it never owns what is true, what is required, what work state exists, or what is approved.
+Its two outputs are the ephemeral
 **Reader Brief** and the bounded, append-only **Report Artifact**; neither is an authoritative
 chain artifact in the 7.11.3 sense.
 
@@ -49,7 +52,7 @@ report—or when I need to resume a project—I receive one budgeted, inspectabl
 what matters now and keeps every consequential detail reachable. **Personal value:** explicit —
 quoted user statements, not inference.
 
-### 1.1 Recorded user decisions (2026-08-12 through 2026-08-19)
+### 1.1 Recorded user decisions (2026-08-12 through 2026-08-20)
 
 1. **Existence.** `astra-report` is approved as a user-facing reporting skill alongside the
    six-skill coding lifecycle. It holds no lifecycle authority.
@@ -105,11 +108,12 @@ quoted user statements, not inference.
     feedback, or Report only for procedural reporting facts. A response may contain several such
     blocks, but a principal change must start a separately labelled block. Quoted and referenced
     positions may remain nested inside it.
-12. **Bounded feedback return.** Report may capture, package, and pass confirmed user feedback to
-    a mechanically identified owner through passive transport. Capture, send, receipt, producer
-    disposition, and lifecycle effect remain separate. Report never invokes a producer, starts
-    work, reopens an artifact, or advances the lifecycle merely to deliver feedback; absent passive
-    delivery, the feedback remains visibly pending.
+12. **Bounded feedback return.** Report may capture and package confirmed user feedback in the
+    active Report Artifact, then circulate that pinned artifact through the relevant lifecycle
+    skills in canonical order under decision 17. Capture, send, receipt, producer response,
+    disposition, and lifecycle effect remain separate. The review circulation may request a
+    bounded annotation response; it never starts the producer's public workflow, applies the
+    feedback, reopens an authoritative artifact, or advances the lifecycle.
 13. **Confirmation-gated feedback polish.** Typed feedback is an ephemeral draft. Report may
     propose clearer wording, but one decision panel lets the user confirm the polish, send the
     original, edit, or cancel. Only the final confirmed wording becomes one durable feedback
@@ -124,6 +128,86 @@ quoted user statements, not inference.
     user to certify every section. Optional unreviewed material may remain visibly deferred. One
     consolidated panel appears only when an actual decision or feedback wording must be
     committed; per-section review prompts and acknowledgements are forbidden by default.
+16. **Paired directional relations.** `I(reporting)` remains the producer-to-user presentation
+    relation. Final user-confirmed feedback returns through a separate `F(feedback)` relation so
+    the change of represented principal and authority is explicit. `F(feedback)` permits only the
+    bounded review circulation and response in decision 17; it cannot start substantive work or
+    interpret, accept, apply, or give lifecycle effect to feedback.
+17. **Sequential skill-annotation round.** After one user confirmation, Report pins the annotated
+    Report Artifact and circulates it through Understand Code, Critique, Spec, Implement, Test,
+    and Ship in that order, limited to skills represented by owned sections. A skill contributes
+    only attributed responses to its own sections. If all of a skill's current-revision sections
+    are user-approved and carry no unresolved comment, condition, rejection, or change request,
+    Report skips that skill's response work but still delivers or exposes the approval event for
+    authoritative recording. After the round, Report presents the consolidated skill-annotated
+    Report Artifact. No participant may rewrite the user's annotations or another skill's entry.
+18. **Sole writer, distributed authorship.** Report is the sole physical writer of the Report
+    Artifact. Each skill authors an immutable, attributed response for its owned sections; Report
+    appends that response without paraphrasing, strengthening, or merging it. The skill retains
+    semantic ownership, Report retains storage and ordering integrity, and corrections use a new
+    attributed supersession event rather than editing prior text.
+19. **Response-only skill annotations.** A skill's circulation response may state that the user's
+    annotation is accepted, partially accepted, rejected, awaiting clarification, deferred, or
+    outside that skill's authority; give its rationale and evidence; and state whether a new
+    authoritative revision or separate lifecycle operation is required. The response cannot
+    rewrite the reported section, mutate a source artifact, or perform the requested work during
+    circulation. Any substantive change proceeds through the normal lifecycle and produces a new
+    producer-owned revision, which Report may later reference and report.
+20. **One-pass termination.** One confirmed feedback batch authorizes at most one canonical
+    `F(feedback)` pass. Each represented skill receives at most one response opportunity in that
+    pass; an annotation, clarification request, rejection, deferral, delivery failure, or later
+    producer revision cannot recursively start another pass. Report presents the consolidated
+    artifact and stops. Only a new or amended user-confirmed feedback batch may begin another
+    round, and unchanged resolved sections remain skipped.
+21. **Pinned-round revision policy.** Every circulation response remains bound to the source
+    revision confirmed at the start of its round. If a producer publishes a newer revision while
+    the pass is in flight, Report finishes the pass against the pinned snapshot, flags the newer
+    revision and its affected sections as unreviewed, and includes that state in the consolidated
+    artifact. It never switches sources, rewrites prior annotations, aborts, or restarts the pass
+    automatically. Reviewing the newer revision requires a new user-confirmed round.
+22. **Dual-record approval.** A confirmed user approval in the Report Artifact is immediately
+    authoritative evidence of the user's decision for its exact target and pinned revision. It is
+    not producer-owned approval state and gives Report no lifecycle authority. The owning skill
+    later validates and records the decision through its normal authoritative mechanism; until
+    then the user-facing section remains `AP` while the owning skill's visibly separate recording
+    section remains `UR`. A cleanly approved section requires no skill annotation response, while
+    delivery and receipt remain separate communication facts.
+23. **Attributed handoff, separate invocation.** When a skill response says that follow-on
+    lifecycle work is required, Report presents an attributed `ACTION` naming the responsible
+    skill, the exact producer-requested operation, and its source response, then stops. The user
+    must invoke that skill separately to authorize work. Report cannot embed a control whose
+    confirmation starts the operation, treat a generic continuation as authority, or convert the
+    annotation round into a lifecycle handoff.
+24. **Separate state axes, compact actor-scoped projection.** The Report Artifact keeps review or
+    revelation, user position, delivery or receipt, producer disposition, and lifecycle effect as
+    separate facts. Every visibly attributed user- or skill-facing section normally shows exactly
+    one marker—`UR`, `RV`, `CM`, `RJ`, `AP`, or `DF`—for that section's designated actor. The
+    marker is a display projection, not stored authority state. The labels are an Astra product
+    default, not a research-established vocabulary.
+25. **Explicit-only review.** Only an explicit act by a section's designated actor may create an
+    `RV` review event. Opening, revealing, scrolling, or receiving a section records exposure at
+    most; it never establishes review. Report does not solicit review confirmation section by
+    section. In a user-facing section, `CM`, `RJ`, `AP`, and `DF` already record a stronger
+    explicit user position and therefore take precedence over `RV`.
+26. **One event, multiple stable targets.** One confirmed feedback event may reference several
+    section, claim, evidence, option, or artifact IDs and therefore several mechanically identified
+    owners. Report preserves one final wording, sends it to each owner, and records separate
+    transport facts without duplicating the user event. Each skill may respond only to its owned
+    targets. When stable references do not determine the owner set, Report asks once before
+    confirmation and logging; it never infers recipients from the feedback prose.
+27. **Attributed conflict, no synthetic verdict.** Incompatible skill annotations become one
+    elevated `CONFLICT` surface containing each position, principal, source response, and evidence.
+    Report neither merges the positions, counts votes, nor grants precedence to canonical order.
+    Its `ACTION` names the decision authority already established by the source contracts—normally
+    the user for policy or trade-offs and the relevant skill for its technical record. If authority
+    itself is unresolved, Report says so rather than selecting a winner.
+28. **Role-local `UR`; continue on missing response.** User-facing report sections and
+    skill-facing annotation or recording sections are visibly distinct. If a skill is unavailable
+    or its delivery fails, only that skill-facing section remains `UR`; an existing user-facing
+    `AP`, `CM`, `RJ`, or `DF` marker is unchanged. Report records the transport fact internally,
+    continues the one-pass round through the remaining skills, performs no automatic retry, and
+    never treats the missing response as approval or lack of objection. No extra visible delivery
+    state or suffix is introduced.
 
 These are recorded decisions in the sense of the 2026-08-12 lock convention: they fix design
 direction, and they revise two locked claims — the exactly-six public roster in
@@ -135,7 +219,7 @@ retirement of any source.
 ### 1.2 Interpretation resolved
 
 **2026-08-19 amendment.** The output-only resolution below is retained as historical context but
-is superseded, for feedback about a bounded Report Artifact, by decisions 10–14 and section 15.
+is superseded, for feedback about a bounded Report Artifact, by decisions 10–28 and section 15.
 Ordinary skill intake and unrelated conversation remain direct; the amendment does not make
 Report a general input mediator.
 
@@ -191,6 +275,8 @@ human-facing rendering without corrupting its own artifact discipline.
 | **Attention budget** | Report's explicit allocation of simultaneous reply surfaces and explanatory detail. It prioritizes producer-marked blockers and consequential decisions, but no exact numeric limit is treated as a cognitive law |
 | **Attention escalation** | The rule deciding when an item must surface regardless of brevity preference: blocking user decisions and their complete decision semantics always appear in the initial report or decision panel |
 | **Topic section** | One addressable top-level matter in a report, with a stable ID, an attributed informative heading, producer-supported semantics, and linked evidence; comparable multi-topic reports normally use the five-function route in decision 5 |
+| **Visible status marker** | A compact actor-scoped section-heading projection: `UR` (unreviewed), `RV` (explicitly reviewed), `CM` (commented), `RJ` (rejected), `AP` (approved), or `DF` (deferred). The heading identifies whether the section belongs to the user or a named skill; one actor's marker never overwrites another's, and no separate delivery badge is added |
+| **Conflict surface** | One elevated, non-synthetic comparison of incompatible attributed positions, their source responses and evidence, plus the already-established decision authority or an explicit authority gap; it is never a vote or Report verdict |
 | **Evidence expansion** | Evidence-grade material requested after or alongside a consolidated report. It is addressable by stable references and does not require a structured-choice outline or one conversational turn per topic |
 | **Brief segment** | One receipt-bearing Report delivery: normally one consolidated Skim, Standard, or Deep response, or a later evidence expansion, decision panel, or confirmed-feedback result |
 | **Exposure record** | The disclosure-history component of one bounded Report Artifact: what exact rendered material was receipt-confirmed as shown, against which subject and source revision; it is not a per-project cognition ledger |
@@ -318,8 +404,9 @@ repository file; hides disagreement between sources; starts, schedules, or inter
 workflow; ranks anything outside the scope it was invoked on; or communicates across projects.
 Its only durable effects are append-only Report-jurisdiction communication records: exact
 presentation/delivery facts and final user-confirmed feedback bound to one Report Artifact. It
-cannot autonomously alter a user response, and these records are never approval or lifecycle
-state (sections 15.3–15.4). Format
+cannot autonomously alter a user response. A confirmed approval is authoritative evidence of the
+user's decision for its pinned target, but these records are never producer-owned approval or
+lifecycle state (sections 15.3–15.4). Format
 conversion, generated visual reporting, and dashboard authorship are post-v1 non-goals (section
 4.3). Presenting an existing text/code deliverable or using host-native controls is in v1 and
 creates no file-writing authority.
@@ -519,8 +606,9 @@ Against the strongest applicable single source (the source oracle per case: `/do
 quality, `internal-comms` for status format, `doc-coauthoring` for chunked iteration),
 combined behavior must outperform on three named task classes:
 
-1. **Resumption after absence.** No source constructs a capsule plus state delta from an
-   exposure record; every oracle re-explains or omits by accident.
+1. **Resumption after absence.** No source reconstructs minimal subject orientation plus a bounded
+   state delta from receipt-backed disclosure history; every oracle re-explains or omits by
+   accident.
 2. **Multi-artifact overload.** Six locally-good summaries still concatenate into dozens of
    findings; no oracle ranks across artifact types under a surface budget with named deferral.
 3. **Approval teeing.** No oracle renders a typed decision payload under fidelity precedence
@@ -564,9 +652,11 @@ regardless of output quality.
    topics together. Evidence and audit depth stay reachable by stable reference without generic
    "want to hear more?" questions or one reveal turn per topic. Matters when: supporting detail
    exists but no additional commitment is required.
-8. **No orchestration.** Report never decides whether or when to interrupt the user, never
-   ranks across projects, and never starts a peer workflow. Matters when: a surfaced
-   contradiction tempts an automatic Critique invocation — routing is user-mediated (3.7).
+8. **No lifecycle orchestration.** Report never decides whether or when to interrupt the user,
+   ranks across projects, or starts a public peer workflow. It may sequence only decision 17's
+   review-only `F(feedback)` operations over one pinned Report Artifact. Matters when: a surfaced
+   contradiction or requested change tempts Report to start Critique or Implement rather than
+   record a response and leave lifecycle routing user- or producer-owned.
 9. **Visible deferral.** DEFERRED names what was parked; silent omission is forbidden even
    below the budget line. Matters when: the user wants to veto a deferral cheaply.
 
@@ -728,7 +818,7 @@ relevant prior presentation/review events needed to regenerate the view. Report 
 conversation or project-wide cognition store; the Report Artifact is its only durable subject
 state.
 
-## 8. Delegated voice: the `I(reporting)` relation and reporting hooks
+## 8. Delegated voice and return mediation: `I(reporting)`, `F(feedback)`, and producer hooks
 
 ### 8.1 Direction rule
 
@@ -745,7 +835,9 @@ requests are navigation inside an active Report Artifact. Actual producer decisi
 wording use separately identified decision controls; neither an evidence request nor a generic
 continuation phrase can grant approval or an effect.
 
-### 8.2 The `I(reporting)` relation
+### 8.2 Paired reporting and feedback relations
+
+#### 8.2.1 `I(reporting)` — producer case outbound
 
 Rendering delegation is a **typed use of the canonical `I` relation** — consumption of a peer
 capability without invoking its lifecycle judgment — not a new relation letter. A first draft
@@ -757,6 +849,66 @@ returns.** It is not `C` (nothing is checked against upstream authority; no
 pass/drift/authority_gap) and not `H` (nothing is handed off). Report consumes the producers'
 artifacts through ordinary `I` references in the opposite direction. The typing convention
 needs only a clarifying note in the relation vocabulary (12.4), not a new entry.
+
+#### 8.2.2 `F(feedback)` — bounded review circulation
+
+`F(feedback)` is the distinct return relation for a pinned, user-confirmed Report Artifact. Report
+uses it to circulate the artifact through the lifecycle skills represented by its owned sections,
+in canonical order: Understand Code → Critique → Spec → Implement → Test → Ship. The outbound
+feedback blocks preserve the user as principal and carry final confirmed wording, stable targets,
+source revisions, earlier attributed responses in the same round, and Report-owned transport
+facts; an unconfirmed draft cannot cross the relation.
+
+A confirmed feedback event may carry several stable target references and map mechanically to
+several represented skills. Every recipient receives the same final user wording, while Report
+records delivery and receipt separately per recipient. The durable user event is not copied into
+one apparent decision per skill, and no recipient may respond outside its owned targets.
+
+If the returned annotations conflict, Report preserves them as one elevated `CONFLICT` surface.
+Each position retains its principal, source response, rationale, and evidence. Canonical
+circulation order supplies no substantive precedence, and Report may neither merge the positions
+nor use majority agreement as authority. The surface names the decision owner already established
+by the source contracts or exposes an unresolved authority gap.
+
+For a skill with unresolved owned sections, the relation may request one bounded review response:
+an attributed section annotation, rationale, disposition state, or link to a producer-owned
+revision. The skill authors that immutable response; Report is the sole Report Artifact writer and
+appends it without semantic transformation. This is a narrow communication operation, not the
+skill's public lifecycle workflow. A skill whose owned sections are all user-approved at the
+pinned revision performs no response work; the approval event is still delivered or made
+referenceable so skipping analysis cannot erase the user's decision or prevent later producer
+recording.
+
+That response is disposition and explanation only. It may accept, partially accept, reject,
+request clarification on, defer, or decline for lack of authority over the user's annotation; add
+rationale and evidence; and identify required follow-on lifecycle work. It may not revise the
+reported producer case, mutate an authoritative artifact, or perform that follow-on work during
+`F(feedback)`. A later producer-owned revision is a separate lifecycle result and is linked only
+after the responsible skill creates it through its normal workflow.
+
+When that response identifies required follow-on work, Report may render one attributed `ACTION`
+that names the responsible skill, the exact producer-requested lifecycle operation, and the source
+response. It cannot start the operation or attach a control whose confirmation would do so; the
+user invokes the public skill separately.
+
+One confirmed feedback batch permits one pass only. Each represented skill is considered at most
+once in canonical order, and no response, unresolved delivery state, or linked producer revision
+recursively invokes `F(feedback)`. Report consolidates the completed and unresolved outcomes, then
+returns control to the user.
+
+The source revision is pinned for the entire pass. If a newer producer revision appears, Report
+continues against the snapshot the user reviewed, records the supersession as a procedural fact,
+and marks the newer revision's affected sections unreviewed in the consolidated artifact. It does
+not substitute the new source or restart circulation without a new user confirmation.
+
+The relation cannot select or start substantive work, interpret the user response authoritatively,
+or itself create producer acceptance, producer approval state, artifact mutation, or lifecycle
+effect. Report may preserve the exact confirmed user decision as communication evidence. A send
+attempt, confirmed receipt, producer response, producer disposition, and producer-owned lifecycle
+effect remain separate events. `F(feedback)` is not `C` because it returns no consultant `pass`, `drift`,
+or `authority_gap`; it is not `H` because it starts no public peer workflow; and it is not ordinary
+`I` because its represented principal, bounded review operation, and fidelity obligations are
+explicit.
 
 ### 8.3 Lifecycle reporting moments and the ReportEvent envelope
 
@@ -773,8 +925,11 @@ manufacturing a ReportEvent.
 Every moment crosses the relation as one common **ReportEvent envelope**: event type (one of
 the five); producing skill; `artifact_ref`, either an identity/revision/hash tuple per 7.11.3 or
 `null`; a one-sentence producer-authored outcome; blocking status; surface candidates with
-their source-assigned consequence fields (8.6); open-decision references; and evidence
-references. `artifact_ref` is required for artifact completion and whenever an authoritative
+their source-assigned stance and consequence semantics (8.6); open-decision references; and
+evidence references. A stance-bearing rendering requires the producer to identify its
+communicative purpose, governing point, recommendation or explicit absence, requested action,
+and material caveats or counterpositions where applicable; Report never reconstructs these from
+tone or prose implication. `artifact_ref` is required for artifact completion and whenever an authoritative
 artifact already exists; it may be `null` only when entry is refused or work fails before any
 artifact can exist. A null reference requires a producer-owned event identity plus evidence or
 failure anchors, so Report never invents an artifact to satisfy the schema. Approval requests
@@ -790,8 +945,10 @@ unchanged). Report owns wording, ordering, budget placement, and evidence links.
 payload extending the ReportEvent envelope is: decision identity; options with source-assigned
 consequences; evidence references; blocking status; and an explicit recorded recommendation or
 `none`. The Report Artifact records that the decision was presented and may preserve the user's
-final confirmed response as a user-principal communication event. The producer's artifact alone
-interprets and records its authoritative disposition and lifecycle effect.
+final confirmed response as a user-principal communication event. A confirmed approval is
+authoritative evidence of the user's decision for the exact referenced target and revision, but it
+does not change producer-owned approval state. The producer's artifact alone interprets and records
+its authoritative disposition and lifecycle effect.
 
 The complete decision envelope appears in the consolidated report or its decision panel and is
 never hidden behind an evidence request. Supporting rationale, alternatives, and evidence remain
@@ -819,13 +976,15 @@ in the ledger delta and surfaces them.
 
 ### 8.6 Reporting hooks on the six artifact contracts
 
-Partially satisfied by 7.11.3: stable identifiers exist (Finding IDs, requirement and
-acceptance identifiers, the machine-checkable traceability chain), and supersession semantics
-exist in principle — but explicit supersession **fields** are defined only by Critique and
-Spec. **Four additions are required:**
+The original contract audit found stable identifiers (Finding IDs, requirement and acceptance
+identifiers, and the machine-checkable traceability chain) plus partial supersession semantics.
+Five cross-skill additions were required and are now reconciled in the six sibling designs:
 
-1. **Typed consequence fields** on every user-relevant claim: severity or consequence,
-   blocking-or-deferrable, decision-required-or-FYI — assigned by the producing skill (6.3).
+1. **Typed stance and consequence semantics** on every user-relevant claim: communicative purpose,
+   governing point, motivation where recorded, consequence, blocking-or-deferrable,
+   decision-required-or-FYI, recommendation or explicit `none`, requested action, and material
+   caveats or counterpositions — all assigned by the producing skill (6.3). Exact runtime field
+   names remain a later schema decision.
 2. **A common open-decision shape** across all six, so open decisions are enumerable without
    six parsers.
 3. **Explicit supersession fields** for Understand Code, Implement, Test, and Ship, matching
@@ -833,22 +992,33 @@ Spec. **Four additions are required:**
    chain.
 4. **ReportEvent envelope adoption** (8.3) at every reporting moment, including the approval
    extension (8.4).
+5. **A bounded `F(feedback)` response hook** through which each represented skill can receive one
+   pinned, user-confirmed Report Artifact and return at most one attributed response for its owned
+   unresolved targets, without source mutation, new work, or lifecycle effect.
 
-These are proposed amendments to each sibling design's artifact contract, `claimed` rows for
-coordinator migration (12.4).
+These are semantic design contracts, not exact runtime schemas. Their sibling wording was
+reconciled on 2026-08-20; source-accounting rows remain `claimed`, never `resolved`, and runtime
+implementation remains separately gated.
 
 ### 8.7 Impact on the six designs
 
-Each sibling's user-visible-result and approval-flow sections gain an `I(reporting)`
-delegation clause;
-their content authority sections are untouched. This is wording migration, not authority
-change. Rows stay `claimed`, never `resolved`, until the roster-wide review.
+Each sibling's reporting section now carries two deliberately asymmetric clauses:
+
+- outbound `I(reporting)` delegates producer-authored presentation to Report; and
+- inbound `F(feedback)` permits one response-only review act over the pinned Report Artifact.
+
+Their content authority, source-artifact ownership, public entry, approval recording, and
+lifecycle effects are untouched. A skill may annotate only its own unresolved targets; Report is
+the sole physical Report Artifact writer; and any actual revision or work requires a later,
+separately invoked producer workflow. This is a communication-interface amendment, not an
+authority transfer.
 
 ### 8.8 Producer-neutral ReportPacket profile
 
 Cooperating agents outside the six lifecycle authorities delegate only **presentation** through a
 producer-owned ReportPacket. The packet is a semantic contract, not a lifecycle artifact and not a
-new public workflow. It carries:
+new public workflow. The six-skill `F(feedback)` review relation is not generalized to these
+producers in v1. The packet carries:
 
 | Field | Invariant |
 |---|---|
@@ -895,6 +1065,7 @@ Report must be able to resolve immutable references; its absence is a 7.6 degrad
 | Peer | Relation | Direction and content |
 |---|---|---|
 | All six lifecycle skills | `I(reporting)` | Each consumes Report's rendering capability at the 8.3 moments via the ReportEvent envelope |
+| All six lifecycle skills | `F(feedback)` | Report makes one non-recursive pass with one pinned, user-confirmed Report Artifact in canonical lifecycle order; each represented skill may return one attributed, response-only disposition and explanation for its owned unresolved sections, while approved sections skip response work but not approval delivery or recording; circulation performs no source mutation or lifecycle work |
 | All six lifecycle skills | `I` | Report reads their immutable artifacts by reference |
 | Cooperating non-lifecycle producers | presentation seam only | Each may supply a producer-owned ReportPacket at a reportable outbound event; no lifecycle determination, relation, or authority is created |
 | `astra-critique` | user-mediated routing | A surfaced contradiction may lead the user to open Critique; Report never starts it |
@@ -1037,6 +1208,41 @@ than trusting it.
 43. Interface-complete release gate: the same candidate and public identity pass progress, result,
     blocker/failure, decision, lifecycle artifact, text deliverable, code/diff, resumption,
     degradation, and host-fallback families before promotion.
+44. Attributed producer advocacy: Report may foreground a producer-recorded recommendation but
+    every stance-bearing section identifies its principal and never strengthens `none`, polarity,
+    certainty, or commitment.
+45. Feedback polishing and confirmation: Report preserves the user's exact draft, presents a
+    separately attributed polished version in one decision panel or faithful text fallback, and
+    appends nothing until the user confirms, edits, or cancels it.
+46. Principal switching: producer reporting, user feedback, and Report procedural notices remain
+    distinct attributed sections even when one response contains all three; a user question or
+    navigation request does not become a user-policy stance.
+47. One event, several targets: one confirmed user wording may reference several stable targets
+    and mechanically resolved owners without duplication; every delivery and receipt remains
+    recipient-specific.
+48. Canonical one-pass review: Understand Code, Critique, Spec, Implement, Test, then Ship each
+    receive at most one response opportunity; a skill whose current-revision sections are all
+    user-approved skips annotation work without blocking later approval recording.
+49. Response-only producer annotation: a skill may return a disposition, rationale, evidence, and
+    required-follow-on notice for its own unresolved targets, but cannot rewrite a reported
+    section, mutate its source artifact, perform work, or invoke another public skill.
+50. Sole-writer integrity: each producer-authored response is appended immutably by Report without
+    semantic transformation; neither the user nor a skill writes the Report Artifact directly.
+51. Pinned-round revision: the pass finishes against its starting revisions; a newer source is
+    shown as newly `UR` without source substitution, restart, or recursive circulation.
+52. Dual-record approval: a user-facing `AP` is authoritative evidence of the user's exact
+    decision, while the owning skill-facing recording section remains `UR` until that skill later
+    records producer-owned approval state through its normal workflow.
+53. Conflicting annotations: incompatible skill positions remain separately attributed inside one
+    elevated conflict surface; Report neither votes, merges, orders them as precedence, nor invents
+    a common recommendation.
+54. Role-local unavailable state: a failed or unavailable skill leaves only its named skill-facing
+    annotation or recording section `UR`; all user-facing markers remain unchanged, remaining
+    skills still receive their pass opportunity, and silence is never approval or no objection.
+55. Attributed follow-on handoff: Report may name one producer-requested `ACTION`, then stops; only
+    a separate user invocation starts the responsible public workflow.
+56. Non-recursive termination: producer responses and later revisions never initiate another
+    `F(feedback)` round; only new or amended user-confirmed feedback can create a later pass.
 
 ### 11.3 Method and measures
 
@@ -1057,7 +1263,12 @@ communication-event integrity; and cost, latency, and required user turns per co
 The v1 gate additionally measures work-state preservation, work/disclosure independence,
 ReportEvent-to-packet field preservation, deliverable provenance/addressability, correct
 dialogue/report trigger classification, and semantic convergence between native progress UI and
-text fallback.
+text fallback. The stance-bearing extension additionally measures principal-identification
+accuracy; preservation of exact user wording; semantic fidelity and visible provenance of polished
+feedback; confirmation-before-append integrity; recipient and target precision; response-scope
+compliance; one-pass and non-recursion bounds; sole-writer provenance; separation of user decision
+evidence from producer approval state; conflict visibility; actor-local marker correctness; and
+zero false approval, false receipt, source mutation, or Report-created lifecycle effects.
 
 The conditional five-function route, its order, consolidated Standard density, reply-surface
 allocation, and minimal-orientation resumption value are Astra product hypotheses. The cited
@@ -1072,6 +1283,7 @@ evidence.
 | Positive advantage on classes 2, 3, 4 of 11.2 | Withdraw the public interface; Report collapses to an exported style contract consumed by the six (5.4) |
 | Internalization fidelity: candidate matches convener on retained behavior | Candidate blocked; convener remains the bridge |
 | Invariant preservation (section 6) on classes 10, 11, 13 | Design fault, not tuning: revise this document |
+| Constitutional mediation safety on classes 44–56: no principal laundering, invented recommendation, false approval/receipt, source mutation, or Report-created lifecycle effect | Reject the stance-bearing path regardless of clarity, preference, speed, or token savings; retain the smallest safer output-only or split-role boundary |
 
 ### 11.5 Retirement
 
@@ -1146,9 +1358,10 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
   `docs/superpowers/plans/2026-08-12-astra-report-spec-approval-slice.md`, reconciled in `318bcaf`,
   is superseded for execution by the 2026-08-17 interface-complete v1 direction. Its fixtures and
   cases may be incorporated into the v1 plan; its approval-only `SKILL.md` must not be shipped.
-- Resolved by the 2026-08-12 review: the output-only interpretation of decision 3 (1.2); the
-  withdrawal of the `V` relation in favor of typed `I(reporting)` (8.2); and the post-v1
-  deferral of the `make-pdf` and `diagram` generated-format adapters (4.3).
+- Resolved by the 2026-08-12 review, then narrowed by the 2026-08-20 amendment: `I(reporting)`
+  remains output-only, while final confirmed feedback about one pinned Report Artifact may return
+  through the distinct `F(feedback)` relation. The withdrawal of `V` and the post-v1 deferral of
+  the `make-pdf` and `diagram` generated-format adapters remain unchanged.
 - Resolved by the user's 2026-08-12 approval: the exact three-source secondary-slice exception
   in 4.2. The exception changes claim ownership only and leaves all five documentation sources
   outside the 92 target.
@@ -1161,9 +1374,11 @@ limited multimedia-learning analogies instead. Books remain research inputs, not
    avoids a reveal turn per section, but an unbounded flat response can still recreate overload.
    Evaluation must compare decision quality, severe-item recall, required user turns, and noise
    before fixing product defaults.
-2. **Which visible field labels should the conditional five-function route print by default?**
-   Semantic coverage is approved; exact labels, merging thresholds, and ordinary-versus-action-
-   first order remain testable product choices rather than claims derived from the books.
+2. **How aggressively may adjacent five-function fields merge without obscuring the user's
+   route?** The user-approved default labels are `TOPIC`, `MOTIVATION`, `WHAT IS IT?`, `IMPACT`,
+   and `ACTION`, with `ACTION` promoted for a blocker, urgent failure, or live decision. Evaluation
+   must still determine when redundant or inapplicable labels can disappear without reducing
+   comprehension, attribution, or action completeness.
 
 ### 12.4 Coordinator reconciliation state
 
@@ -1188,6 +1403,14 @@ All source rows remain `claimed`, never `resolved`, citing the 2026-08-12 user d
 6. **Complete, 2026-08-13.** Include Report in the trigger-surface reconciliation (absorption design section 11,
    remaining-work item 3), ensuring 3.2/3.3 does not collide with Understand Code or the
    deferred documentation candidates.
+7. **Complete, 2026-08-20.** Add `F(feedback)` to the shared relation vocabulary as a bounded,
+   review-only return path distinct from outbound `I(reporting)`, consultation, handoff, and public
+   workflow invocation.
+8. **Complete, 2026-08-20.** Add reciprocal `F(feedback)` clauses to all six lifecycle designs,
+   preserving their source-artifact authority, producer-owned approval recording, and separate
+   public invocation for any substantive work.
+9. **Complete, 2026-08-20.** Reconcile the stance-bearing mediation direction into roadmap
+   amendment 11 without altering source-allocation rows or authorizing runtime execution.
 
 ## 13. Shared trigger-surface reconciliation result
 
@@ -1263,19 +1486,20 @@ tranche, not the product milestone.
 
 This amendment authorizes design and implementation planning only. It does not authorize a
 `SKILL.md`, schema, script, test harness, Report Artifact storage, installation, or runtime
-execution. The proposed plan is
+execution. The pre-amendment interface-complete plan is
 [`docs/superpowers/plans/2026-08-17-astra-report-v1.md`](../docs/superpowers/plans/2026-08-17-astra-report-v1.md).
-Execution requires an explicit, separately scoped amendment to `docs/phase-0.md` after plan
-review.
+It remains evidence and case inventory but must be revised against section 15 and reviewed before
+any execution request. Execution also requires an explicit, separately scoped amendment to
+`docs/phase-0.md`.
 
-## 15. Stance-bearing mediation amendment (2026-08-19, in progress)
+## 15. Stance-bearing mediation amendment (2026-08-19 through 2026-08-20)
 
-This amendment records the later user decisions in 1.1 items 10–15 and the evidence-grounded
+This amendment records the later user decisions in 1.1 items 10–28 and the evidence-grounded
 correction of items 4–6. Where those decisions conflict with the output-only,
 per-project-Exposure-Ledger, or one-topic-per-turn design, this section governs. The amendment
 remains phase-0 design: it authorizes neither a runtime nor an automatic delivery mechanism.
-Undecided contract syntax and downstream reconciliation remain open rather than being inferred
-from the deep-research proposal.
+Exact runtime schema and storage mechanics remain deferred rather than being inferred from the
+deep-research proposal; the documentation-level downstream contracts are reconciled.
 
 ### 15.1 Represented stance and principal switching
 
@@ -1300,13 +1524,62 @@ navigation such as "show the evidence" remain ephemeral interaction requests rat
 user-position events. A mixed response is split into the smallest blocks needed to preserve those
 different functions.
 
-### 15.2 Bounded feedback return without orchestration
+### 15.2 Bounded sequential feedback circulation
 
 For feedback attached to the active Report Artifact, Report may preserve the confirmed response,
-bind it to stable section/claim/option and source-revision references, and pass it to an owner that
-is mechanically determined by those references or explicitly named by the user. Ambiguous or
-genuinely cross-authority routing remains unresolved until the user clarifies it; Report does not
-choose substantive jurisdiction.
+bind it to stable section/claim/option and source-revision references, pin that annotated Report
+Artifact, and circulate it through `F(feedback)`. The order is Understand Code, Critique, Spec,
+Implement, Test, then Ship. A skill with no owned section is outside the round. Ambiguous section
+ownership or genuinely cross-authority routing remains unresolved until the user clarifies it;
+Report does not choose substantive jurisdiction. One event may carry several stable targets and
+therefore several mechanically resolved owners. Report asks once before confirmation when those
+references do not establish the recipient set; it never derives recipients from prose alone.
+
+For each represented skill:
+
+1. if every owned section is user-approved for the pinned source revision and has no unresolved
+   comment, condition, rejection, or change request, Report delivers or exposes the user approval
+   event for later producer recording but requests no annotation response;
+2. otherwise, Report supplies the pinned artifact and requests one bounded, attributed response
+   covering only that skill's owned sections; and
+3. the skill authors one immutable response and Report, as sole writer, appends it beside the user
+   annotation and earlier skill responses without paraphrasing or merging; it may not overwrite
+   them or another principal's position.
+
+The response is limited to a disposition on the user's annotation, rationale or evidence for that
+disposition, and identification of any required new authoritative revision or separate lifecycle
+operation. It cannot rewrite the reported section, mutate its source artifact, or carry out the
+requested work. If a change is required, the responsible skill performs it only through its normal
+lifecycle after the circulation round; Report later links the resulting producer-owned revision
+without treating the annotation response itself as that revision.
+
+After all eligible skills have responded, been skipped under rule 1, or retained an internally
+recorded transport failure, Report presents the consolidated skill-annotated Report Artifact to
+the user. This creates one review round rather than one user conversation per skill.
+
+User-facing report sections and named skill-facing annotation or recording sections are visibly
+separate. If one skill is unavailable or delivery fails, its section remains `UR`; Report does not
+add a second delivery-status marker or change any user-facing marker. It records the transport fact
+inside the Report Artifact, continues through the remaining skills, performs no automatic retry,
+and never treats silence as approval or lack of objection.
+
+Incompatible responses are not blended into that consolidation. Report elevates one `CONFLICT`
+surface containing each attributed position and its evidence, then gives one `ACTION` naming the
+decision authority established by the source contracts. The user owns policy and trade-off
+decisions; a skill retains its technical record inside its jurisdiction. If neither rule resolves
+the authority, the action states the gap rather than choosing a winner.
+
+The round then stops. A skill response, clarification request, rejection, deferral, failed
+delivery, or subsequent producer-owned revision never starts another circulation automatically.
+Another round requires a new or amended user-feedback batch and one new confirmation; unchanged
+resolved sections remain skipped. This prevents the review protocol from becoming an automatic
+skill-to-skill or user-to-skill convergence loop.
+
+All responses in the round remain attached to the source revision pinned when the user confirmed
+the batch. If a newer producer revision appears before the round ends, Report finishes the current
+pass against that immutable snapshot and flags the newer revision and its affected sections as
+unreviewed. It neither substitutes the new source mid-pass nor starts a review of it. A later round
+for the newer revision requires a new user confirmation.
 
 The return path distinguishes at least:
 
@@ -1315,11 +1588,23 @@ confirmed -> sent -> received -> producer disposition -> producer-owned lifecycl
 ```
 
 These are independent claims. A send attempt is not receipt; receipt is not acceptance; a
-producer disposition is not a lifecycle effect; and none is evidence of cognition. Passive
-transport and a durable receipt may support the first three states. If the host offers no such
-path, Report records the confirmed feedback as pending and states that delivery is unconfirmed.
-It must not invoke a skill, start or schedule work, reopen an authoritative artifact, or advance a
-lifecycle stage to manufacture delivery or closure.
+producer disposition is not a lifecycle effect; and none is evidence of cognition. The bounded
+review operation and a durable receipt may support the first three states. If the host offers no
+such path, Report records the transport fact internally and leaves the relevant named skill-facing
+section `UR`; it adds no visible delivery state or suffix. It must not start or schedule
+substantive work, reopen an authoritative artifact, or advance a lifecycle stage to manufacture
+delivery or closure.
+
+A confirmed user approval is already authoritative evidence of the user's decision for its pinned
+target. Until the owning producer creates its approval record through the normal lifecycle, Report
+keeps the user-facing section `AP` and the owning skill's separate recording section `UR`.
+Skipping a cleanly approved section therefore avoids redundant annotation work without pretending
+that the producer artifact has changed.
+
+If a response says that follow-on lifecycle work is required, the consolidated artifact presents
+one attributed `ACTION` with the responsible skill, exact producer-requested operation, and source
+response. Report then stops. A separate user invocation of that public skill is the authority to
+begin work; neither an annotation, an action-panel selection, nor `proceed` starts it.
 
 ### 15.3 Polishing and confirming user feedback
 
@@ -1328,7 +1613,8 @@ may improve grammar, tone, organization, terminology, and explicit target or sco
 silently change polarity, commitment, conditions, priority, requested effect, or policy breadth.
 
 When polishing is useful, Report presents one bounded decision panel containing the proposed
-final wording, destination, and exact consequence of confirmation. The controls are conceptually:
+final wording, destination or mechanically resolved destinations, and exact consequence of
+confirmation. The controls are conceptually:
 `Confirm and send`, `Send original`, `Edit`, and `Cancel`; a host may render equivalent controls
 without changing their semantics. Only the selected final wording is appended as the single user
 feedback event. Draft text and intermediate rewrites are not durable Report Artifact entries.
@@ -1337,6 +1623,10 @@ structured decision that requires no rewriting needs no redundant polishing conf
 When feedback accompanies a producer decision, its wording confirmation and that decision share
 one panel where the host can preserve both semantics; Report must not create two consecutive
 confirmation rounds for one intended action.
+
+Multi-target feedback remains one confirmed user event with one final wording. Per-recipient
+delivery and receipt records may differ, but Report does not create several apparent user comments
+merely because several owners receive it.
 
 ### 15.4 The stance-bearing Report Artifact
 
@@ -1351,19 +1641,35 @@ Its durable content is limited to:
 - the rendered, attributed producer case and its source trace;
 - the report outline and section revelation/review facts;
 - one confirmed user-feedback event per completed confirmation flow;
+- attributed skill responses from a bounded sequential annotation round;
 - send/receipt facts and failure state; and
 - references to producer acknowledgements, dispositions, and resulting authoritative revisions.
+
+The confirmed user event and the producer-owned approval record are separate linked facts. The
+first records what the user decided; the second records the lifecycle consequence within the
+producer's jurisdiction. Report may display both states but can create only the first.
+
+Report alone writes this artifact. Producer and user entries retain their originating principal,
+author, stable event identity, and source references. A producer supplies its response as an
+immutable return value; Report appends it exactly and may add only separately attributed transport
+or ordering metadata. Corrections and withdrawals append a new attributed event that supersedes
+the earlier entry; no participant edits history in place.
 
 The rendered producer case is a stable snapshot of what Report presented, not a second source of
 technical truth. Producer artifacts continue to own facts, severity, requirements, work state,
 approval semantics, and lifecycle effects. Report owns only its presentation, review, and
 communication records. When a source revision changes, affected sections are marked changed since
-review and become eligible for renewed review; unchanged project history is not reconstructed.
+review and become eligible for renewed review; unchanged project history is not reconstructed. An
+in-flight round remains pinned to its earlier snapshot, and the new revision stays unreviewed until
+the user confirms a later round.
 
 The earlier Exposure Ledger semantics survive as the Report Artifact's disclosure component under
 7.3. Its historical per-project scope and the old claim that factual exposure is Report's only
-durable state are superseded. Exact storage format, status vocabulary, retention, and concurrency
-mechanisms remain later decisions.
+durable state are superseded. Review or revelation, user position, delivery or receipt, producer
+disposition, and lifecycle effect remain orthogonal facts; no single stored status may replace
+them. The visible marker is local to its attributed user- or skill-facing section; a transport
+failure remains an internal fact while the affected skill-facing section stays `UR`. Exact storage
+format, underlying state syntax, retention, and concurrency mechanisms remain later decisions.
 
 ### 15.5 Low-dialogue review behavior
 
@@ -1372,12 +1678,24 @@ Opening, skipping, or returning to a section produces no confirmation question. 
 ask the user to mark each section reviewed, narrate every state transition, or acknowledge every
 optional deferral.
 
-The normal visible progress cue stays compact, for example `2/5 Testing`. Additional state appears
-only when it changes the next safe action. Optional sections that the user does not open remain
-unreviewed or deferred; Report never relabels them reviewed merely because the user proceeds.
-Their existence may be stated inside the one final decision panel without requiring a separate
-acknowledgement. Any material fact required for a safe immediate decision must already be visible
-in the producer case and cannot be hidden behind an unreviewed-section gate.
+The normal visible cue stays compact: the heading combines ordinal progress, the designated actor,
+and one marker, for example `2/5 Testing — User [AP]` or `Test annotation [UR]`. The default marker
+vocabulary is `UR` (unreviewed), `RV` (reviewed), `CM` (commented), `RJ` (rejected), `AP`
+(approved), and `DF` (deferred). A user-facing marker and a skill-facing marker belong to separate
+sections, so neither needs a delivery or producer-state suffix.
+
+The visible marker is derived from the separate Report Artifact axes; it is not itself authority
+or lifecycle state. Optional user-facing sections that the user does not open remain unreviewed or
+deferred; Report never relabels them reviewed merely because the user proceeds. `RV` requires an
+explicit act by the section's designated actor: a user statement or control for a user-facing
+section, or an attributed skill response for a skill-facing annotation section. Reveal, opening,
+scrolling, and delivery receipts establish exposure only. Report does not ask for that review event
+section by section. In user-facing sections, `CM`, `RJ`, `AP`, and `DF` replace `RV` as the visible
+marker without erasing the separate review fact.
+Any remaining `UR` or `DF` sections may be listed inside the one final decision panel without
+requiring a separate acknowledgement. Any material fact required for a safe immediate decision
+must already be visible in the producer case and cannot be hidden behind an unreviewed-section
+gate.
 
 The default interaction budget is therefore one required user turn per real producer decision or
 confirmed feedback submission, not one turn per report section. Evidence expansion, review,
@@ -1404,22 +1722,28 @@ template. The approved transfer is therefore the conditional contract in 7.2:
 - job-specific structures for progress, failure, incident, evidence-audit, and single-answer
   reports.
 
-This is an Astra synthesis and product default. Its exact labels, order, and effects on decision
-quality remain testable hypotheses. The source-level advice and transfer limits are preserved in
+This is an Astra synthesis and product default. The labels are user-approved; merging thresholds,
+conditional order, and effects on decision quality remain testable product hypotheses. The
+source-level advice and transfer limits are preserved in
 the [book distillation](../docs/research/2026-08-18-astra-report-book-distillation.md); the focused
 risk analysis is in the
-[five-field template audit](../docs/research/2026-08-19-astra-report-five-field-template-evidence-audit.md).
+[five-field template audit](../docs/research/2026-08-19-astra-report-five-field-template-evidence-audit.md);
+and the role, attribution, framing, feedback-closure, and orchestration-boundary evidence is in the
+[stance-handoff deep-research resolution](../docs/research/2026-08-19-astra-report-stance-deep-research-resolution.md).
+Those sources support the distinctions and risks; decisions 10–28 remain explicit Astra synthesis
+and user-approved product policy.
 
-### 15.7 Preserved boundary and deferred reconciliation
+### 15.7 Preserved boundary and remaining implementation deferrals
 
-`I(reporting)` remains the outbound presentation relation unless a later approved decision changes
-its typing. This amendment establishes a bounded semantic return path but does not yet name a new
-relation or approve the deep-research proposal's C1-C6 schemas. Sections 8.2, 8.6–8.8, 9, 11,
-12.2, and the sibling designs require final wording reconciliation once the remaining
-constitutional questions are settled. Until then, section 15 has precedence for decisions 10–15
-and the corrected report structure in decisions 4–6.
+`I(reporting)` remains the outbound presentation relation and `F(feedback)` is now the approved
+bounded review-circulation relation. The deep-research proposal's C1-C6 names and exact schemas are
+not adopted; their approved semantic obligations are expressed directly in sections 7–9 and the
+six sibling contracts. The shared requirements, peer contracts, validation corpus, and roadmap
+are reconciled to decisions 10–28.
 
 Report remains read-only over lifecycle authority. It cannot approve, reject, waive, mutate a
 producer artifact, reinterpret technical evidence, create cross-skill consensus, or cause a
 lifecycle transition. Runtime transport, persistent storage, host adapters, schema files, tests,
-installation, and lifecycle integration still require separate authorization.
+installation, and lifecycle integration still require separate authorization. The
+2026-08-17 interface-complete v1 implementation plan predates this amendment and must be revised
+and reviewed before it can support any future runtime-execution request.

@@ -1,6 +1,7 @@
 # Astra Test — phase-0 design
 
-**Date:** 2026-08-03 · **Six-skill reconciliation:** 2026-08-11 · **Status:** `proposed`
+**Date:** 2026-08-03 · **Six-skill reconciliation:** 2026-08-11 · **Report feedback reconciliation:**
+2026-08-20 · **Status:** `proposed`
 
 > **Authority.** `docs/phase-0.md` governs phase scope and ledger ownership;
 > `docs/design-requirements.md` is the sole per-skill contract; the current user handoff fixes the
@@ -1068,10 +1069,27 @@ exposes Critique as a prospective stage that only the user may start.
 The Test Evidence Packet adds `reporting.supersedes_ref`, `reporting.surfaces`, and
 `reporting.open_decisions`. Those fields reference the packet's pinned chain, tested revision,
 commands, raw evidence, gaps, skips, residue, and overall evidence state. Test alone owns its
-evidence claims, consequences, blocking state, and packet completion.
+evidence claims, consequences, blocking state, packet completion, and any communicative purpose,
+governing point, recommendation state and strength, requested action, uncertainty, or material
+caveat or counterposition exposed under the shared stance-bearing contract. Missing semantics
+remain explicit gaps; Report cannot infer them.
 
 Test emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
 `stage_boundary`, `status_request`, and `failure`. If Report is unavailable, non-decision moments
 use the shared minimal notice and any approval request uses Test's complete decision envelope.
 `I(reporting)` changes presentation only and cannot strengthen evidence, waive a criterion, infer
-cause, or record a lifecycle decision for Test.
+cause, or record producer-owned lifecycle decision state for Test; Report may retain the exact
+confirmed user event only as communication evidence.
+
+Under `F(feedback)`, Test may receive one pinned, user-confirmed Report Artifact during the
+canonical review round. It may respond at most once and only to unresolved sections grounded in
+Test Evidence Packet claims it owns, using an attributed acceptance, partial acceptance,
+rejection, clarification request, deferral, or out-of-authority response with rationale, evidence,
+and any required follow-on work. If all of its current-revision sections are user-approved, it
+skips annotation work; the approval event remains available for its normal authoritative recording
+path. This response-only operation cannot reinterpret or revise evidence, run a test, waive a
+criterion, infer cause, record producer-owned approval state, or start a repair workflow. Report
+alone appends the immutable response. Failed or unavailable delivery leaves only the Test-facing
+annotation or recording section `UR`, preserves every user-facing marker, and does not stop the
+remaining pass; silence is never approval or absence of objection. Any new evidence, disposition,
+or packet revision requires a separately invoked Test workflow.

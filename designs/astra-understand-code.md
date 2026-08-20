@@ -1,6 +1,7 @@
 # Astra Understand Code — phase-0 design
 
-**Date:** 2026-08-03 · **Six-skill reconciliation:** 2026-08-11 · **Status:** `proposed`
+**Date:** 2026-08-03 · **Six-skill reconciliation:** 2026-08-11 · **Report feedback reconciliation:**
+2026-08-20 · **Status:** `proposed`
 
 > **Authority.** `docs/design-requirements.md` is the sole per-skill contract;
 > `docs/phase-0.md` owns phase scope and global accounting; the current user instruction fixes the
@@ -1167,10 +1168,26 @@ Every Understanding Report adds `reporting.supersedes_ref`, `reporting.surfaces`
 `reporting.open_decisions`. The supersession reference is explicit or `null`; it is never inferred
 from repository chronology. Surfaces and decisions reference the report's observed claims,
 inferences, unavailable inputs, evidence anchors, and unresolved gaps. Understand owns every
-claim, consequence, blocking state, and returned decision.
+claim, consequence, blocking state, producer-owned interpretation of any returned decision, and
+any communicative purpose, governing point, recommendation, requested action, uncertainty, or
+material caveat exposed under the shared stance-bearing contract. Missing stance semantics remain
+explicit gaps; Report cannot infer them.
 
 Understand emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
 `stage_boundary`, `status_request`, and `failure`. Report unavailability uses the shared minimal
 non-decision notice or, for an approval request, Understand's complete decision envelope.
 `I(reporting)` is output-only presentation and is distinct from Understand Code's conditional
 downstream `C` mode; it returns no `pass`, `drift`, or `authority_gap`.
+
+Under `F(feedback)`, Understand Code may receive one pinned, user-confirmed Report Artifact during
+the canonical review round. It may respond at most once and only to unresolved sections grounded
+in Understanding Report claims it owns, using an attributed acceptance, partial acceptance,
+rejection, clarification request, deferral, or out-of-authority response with rationale, evidence,
+and any required follow-on work. If all of its current-revision sections are user-approved, it
+skips annotation work; the approval event remains available for its normal authoritative recording
+path. This response-only operation cannot revise the Understanding Report, inspect new repository
+state, perform new explanation work, or start a peer workflow. Report alone appends the immutable
+response. Failed or unavailable delivery leaves only the Understand Code-facing annotation or
+recording section `UR`, preserves every user-facing marker, and does not stop the remaining pass;
+silence is never approval or absence of objection. Any new authoritative analysis or revision
+requires a separately invoked Understand Code workflow.

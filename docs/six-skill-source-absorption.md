@@ -9,8 +9,9 @@ the user on 2026-08-12
 **Lifecycle authorities:** `astra-critique`, `astra-understand-code`, `astra-spec`,
 `astra-implement`, `astra-test`, `astra-ship`
 
-**Reporting surface:** `astra-report` is additional and non-authoritative. Its approved secondary
-source slices do not join or change the 92-component target.
+**Reporting surface:** `astra-report` is additional and non-authoritative. It owns rich outbound
+presentation and one bounded, review-only feedback-mediation path; neither role changes the six
+lifecycle authorities or the 92-component target.
 
 ## 1. Decision and scope
 
@@ -22,8 +23,10 @@ The approved first absorption target is **92 distinct source component identifie
 
 This count is source accounting, not a public-skill count and not a claim that any source is
 already behaviorally absorbed. The lifecycle-authority interface remains exactly six skills;
-Report is an additional directly invocable presentation surface with no lifecycle authority. The
-92-component target records which source behavior the six authority designs must internalize
+Report is an additional directly invocable communication surface with no lifecycle authority. Its
+2026-08-20 `F(feedback)` amendment permits only a pinned response-only annotation round and creates
+no source mutation, public peer invocation, or lifecycle effect. The 92-component target records
+which source behavior the six authority designs must internalize
 before any original can be considered for retirement.
 
 This document is the shared evidence and allocation record allowed by

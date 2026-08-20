@@ -1,8 +1,8 @@
 # Astra skill design requirements
 
-**Date:** 2026-07-31; amended 2026-08-17
+**Date:** 2026-07-31; amended 2026-08-20
 **Status:** Approved structure; six-skill coding-lifecycle authority and interface-complete Report
-presentation policy added
+presentation plus bounded feedback-mediation policy added
 
 ## 1. Purpose
 
@@ -437,7 +437,53 @@ The lifecycle-authority roster is exactly:
 `astra-report` is an additional directly invocable reporting surface, not a seventh lifecycle
 authority. The six retain user-to-skill intake and approval authority. Under typed
 `I(reporting)`, they delegate rich outbound presentation to Report, which returns no lifecycle
-determination and starts no peer workflow.
+determination and starts no peer workflow. Under `F(feedback)`, Report may sequence only a bounded
+review-annotation round over one pinned, user-confirmed Report Artifact; this does not invoke any
+skill's public workflow or authorize substantive work. A skill's attributed return is response-only:
+it may state acceptance, partial acceptance, rejection, need for clarification, deferral, or lack
+of authority; supply rationale or evidence; and identify required follow-on work. It may not rewrite
+the reported section, mutate an authoritative artifact, or perform that follow-on work during the
+round. Any substantive effect remains a later producer-owned lifecycle operation and revision.
+One confirmed feedback batch permits one canonical pass only. Neither a skill response nor a later
+revision may recursively trigger another round; another pass requires new or amended
+user-confirmed feedback. If a producer publishes a newer revision during the pass, the round
+finishes against its pinned snapshot, the new revision is flagged as unreviewed, and no source
+substitution or automatic restart occurs.
+A confirmed approval in the Report Artifact is immediately authoritative evidence of the user's
+decision for its exact target and pinned revision, but it is not producer-owned approval state.
+Report shows that approval and any pending producer recording separately; only the owning skill may
+record the lifecycle consequence through its normal authoritative mechanism.
+When an annotation identifies required follow-on lifecycle work, Report may present one attributed
+`ACTION` naming the responsible skill, exact producer-requested operation, and source response. It
+then stops. The user must invoke that public skill separately; no Report control or continuation
+phrase may start the work.
+The Report Artifact stores review or revelation, user position, delivery or receipt, producer
+disposition, and lifecycle effect as separate facts. Each visibly attributed user- or skill-facing
+section normally projects one actor-local marker: `UR` (unreviewed), `RV` (explicitly reviewed),
+`CM` (commented), `RJ` (rejected), `AP` (approved), or `DF` (deferred). The actor label makes the
+scope clear, for example `2/5 Testing — User [AP]` versus `Test annotation [UR]`; one actor's marker
+never overwrites another's, and no separate delivery-status badge or suffix is added. These labels
+are a product default, not a research-established state model, and the visible marker creates no
+authority.
+`RV` requires an explicit act by the section's designated actor. Opening, revealing, scrolling, or
+receiving a section establishes exposure at most and never review, and Report must not solicit
+`RV` section by section. In user-facing sections, `CM`, `RJ`, `AP`, and `DF` are stronger explicit
+user-position markers and take visible precedence over `RV` without collapsing the underlying
+state axes.
+One confirmed feedback event may reference several stable section, claim, evidence, option, or
+artifact IDs and map mechanically to several owners. Report preserves one final user wording and
+one durable user event, while delivery and receipt remain separate per recipient. Each skill may
+respond only to its owned targets. If stable references do not establish the recipient set, Report
+asks once before confirmation and logging; it may not infer recipients from the feedback prose.
+Incompatible skill annotations are rendered as one elevated `CONFLICT` surface containing every
+attributed position, source response, and item of supporting evidence. Report may not merge them,
+count votes, or treat canonical circulation order as precedence. Its `ACTION` names the decision
+authority already established by the source contracts—normally the user for policy or trade-offs
+and the relevant skill for its technical record—or exposes the unresolved authority gap.
+If a skill is unavailable or delivery fails, its named skill-facing section remains `UR`, while
+existing user-facing markers remain unchanged. Report keeps the transport failure internally,
+continues through the remaining skills, performs no automatic retry, and never treats silence as
+approval or lack of objection.
 
 `astra-plan` is divided between Spec's change authority and Implement's delivery authority.
 `astra-debug` becomes Critique's diagnostic mode. Their design files remain
@@ -506,10 +552,30 @@ public skill nor a harness dependency. It remains distinct from:
 
 - `R`, roster and authority-ownership reconciliation without runtime invocation;
 - `I`, consumption of a peer artifact or capability without invoking its judgment;
-- `I(reporting)`, output-only presentation consumption: the producer owns facts, consequences,
-  options, evidence, blocking state, and the returned user decision, while Report owns
-  organization, density, language, staged disclosure, and evidence links; it returns no `pass`,
+- `I(reporting)`, producer-to-user presentation consumption: the producer owns facts,
+  consequences, options, evidence, blocking state, and authoritative decision disposition, while
+  Report owns faithful organization, density, language, and evidence links; it returns no `pass`,
   `drift`, or `authority_gap` and is neither a public peer invocation nor an `H` handoff;
+- `F(feedback)`, bounded circulation of one pinned, user-confirmed Report Artifact through its
+  represented lifecycle skills in canonical order (Understand Code, Critique, Spec, Implement,
+  Test, Ship): one confirmed feedback batch permits one non-recursive pass and at most one response
+  opportunity per represented skill; one user event may carry several stable targets and
+  mechanically resolved owners without being duplicated; the user remains principal for feedback;
+  each skill may contribute an attributed response-only disposition, rationale, evidence, and
+  required-follow-on notice only to its owned unresolved sections; a skill whose current-revision
+  sections are all user-approved skips response work but still receives or can reference the user
+  approval event for later producer recording; the user event is authoritative decision evidence
+  but does not itself change producer-owned approval state; Report is the sole Report Artifact
+  writer and appends each immutable skill-authored response without semantic transformation;
+  neither Report nor the responding skill may rewrite a reported section, mutate a producer
+  artifact, or perform lifecycle work through this relation; Report preserves wording, targets,
+  revisions, ordering, and transport facts but cannot interpret the response authoritatively,
+  create a lifecycle effect, or
+  automatically start another pass; a newer source revision is flagged as unreviewed while the
+  current pass finishes against its pinned snapshot; any required follow-on work is rendered as an
+  attributed handoff action and requires separate user invocation of the responsible public skill;
+  conflicting annotations remain separately attributed inside one elevated conflict surface and
+  never acquire precedence from voting or circulation order;
 - `H`, Critique's user-mediated handoff capsule without automatically starting a peer; and
 - `P`, provenance or source-history dependency without runtime permission.
 
@@ -669,7 +735,7 @@ sufficient routing evidence.
 | Plan and execute exact repository delivery | `astra-implement` | Current Approved Change Specification and effect authority | Approved Delivery Roadmap, Execution Ledger, and atomic implementation commits |
 | Construct or run independent proof at a pinned revision | `astra-test` | Accepted behavior, target snapshot, and effect boundary | Test Evidence Packet |
 | Prepare and perform publication effects | `astra-ship` | Complete current artifact chain, passing evidence, and explicit effect authority | Publication Record |
-| Present recorded lifecycle artifacts or typed producer-owned progress, results, blockers, decisions, and deliverables | `astra-report` | Recorded producer artifacts, stable deliverable descriptors, a lifecycle `ReportEvent`, or a producer-owned ReportPacket | Attention-managed rendering with no lifecycle determination or authority upgrade |
+| Present recorded lifecycle artifacts or typed producer-owned progress, results, blockers, decisions, and deliverables; capture and circulate confirmed feedback about one bounded reported subject | `astra-report` | Recorded producer artifacts, stable deliverable descriptors, a lifecycle `ReportEvent`, a producer-owned ReportPacket, or one pinned Report Artifact | Attention-managed rendering and review-only feedback mediation with no lifecycle determination, source mutation, or authority upgrade |
 
 Selection obeys these rules:
 
@@ -678,8 +744,8 @@ Selection obeys these rules:
 2. Implicit routing chooses the **earliest missing authority** required for the requested outcome.
 3. Ask one focused question when two plausible routes materially change authority, writable scope,
    external effects, evidence, or cost.
-4. Run one public workflow. Required `C` checks occur inside it; `I`, `H`, and `I(reporting)` do
-   not start public peers.
+4. Run one public workflow. Required `C` checks occur inside it; `I`, `H`, `I(reporting)`, and
+   review-only `F(feedback)` do not start public peers.
 5. A compound request retains later outcomes as prospective stages and stops at every artifact or
    approval boundary.
 6. The user starts each later public workflow. Report detail selection and
@@ -689,8 +755,8 @@ Selection obeys these rules:
    facts, work state, deliverables, decisions, and effects.
 
 There is **no automatic public peer invocation**. Internal modes, artifact presence, `C`, `I`,
-`H`, `I(reporting)`, Report detail selection, and continuation controls may establish eligibility
-or expose a next workflow, but cannot start it.
+`H`, `I(reporting)`, review-only `F(feedback)`, Report detail selection, and continuation controls
+may establish eligibility or expose a next workflow, but cannot start it.
 
 | Request | Canonical partition |
 |---|---|
@@ -735,6 +801,16 @@ omitted field.
 | `reporting.open_decisions[].evidence_refs` | Non-empty stable artifact-field references |
 | `reporting.open_decisions[].blocking` | Boolean |
 
+For stance-bearing presentation, those fields are necessary but not always sufficient. The
+producer must also make its communicative purpose, governing point, recorded motivation,
+recommendation or explicit absence, recommendation strength, requested action, uncertainty, and
+all material caveats or counterpositions available through stable authoritative fields. Report may
+advocate only to that recorded degree. A missing semantic is a visible producer-contract gap or an
+explicitly inapplicable value, never an invitation for Report to infer intent from tone. These are
+phase-zero semantic obligations; they do not adopt the deep-research C1 field names or authorize an
+exact runtime schema. The pre-amendment `astra.report-event/v0` plan must be revised to carry them
+losslessly before stance-bearing runtime execution can be requested.
+
 At artifact completion, an approval request, a stage boundary, an explicit status request, and a
 failure or degradation announcement, the producer emits a `ReportEvent` with this envelope:
 
@@ -753,8 +829,10 @@ failure or degradation announcement, the producer emits a `ReportEvent` with thi
 | `evidence_refs` | Stable evidence references |
 | `decision` | Complete matching open-decision object for `approval_request`; otherwise `null` |
 
-The full approval decision envelope is never staged behind optional detail. Only the producer
-records the user's answer against the exact authoritative artifact revision and hash.
+The full approval decision envelope is never staged behind optional detail. Report may preserve
+the user's exact confirmed answer as authoritative evidence of user intent against the exact
+target and revision; only the producer records that answer as producer-owned lifecycle approval
+state and applies its consequence.
 
 If Report is unavailable at a non-decision moment, the producer emits only artifact and event
 identity, a one-sentence outcome, blocking state, and an unavailable flag. At an approval request,
@@ -828,7 +906,7 @@ that step or topic. Neither axis mutates or proves the other.
 Native progress indicators, structured choices, and deliverable links/attachments are host
 adapters. A host without one receives the same ordered states, topic previews, decision meanings,
 and deliverable references as text. Adapter availability may change mechanics, never content,
-authority, addressability, or Exposure Ledger receipt rules.
+authority, addressability, or the Report Artifact's receipt-backed disclosure rules.
 
 ## 8. Architecture is local to each skill
 

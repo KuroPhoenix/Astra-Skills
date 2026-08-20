@@ -1,6 +1,7 @@
 # Astra Ship — phase-0 design
 
-**Date:** 2026-08-04 · **Wave:** 4 · **Six-skill reconciliation:** 2026-08-11 · **Status:** `proposed`
+**Date:** 2026-08-04 · **Wave:** 4 · **Six-skill reconciliation:** 2026-08-11 ·
+**Report feedback reconciliation:** 2026-08-20 · **Status:** `proposed`
 
 > **Authority.** `docs/design-requirements.md` governs this document; `docs/phase-0.md` owns phase
 > scope and the global ledgers; `docs/design-roadmap.md` supplies the provisional roster, the Ship &
@@ -1405,10 +1406,28 @@ invoking it.
 The Publication Record adds `reporting.supersedes_ref`, `reporting.surfaces`, and
 `reporting.open_decisions`, grounded in the exact chain, effect authorizations, attempts, observed
 results, integration state, residue, and follow-ups. Ship alone owns publication consequences,
-records effect authorization, and records the publication result.
+records effect authorization, records the publication result, and supplies any communicative
+purpose, governing point, recommendation state and strength, requested action, uncertainty, or
+material caveat or counterposition exposed under the shared stance-bearing contract. Missing
+semantics remain explicit gaps; Report cannot infer them.
 
 Ship emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
 `stage_boundary`, `status_request`, and `failure`. If Report is unavailable, non-decision moments
 use the shared minimal notice and approval requests use Ship's complete effect-decision envelope.
 `I(reporting)` changes presentation only and cannot authorize, perform, or reinterpret a
-publication effect.
+publication effect. Ship alone records producer-owned effect authorization; Report may retain the
+exact confirmed user event only as communication evidence.
+
+Under `F(feedback)`, Ship may receive one pinned, user-confirmed Report Artifact during the
+canonical review round. It may respond at most once and only to unresolved sections grounded in
+Publication Record claims or effect decisions it owns, using an attributed acceptance, partial
+acceptance, rejection, clarification request, deferral, or out-of-authority response with
+rationale, evidence, and any required follow-on work. If all of its current-revision sections are
+user-approved, it skips annotation work; the approval event remains available for Ship's normal
+authoritative recording path. This response-only operation cannot revise a Publication Record,
+authorize or perform an external effect, record producer-owned approval state, or start an earlier
+repair workflow. Report alone appends the immutable response. Failed or unavailable delivery
+leaves only the Ship-facing annotation or recording section `UR`, preserves every user-facing
+marker, and does not stop the remaining pass; silence is never approval or absence of objection.
+Any authoritative disposition, effect record, or publication operation requires a separately
+invoked Ship workflow.

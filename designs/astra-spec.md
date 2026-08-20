@@ -1,6 +1,7 @@
 # Astra Spec — phase-0 design
 
-**Date:** 2026-08-03 · **Authoritative drafting-tranche position:** 3 of 8 ·
+**Date:** 2026-08-03 · **Report feedback reconciliation:** 2026-08-20 ·
+**Authoritative drafting-tranche position:** 3 of 8 ·
 **Status:** `proposed`
 
 **Six-skill reconciliation:** 2026-08-11 · surviving public home for solution selection and the
@@ -1373,7 +1374,10 @@ Implement remains a non-invoked prospective stage until the user starts it.
 The Approved Change Specification maps its existing `supersedes_revision` plus the explicitly
 referenced prior `spec_id` and `content_hash` to `reporting.supersedes_ref`; a missing prior hash
 cannot be inferred. It adds `reporting.surfaces` and `reporting.open_decisions`, grounded in exact
-requirements, criteria, decisions, alternatives, evidence, gaps, and approval state.
+requirements, criteria, decisions, alternatives, evidence, gaps, and approval state. Spec also owns
+every communicative purpose, governing point, recommendation state and strength, requested action,
+uncertainty, and material caveat or counterposition exposed under the shared stance-bearing
+contract. Missing semantics remain explicit gaps; Report cannot infer them.
 
 Spec emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
 `stage_boundary`, `status_request`, and `failure`. The `approval_request` occurs immediately before
@@ -1381,4 +1385,18 @@ whole-revision approval and carries every option ID, label, Spec-authored conseq
 reference, and blocking state. The complete envelope is never hidden behind optional detail. If
 Report is unavailable, Spec presents that envelope itself; other moments use the shared minimal
 unavailable notice. `I(reporting)` changes presentation only. Spec alone records the answer
-against the exact Specification revision and content hash.
+as Specification approval state against the exact revision and content hash; Report may retain the
+exact confirmed user event only as communication evidence.
+
+Under `F(feedback)`, Spec may receive one pinned, user-confirmed Report Artifact during the
+canonical review round. It may respond at most once and only to unresolved sections grounded in
+Specification claims or decisions it owns, using an attributed acceptance, partial acceptance,
+rejection, clarification request, deferral, or out-of-authority response with rationale, evidence,
+and any required follow-on work. If all of its current-revision sections are user-approved, it
+skips annotation work; the approval event remains available for Spec's normal authoritative
+recording path. This response-only operation cannot amend the Specification, select a new solution,
+record producer-owned approval state, or start Implement. Report alone appends the immutable
+response. Failed or unavailable delivery leaves only the Spec-facing annotation or recording
+section `UR`, preserves every user-facing marker, and does not stop the remaining pass; silence is
+never approval or absence of objection. Any authoritative disposition, approval record, or revised
+Specification requires a separately invoked Spec workflow.

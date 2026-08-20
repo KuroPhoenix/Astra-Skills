@@ -1,7 +1,7 @@
 # Astra Implement — phase-0 design
 
 **Date:** 2026-08-03, revised 2026-08-04 against four completed peer contracts · **Wave:** 3 ·
-**Status:** `proposed`
+**Report feedback reconciliation:** 2026-08-20 · **Status:** `proposed`
 
 **Six-skill reconciliation:** 2026-08-11 · owns immutable repository delivery-roadmap approval,
 execution, atomic implementation commits, and the Execution Ledger
@@ -1431,11 +1431,29 @@ The Approved Delivery Roadmap and Execution Ledger each carry their own
 `reporting.supersedes_ref`, `reporting.surfaces`, and `reporting.open_decisions`, tied to that
 artifact's identity, revision, and content hash. Roadmap surfaces describe approved delivery
 choices and consequences; Ledger surfaces describe observed execution, deviations, evidence,
-residue, and commit state. Neither artifact may silently reuse the other's supersession identity.
+residue, and commit state. Implement also owns every communicative purpose, governing point,
+recommendation state and strength, requested action, uncertainty, and material caveat or
+counterposition exposed under the shared stance-bearing contract. Missing semantics remain
+explicit gaps; Report cannot infer them. Neither artifact may silently reuse the other's
+supersession identity.
 
 Implement emits a producer-owned `ReportEvent` at `artifact_completion`, `approval_request`,
 `stage_boundary`, `status_request`, and `failure`, identifying the relevant Roadmap or Ledger
 revision. Roadmap approval uses the complete producer-owned decision envelope. If Report is
 unavailable, Implement presents that envelope itself; other moments use the shared minimal
 unavailable notice. `I(reporting)` changes presentation only. Implement alone records Roadmap
-approval and execution state.
+approval and execution state; Report may retain the exact confirmed user event only as
+communication evidence.
+
+Under `F(feedback)`, Implement may receive one pinned, user-confirmed Report Artifact during the
+canonical review round. It may respond at most once and only to unresolved sections grounded in
+Roadmap or Execution Ledger claims it owns, using an attributed acceptance, partial acceptance,
+rejection, clarification request, deferral, or out-of-authority response with rationale, evidence,
+and any required follow-on work. If all of its current-revision sections are user-approved, it
+skips annotation work; the approval event remains available for Implement's normal authoritative
+recording path. This response-only operation cannot revise a Roadmap or Ledger, mutate the
+repository, record producer-owned approval or execution state, or start Test or Ship. Report alone
+appends the immutable response. Failed or unavailable delivery leaves only the Implement-facing
+annotation or recording section `UR`, preserves every user-facing marker, and does not stop the
+remaining pass; silence is never approval or absence of objection. Any authoritative disposition,
+artifact revision, or delivery work requires a separately invoked Implement workflow.
